@@ -1,0 +1,16 @@
+{
+  "name": "az-functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup src/main.ts"
+  },
+  "keywords": [],
+  "author": "Thada Wangthammang",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^6.5.0"
+  }
+}
