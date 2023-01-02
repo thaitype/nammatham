@@ -11,6 +11,10 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "devDependencies": {
+    "reflect-metadata": "^0.1.13",
     "tsup": "^6.5.0"
+  },
+  "dependencies": {
+    "inversify": "^6.0.1"
   }
 }
