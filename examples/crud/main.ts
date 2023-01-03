@@ -1,4 +1,8 @@
 import { Container } from 'inversify';
+import 'reflect-metadata';
+import { bootstrap } from '@mildronize/azure-functions';
+// This is require to import Ref: https://github.com/inversify/inversify-express-utils#important-information-about-the-controller-decorator
+import './controllers/user.controller';
 
 // set up container
 const container = new Container();
@@ -6,4 +10,5 @@ const container = new Container();
 // set up bindings
 // container.bind<FooService>('FooService').to(FooService);
 
-console.log('sss')
+// console.log('sss')
+bootstrap(container);
