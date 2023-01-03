@@ -1,5 +1,3 @@
-// import { controller } from "@mildronize/azure-functions";
-
 import { controller, functionName } from "@mildronize/azure-functions";
 
 @controller()

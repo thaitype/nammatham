@@ -32,3 +32,11 @@ export interface ControllerMetadata {
   // middleware: Array<Middleware>;
   target: DecoratorTarget;
 }
+
+
+export type ControllerHandler = (...params: Array<unknown>) => unknown;
+export type Controller = Record<string, ControllerHandler>;
+
+export const NO_CONTROLLERS_FOUND = 'No controllers' +
+  'have been found! Please ensure that you have register' +
+  'at least one Controller.';
