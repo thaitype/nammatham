@@ -15,8 +15,20 @@ const config = {
 
 type AzureFunctionParams = Parameters<AzureFunction>;
 
+export function bootstrap(container: Container){
+    attachControllers(container);
+    // TODO: generate files from container 
+    // TODO: 
+    /**
+     *  └── out
+          └── GetUsers
+              ├── function.json
+              └── index.ts
+     */
+}
+
 export function funcBootstrap(container: Container, classTarget: NewableFunction, methodName: string, azureFunctionParams: AzureFunctionParams) {
-  const azureFunctions = bootstrap(container);
+  const azureFunctions = attachControllers(container);
   for(const func of azureFunctions){
     console.log(func.key, func.name, (func.target as { constructor: NewableFunction }).constructor);
   }
@@ -25,7 +37,7 @@ export function funcBootstrap(container: Container, classTarget: NewableFunction
   console.log("funcBootstrap");
 }
 
-export function bootstrap(container: Container) {
+function attachControllers(container: Container) {
   console.log("Getting Metadata from method");
   const constructors = getControllersFromMetadata();
 
