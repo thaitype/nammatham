@@ -7,18 +7,21 @@ import {
 } from "./utils";
 import { TYPE } from "./contants";
 import { AzureFunctionMethodMetadata } from "./interfaces";
+import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 
 const config = {
   forceControllers: true, // throw if no controller assigned
 };
 
-export function funcBootstrap(container: Container, classTarget: NewableFunction, methodName: string) {
+type AzureFunctionParams = Parameters<AzureFunction>;
+
+export function funcBootstrap(container: Container, classTarget: NewableFunction, methodName: string, azureFunctionParams: AzureFunctionParams) {
   const azureFunctions = bootstrap(container);
   for(const func of azureFunctions){
     console.log(func.key, func.name, (func.target as { constructor: NewableFunction }).constructor);
   }
   let controllerInstance = container.getNamed(TYPE.Controller, classTarget.name);
-  (controllerInstance as any)[methodName]();
+  (controllerInstance as any)[methodName](...azureFunctionParams);
   console.log("funcBootstrap");
 }
 
