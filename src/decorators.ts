@@ -1,6 +1,7 @@
 import { inject, injectable, decorate } from 'inversify';
 import { METADATA_KEY } from "./contants";
 import { AzureFunctionMethodMetadata, ControllerMetadata, DecoratorTarget, HandlerDecorator } from "./interfaces";
+import { FunctionBinding } from './bindings';
 
 export function controller( 
   // ...middleware: Array<Middleware>
@@ -39,6 +40,7 @@ export function controller(
 export function functionName(
     name: string,
     // ...middleware: Array<Middleware>
+    ...bindings: Array<FunctionBinding | [FunctionBinding, FunctionBinding]>
   ): HandlerDecorator {
     return (target: DecoratorTarget, key: string): void => {
       const metadata: AzureFunctionMethodMetadata = {
@@ -46,7 +48,20 @@ export function functionName(
         name,
         target,
       };
-  
+
+      const serializedBindings: FunctionBinding[] = [];
+      for(const binding of bindings){
+        if(Array.isArray(binding)){
+          serializedBindings.push(...binding)
+        } else {
+          serializedBindings.push(binding);
+        }
+      }
+      
+      for(const binding of serializedBindings){
+          console.log(`${name} register binding ${binding.name} with type ${binding.type}`);
+      }
+
       let metadataList: Array<AzureFunctionMethodMetadata> = [];
   
       if (

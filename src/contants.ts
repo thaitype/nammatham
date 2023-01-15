@@ -5,4 +5,5 @@ export const METADATA_KEY = {
 
 export const TYPE = {
   Controller: Symbol.for('Controller'),
+  Method: Symbol.for('Method'),
 };
