@@ -1,6 +1,10 @@
 # az-functions
 Azure Function Nodejs frameworks with Dependency Injection
 
+## Features
+- Support Azure Functions HTTP trigger
+
+
 ## Dev
 
 ```
