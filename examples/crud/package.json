@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "ts-node bootstrap.ts && tsc -p tsconfig.app.json",
+    "start": "func start"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
@@ -14,6 +15,8 @@
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "ts-node": "^10.9.1",
+    "tsx": "latest",
     "typescript": "latest"
   }
 }
