@@ -5,46 +5,21 @@ import {
   getControllersFromContainer,
   getControllersFromMetadata,
 } from "./utils";
-import { TYPE } from "./contants";
-import { AzureFunctionMethodMetadata } from "./interfaces";
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { TYPE } from "../contants";
+import { AzureFunctionMethodMetadata } from "../interfaces";
 
 const config = {
   forceControllers: true, // throw if no controller assigned
 };
 
-type AzureFunctionParams = Parameters<AzureFunction>;
-
-export function bootstrap(container: Container){
-    attachControllers(container);
-    // TODO: generate files from container 
-    // TODO: 
-    /**
-     *  └── out
-          └── GetUsers
-              ├── function.json
-              └── index.ts
-     */
-}
-
-export function funcBootstrap(container: Container, classTarget: NewableFunction, methodName: string, azureFunctionParams: AzureFunctionParams) {
-  const azureFunctions = attachControllers(container);
-  for(const func of azureFunctions){
-    console.log(func.key, func.name, (func.target as { constructor: NewableFunction }).constructor);
-  }
-  let controllerInstance = container.getNamed(TYPE.Controller, classTarget.name);
-  (controllerInstance as any)[methodName](...azureFunctionParams);
-  console.log("funcBootstrap");
-}
-
-function attachControllers(container: Container) {
+export function attachControllers(container: Container) {
   console.log("Getting Metadata from method");
   const constructors = getControllersFromMetadata();
 
   constructors.forEach((constructor) => {
     const { name } = constructor as { name: string };
 
-    console.log(name)
+    console.log(name);
     container
       .bind(TYPE.Controller)
       .to(constructor as new (...args: Array<never>) => unknown)

@@ -1,12 +1,12 @@
 import { interfaces } from "inversify";
-import { METADATA_KEY, TYPE } from "./contants";
+import { METADATA_KEY, TYPE } from "../contants";
 import {
   AzureFunctionMethodMetadata,
   Controller,
   ControllerMetadata,
   DecoratorTarget,
   NO_CONTROLLERS_FOUND,
-} from "./interfaces";
+} from "../interfaces";
 
 export function getControllersFromMetadata(): Array<DecoratorTarget> {
   const arrayOfControllerMetadata: Array<ControllerMetadata> =
