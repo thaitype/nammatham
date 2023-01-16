@@ -1,7 +1,8 @@
 import { Container } from 'inversify';
 import { AzureFunctionMethodMetadata } from '../interfaces';
 
-import fs from 'node:fs/promises';
+import fsPromise from 'node:fs/promises';
+import fs from 'node:fs';
 import slash from 'slash';
 import path from 'node:path';
 import { attachControllers } from './attach-controllers';
@@ -32,34 +33,49 @@ interface IBootstrapOption {
    * TODO: Using register controller to bind the dependencies
    */
   controllers: NewableFunction[];
+  /**
+   * Automatic add gitignore for function endpoint, default = true
+   */
+  gitignore?: boolean;
+}
+
+async function appendGitignore(cwd: string, functionName: string) {
+  const gitignorePath = path.join(cwd, '.gitignore');
+  if(!fs.existsSync(gitignorePath)){
+    await fsPromise.writeFile(gitignorePath, functionName, 'utf8');
+    return;
+  }
+  // Assume the gitignore file is a small file, more secure: https://geshan.com.np/blog/2021/10/nodejs-read-file-line-by-line/
+  const gitignoreLines = (await fsPromise.readFile(gitignorePath, 'utf8')).split(/\r?\n/);
+  if (!gitignoreLines.includes(functionName)) {
+    gitignoreLines.push(functionName);
+  }
+  await fsPromise.writeFile(gitignorePath, gitignoreLines.join('\n'), 'utf8');
 }
 
 export async function bootstrap(option: IBootstrapOption) {
   const container = option.container ?? new Container();
   const cwd = option.cwd ?? process.cwd();
   const output = option.output ?? '';
+  const enableGitignore = option.gitignore ?? true;
   const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container);
 
-  console.log('----');
-  console.log(option.bootstrapPath);
-  const bootstrapCode = await fs.readFile(option.bootstrapPath, 'utf8');
+  const bootstrapCode = await fsPromise.readFile(option.bootstrapPath, 'utf8');
   const controllerLocator = new ControllerLocator(bootstrapCode);
 
-  // 1. get list of functions name
   for (const metadata of azureFunctionsMethodMetadata) {
     const controllerName = (metadata.target.constructor as { name: string }).name;
     const controllerRelativePath = slash(path.join('..', controllerLocator.getControllerImportPath(controllerName)));
-    console.log(controllerRelativePath)
     const methodName = metadata.key;
     const functionName = metadata.name;
 
     const functionPath = path.join(output, metadata.name);
     // TODO: Make concurrent later
-    await fs.mkdir(functionPath, { recursive: true });
+    await fsPromise.mkdir(functionPath, { recursive: true });
     const functionBinding: AzureFunctionJsonConfig = {
       bindings: metadata.binding,
     };
-    await fs.writeFile(path.join(functionPath, 'function.json'), JSON.stringify(functionBinding, null, 2), 'utf8');
+    await fsPromise.writeFile(path.join(functionPath, 'function.json'), JSON.stringify(functionBinding, null, 2), 'utf8');
 
     const azFunctionEndpointCode: string = azFunctionTemplate({
       controllerName,
@@ -68,16 +84,8 @@ export async function bootstrap(option: IBootstrapOption) {
       functionName,
     });
 
-    await fs.writeFile(path.join(functionPath, 'index.ts'), azFunctionEndpointCode, 'utf8');
-  }
-  // 2. create out dir
+    await fsPromise.writeFile(path.join(functionPath, 'index.ts'), azFunctionEndpointCode, 'utf8');
 
-  // TODO: generate files from container
-  // TODO:
-  /**
-     *  └── out
-          └── GetUsers
-              ├── function.json
-              └── index.ts
-     */
+    if (enableGitignore) await appendGitignore(cwd, functionName);
+  }
 }

@@ -13,4 +13,5 @@ export class UserController {
     console.log("UserController: getting users");
     context.log('Context Log');
   }
+
 }

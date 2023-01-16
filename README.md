@@ -6,7 +6,7 @@ Azure Function Nodejs frameworks with Dependency Injection
 
 
 ## TODO
-- [ ] auto add git ignore for endpoints
+- [X] auto add git ignore for endpoints
 
 ## Dev
 
