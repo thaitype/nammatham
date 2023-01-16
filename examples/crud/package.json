@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
+    "@mildronize/azure-functions": "latest",
     "@azure/functions": "latest",
     "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "typescript": "latest"
   }
 }

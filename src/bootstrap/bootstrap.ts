@@ -42,6 +42,15 @@ interface IBootstrapOption {
    */
   clean?: boolean;
   /**
+   * Dist directory path, the output directory of JS files, default = dist
+   */
+  outDir?: string;
+  /**
+   * JavaScript Extenstion used for `scriptFile` in Azure Function Config,
+   * Default = js
+   */
+  extension?: string;
+  /**
    * TODO: Incremental build file
    */
 }
@@ -64,6 +73,8 @@ export async function bootstrap(option: IBootstrapOption) {
   const container = option.container ?? new Container();
   const cwd = option.cwd ?? process.cwd();
   const output = option.output ?? '';
+  const outDir = option.outDir ?? 'dist';
+  const extension = option.extension ?? 'js';
   const enableGitignore = option.gitignore ?? true;
   const enableClean = option.clean ?? true;
   const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container);
@@ -73,7 +84,8 @@ export async function bootstrap(option: IBootstrapOption) {
 
   for (const metadata of azureFunctionsMethodMetadata) {
     const controllerName = (metadata.target.constructor as { name: string }).name;
-    const controllerRelativePath = slash(path.join('..', controllerLocator.getControllerImportPath(controllerName)));
+    const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
+    const controllerRelativePath = slash(path.join('..', controllerImportPath));
     const methodName = metadata.key;
     const functionName = metadata.name;
 
@@ -85,6 +97,7 @@ export async function bootstrap(option: IBootstrapOption) {
     await fsPromise.mkdir(functionPath, { recursive: true });
     const functionBinding: AzureFunctionJsonConfig = {
       bindings: metadata.binding,
+      scriptFile: slash(path.join('..', outDir, `${controllerImportPath}.${extension}`)),
     };
     await fsPromise.writeFile(
       path.join(functionPath, 'function.json'),
