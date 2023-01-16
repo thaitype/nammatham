@@ -5,16 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup src/main.ts"
+    "build": "tsup src/main.ts --dts"
   },
   "keywords": [],
   "author": "Thada Wangthammang",
   "license": "MIT",
   "devDependencies": {
+    "@azure/functions": "^3.5.0",
     "reflect-metadata": "^0.1.13",
     "tsup": "^6.5.0"
   },
   "dependencies": {
-    "inversify": "^6.0.1"
+    "handlebars": "^4.7.7",
+    "inversify": "^6.0.1",
+    "slash": "^5.0.0",
+    "strip-indent": "^4.0.0",
+    "typescript": "^4.9.4"
   }
 }

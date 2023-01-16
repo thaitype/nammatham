@@ -5,22 +5,21 @@ import {
   getControllersFromContainer,
   getControllersFromMetadata,
 } from "./utils";
-import { TYPE } from "./contants";
+import { TYPE } from "../contants";
+import { AzureFunctionMethodMetadata } from "../interfaces";
 
 const config = {
   forceControllers: true, // throw if no controller assigned
 };
 
-export function bootstrap(container: Container) {
+export function attachControllers(container: Container) {
   console.log("Getting Metadata from method");
-  // for(const metadata of getControllersFromMetadata()){
-  //     console.log(metadata);
-  // }
   const constructors = getControllersFromMetadata();
 
   constructors.forEach((constructor) => {
     const { name } = constructor as { name: string };
 
+    console.log(name);
     container
       .bind(TYPE.Controller)
       .to(constructor as new (...args: Array<never>) => unknown)
@@ -32,11 +31,20 @@ export function bootstrap(container: Container) {
     config.forceControllers
   );
 
+  const azureFunctions: AzureFunctionMethodMetadata[] = [];
+
   for (const controller of controllers) {
     const controllerMetadata = getControllerMetadata(controller.constructor);
     const methodMetadata = getAzureFunctionMethodMetadata(
       controller.constructor
     );
     console.log(controllerMetadata, methodMetadata);
+    methodMetadata.forEach((metadata: AzureFunctionMethodMetadata) => {
+      console.log(metadata.target.constructor);
+      azureFunctions.push({
+        ...metadata,
+      });
+    });
   }
+  return azureFunctions;
 }
