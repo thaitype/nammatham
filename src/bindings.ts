@@ -5,6 +5,11 @@ export type RequestMethod = "get" | "post" | "delete" | "options" | "put";
 export type BindingType = "httpTrigger" | "http";
 export type BindingDiection = "in" | "out";
 
+export interface AzureFunctionJsonConfig {
+  bindings: FunctionBinding[];
+  scriptFile?: string;
+}
+
 // Ref: https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#configuration
 export interface FunctionBinding {
   authLevel?: AuthorizationLevel;

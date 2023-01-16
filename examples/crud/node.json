@@ -1,0 +1,209 @@
+{
+  "pos": 0,
+  "end": 254,
+  "flags": 0,
+  "modifierFlagsCache": 0,
+  "transformFlags": 0,
+  "kind": 308,
+  "statements": [
+    {
+      "pos": 84,
+      "end": 149,
+      "flags": 0,
+      "modifierFlagsCache": 0,
+      "transformFlags": 0,
+      "kind": 269,
+      "importClause": {
+        "pos": 92,
+        "end": 111,
+        "flags": 0,
+        "modifierFlagsCache": 0,
+        "transformFlags": 0,
+        "kind": 270,
+        "isTypeOnly": false,
+        "namedBindings": {
+          "pos": 92,
+          "end": 111,
+          "flags": 0,
+          "modifierFlagsCache": 0,
+          "transformFlags": 0,
+          "kind": 272,
+          "elements": [
+            {
+              "pos": 94,
+              "end": 109,
+              "flags": 0,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 273,
+              "isTypeOnly": false,
+              "name": {
+                "pos": 94,
+                "end": 109,
+                "flags": 0,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "UserController"
+              }
+            }
+          ]
+        }
+      },
+      "moduleSpecifier": {
+        "pos": 116,
+        "end": 148,
+        "flags": 0,
+        "modifierFlagsCache": 0,
+        "transformFlags": 0,
+        "kind": 10,
+        "text": "./controllers/user.controller",
+        "hasExtendedUnicodeEscape": false
+      }
+    },
+    {
+      "pos": 149,
+      "end": 252,
+      "flags": 0,
+      "modifierFlagsCache": 0,
+      "transformFlags": 0,
+      "kind": 241,
+      "expression": {
+        "pos": 149,
+        "end": 251,
+        "flags": 0,
+        "modifierFlagsCache": 0,
+        "transformFlags": 0,
+        "kind": 210,
+        "expression": {
+          "pos": 149,
+          "end": 162,
+          "flags": 0,
+          "modifierFlagsCache": 0,
+          "transformFlags": 0,
+          "kind": 79,
+          "escapedText": "bootstrap"
+        },
+        "arguments": [
+          {
+            "pos": 163,
+            "end": 250,
+            "flags": 0,
+            "modifierFlagsCache": 0,
+            "transformFlags": 0,
+            "kind": 207,
+            "properties": [
+              {
+                "pos": 164,
+                "end": 195,
+                "flags": 0,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 299,
+                "name": {
+                  "pos": 164,
+                  "end": 183,
+                  "flags": 0,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 0,
+                  "kind": 79,
+                  "escapedText": "bootstrapPath"
+                },
+                "initializer": {
+                  "pos": 184,
+                  "end": 195,
+                  "flags": 0,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 0,
+                  "kind": 79,
+                  "escapedText": "___filename"
+                }
+              },
+              {
+                "pos": 196,
+                "end": 247,
+                "flags": 0,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 299,
+                "name": {
+                  "pos": 196,
+                  "end": 213,
+                  "flags": 0,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 0,
+                  "kind": 79,
+                  "escapedText": "controllers"
+                },
+                "initializer": {
+                  "pos": 214,
+                  "end": 247,
+                  "flags": 0,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 0,
+                  "kind": 206,
+                  "elements": [
+                    {
+                      "pos": 216,
+                      "end": 240,
+                      "flags": 0,
+                      "modifierFlagsCache": 0,
+                      "transformFlags": 0,
+                      "kind": 79,
+                      "escapedText": "UserController"
+                    }
+                  ],
+                  "multiLine": true
+                }
+              }
+            ],
+            "multiLine": true
+          }
+        ]
+      }
+    }
+  ],
+  "endOfFileToken": {
+    "pos": 252,
+    "end": 254,
+    "flags": 0,
+    "modifierFlagsCache": 0,
+    "transformFlags": 0,
+    "kind": 1
+  },
+  "fileName": "x.ts",
+  "text": "import \"reflect-metadata\";\r\nimport { bootstrap } from \"@mildronize/azure-functions\";\r\nimport { UserController } from \"./controllers/user.controller\";\r\n\r\nbootstrap({\r\n    bootstrapPath: __filename,\r\n    controllers: [\r\n        UserController\r\n    ]\r\n});\r\n",
+  "languageVersion": 99,
+  "languageVariant": 0,
+  "scriptKind": 3,
+  "isDeclarationFile": false,
+  "hasNoDefaultLib": false,
+  "bindDiagnostics": [],
+  "externalModuleIndicator": {
+    "pos": 0,
+    "end": 26,
+    "flags": 0,
+    "modifierFlagsCache": 0,
+    "transformFlags": 0,
+    "kind": 269,
+    "moduleSpecifier": {
+      "pos": 6,
+      "end": 25,
+      "flags": 0,
+      "modifierFlagsCache": 0,
+      "transformFlags": 0,
+      "kind": 10,
+      "text": "reflect-metadata",
+      "hasExtendedUnicodeEscape": false
+    }
+  },
+  "pragmas": {},
+  "referencedFiles": [],
+  "typeReferenceDirectives": [],
+  "libReferenceDirectives": [],
+  "amdDependencies": [],
+  "nodeCount": 27,
+  "identifierCount": 7,
+  "identifiers": {},
+  "parseDiagnostics": []
+}
