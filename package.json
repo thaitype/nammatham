@@ -1,10 +1,12 @@
 {
-  "name": "az-functions",
-  "version": "1.0.0",
+  "name": "@mildronize/azure-functions",
+  "version": "0.0.1-pre-alpha.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build",
     "build": "tsup src/main.ts --dts"
   },
   "keywords": [],
@@ -12,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@azure/functions": "^3.5.0",
+    "@types/node": "^18.11.18",
     "reflect-metadata": "^0.1.13",
     "tsup": "^6.5.0"
   },
