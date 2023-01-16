@@ -37,11 +37,18 @@ interface IBootstrapOption {
    * Automatic add gitignore for function endpoint, default = true
    */
   gitignore?: boolean;
+  /**
+   * Clean generated files before build, default = true
+   */
+  clean?: boolean;
+  /**
+   * TODO: Incremental build file
+   */
 }
 
 async function appendGitignore(cwd: string, functionName: string) {
   const gitignorePath = path.join(cwd, '.gitignore');
-  if(!fs.existsSync(gitignorePath)){
+  if (!fs.existsSync(gitignorePath)) {
     await fsPromise.writeFile(gitignorePath, functionName, 'utf8');
     return;
   }
@@ -58,6 +65,7 @@ export async function bootstrap(option: IBootstrapOption) {
   const cwd = option.cwd ?? process.cwd();
   const output = option.output ?? '';
   const enableGitignore = option.gitignore ?? true;
+  const enableClean = option.clean ?? true;
   const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container);
 
   const bootstrapCode = await fsPromise.readFile(option.bootstrapPath, 'utf8');
@@ -69,13 +77,20 @@ export async function bootstrap(option: IBootstrapOption) {
     const methodName = metadata.key;
     const functionName = metadata.name;
 
-    const functionPath = path.join(output, metadata.name);
+    const functionPath = path.join(output, functionName);
     // TODO: Make concurrent later
+    if (enableClean) {
+      fs.rmSync(functionPath, { recursive: true, force: true });
+    }
     await fsPromise.mkdir(functionPath, { recursive: true });
     const functionBinding: AzureFunctionJsonConfig = {
       bindings: metadata.binding,
     };
-    await fsPromise.writeFile(path.join(functionPath, 'function.json'), JSON.stringify(functionBinding, null, 2), 'utf8');
+    await fsPromise.writeFile(
+      path.join(functionPath, 'function.json'),
+      JSON.stringify(functionBinding, null, 2),
+      'utf8'
+    );
 
     const azFunctionEndpointCode: string = azFunctionTemplate({
       controllerName,
