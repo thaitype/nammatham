@@ -2,6 +2,7 @@ import { Container } from 'inversify';
 import { AzureFunctionMethodMetadata } from '../interfaces';
 
 import fs from 'node:fs/promises';
+import slash from 'slash';
 import path from 'node:path';
 import { attachControllers } from './attach-controllers';
 import { AzureFunctionJsonConfig } from '../bindings';
@@ -36,7 +37,7 @@ interface IBootstrapOption {
 export async function bootstrap(option: IBootstrapOption) {
   const container = option.container ?? new Container();
   const cwd = option.cwd ?? process.cwd();
-  const output = option.output ?? 'out';
+  const output = option.output ?? '';
   const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container);
 
   console.log('----');
@@ -47,7 +48,8 @@ export async function bootstrap(option: IBootstrapOption) {
   // 1. get list of functions name
   for (const metadata of azureFunctionsMethodMetadata) {
     const controllerName = (metadata.target.constructor as { name: string }).name;
-    const controllerRelativePath = controllerLocator.getControllerRelativePath(controllerName);
+    const controllerRelativePath = slash(path.join('..', controllerLocator.getControllerImportPath(controllerName)));
+    console.log(controllerRelativePath)
     const methodName = metadata.key;
     const functionName = metadata.name;
 

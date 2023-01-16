@@ -5,6 +5,9 @@ Azure Function Nodejs frameworks with Dependency Injection
 - Support Azure Functions HTTP trigger
 
 
+## TODO
+- [ ] auto add git ignore for endpoints
+
 ## Dev
 
 ```

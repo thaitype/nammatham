@@ -5,6 +5,7 @@ specifiers:
   handlebars: ^4.7.7
   inversify: ^6.0.1
   reflect-metadata: ^0.1.13
+  slash: ^5.0.0
   strip-indent: ^4.0.0
   tsup: ^6.5.0
   typescript: ^4.9.4
@@ -12,6 +13,7 @@ specifiers:
 dependencies:
   handlebars: 4.7.7
   inversify: 6.0.1
+  slash: 5.0.0
   strip-indent: 4.0.0
   typescript: 4.9.4
 
@@ -769,6 +771,11 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
     dev: true
+
+  /slash/5.0.0:
+    resolution: {integrity: sha512-n6KkmvKS0623igEVj3FF0OZs1gYYJ0o0Hj939yc1fyxl2xt+xYpLnzJB6xBSqOfV9ZFLEWodBBN/heZJahuIJQ==}
+    engines: {node: '>=14.16'}
+    dev: false
 
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
