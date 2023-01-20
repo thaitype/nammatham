@@ -12,5 +12,9 @@ export class UserController {
   public getUsers(context: Context, req: HttpRequest): void {
     console.log("UserController: getting users");
     context.log('Context Log');
+    context.res = {
+      status: 200,
+      body: 'test'
+    }
   }
 }
