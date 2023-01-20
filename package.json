@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build",
-    "build": "tsup src/main.ts --dts"
+    "build": "tsup src/main.ts --dts",
+    "build:watch": "nodemon --watch src --ext ts --exec 'npm run build'"
   },
   "keywords": [],
   "author": "Thada Wangthammang",

@@ -4,16 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "serve": "run-s build start",
     "build": "ts-node bootstrap.ts && tsc -p tsconfig.app.json",
-    "build:watch": "nodemon --watch src --ext ts --exec 'npm run build'",
-    "start:watch": "nodemon --watch dist --exec 'npm start'",
+    "serve:watch": "nodemon --watch src --ext ts --exec 'npm run serve'",
+    "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",
+    "start:watch": "nodemon --watch dist --delay 0.3 --exec  'npm start'",
     "start": "func start",
-    "dev": "npx link ../../ && run-p **:watch"
+    "dev": "npx link ../../ && run-s serve:watch"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "latest",
+    "@mildjs/di": "^2.0.2",
     "@mildronize/azure-functions": "latest",
     "nodemon": "^2.0.20",
     "reflect-metadata": "^0.1.13"
