@@ -16,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "latest",
-    "@mildjs/di": "^2.0.2",
     "@mildronize/azure-functions": "latest",
     "nodemon": "^2.0.20",
     "reflect-metadata": "^0.1.13"

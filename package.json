@@ -1,7 +1,7 @@
 {
   "name": "@mildronize/azure-functions",
-  "version": "0.0.1-pre-alpha.4",
-  "description": "",
+  "version": "0.0.1-pre-alpha.5",
+  "description": "Azure Function Nodejs Lightweight frameworks with Dependency Injection",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
@@ -10,9 +10,19 @@
     "build": "tsup src/main.ts --dts",
     "build:watch": "nodemon --watch src --ext ts --exec 'npm run build'"
   },
-  "keywords": [],
+  "keywords": [
+    "azure-functions",
+    "azure",
+    "framework",
+    "dependency-injection",
+    "inversion-of-control"
+  ],
   "author": "Thada Wangthammang",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mildronize/azure-functions.git"
+  },
   "devDependencies": {
     "@azure/functions": "^3.5.0",
     "@types/node": "^18.11.18",
