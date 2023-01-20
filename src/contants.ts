@@ -1,6 +1,6 @@
 export const METADATA_KEY = {
-  azureFunction: "@mildronize/azure-functions:azureFunction",
-  controller: '@mildronize/azure-functions:controller',
+  azureFunction: "nammatham:azureFunction",
+  controller: 'nammatham:controller',
 };
 
 export const TYPE = {

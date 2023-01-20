@@ -1,4 +1,4 @@
-# @mildronize/azure-functions
+# Nammatham
 Azure Function Nodejs Lightweight frameworks with Dependency Injection
 
 > This project is in proof of concept stage, any issue feel free to open the issue.
@@ -39,7 +39,7 @@ it will autogenerate, 2 files per function
   ```ts
   import 'reflect-metadata';
   import { AzureFunction, Context } from '@azure/functions';
-  import { funcBootstrap } from '@mildronize/azure-functions';
+  import { funcBootstrap } from 'nammatham';
   import { UserController } from '../src/controllers/user.controller';
 
   const GetUsers: AzureFunction = async function (

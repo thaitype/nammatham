@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { bootstrap } from "@mildronize/azure-functions";
+import { bootstrap } from "nammatham";
 import { UserController } from "./src/controllers/user.controller";
 
 bootstrap({

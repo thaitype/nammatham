@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "latest",
-    "@mildronize/azure-functions": "latest",
+    "nammatham": "latest",
     "nodemon": "^2.0.20",
     "reflect-metadata": "^0.1.13"
   },

@@ -3,7 +3,7 @@ import {
   controller,
   functionName,
   httpTrigger,
-} from "@mildronize/azure-functions";
+} from "nammatham";
 import { Context, HttpRequest } from "@azure/functions";
 
 @controller()

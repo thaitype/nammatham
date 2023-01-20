@@ -1,6 +1,6 @@
 {
-  "name": "@mildronize/azure-functions",
-  "version": "0.0.1-pre-alpha.5",
+  "name": "nammatham",
+  "version": "0.0.1-pre-alpha.6",
   "description": "Azure Function Nodejs Lightweight frameworks with Dependency Injection",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
