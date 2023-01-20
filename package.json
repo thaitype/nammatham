@@ -1,6 +1,6 @@
 {
   "name": "@mildronize/azure-functions",
-  "version": "0.0.1-pre-alpha.2",
+  "version": "0.0.1-pre-alpha.3",
   "description": "",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
