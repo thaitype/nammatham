@@ -1,7 +1,7 @@
 # Nammatham
-Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`) Azure Function Nodejs Lightweight frameworks with Dependency Injection, 
+Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`) is Azure Function Nodejs Lightweight frameworks with Dependency Injection, 
 
-> This project is in proof of concept stage, any issue feel free to open the issue.
+[![npm version](https://img.shields.io/npm/v/nammatham)](https://www.npmjs.com/package/nammatham) [![npm download](https://img.shields.io/npm/dt/nammatham)](https://www.npmjs.com/package/nammatham)
 
 ## Features
 - Provide basic utility for writing Azure Functions
