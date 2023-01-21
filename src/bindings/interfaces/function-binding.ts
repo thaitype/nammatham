@@ -15,4 +15,13 @@ export type DefinedFunctionBinding =
  */
 export type FunctionBinding<T = null> = T extends null
    ? DefinedFunctionBinding
-   : CustomFunctionBinding<T>;
+   : CustomFunctionBinding;
+
+// function checkType<T>(){
+  // const result: FunctionBinding<any> = {
+  //   name: '',
+  //   direction: 'out',
+  //   type: 'http'
+  // };
+//   return result;
+// }
