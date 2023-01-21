@@ -10,7 +10,12 @@ import { HttpRequest } from "@azure/functions";
 @controller()
 export class UserController extends BaseController {
 
-  @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
+  @functionName("GetUsers", {
+    type: 'timerTrigger',
+    direction: 'in',
+    name: '',
+    schedule: ''
+  })
   public getUsers(req: HttpRequest): void {
     const name = req.query.name;  
     this.context.log('Context Log');
