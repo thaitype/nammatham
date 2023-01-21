@@ -16,15 +16,9 @@ export function funcBootstrap(
 ) {
   const container = option.container ?? new Container();
   attachControllers(container);
-  // for (const func of azureFunctions) {
-  //   console.log(
-  //     func.key,
-  //     func.name,
-  //     (func.target as { constructor: NewableFunction }).constructor
-  //   );
-  // }
   const [azureFunctionContext, ...azureFunctionArgs] = option.azureFunctionParams;
   
+  // Unbind the Fake Context in attachControllers
   container.unbind(TYPE.Context);
   // Binding Azure Function Context
   container
@@ -36,5 +30,4 @@ export function funcBootstrap(
     option.classTarget.name
   );
   (controllerInstance as any)[option.methodName](...azureFunctionArgs);
-  console.log("funcBootstrap");
 }
