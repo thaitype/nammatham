@@ -39,12 +39,6 @@ const httpTrigger: AzureFunction = async function (
   funcBootstrap(container, UserController ,"getUsers", [context, ...args]);
 };
 
-// class MockContext {
-//   log(message: string){
-//     console.log(message);
-//   }
-// }
-
 // httpTrigger(new MockContext() as Context);
 export default httpTrigger;
 ```
