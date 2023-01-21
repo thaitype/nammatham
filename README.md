@@ -80,8 +80,10 @@ Please see in [example](examples) directory
       console.log("UserController: getting users");
       this.context.log('Context Log');
 
-      this.res.ok(`hello get user with ${name}`);
-      this.context.log('After response');
+      // this.res.send(`hello get user with ${name}`);
+      this.res.json({
+        data: `hello get user with ${name}`
+      });
     }
   }
   ```
@@ -89,6 +91,8 @@ Please see in [example](examples) directory
 ## TODO
 - [ ] Add Log at boostrap level
 - [X] Inject **Context** in Class Dependency
+- [ ] `@controller()` should accept prefix path, e.g. `@controller('users')`
+- [ ] allow to add Middleware
 
 ## Author
 - Thada Wangthammang, Software Engineer, Thailand
