@@ -69,6 +69,24 @@ async function appendGitignore(cwd: string, functionName: string) {
   await fsPromise.writeFile(gitignorePath, gitignoreLines.join('\n'), 'utf8');
 }
 
+/**
+ *
+ * Example:
+ *  - cwd = '/home/nammatham/examples/crud'
+ *  - absolutePath = '/home/nammatham/examples/crud/src/main.ts'
+ *
+ * Return:
+ *  - 'src/'
+ *
+ * @param cwd Working Directory
+ * @param absolutePath Absolute Path file
+ * @returns
+ */
+
+function extractRuntimeWorkingDirectory(cwd: string, absolutePath: string) {
+  return path.dirname(absolutePath).replace(cwd, '');
+}
+
 export async function bootstrap(option: IBootstrapOption) {
   const container = option.container ?? new Container();
   const cwd = option.cwd ?? process.cwd();
@@ -79,13 +97,14 @@ export async function bootstrap(option: IBootstrapOption) {
   const enableClean = option.clean ?? true;
   const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container);
 
+  const runtimeWorkingDirectory = extractRuntimeWorkingDirectory(cwd, option.bootstrapPath);
   const bootstrapCode = await fsPromise.readFile(option.bootstrapPath, 'utf8');
   const controllerLocator = new ControllerLocator(bootstrapCode);
 
   for (const metadata of azureFunctionsMethodMetadata) {
     const controllerName = (metadata.target.constructor as { name: string }).name;
     const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
-    const controllerRelativePath = slash(path.join('..', controllerImportPath));
+    const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
     const methodName = metadata.key;
     const functionName = metadata.name;
 

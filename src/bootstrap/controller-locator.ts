@@ -26,7 +26,6 @@ export class ControllerLocator {
   }
 
   public getControllerImportPath(controllerName: string) {
-    console.log(this.importClauses)
     if(!this.importClauses.hasOwnProperty(controllerName)){
       throw new Error(`No controller '${controllerName}' already imported in bootstrap file `);
     }

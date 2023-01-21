@@ -14,13 +14,11 @@ const config = {
 };
 
 export function attachControllers(container: Container) {
-  console.log("Getting Metadata from method");
   const constructors = getControllersFromMetadata();
 
   constructors.forEach((constructor) => {
     const { name } = constructor as { name: string };
 
-    console.log(name);
     container
       .bind(TYPE.Controller)
       .to(constructor as new (...args: Array<never>) => unknown)
@@ -45,9 +43,7 @@ export function attachControllers(container: Container) {
     const methodMetadata = getAzureFunctionMethodMetadata(
       controller.constructor
     );
-    console.log(controllerMetadata, methodMetadata);
     methodMetadata.forEach((metadata: AzureFunctionMethodMetadata) => {
-      console.log(metadata.target.constructor);
       azureFunctions.push({
         ...metadata,
       });

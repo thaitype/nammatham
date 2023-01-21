@@ -13,7 +13,7 @@ export const injectContext = inject(TYPE.Context);
 export function controller() {
 // ...middleware: Array<Middleware>
   return (target: NewableFunction): void => {
-    console.log(`register controller target ${target.name}`);
+    // console.log(`Register controller target ${target.name}`);
     const currentMetadata: ControllerMetadata = {
       // middleware,
       target,
@@ -57,11 +57,9 @@ export function functionName(
 
     for (const binding of flattenBindings) {
       console.log(
-        `${name} register binding ${binding.name} with type ${binding.type}`
+        `[Binding] '${name}' register ${binding.name} with type ${binding.type}`
       );
     }
-
-    // console.log(`Filename is ${__filename}`)
 
     const metadata: AzureFunctionMethodMetadata = {
       key,

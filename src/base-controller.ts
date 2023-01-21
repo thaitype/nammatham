@@ -7,7 +7,6 @@ import { HttpResponse } from './http';
 export class BaseController {
   protected res!: HttpResponse;
   constructor(@injectContext protected readonly context: Context) {
-    console.log(`this.context = ${this.context}`)
     this.res = new HttpResponse(this.context);
   }
 
