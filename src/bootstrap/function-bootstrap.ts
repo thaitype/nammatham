@@ -2,7 +2,7 @@ import { Container } from "inversify";
 import { TYPE } from "../contants";
 import { attachControllers } from "./attach-controllers";
 import { AzureFunction, Context } from "@azure/functions";
-import { BaseController } from "dist/main";
+import { BaseController } from "../base-controller";
 type AzureFunctionParams = Parameters<AzureFunction>;
 
 export interface IFuncBootstrapOption {
