@@ -10,7 +10,8 @@
     "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",
     "start:watch": "nodemon --watch dist --delay 0.3 --exec  'npm start'",
     "start": "func start",
-    "dev": "npx link ../../ && run-s serve:watch"
+    "dev:local": "npx link ../../ && run-s serve:watch",
+    "dev": "run-s serve:watch"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
