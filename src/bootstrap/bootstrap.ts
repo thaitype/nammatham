@@ -95,7 +95,7 @@ export async function bootstrap(option: IBootstrapOption) {
   const extension = option.extension ?? 'js';
   const enableGitignore = option.gitignore ?? true;
   const enableClean = option.clean ?? true;
-  const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container);
+  const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container, option.controllers);
 
   const runtimeWorkingDirectory = extractRuntimeWorkingDirectory(cwd, option.bootstrapPath);
   const bootstrapCode = await fsPromise.readFile(option.bootstrapPath, 'utf8');

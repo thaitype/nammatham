@@ -15,7 +15,7 @@ export function funcBootstrap(
   option: IFuncBootstrapOption
 ) {
   const container = option.container ?? new Container();
-  attachControllers(container);
+  attachControllers(container, [option.classTarget]);
   const [azureFunctionContext, ...azureFunctionArgs] = option.azureFunctionParams;
   
   // Unbind the Fake Context in attachControllers
