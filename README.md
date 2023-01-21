@@ -89,6 +89,8 @@ Please see in [example](examples) directory
 ## TODO
 - [ ] Add Log at boostrap level
 - [X] Inject **Context** in Class Dependency
+- [ ] `@controller()` should accept prefix path, e.g. `@controller('users')`
+- [ ] allow to add Middleware
 
 ## Author
 - Thada Wangthammang, Software Engineer, Thailand

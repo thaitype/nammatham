@@ -20,6 +20,5 @@ export class UserController extends BaseController {
     this.res.json({
       data: `hello get user with ${name}`
     });
-    this.context.log('After response');
   }
 }
