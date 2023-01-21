@@ -1,6 +1,6 @@
 // Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 
-import { FunctionBinding } from "./bindings";
+import type { FunctionBinding } from "./main";
 
 export type HandlerDecorator = (
   target: DecoratorTarget,
@@ -23,10 +23,10 @@ type Prototype<T> = {
   constructor: NewableFunction;
 };
 
-export interface AzureFunctionMethodMetadata extends ControllerMetadata {
+export interface AzureFunctionMethodMetadata<T = null> extends ControllerMetadata {
   key: string;
   name: string;
-  binding: FunctionBinding[];
+  binding: Array<FunctionBinding<T>>;
 }
 
 export interface ControllerMetadata {

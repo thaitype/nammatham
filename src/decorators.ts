@@ -40,13 +40,13 @@ export function controller() {
   };
 }
 
-export function functionName(
+export function functionName<T = null>(
   name: string,
   // ...middleware: Array<Middleware>
-  ...bindings: Array<FunctionBinding | [FunctionBinding, FunctionBinding]>
+  ...bindings: Array<FunctionBinding<T> | [FunctionBinding<T>, FunctionBinding<T>]>
 ): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {
-    const flattenBindings: FunctionBinding[] = [];
+    const flattenBindings: FunctionBinding<T>[] = [];
     for (const binding of bindings) {
       if (Array.isArray(binding)) {
         flattenBindings.push(...binding);
@@ -61,14 +61,14 @@ export function functionName(
       );
     }
 
-    const metadata: AzureFunctionMethodMetadata = {
+    const metadata: AzureFunctionMethodMetadata<T> = {
       key,
       name,
       target,
       binding: flattenBindings,
     };
 
-    let metadataList: Array<AzureFunctionMethodMetadata> = [];
+    let metadataList: Array<AzureFunctionMethodMetadata<T>> = [];
 
     if (
       !Reflect.hasOwnMetadata(METADATA_KEY.azureFunction, target.constructor)
@@ -82,7 +82,7 @@ export function functionName(
       metadataList = Reflect.getOwnMetadata(
         METADATA_KEY.azureFunction,
         target.constructor
-      ) as Array<AzureFunctionMethodMetadata>;
+      ) as Array<AzureFunctionMethodMetadata<T>>;
     }
 
     metadataList.push(metadata);

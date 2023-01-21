@@ -2,7 +2,6 @@ export * from './contants';
 export * from './bootstrap';
 export * from './decorators';
 export * from './bindings';
-export * from './enum';
 export * from './base-controller';
 // Re-export http-status-codes for convenience use.
 // Inspired by NestJS
