@@ -6,9 +6,16 @@ import {
   httpTrigger,
 } from 'nammatham';
 import { HttpRequest } from '@azure/functions';
+import { inject } from 'inversify';
+import { Service } from './services';
+
 
 @controller()
 export class MyHttpController extends BaseController {
+
+  // constructor(@inject(Service) private readonly service: Service){
+  //   super();
+  // }
 
   @functionName("MyHttp", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
   public getName(req: HttpRequest): void {
@@ -17,7 +24,7 @@ export class MyHttpController extends BaseController {
 
     // this.res.send(`hello get user with ${name}`);
     this.res.json({
-      data: `[MyHttp] hello get user with ${name}`,
+      data: `[MyHttp] hello get user with ${name}}`,
     });
   }
   

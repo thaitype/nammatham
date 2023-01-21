@@ -27,10 +27,10 @@ export function attachControllers(container: Container, controllers: NewableFunc
 
     // Fake HttpContext is needed during registration, Ref: https://github.com/inversify/inversify-express-utils
     // Because Context's object will be passing during runtime by Azure Function
-    console.log(controller.name);
-    container
-      .bind<Context>(TYPE.Context)
-      .toConstantValue({} as Context)
+    // console.log(controller.name);
+    // container
+    //   .bind<Context>(TYPE.Context)
+    //   .toConstantValue({} as Context)
       // .whenTargetNamed(controller.name);
       
   }

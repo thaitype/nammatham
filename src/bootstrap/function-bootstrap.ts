@@ -2,6 +2,7 @@ import { Container } from "inversify";
 import { TYPE } from "../contants";
 import { attachControllers } from "./attach-controllers";
 import { AzureFunction, Context } from "@azure/functions";
+import { BaseController } from "dist/main";
 type AzureFunctionParams = Parameters<AzureFunction>;
 
 export interface IFuncBootstrapOption {
@@ -19,15 +20,17 @@ export function funcBootstrap(
   const [azureFunctionContext, ...azureFunctionArgs] = option.azureFunctionParams;
   
   // Unbind the Fake Context in attachControllers
-  container.unbind(TYPE.Context);
-  // Binding Azure Function Context
-  container
-    .bind<Context>(TYPE.Context)
-    .toConstantValue(azureFunctionContext)
+  // container.unbind(TYPE.Context);
+  // // Binding Azure Function Context
+  // container
+  //   .bind<Context>(TYPE.Context)
+  //   .toConstantValue(azureFunctionContext)
 
-  let controllerInstance = container.getNamed(
+  const controllerInstance = container.getNamed<BaseController>(
     TYPE.Controller,
     option.classTarget.name
   );
+  // Set context to in
+  controllerInstance.init(azureFunctionContext);
   (controllerInstance as any)[option.methodName](...azureFunctionArgs);
 }
