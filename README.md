@@ -7,6 +7,7 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`) Azure Fun
 - Provide basic utility for writing Azure Functions
 - Mostly support TypeScript
 - Built-in support HTTP trigger, and also [support all types of Trigger](docs/define-azure-function.md#custom-binding)
+- Build Tool Agnostic, this framework just provide the library. It can work with all TypeScript build tool e.g. tsc, esbuild, etc.
 
 ## Motivation
 
