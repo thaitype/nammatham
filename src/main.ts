@@ -3,3 +3,4 @@ export * from './bootstrap';
 export * from './decorators';
 export * from './bindings';
 export * from './enum';
+export * from './base-controller';

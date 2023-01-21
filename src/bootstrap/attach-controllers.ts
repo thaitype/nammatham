@@ -7,6 +7,7 @@ import {
 } from "./utils";
 import { TYPE } from "../contants";
 import { AzureFunctionMethodMetadata } from "../interfaces";
+import { Context } from "@azure/functions";
 
 const config = {
   forceControllers: true, // throw if no controller assigned
@@ -24,6 +25,12 @@ export function attachControllers(container: Container) {
       .bind(TYPE.Controller)
       .to(constructor as new (...args: Array<never>) => unknown)
       .whenTargetNamed(name);
+
+    // Fake HttpContext is needed during registration, Ref: https://github.com/inversify/inversify-express-utils
+    // Because Context's object will be passing during runtime by Azure Function 
+    container
+      .bind<Context>(TYPE.Context)
+      .toConstantValue({} as Context)
   });
 
   const controllers = getControllersFromContainer(
