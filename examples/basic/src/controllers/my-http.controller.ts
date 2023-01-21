@@ -13,10 +13,6 @@ import { Service } from './services';
 @controller()
 export class MyHttpController extends BaseController {
 
-  // constructor(@inject(Service) private readonly service: Service){
-  //   super();
-  // }
-
   @functionName("MyHttp", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
   public getName(req: HttpRequest): void {
     const name = req.query.name;

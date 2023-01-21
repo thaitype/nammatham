@@ -23,4 +23,3 @@ export class SampleHttpController extends BaseController {
   
 }
 
-
