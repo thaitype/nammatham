@@ -5,5 +5,5 @@ import { MyHttpController } from './controllers/my-http.controller';
 
 bootstrap({
   bootstrapPath: __filename,
-  controllers: [SampleHttpController],
+  controllers: [SampleHttpController, MyHttpController],
 });
