@@ -3,7 +3,7 @@ import {
   controller,
   functionName,
   httpTrigger,
-} from "@mildronize/azure-functions";
+} from "nammatham";
 import { Context, HttpRequest } from "@azure/functions";
 
 @controller()
@@ -12,5 +12,9 @@ export class UserController {
   public getUsers(context: Context, req: HttpRequest): void {
     console.log("UserController: getting users");
     context.log('Context Log');
+    context.res = {
+      status: 200,
+      body: 'test'
+    }
   }
 }

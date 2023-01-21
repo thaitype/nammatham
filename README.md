@@ -1,44 +1,67 @@
-# az-functions
-Azure Function Nodejs frameworks with Dependency Injection
+# Nammatham
+Azure Function Nodejs Lightweight frameworks with Dependency Injection
+
+> This project is in proof of concept stage, any issue feel free to open the issue.
 
 ## Features
 - Support Azure Functions HTTP trigger
 
+## Motivation
 
-## TODO
-- [X] auto add git ignore for endpoints
+.NET is a first-class supported in Azure Function which 
 
-## Dev
+it will autogenerate, 2 files per function
 
-```
-npx tsx examples/crud/bootstrap.ts
-```
+1. function.json
+  ```json
+  {
+    "bindings": [
+      {
+        "authLevel": "anonymous",
+        "type": "httpTrigger",
+        "direction": "in",
+        "name": "req",
+        "methods": [
+          "get"
+        ]
+      },
+      {
+        "type": "http",
+        "direction": "out",
+        "name": "res"
+      }
+    ],
+    "scriptFile": "../dist/src/controllers/user.controller.js"
+  }
+  ```
 
-## Example
-- C# Azure Functions In-Process with REST Example https://markheath.net/post/azure-functions-rest-csharp-bindings, https://github.com/markheath/funcs-todo-csharp/
-- Inversify Express Util: https://github.com/inversify/inversify-express-utils
-- azure-middlewares
+2. index.ts
+  ```ts
+  import 'reflect-metadata';
+  import { AzureFunction, Context } from '@azure/functions';
+  import { funcBootstrap } from 'nammatham';
+  import { UserController } from '../src/controllers/user.controller';
 
-
-demo output
-```ts
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { Container } from "inversify";
-import "reflect-metadata";
-import { funcBootstrap } from "@mildronize/azure-functions";
-import "../../controllers/user.controller";
-import { UserController } from '../../controllers/user.controller';
-
-// set up container
-const httpTrigger: AzureFunction = async function (
+  const GetUsers: AzureFunction = async function (
   context: Context,
   ...args: any[]
-): Promise<void> {
-  context.log("HTTP trigger function processed a request.");
-  const container = new Container();
-  funcBootstrap(container, UserController ,"getUsers", [context, ...args]);
-};
+  ): Promise<void> {
+  funcBootstrap({
+    classTarget: UserController,
+    methodName: 'getUsers',
+    azureFunctionParams: [context, ...args]
+  });
+  };
 
-// httpTrigger(new MockContext() as Context);
-export default httpTrigger;
-```
+  export default GetUsers;
+  ```
+
+## Usage
+Please see in [example](examples) directory
+
+## TODO
+- [ ] Add Log at boostrap level
+- [ ] Inject **Context** in Class Dependency
+
+## Author
+- Thada Wangthammang, Software Engineer, Thailand

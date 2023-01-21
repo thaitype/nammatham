@@ -1,25 +1,42 @@
 {
-  "name": "az-functions",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "nammatham",
+  "version": "0.0.1-pre-alpha.6",
+  "description": "Azure Function Nodejs Lightweight frameworks with Dependency Injection",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup src/main.ts --dts"
+    "prepublishOnly": "npm run build",
+    "build": "tsup src/main.ts --dts",
+    "build:watch": "nodemon --watch src --ext ts --exec 'npm run build'"
   },
-  "keywords": [],
+  "keywords": [
+    "azure-functions",
+    "azure",
+    "framework",
+    "dependency-injection",
+    "inversion-of-control"
+  ],
   "author": "Thada Wangthammang",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mildronize/azure-functions.git"
+  },
   "devDependencies": {
     "@azure/functions": "^3.5.0",
+    "@types/node": "^18.11.18",
     "reflect-metadata": "^0.1.13",
     "tsup": "^6.5.0"
   },
   "dependencies": {
     "handlebars": "^4.7.7",
     "inversify": "^6.0.1",
-    "slash": "^5.0.0",
-    "strip-indent": "^4.0.0",
+    "slash": "^3.0.0",
+    "strip-indent": "^3.0.0",
     "typescript": "^4.9.4"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

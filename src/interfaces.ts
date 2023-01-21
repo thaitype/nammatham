@@ -23,8 +23,6 @@ type Prototype<T> = {
   constructor: NewableFunction;
 };
 
-//
-
 export interface AzureFunctionMethodMetadata extends ControllerMetadata {
   key: string;
   name: string;

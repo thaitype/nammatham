@@ -97,7 +97,7 @@ export async function bootstrap(option: IBootstrapOption) {
     await fsPromise.mkdir(functionPath, { recursive: true });
     const functionBinding: AzureFunctionJsonConfig = {
       bindings: metadata.binding,
-      scriptFile: slash(path.join('..', outDir, `${controllerImportPath}.${extension}`)),
+      scriptFile: slash(path.join('..', outDir, functionPath, 'index.js')),
     };
     await fsPromise.writeFile(
       path.join(functionPath, 'function.json'),

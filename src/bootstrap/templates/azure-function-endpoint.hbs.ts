@@ -11,7 +11,7 @@ export interface IAzFunctionHandlebarsTemplateData {
 export const azFunctionHandlebarsTemplate = stripIndent(`
   import 'reflect-metadata';
   import { AzureFunction, Context } from '@azure/functions';
-  import { funcBootstrap } from '@mildronize/azure-functions';
+  import { funcBootstrap } from 'nammatham';
   import { {{controllerName}} } from '{{controllerRelativePath}}';
 
   const {{functionName}}: AzureFunction = async function (
