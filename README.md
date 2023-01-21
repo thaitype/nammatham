@@ -43,14 +43,14 @@ it will autogenerate, 2 files per function
   import { UserController } from '../src/controllers/user.controller';
 
   const GetUsers: AzureFunction = async function (
-  context: Context,
-  ...args: any[]
+    context: Context,
+    ...args: any[]
   ): Promise<void> {
-  funcBootstrap({
-    classTarget: UserController,
-    methodName: 'getUsers',
-    azureFunctionParams: [context, ...args]
-  });
+    funcBootstrap({
+      classTarget: UserController,
+      methodName: 'getUsers',
+      azureFunctionParams: [context, ...args]
+    });
   };
 
   export default GetUsers;
@@ -59,9 +59,36 @@ it will autogenerate, 2 files per function
 ## Usage
 Please see in [example](examples) directory
 
+1. define `bootstrap.ts`
+2. Write controller, extend with `BaseController` we will auto inject Azure Function's Context
+  ```ts
+  import {
+    AuthorizationLevel,
+    BaseController,
+    controller,
+    functionName,
+    httpTrigger,
+  } from "nammatham";
+  import { HttpRequest } from "@azure/functions";
+
+  @controller()
+  export class UserController extends BaseController {
+
+    @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
+    public getUsers(req: HttpRequest): void {
+      const name = req.query.name;  
+      console.log("UserController: getting users");
+      this.context.log('Context Log');
+
+      this.res.ok(`hello get user with ${name}`);
+      this.context.log('After response');
+    }
+  }
+  ```
+
 ## TODO
 - [ ] Add Log at boostrap level
-- [ ] Inject **Context** in Class Dependency
+- [X] Inject **Context** in Class Dependency
 
 ## Author
 - Thada Wangthammang, Software Engineer, Thailand

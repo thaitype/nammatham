@@ -1,5 +1,5 @@
 import { inject, injectable, decorate } from "inversify";
-import { METADATA_KEY } from "./contants";
+import { METADATA_KEY, TYPE } from "./contants";
 import {
   AzureFunctionMethodMetadata,
   ControllerMetadata,
@@ -7,6 +7,8 @@ import {
   HandlerDecorator,
 } from "./interfaces";
 import { FunctionBinding } from "./bindings";
+
+export const injectContext = inject(TYPE.Context);
 
 export function controller() {
 // ...middleware: Array<Middleware>
