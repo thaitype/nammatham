@@ -88,7 +88,7 @@ Please see in [example](examples) directory
 
 ## TODO
 - [ ] Add Log at boostrap level
-- [ ] Inject **Context** in Class Dependency
+- [X] Inject **Context** in Class Dependency
 
 ## Author
 - Thada Wangthammang, Software Engineer, Thailand
