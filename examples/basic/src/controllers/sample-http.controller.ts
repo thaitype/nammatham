@@ -21,20 +21,6 @@ export class SampleHttpController extends BaseController {
     });
   }
   
-  /**
-   * To support other trigger type,
-   * Using Custom Function Binding instead
-   */
-
-  @functionName<string>('SampleCustomFunctionBinding', {
-    name: 'SampleCustomFunctionBinding',
-    // Note: this type is not available in Azure Functions
-    type: 'custom-type',
-    direction: 'in'
-  })
-  public customFunctionBinding(): void {
-    this.context.log(`Running custom binding funtion`);
-  }
 }
 
 
