@@ -80,8 +80,10 @@ Please see in [example](examples) directory
       console.log("UserController: getting users");
       this.context.log('Context Log');
 
-      this.res.ok(`hello get user with ${name}`);
-      this.context.log('After response');
+      // this.res.send(`hello get user with ${name}`);
+      this.res.json({
+        data: `hello get user with ${name}`
+      });
     }
   }
   ```
