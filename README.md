@@ -110,6 +110,7 @@ it will autogenerate, 2 files per function
 - [ ] `@controller()` should accept prefix path, e.g. `@controller('users')`
 - [ ] allow to add Middleware
 - [ ] Unit Test
+- [ ] functionName must be unique
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)

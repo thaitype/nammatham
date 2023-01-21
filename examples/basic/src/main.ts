@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { bootstrap } from 'nammatham';
-import { UserController } from './controllers/user.controller';
+import { SampleHttpController } from './controllers/sample-http.controller';
 
 bootstrap({
   bootstrapPath: __filename,
-  controllers: [UserController],
+  controllers: [SampleHttpController],
 });
