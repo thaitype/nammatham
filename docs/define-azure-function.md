@@ -62,29 +62,27 @@ the `httpTrigger` function will return simple JSON Binding Object like this:
 
 In `@functionName()` decorator support any JSON Binding Object that you can self-define it.
 
-For example, if you want to use Timer Trigger, you can simply do like this:
+For example, if you want to use `custom-type`, you can simply do like this:
+
+> Note: `custom-type` type is not available in Azure Functions, just show the example of the custom type
 
 ```ts
-import { BaseController, FunctionBinding, controller, functionName } from 'nammatham';
-import { Timer } from '@azure/functions';
-
-const timerTrigger: FunctionBinding = {
-  schedule: '0 */5 * * * *',
-  name: 'CheckDuplicateBucketExternal',
-  type: 'timerTrigger',
-  direction: 'in',
-};
+import { BaseController, controller, functionName } from 'nammatham';
 
 @controller()
-export class UserController extends BaseController {
-
-  @functionName('GetUsersBackground', timerTrigger)
-  public backgroundJob(timer: Timer): void {
-    const timeStamp = new Date().toISOString();
-    if (timer.isPastDue) {
-      this.context.log('Node is running late!');
-    }
-    this.context.log('Node timer trigger function ran!', timeStamp);
+export class SampleHttpController extends BaseController {
+  
+  /**
+   * To support other trigger type,
+   * Using Custom Function Binding instead
+   */
+  @functionName<string>('SampleCustomFunctionBinding', {
+    name: 'SampleCustomFunctionBinding',
+    type: 'custom-type',
+    direction: 'in'
+  })
+  public customFunctionBinding(): void {
+    this.context.log(`Running custom binding funtion`);
   }
 }
 ```
