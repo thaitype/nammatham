@@ -6,20 +6,24 @@ import {
   httpTrigger,
 } from 'nammatham';
 import { HttpRequest } from '@azure/functions';
+import { inject } from 'inversify';
+import { Service } from './services';
+
 
 @controller()
-export class SampleHttpController extends BaseController {
+export class MyHttpController extends BaseController {
 
-  @functionName("SampleHttp", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
+  @functionName("MyHttp", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
   public getName(req: HttpRequest): void {
     const name = req.query.name;
     this.context.log('Context Log');
 
     // this.res.send(`hello get user with ${name}`);
     this.res.json({
-      data: `hello get user with ${name}`,
+      data: `[MyHttp] hello get user with ${name}}`,
     });
   }
   
 }
+
 

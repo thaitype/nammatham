@@ -111,6 +111,8 @@ it will autogenerate, 2 files per function
 - [ ] allow to add Middleware
 - [ ] Unit Test
 - [ ] functionName must be unique
+- [ ] Clean generated function endpoint (already remove controller)
+- [ ] Cannot Resolve Serivce from Bootstrap script
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)

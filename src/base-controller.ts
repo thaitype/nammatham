@@ -5,9 +5,14 @@ import { HttpResponse } from './http';
 
 @injectable()
 export class BaseController {
+
+  protected context!: Context;
+  // @injectContext protected readonly context!: Context;
   protected res!: HttpResponse;
-  constructor(@injectContext protected readonly context: Context) {
-    this.res = new HttpResponse(this.context);
+
+  public init(context: Context){
+    this.context = context;
+    this.res = new HttpResponse(context);
   }
 
 }
