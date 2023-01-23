@@ -3,9 +3,18 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`) is Azure 
 
 [![npm version](https://img.shields.io/npm/v/nammatham)](https://www.npmjs.com/package/nammatham) [![npm download](https://img.shields.io/npm/dt/nammatham)](https://www.npmjs.com/package/nammatham)
 
+## Installation
+You can install nammatham using npm:
+
+```
+npm install nammatham inversify reflect-metadata --save
+```
+
+The `nammatham` type definitions are included in the npm module and require TypeScript 2.0 and above. Please refer to the [InversifyJS](https://github.com/inversify/InversifyJS#-installation) documentation to learn more about the installation process.
+
 ## Features
 - Provide basic utility for writing Azure Functions
-- Mostly support TypeScript
+- Only support TypeScript and [InversifyJS](https://github.com/inversify/Inversify) as the [Most Popular Inversion of Control Container and Dependency Injection Approach](https://npmtrends.com/awilix-vs-bottlejs-vs-inversify-vs-node-dependency-injection-vs-tsyringe-vs-typedi-vs-typescript-ioc) 
 - Built-in support HTTP trigger, and also [support all types of Trigger](docs/define-azure-function.md#custom-binding)
 - Build Tool Agnostic, this framework just provide the library. It can work with all TypeScript build tool e.g. tsc, esbuild, etc.
 
@@ -113,6 +122,9 @@ it will autogenerate, 2 files per function
 - [ ] functionName must be unique
 - [ ] Clean generated function endpoint (already remove controller)
 - [ ] Cannot Resolve Serivce from Bootstrap script
+- [ ] May create other version to support the other Dependency injection containers
+  - [ ] [Microsoft/tsyringe](https://github.com/microsoft/tsyringe)
+  - [ ] [typestack/typedi](https://github.com/typestack/typedi)
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
