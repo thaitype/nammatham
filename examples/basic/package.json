@@ -10,16 +10,16 @@
     "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",
     "start:watch": "nodemon --watch dist --delay 0.3 --exec  'npm start'",
     "start": "func start",
-    "dev:local": "npx link ../../ && run-s serve:watch",
     "dev": "run-s serve:watch"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "latest",
-    "nammatham": "latest",
+    "nammatham": "workspace:*",
     "nodemon": "^2.0.20",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "inversify": "^6.0.1"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",
