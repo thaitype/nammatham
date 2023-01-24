@@ -32,7 +32,8 @@ We heavily get inspired from Azure Functions .NET version which provide clearly 
         2. [function.json](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#functionjson) which is plain JSON, no autocomplete how to config, it requires to open the document to config it.
 - **No Dependecy Injection** - Azure Function Node.js doesn't provide any Dependecy Injection tool, however, in [.NET Azure Function provides built-in Dependency Injection](https://learn.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection)
 
-## Usage
+## Getting Started
+
 Please see in [example](examples) directory
 
 1. define `bootstrap.ts`
@@ -112,6 +113,9 @@ it will autogenerate, 2 files per function
     export default GetUsers;
     ```
 
+## Documentation
+
+Please read the [full documentation in the repo](docs/README.md)
 
 ## TODO
 - [ ] Add Log at boostrap level
