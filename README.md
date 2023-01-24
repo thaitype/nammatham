@@ -122,9 +122,7 @@ it will autogenerate, 2 files per function
 - [ ] functionName must be unique
 - [ ] Clean generated function endpoint (already remove controller)
 - [ ] Cannot Resolve Serivce from Bootstrap script
-- [ ] May create other version to support the other Dependency injection containers
-  - [ ] [Microsoft/tsyringe](https://github.com/microsoft/tsyringe)
-  - [ ] [typestack/typedi](https://github.com/typestack/typedi)
+
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
