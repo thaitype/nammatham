@@ -80,6 +80,8 @@ import { HttpRequest } from "@azure/functions";
 
 const httpTriggerBindings: FunctionBinding[] = [
   {
+    // This will be type error due to enum
+    // Will fix in the issue #23
     authLevel: "anonymous",
     type: "httpTrigger",
     direction: "in",
