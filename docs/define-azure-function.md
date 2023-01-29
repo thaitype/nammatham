@@ -25,7 +25,7 @@ function functionName<T = null>(
 
 Basically, this framework doesn't strict with some trigger, any trigger binding also support in just simply define JSON binding Object.
 
-The example below show how to use Azure Functions with HTTP Trigger, and this framework also provide utilty like `httpTrigger` which is pre-defined JSON Binding Object in `function.json`
+The example below show how to use Azure Functions with HTTP Trigger, This framework also provides a utility function like `httpTrigger` which is pre-defined JSON Binding Object in `function.json` file.
 
 ```ts
 import { AuthorizationLevel, BaseController, controller, functionName, httpTrigger } from "nammatham";
