@@ -10,6 +10,8 @@
     "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",
     "start:watch": "nodemon --watch dist --delay 0.3 --exec  'npm start'",
     "start": "func start",
+    "test": "ava --verbose",
+    "test:watch": "ava --watch",
     "dev": "run-s serve:watch"
   },
   "author": "Thada Wangthammang",
@@ -26,5 +28,13 @@
     "ts-node": "^10.9.1",
     "tsx": "latest",
     "typescript": "latest"
+  },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   }
 }
