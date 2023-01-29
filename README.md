@@ -56,11 +56,30 @@ We heavily get inspired from Azure Functions .NET version which provide clearly 
 
 ## Getting Started
 
-Please see in [example](examples) directory
+Full examples please, go to [examples](examples) directory
 
-1. define `bootstrap.ts`
+### 1. Basic
+
+This is basic to use partially type support, you can follow steps below:
+
+1. define `main.ts` (or any name)
+    ```ts
+    // File: main.ts
+    import 'reflect-metadata';
+    import { bootstrap } from 'nammatham';
+    import { UserController } from './controllers/user.controller';
+
+    bootstrap({
+      // Require passing `__filename` to `bootstrapPath` prop
+      bootstrapPath: __filename,
+      // Add Controller to register function
+      controllers: [UserController],
+    });
+    ```
+   
 2. Write controller, extend with `BaseController` we will auto inject Azure Function's Context
     ```ts
+    // src/user.controller.ts
     import {
       AuthorizationLevel,
       BaseController,
@@ -74,70 +93,64 @@ Please see in [example](examples) directory
     export class UserController extends BaseController {
 
       @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
-      public getUsers(req: HttpRequest): void {
+      public getUsers(_: any, req: HttpRequest): void {
         const name = req.query.name;  
-        this.context.log('Context Log');
-
-        // this.res.send(`hello get user with ${name}`);
-        this.res.json({
-          data: `hello get user with ${name}`
-        });
+        const message = `hello get user with ${name}`;
+        this.context.log(message);
+        this.res.send(message);
       }
     }
     ```
-
-
-## How it work
-
-it will autogenerate, 2 files per function
-
-1. function.json
-    ```json
-    {
-      "bindings": [
-        {
-          "authLevel": "anonymous",
-          "type": "httpTrigger",
-          "direction": "in",
-          "name": "req",
-          "methods": [
-            "get"
-          ]
-        },
-        {
-          "type": "http",
-          "direction": "out",
-          "name": "res"
-        }
-      ],
-      "scriptFile": "../dist/src/controllers/user.controller.js"
-    }
-    ```
-
-2. index.ts
+3. Add Azure Functions files at root
+    - `host.json`
+    - `local.settings.json`
+4. Run `ts-node` to generate all Azure Functions 
     ```ts
-    import 'reflect-metadata';
-    import { AzureFunction, Context } from '@azure/functions';
-    import { funcBootstrap } from 'nammatham';
-    import { UserController } from '../src/controllers/user.controller';
-
-    const GetUsers: AzureFunction = async function (
-      context: Context,
-      ...args: any[]
-    ): Promise<void> {
-      funcBootstrap({
-        classTarget: UserController,
-        methodName: 'getUsers',
-        azureFunctionParams: [context, ...args]
-      });
-    };
-
-    export default GetUsers;
+    ts-node src/main.ts && tsc
     ```
+5. Start Azure Functions
+    ```
+    func start
+    ```
+
+### 2. Handle `function.json` config by yourself
+
+This method will support full support type when bindings config is set, for example below:
+
+you can define your own `function.json` in Typescript object (as you can see the variable `functionConfig`), this will binding type into `ContextBindings` by using type utility `GetContextBindings`
+
+```ts
+import { BaseController, controller, functionName, GetContextBindings, HttpTriggerRequestBinding, HttpTriggerResponseBinding, CustomFunctionBinding } from 'nammatham';
+
+const functionConfig = [
+  {
+    name: 'req',
+    type: 'httpTrigger',
+    direction: 'in',
+  } as HttpTriggerRequestBinding<'req'>,
+  {
+    name: 'res',
+    direction: 'out',
+    type: 'http',
+  } as HttpTriggerResponseBinding<'res'>,
+];
+
+@controller()
+export class HelloTypeController extends BaseController {
+  @functionName('HelloType', ...functionConfig)
+  public getName({ req }: GetContextBindings<typeof functionConfig>): void {
+    const name = req.query.name;
+    // this context will have the correct type of Response
+    this.context.res = {
+      body: `hello HelloType with ${name}`,
+    };
+  }
+}
+```
 
 ## Documentation
 
-Please read the [full documentation in the repo](docs/README.md)
+Please read the [full documentation in the repo](docs)
 
 ## TODO
 - [ ] Add Log at boostrap level

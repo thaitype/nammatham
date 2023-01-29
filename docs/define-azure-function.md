@@ -16,9 +16,7 @@ As you can see in the function defintion:
 ```ts
 function functionName<T = null>(
   name: string,
-  ...bindings: Array<
-    FunctionBinding<T> | [FunctionBinding<T>, FunctionBinding<T>]
-  >
+   ...bindings: Array<BaseFunctionBinding<T, string> | [BaseFunctionBinding<T, string>, BaseFunctionBinding<T, string>]>
 ): HandlerDecorator;
 ```
 
@@ -35,7 +33,7 @@ import { HttpRequest } from "@azure/functions";
 export class UserController extends BaseController {
 
   @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
-  public getUsers(req: HttpRequest): void {
+  public getUsers(_:any, req: HttpRequest): void {
     const name = req.query.name;  
     this.res.send(`hello get user with ${name}`);
   }
@@ -75,33 +73,34 @@ the `httpTrigger` function will return simple JSON Binding Object like this:
 In case your want to define your [function.json](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#functionjson) by yourself, you just simply create array of `FunctionBinding` type and passing into the `@functionName` decorator, using spread operator `...`
 
 ```ts
-import { AuthorizationLevel, BaseController, controller, functionName, httpTrigger, FunctionBinding } from "nammatham";
-import { HttpRequest } from "@azure/functions";
+import { BaseController, controller, functionName, GetContextBindings, HttpTriggerRequestBinding, HttpTriggerResponseBinding, CustomFunctionBinding } from 'nammatham';
 
-const httpTriggerBindings: FunctionBinding[] = [
+const functionConfig = [
   {
     // This will be type error due to enum
     // Will fix in the issue #23
     authLevel: "anonymous",
-    type: "httpTrigger",
-    direction: "in",
-    name: "req",
+    name: 'req',
+    type: 'httpTrigger',
+    direction: 'in',
     methods: ["get"],
-  },
+  } as HttpTriggerRequestBinding<'req'>,
   {
-    type: "http",
-    direction: "out",
-    name: "res",
-  },
+    name: 'res',
+    direction: 'out',
+    type: 'http',
+  } as HttpTriggerResponseBinding<'res'>,
 ];
 
 @controller()
-export class UserController extends BaseController {
-
-  @functionName("GetUsers", ...httpTriggerBindings)
-  public getUsers(req: HttpRequest): void {
-    const name = req.query.name;  
-    this.res.send(`hello get user with ${name}`);
+export class HelloTypeController extends BaseController {
+  @functionName('HelloType', ...functionConfig)
+  public getName({ req }: GetContextBindings<typeof functionConfig>): void {
+    const name = req.query.name;
+    // this context will have the correct type of Response
+    this.context.res = {
+      body: `hello HelloType with ${name}`,
+    };
   }
 }
 ```
@@ -117,22 +116,50 @@ For example, if you want to use `custom-type`, you can simply do like this:
 > Note: `custom-type` type is not available in Azure Functions, just show the example of the custom type
 
 ```ts
-import { BaseController, controller, functionName } from 'nammatham';
+import {
+  BaseController,
+  controller,
+  functionName,
+  GetContextBindings,
+  HttpTriggerRequestBinding,
+  HttpTriggerResponseBinding,
+  CustomFunctionBinding
+} from 'nammatham';
 
-@controller()
-export class SampleHttpController extends BaseController {
-  
-  /**
+const functionConfig = [
+  {
+    name: 'req',
+    type: 'httpTrigger',
+    direction: 'in',
+  } as HttpTriggerRequestBinding<'req'>,
+  {
+    name: 'res',
+    direction: 'out',
+    type: 'http',
+  } as HttpTriggerResponseBinding<'res'>,
+];
+
+ /**
    * To support other trigger type,
    * Using Custom Function Binding instead
    */
-  @functionName<string>('SampleCustomFunctionBinding', {
-    name: 'SampleCustomFunctionBinding',
-    type: 'custom-type',
-    direction: 'in'
-  })
-  public customFunctionBinding(): void {
-    this.context.log(`Running custom binding funtion`);
+const unsupportType : CustomFunctionBinding<'unsupport'> = {
+  name: 'unsupport',
+  type: 'unsupport-type',
+  direction: 'in',
+};
+
+@controller()
+export class WithTypeUtilityController extends BaseController {
+  
+  // `unsupport-type` will make the function disable
+  // This only show how to use `CustomFunctionBinding`
+  @functionName('WithTypeUtility', ...functionConfig, unsupportType)
+  public getName({ req, unsupport }: GetContextBindings<typeof functionConfig>): void {
+    const name = req.query.name;
+    this.context.res = {
+      body: `xx hello WithTypeUtility with ${name}, unsupport value = ${unsupport}`
+    }
   }
 }
 ```
