@@ -14,7 +14,6 @@ const config = {
 };
 
 export function attachControllers(container: Container, controllers: NewableFunction[]) {
-  // const childContainer = container.createChild();
   for (const controller of controllers) {
     const controllerMetadata = getControllerMetadata(controller);
     console.log('controllerMetadata', controllerMetadata);
