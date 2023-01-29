@@ -7,12 +7,14 @@ importers:
       '@azure/functions': ^3.5.0
       '@types/node': ^18.11.18
       nx: ^15.6.1
+      prettier: ^2.8.3
       reflect-metadata: ^0.1.13
       tsup: ^6.5.0
     devDependencies:
       '@azure/functions': 3.5.0
       '@types/node': 18.11.18
       nx: 15.6.1
+      prettier: 2.8.3
       reflect-metadata: 0.1.13
       tsup: 6.5.0
 
@@ -1738,6 +1740,12 @@ packages:
     dependencies:
       lilconfig: 2.0.6
       yaml: 1.10.2
+    dev: true
+
+  /prettier/2.8.3:
+    resolution: {integrity: sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: true
 
   /proxy-from-env/1.1.0:

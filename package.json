@@ -3,7 +3,8 @@
   "version": "0.3.1-alpha.2",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.ts'"
   },
   "keywords": [
     "azure-functions",
@@ -22,6 +23,7 @@
     "@azure/functions": "^3.5.0",
     "@types/node": "^18.11.18",
     "nx": "^15.6.1",
+    "prettier": "^2.8.3",
     "reflect-metadata": "^0.1.13",
     "tsup": "^6.5.0"
   },
