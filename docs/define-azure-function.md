@@ -9,14 +9,17 @@ In order to define Azure Functions, simply do the following steps:
 
 `@functionName` decorator gets 2 paramters:
 1. Function Name
-2. Azure Function Binding, which is accept array of `FunctionBinding` Object or `FunctionBinding` Object. This will be convert to [function.json](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#functionjson) (The configuration file of Azure Function)
+2. Azure Function Binding, which is accept array of `BaseFunctionBinding` Object or `BaseFunctionBinding` Object. This will be convert to [function.json](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#functionjson) (The configuration file of Azure Function)
 
 As you can see in the function defintion:
 
 ```ts
 function functionName<T = null>(
   name: string,
-   ...bindings: Array<BaseFunctionBinding<T, string> | [BaseFunctionBinding<T, string>, BaseFunctionBinding<T, string>]>
+   ...bindings: Array<
+    BaseFunctionBinding<T, string> | 
+    [BaseFunctionBinding<T, string>, BaseFunctionBinding<T, string>]
+    >
 ): HandlerDecorator;
 ```
 
@@ -33,7 +36,7 @@ import { HttpRequest } from "@azure/functions";
 export class UserController extends BaseController {
 
   @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
-  public getUsers(_:any, req: HttpRequest): void {
+  public getUsers(req: HttpRequest): void {
     const name = req.query.name;  
     this.res.send(`hello get user with ${name}`);
   }

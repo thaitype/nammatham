@@ -93,7 +93,7 @@ This is basic to use partially type support, you can follow steps below:
     export class UserController extends BaseController {
 
       @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
-      public getUsers(_: any, req: HttpRequest): void {
+      public getUsers(req: HttpRequest): void {
         const name = req.query.name;  
         const message = `hello get user with ${name}`;
         this.context.log(message);
