@@ -6,5 +6,5 @@ npx nx build nammatham
 npx nx run nammatham:build
 
 # Publish npm with nx
-pnpm --filter nammatham publish --dry-run
+pnpm --filter nammatham publish
 ```
