@@ -10,6 +10,7 @@ importers:
       prettier: ^2.8.3
       reflect-metadata: ^0.1.13
       tsup: ^6.5.0
+      type-fest: ^3.5.3
     devDependencies:
       '@azure/functions': 3.5.0
       '@types/node': 18.11.18
@@ -17,6 +18,7 @@ importers:
       prettier: 2.8.3
       reflect-metadata: 0.1.13
       tsup: 6.5.0
+      type-fest: 3.5.3
 
   examples/basic:
     specifiers:
@@ -2236,6 +2238,11 @@ packages:
       '@esbuild-kit/esm-loader': 2.5.4
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /type-fest/3.5.3:
+    resolution: {integrity: sha512-V2+og4j/rWReWvaFrse3s9g2xvUv/K9Azm/xo6CjIuq7oeGqsoimC7+9/A3tfvNcbQf8RPSVj/HV81fB4DJrjA==}
+    engines: {node: '>=14.16'}
     dev: true
 
   /typed-array-length/1.0.4:

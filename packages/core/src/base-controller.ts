@@ -1,7 +1,5 @@
 import { injectable } from 'inversify';
-import { Context } from '@azure/functions';
-import { injectContext } from './decorators';
-import { HttpResponse } from './http';
+import { HttpResponse, Context } from './http';
 
 @injectable()
 export class BaseController {

@@ -1,4 +1,4 @@
-import { Context } from '@azure/functions';
+import { Context as FunctionContext } from '@azure/functions';
 import { StatusCodes } from 'http-status-codes';
 
 type HttpStatus = StatusCodes | number;
@@ -6,6 +6,20 @@ type HttpStatus = StatusCodes | number;
 export interface ISendOption<T> {
   status: HttpStatus;
   body: T;
+}
+
+type Dictionary = {
+  [key: string]: any;
+};
+
+export interface Context extends FunctionContext {
+  /**
+   * Add prop from the base interface
+   */
+  res?: Dictionary & {
+    status?: HttpStatus;
+    body?: any;
+  };
 }
 
 export class HttpResponse {

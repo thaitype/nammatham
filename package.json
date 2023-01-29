@@ -25,7 +25,8 @@
     "nx": "^15.6.1",
     "prettier": "^2.8.3",
     "reflect-metadata": "^0.1.13",
-    "tsup": "^6.5.0"
+    "tsup": "^6.5.0",
+    "type-fest": "^3.5.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
