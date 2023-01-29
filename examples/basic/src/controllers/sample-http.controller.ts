@@ -4,7 +4,7 @@ import { HttpRequest } from '@azure/functions';
 @controller()
 export class SampleHttpController extends BaseController {
   @functionName('SampleHttp', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
-  public getName(_: any, req: HttpRequest): void {
+  public getName(req: HttpRequest): void {
     const name = req.query.name;
     this.context.log('Context Log');
 

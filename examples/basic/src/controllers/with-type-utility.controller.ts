@@ -36,7 +36,7 @@ export class WithTypeUtilityController extends BaseController {
   public getName({ req, unsupport }: GetContextBindings<typeof functionConfig>): void {
     const name = req.query.name;
     this.context.res = {
-      body: `xx hello WithTypeUtility with ${name}, unsupport value = ${unsupport}`
+      body: `hello WithTypeUtility with ${name}, unsupport value = ${unsupport}`
     }
   }
 }
