@@ -1,10 +1,10 @@
 import { AuthorizationLevel, BaseController, controller, functionName, httpTrigger } from 'nammatham';
-import { HttpRequest } from '@azure/functions';
+import { HttpRequest, ContextBindings } from '@azure/functions';
 
 @controller()
 export class MyHttpController extends BaseController {
   @functionName('MyHttp', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
-  public getName(req: HttpRequest): void {
+  public getName(bindings: ContextBindings, req: HttpRequest): void {
     const name = req.query.name;
     this.context.log('Context Log');
 

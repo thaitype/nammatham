@@ -5,7 +5,7 @@ import { BaseFunctionBinding } from '../base-function-binding';
  *
  * read more: [TimerTrigger Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-javascript#configuration)
  */
-export interface TimerTriggerBinding extends BaseFunctionBinding<'timerTrigger'> {
+export interface TimerTriggerBinding<T> extends BaseFunctionBinding<'timerTrigger', T> {
   type: 'timerTrigger';
   /**
    * A [CRON expression](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-javascript#ncrontab-expressions)

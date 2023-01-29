@@ -4,8 +4,8 @@ export function httpTrigger(
   authLevel: AuthorizationLevel,
   methods: RequestMethod[],
   route?: string
-): [FunctionBinding, FunctionBinding] {
-  const requestBinding: FunctionBinding = {
+): [FunctionBinding<'req'>, FunctionBinding<'res'>] {
+  const requestBinding: FunctionBinding<'req'> = {
     authLevel,
     type: 'httpTrigger',
     direction: 'in',
@@ -15,7 +15,7 @@ export function httpTrigger(
   if (route !== undefined) {
     requestBinding.route = route;
   }
-  const responseBinding: FunctionBinding = {
+  const responseBinding: FunctionBinding<'res'> = {
     type: 'http',
     direction: 'out',
     name: 'res',

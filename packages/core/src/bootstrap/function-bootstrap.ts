@@ -27,5 +27,5 @@ export function funcBootstrap(option: IFuncBootstrapOption) {
   const controllerInstance = container.getNamed<BaseController>(TYPE.Controller, option.classTarget.name);
   // Set context to in
   controllerInstance.init(azureFunctionContext);
-  (controllerInstance as any)[option.methodName](...azureFunctionArgs);
+  (controllerInstance as any)[option.methodName](azureFunctionContext.bindings, ...azureFunctionArgs);
 }

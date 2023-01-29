@@ -1,5 +1,4 @@
-
-export interface BaseFunctionBinding<T> {
+export interface BaseFunctionBinding<T, N> {
   /**
    * Binding Type
    *
@@ -17,5 +16,5 @@ export interface BaseFunctionBinding<T> {
    *
    * Required - the variable name used in function code for the request or request body.
    */
-  name: string;
+  name: N;
 }

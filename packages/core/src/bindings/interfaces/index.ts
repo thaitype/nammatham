@@ -4,3 +4,4 @@ export * from './base-function-binding';
 export * from './function-config';
 export * from './triggers';
 export * from './types';
+export * from './bindings-type';
