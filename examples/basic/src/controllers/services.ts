@@ -1,11 +1,10 @@
-import { injectable } from "inversify";
-
+import { injectable } from 'inversify';
 
 @injectable()
 export class Service {
-    constructor() {}
+  constructor() {}
 
-    public getData() {
-        return `Hey I'm service`;
-    }
+  public getData() {
+    return `Hey I'm service`;
+  }
 }

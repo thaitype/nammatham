@@ -1,4 +1,4 @@
-import ts from "typescript";
+import ts from 'typescript';
 
 type ImportName = string;
 type ModuleSpecifierName = string;
@@ -11,7 +11,7 @@ export class ControllerLocator {
   }
 
   private extractImportClauses(code: string) {
-    const node = ts.createSourceFile("x.ts", code, ts.ScriptTarget.Latest);
+    const node = ts.createSourceFile('x.ts', code, ts.ScriptTarget.Latest);
     const importClauses: ImportClauses = {};
     for (const statement of node.statements) {
       const plainObjectStatement = JSON.parse(JSON.stringify(statement));
@@ -26,7 +26,7 @@ export class ControllerLocator {
   }
 
   public getControllerImportPath(controllerName: string) {
-    if(!this.importClauses.hasOwnProperty(controllerName)){
+    if (!this.importClauses.hasOwnProperty(controllerName)) {
       throw new Error(`No controller '${controllerName}' already imported in bootstrap file `);
     }
     return this.importClauses[controllerName];

@@ -1,5 +1,5 @@
 export const METADATA_KEY = {
-  azureFunction: "nammatham:azureFunction",
+  azureFunction: 'nammatham:azureFunction',
   controller: 'nammatham:controller',
 };
 

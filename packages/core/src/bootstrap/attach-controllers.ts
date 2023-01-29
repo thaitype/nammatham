@@ -30,8 +30,7 @@ export function attachControllers(container: Container, controllers: NewableFunc
     // container
     //   .bind<Context>(TYPE.Context)
     //   .toConstantValue({} as Context)
-      // .whenTargetNamed(controller.name);
-      
+    // .whenTargetNamed(controller.name);
   }
 
   console.log('test heyy');

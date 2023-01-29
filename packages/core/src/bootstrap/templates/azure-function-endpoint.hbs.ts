@@ -1,5 +1,5 @@
-import Handlebars from "handlebars";
-import stripIndent from "strip-indent";
+import Handlebars from 'handlebars';
+import stripIndent from 'strip-indent';
 
 export interface IAzFunctionHandlebarsTemplateData {
   controllerName: string;
@@ -27,6 +27,5 @@ export const azFunctionHandlebarsTemplate = stripIndent(`
 
   export default {{functionName}};
 `);
-
 
 export const azFunctionTemplate = Handlebars.compile<IAzFunctionHandlebarsTemplateData>(azFunctionHandlebarsTemplate);

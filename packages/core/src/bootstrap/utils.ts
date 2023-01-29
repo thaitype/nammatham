@@ -1,20 +1,17 @@
-import { interfaces } from "inversify";
-import { METADATA_KEY, TYPE } from "../contants";
+import { interfaces } from 'inversify';
+import { METADATA_KEY, TYPE } from '../contants';
 import {
   AzureFunctionMethodMetadata,
   Controller,
   ControllerMetadata,
   DecoratorTarget,
   NO_CONTROLLERS_FOUND,
-} from "../interfaces";
+} from '../interfaces';
 
 export function getControllersFromMetadata(): Array<DecoratorTarget> {
   const arrayOfControllerMetadata: Array<ControllerMetadata> =
-    (Reflect.getMetadata(
-      METADATA_KEY.controller,
-      Reflect
-    ) as Array<ControllerMetadata>) || [];
-  return arrayOfControllerMetadata.map((metadata) => metadata.target);
+    (Reflect.getMetadata(METADATA_KEY.controller, Reflect) as Array<ControllerMetadata>) || [];
+  return arrayOfControllerMetadata.map(metadata => metadata.target);
 }
 
 export function getControllersFromContainer(
@@ -31,9 +28,7 @@ export function getControllersFromContainer(
   }
 }
 
-export function getControllerMetadata(
-  constructor: NewableFunction
-): ControllerMetadata {
+export function getControllerMetadata(constructor: NewableFunction): ControllerMetadata {
   const controllerMetadata: ControllerMetadata = Reflect.getOwnMetadata(
     METADATA_KEY.controller,
     constructor
@@ -41,9 +36,7 @@ export function getControllerMetadata(
   return controllerMetadata;
 }
 
-export function getAzureFunctionMethodMetadata(
-  constructor: NewableFunction
-): Array<AzureFunctionMethodMetadata> {
+export function getAzureFunctionMethodMetadata(constructor: NewableFunction): Array<AzureFunctionMethodMetadata> {
   const methodMetadata = Reflect.getOwnMetadata(
     METADATA_KEY.azureFunction,
     constructor

@@ -1,17 +1,12 @@
-import { inject, injectable, decorate } from "inversify";
-import { METADATA_KEY, TYPE } from "./contants";
-import {
-  AzureFunctionMethodMetadata,
-  ControllerMetadata,
-  DecoratorTarget,
-  HandlerDecorator,
-} from "./interfaces";
-import { FunctionBinding } from "./bindings";
+import { inject, injectable, decorate } from 'inversify';
+import { METADATA_KEY, TYPE } from './contants';
+import { AzureFunctionMethodMetadata, ControllerMetadata, DecoratorTarget, HandlerDecorator } from './interfaces';
+import { FunctionBinding } from './bindings';
 
 export const injectContext = inject(TYPE.Context);
 
 export function controller() {
-// ...middleware: Array<Middleware>
+  // ...middleware: Array<Middleware>
   return (target: NewableFunction): void => {
     // console.log(`Register controller target ${target.name}`);
     const currentMetadata: ControllerMetadata = {
@@ -29,10 +24,7 @@ export function controller() {
     // declaring additonal globals. Also, the Reflect is avaiable
     // in both node and web browsers.
     const previousMetadata: Array<ControllerMetadata> =
-      (Reflect.getMetadata(
-        METADATA_KEY.controller,
-        Reflect
-      ) as Array<ControllerMetadata>) || [];
+      (Reflect.getMetadata(METADATA_KEY.controller, Reflect) as Array<ControllerMetadata>) || [];
 
     const newMetadata = [currentMetadata, ...previousMetadata];
 
@@ -56,9 +48,7 @@ export function functionName<T = null>(
     }
 
     for (const binding of flattenBindings) {
-      console.log(
-        `[Binding] '${name}' register ${binding.name} with type ${binding.type}`
-      );
+      console.log(`[Binding] '${name}' register ${binding.name} with type ${binding.type}`);
     }
 
     const metadata: AzureFunctionMethodMetadata<T> = {
@@ -70,19 +60,12 @@ export function functionName<T = null>(
 
     let metadataList: Array<AzureFunctionMethodMetadata<T>> = [];
 
-    if (
-      !Reflect.hasOwnMetadata(METADATA_KEY.azureFunction, target.constructor)
-    ) {
-      Reflect.defineMetadata(
-        METADATA_KEY.azureFunction,
-        metadataList,
-        target.constructor
-      );
+    if (!Reflect.hasOwnMetadata(METADATA_KEY.azureFunction, target.constructor)) {
+      Reflect.defineMetadata(METADATA_KEY.azureFunction, metadataList, target.constructor);
     } else {
-      metadataList = Reflect.getOwnMetadata(
-        METADATA_KEY.azureFunction,
-        target.constructor
-      ) as Array<AzureFunctionMethodMetadata<T>>;
+      metadataList = Reflect.getOwnMetadata(METADATA_KEY.azureFunction, target.constructor) as Array<
+        AzureFunctionMethodMetadata<T>
+      >;
     }
 
     metadataList.push(metadata);

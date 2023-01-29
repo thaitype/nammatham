@@ -1,4 +1,4 @@
-import { BaseFunctionBinding } from "./base-function-binding";
+import { BaseFunctionBinding } from './base-function-binding';
 
 /**
  * Custom Function Binding can assign any type value

@@ -9,7 +9,7 @@ export interface ISendOption<T> {
 }
 
 export class HttpResponse {
-  private statusCode: HttpStatus = StatusCodes.OK; 
+  private statusCode: HttpStatus = StatusCodes.OK;
 
   constructor(protected readonly context: Context) {}
 
@@ -27,7 +27,7 @@ export class HttpResponse {
     };
   }
 
-  public status(status: HttpStatus){
+  public status(status: HttpStatus) {
     this.statusCode = status;
     return this;
   }

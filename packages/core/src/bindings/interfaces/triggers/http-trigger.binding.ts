@@ -7,7 +7,7 @@ export enum AuthorizationLevel {
 
 /**
  * HttpTrigger Binding
- * 
+ *
  * read more: [HttpTrigger Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#configuration)
  */
 export interface HttpTriggerRequestBinding extends BaseFunctionBinding<'httpTrigger'> {
@@ -25,12 +25,12 @@ export interface HttpTriggerRequestBinding extends BaseFunctionBinding<'httpTrig
    */
   authLevel?: AuthorizationLevel;
   /**
-   * An array of the HTTP methods to which the function responds. If not specified, 
+   * An array of the HTTP methods to which the function responds. If not specified,
    * the function responds to all HTTP methods. See [customize the HTTP endpoint](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#customize-the-http-endpoint).
    */
   methods?: RequestMethod[];
   /**
-   * Defines the route template, controlling to which request URLs your function responds. 
+   * Defines the route template, controlling to which request URLs your function responds.
    * The default value if none is provided is `<functionname>`. For more information, see [customize the HTTP endpoint](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#customize-the-http-endpoint).
    */
   route?: string;
@@ -40,4 +40,3 @@ export interface HttpTriggerResponseBinding extends BaseFunctionBinding<'http'> 
   type: 'http';
   direction: 'out';
 }
-
