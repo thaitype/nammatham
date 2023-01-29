@@ -1,8 +1,7 @@
-import { Context, ContextBindings, HttpRequest, HttpResponse } from '@azure/functions';
+import { ContextBindings, HttpRequest, HttpResponse } from '@azure/functions';
 import type { UnionToIntersection } from 'type-fest';
-import { HttpTriggerRequestBinding, HttpTriggerResponseBinding } from './triggers';
-import { DefinedFunctionBinding, FunctionBinding } from './function-binding';
-import { CustomFunctionBinding } from './custom-function-binding';
+import { FunctionBinding } from './function-binding';
+import { AllBindingTypes, Binding } from './types';
 
 // ----- START ---
 // https://catchts.com/tuples
@@ -66,27 +65,6 @@ type UnionToArray<T, A extends unknown[] = []> = IsUnion<T> extends true
   : [T, ...A];
 // https://catchts.com/union-array
 
-// export interface BaseFunctionBinding<T, N> {
-//   type: T;
-//   direction: 'in' | 'out';
-//   name: N;
-// }
-
-// export interface HttpTriggerResponseBinding<T> extends BaseFunctionBinding<'http', T> {
-//   name: T;
-//   type: 'http';
-//   direction: 'out';
-// }
-
-// export interface HttpTriggerRequestBinding<T> extends BaseFunctionBinding<'httpTrigger', T> {
-//   name: T;
-//   type: 'httpTrigger';
-//   direction: 'in';
-//   route?: string;
-// }
-
-// export type DefinedFunctionBinding<T extends unknown> = HttpTriggerRequestBinding<T> | HttpTriggerResponseBinding<T>;
-
 // const bindings = [
 //   {
 //     name: 'req',
@@ -101,17 +79,12 @@ type UnionToArray<T, A extends unknown[] = []> = IsUnion<T> extends true
 //   } as HttpTriggerResponseBinding<'res'>
 // ] as const;
 
-type AllBindings = FunctionBinding<unknown>['type']; // type AllBindings = "http" | "httpTrigger"
-type GetBindingObjectFromType<T extends AllBindings> = T extends 'httpTrigger'
-  ? HttpRequest
-  : T extends 'http'
-  ? HttpResponse
-  : any;
+// type AllBindingTypes = FunctionBinding<unknown>['type']; 
 
-type GetBindingObjectArray<T extends AllBindings[]> = T extends [infer Head, ...infer Tail]
-  ? Head extends AllBindings
-    ? Tail extends AllBindings[]
-      ? [GetBindingObjectFromType<Head>, ...GetBindingObjectArray<Tail>]
+type GetBindingObjectArray<T extends AllBindingTypes[]> = T extends [infer Head, ...infer Tail]
+  ? Head extends AllBindingTypes
+    ? Tail extends AllBindingTypes[]
+      ? [Binding<Head>, ...GetBindingObjectArray<Tail>]
       : []
     : []
   : [];
@@ -134,15 +107,8 @@ export type GetContextBindings<T extends readonly FunctionBinding<unknown>[]> =
       >
     >;
 
-// type A = GetBindingContext<typeof bindings>;
-
 // const myContextBindings: GetBindingContext<typeof bindings> = {
 //   // Mock type
 //   req: {} as HttpRequest,
 //   res: {} as HttpResponse,
 // };
-// // const myContextBindings: MyContextBindings = {
-// //   // Mock type
-// //   req: {} as HttpRequest,
-// //   res: {} as HttpResponse,
-// // };

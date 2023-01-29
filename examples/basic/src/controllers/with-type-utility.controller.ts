@@ -29,10 +29,10 @@ const unsupportType : CustomFunctionBinding<'unsupport'> = {
 
 @controller()
 export class WithTypeUtilityController extends BaseController {
+  
   // `unsupport-type` will make the function disable
   // This only show how to use `CustomFunctionBinding`
   @functionName('WithTypeUtility', ...functionConfig, /** unsupportType **/)
-  //  BindingType<'httpTrigger'> will return `HttpRequest` type
   public getName({ req, unsupport }: GetContextBindings<typeof functionConfig>): void {
     const name = req.query.name;
     this.context.res = {
