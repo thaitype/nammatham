@@ -1,7 +1,7 @@
 import { inject, injectable, decorate } from 'inversify';
 import { METADATA_KEY, TYPE } from './contants';
 import { AzureFunctionMethodMetadata, ControllerMetadata, DecoratorTarget, HandlerDecorator } from './interfaces';
-import { FunctionBinding } from './bindings';
+import { FunctionBinding, BaseFunctionBinding } from './bindings';
 
 export const injectContext = inject(TYPE.Context);
 
@@ -35,10 +35,10 @@ export function controller() {
 export function functionName<T = null>(
   name: string,
   // ...middleware: Array<Middleware>
-  ...bindings: Array<FunctionBinding<T> | [FunctionBinding<T>, FunctionBinding<T>]>
+  ...bindings: Array<BaseFunctionBinding<T, string> | [BaseFunctionBinding<T, string>, BaseFunctionBinding<T, string>]>
 ): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {
-    const flattenBindings: FunctionBinding<T>[] = [];
+    const flattenBindings: BaseFunctionBinding<T, string>[] = [];
     for (const binding of bindings) {
       if (Array.isArray(binding)) {
         flattenBindings.push(...binding);

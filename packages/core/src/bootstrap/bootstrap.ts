@@ -115,7 +115,14 @@ export async function bootstrap(option: IBootstrapOption) {
     }
     await fsPromise.mkdir(functionPath, { recursive: true });
     const functionBinding: AzureFunctionJsonConfig = {
-      bindings: metadata.binding,
+      bindings: metadata.binding.map(binding => {
+        /**
+         * Remove `useHelper` option from function.json
+         * Use internal only
+         **/ 
+        delete binding.useHelper;
+        return binding;
+      }),
       scriptFile: slash(path.join('..', outDir, functionPath, `index.${extension}`)),
     };
     await fsPromise.writeFile(

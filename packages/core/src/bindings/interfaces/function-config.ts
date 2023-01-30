@@ -1,6 +1,6 @@
-import { FunctionBinding } from './function-binding';
+import { BaseFunctionBinding } from './base-function-binding';
 
 export interface AzureFunctionJsonConfig {
-  bindings: FunctionBinding[];
+  bindings: BaseFunctionBinding<unknown, string>[];
   scriptFile?: string;
 }

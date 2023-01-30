@@ -1,7 +1,4 @@
-export type BindingType = 'httpTrigger' | 'http' | 'timerTrigger';
-export type BindingDiection = 'in' | 'out';
-
-export interface BaseFunctionBinding<T> {
+export interface BaseFunctionBinding<T, N> {
   /**
    * Binding Type
    *
@@ -19,5 +16,15 @@ export interface BaseFunctionBinding<T> {
    *
    * Required - the variable name used in function code for the request or request body.
    */
-  name: string;
+  name: N;
+  /**
+   * true if want to ignore the first argument injection with `ContextBindings`,
+   * false if first argument injected with `ContextBindings`
+   * 
+   * this option will be removed before generate `function.json`
+   * 
+   * Added in: Add utility `GetContextBindings` for extracting type from FunctionBinding 
+   * Pull Request #28
+   */
+  useHelper?: boolean;
 }

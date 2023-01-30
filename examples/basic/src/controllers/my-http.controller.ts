@@ -1,7 +1,5 @@
 import { AuthorizationLevel, BaseController, controller, functionName, httpTrigger } from 'nammatham';
 import { HttpRequest } from '@azure/functions';
-import { inject } from 'inversify';
-import { Service } from './services';
 
 @controller()
 export class MyHttpController extends BaseController {

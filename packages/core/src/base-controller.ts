@@ -1,16 +1,14 @@
 import { injectable } from 'inversify';
-import { Context } from '@azure/functions';
-import { injectContext } from './decorators';
-import { HttpResponse } from './http';
+import { HttpResponseContext, Context } from './http';
 
 @injectable()
 export class BaseController {
   protected context!: Context;
   // @injectContext protected readonly context!: Context;
-  protected res!: HttpResponse;
+  protected res!: HttpResponseContext;
 
   public init(context: Context) {
     this.context = context;
-    this.res = new HttpResponse(context);
+    this.res = new HttpResponseContext(context);
   }
 }
