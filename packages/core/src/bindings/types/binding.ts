@@ -1,4 +1,4 @@
-import { FunctionBinding } from './function-binding';
+import { FunctionBinding } from '../interfaces/function-binding';
 import { HttpRequest, HttpResponse, Timer } from '@azure/functions';
 
 export type AllBindingTypes = FunctionBinding<unknown>['type'];
