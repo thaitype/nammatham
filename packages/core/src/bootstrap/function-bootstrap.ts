@@ -41,8 +41,10 @@ export function funcBootstrap(option: IFuncBootstrapOption) {
   // Set context to in
   controllerInstance.init(azureFunctionContext);
   if(useHelper){
+    /** Use Helper Mode **/
     (controllerInstance as any)[option.methodName](...azureFunctionArgs);
   } else {
+    /** Use Manual Mode **/
     (controllerInstance as any)[option.methodName](azureFunctionContext.bindings, ...azureFunctionArgs);
   }
 }
