@@ -166,3 +166,20 @@ export class WithTypeUtilityController extends BaseController {
   }
 }
 ```
+
+Or can use simply object like this:
+
+```ts
+const functionConfig = [
+  {
+    name: 'req',
+    type: 'httpTrigger',
+    direction: 'in',
+  },
+  {
+    name: 'res',
+    direction: 'out',
+    type: 'http',
+  },
+] as const;
+```
