@@ -3,11 +3,9 @@ import {
   getAzureFunctionMethodMetadata,
   getControllerMetadata,
   getControllersFromContainer,
-  getControllersFromMetadata,
 } from './utils';
 import { TYPE } from '../contants';
 import { AzureFunctionMethodMetadata } from '../interfaces';
-import { Context } from '@azure/functions';
 
 const config = {
   forceControllers: true, // throw if no controller assigned
@@ -32,11 +30,7 @@ export function attachControllers(container: Container, controllers: NewableFunc
     //   .toConstantValue({} as Context)
     // .whenTargetNamed(controller.name);
   }
-
-  console.log('test heyy');
-
   const _controllers = getControllersFromContainer(container, config.forceControllers);
-  console.log('test heyy');
 
   const azureFunctions: AzureFunctionMethodMetadata[] = [];
 

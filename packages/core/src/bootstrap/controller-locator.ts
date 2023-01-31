@@ -14,6 +14,7 @@ export class ControllerLocator {
     const node = ts.createSourceFile('x.ts', code, ts.ScriptTarget.Latest);
     const importClauses: ImportClauses = {};
     for (const statement of node.statements) {
+      // TODO: Fix JSON.parse(JSON.stringify(...)) later
       const plainObjectStatement = JSON.parse(JSON.stringify(statement));
       if (plainObjectStatement.importClause === undefined) continue;
       const { importClause, moduleSpecifier } = plainObjectStatement;

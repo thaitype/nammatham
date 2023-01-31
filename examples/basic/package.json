@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "run-s build start",
+    "debug": "tsc && npm run start",
     "build": "ts-node src/main.ts && tsc",
     "serve:watch": "nodemon --watch src --ext ts --exec 'npm run serve'",
     "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",

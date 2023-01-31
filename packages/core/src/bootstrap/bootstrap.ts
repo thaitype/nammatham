@@ -9,8 +9,29 @@ import { attachControllers } from './attach-controllers';
 import { AzureFunctionJsonConfig } from '../bindings';
 import { azFunctionTemplate } from './templates';
 import { ControllerLocator } from './controller-locator';
+import { attachProviders } from './attach-providers';
+import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 
-interface IBootstrapOption {
+/**
+ * Scoped service locators
+ */
+export interface IFunctionModule {
+  /**
+   * Register Controller
+   */
+  controllers: NewableFunction[];
+  /**
+   * Register Providers
+   */
+  providers?: NewableFunction[];
+  /**
+   * Register custom service by inversify
+   */
+  register?: (container: Container) => void;
+}
+
+
+interface IBootstrapOption extends IFunctionModule {
   /**
    * Allow self define container
    */
@@ -29,10 +50,9 @@ interface IBootstrapOption {
    */
   bootstrapPath: string;
   /**
-   * Register Controller, this value is not use to inject DI
-   * TODO: Using register controller to bind the dependencies
+   * Register modules
    */
-  controllers: NewableFunction[];
+  modules?: IFunctionModule[];
   /**
    * Automatic add gitignore for function endpoint, default = true
    */
@@ -95,7 +115,11 @@ export async function bootstrap(option: IBootstrapOption) {
   const extension = option.extension ?? 'js';
   const enableGitignore = option.gitignore ?? true;
   const enableClean = option.clean ?? true;
-  const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(container, option.controllers);
+  const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = attachControllers(
+    container,
+    option.controllers || []
+  );
+  attachProviders(container, option.providers || []);
 
   const runtimeWorkingDirectory = extractRuntimeWorkingDirectory(cwd, option.bootstrapPath);
   const bootstrapCode = await fsPromise.readFile(option.bootstrapPath, 'utf8');
@@ -119,7 +143,7 @@ export async function bootstrap(option: IBootstrapOption) {
         /**
          * Remove `useHelper` option from function.json
          * Use internal only
-         **/ 
+         **/
         delete binding.useHelper;
         return binding;
       }),
@@ -143,3 +167,12 @@ export async function bootstrap(option: IBootstrapOption) {
     if (enableGitignore) await appendGitignore(cwd, functionName);
   }
 }
+
+class FunctionApp {
+  public run(option: IFuncBootstrapOption){
+    return funcBootstrap(option);
+  }
+}
+
+
+
