@@ -57,10 +57,22 @@ export class FunctionAppBuilder {
     return this;
   }
 
+
+  private isUnique<T>(array: Array<T>, name?: string){
+    const set = new Set(array);
+    if(array.length !== set.size){
+      console.error(`The array '${name}' is not unique`);
+      exit(1);
+    }
+  }
   /**
    * Start generate files
    */
   build() {
+
+    this.isUnique(this.functionAppOption.controllers || [], 'controller');
+    this.isUnique(this.functionAppOption.providers || [], 'provider');
+
     const nammathamMode = (process.env.nammatham_env ?? 'runtime').toLowerCase() as 'build'| 'runtime';
     this.functionApp = new FunctionApp(this.functionAppOption);
     /**

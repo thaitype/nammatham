@@ -18,7 +18,3 @@ builder.addProviders(Service);
 builder.build();
 
 export default builder.getApp();
-
-// TODO: Prevent Duplicate Controller in both root module and custom modules;
-
-// TODO: Prevent Service in each module
