@@ -12,9 +12,14 @@ const config = {
 };
 
 export function attachControllers(container: Container, controllers: NewableFunction[]) {
+  console.log(controllers.length)
   for (const controller of controllers) {
     const controllerMetadata = getControllerMetadata(controller);
     console.log('controllerMetadata', controllerMetadata);
+    if(!controllerMetadata){
+      console.warn('controllerMetadata is undefined');
+      continue;
+    }
     const constructor = controllerMetadata.target;
 
     container
@@ -30,6 +35,10 @@ export function attachControllers(container: Container, controllers: NewableFunc
     //   .toConstantValue({} as Context)
     // .whenTargetNamed(controller.name);
   }
+}
+
+
+export function resolveAllAzureFunctions(container: Container){
   const _controllers = getControllersFromContainer(container, config.forceControllers);
 
   const azureFunctions: AzureFunctionMethodMetadata[] = [];

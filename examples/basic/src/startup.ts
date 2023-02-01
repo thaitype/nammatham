@@ -6,21 +6,28 @@ import { WithTypeUtilityController } from './controllers/with-type-utility.contr
 import { Service } from './controllers/services';
 
 const builder = NammathamApp.createBuilder(__filename);
-builder.addModule({
-  controllers: [WithServiceController, SampleHttpController, WithTypeUtilityController],
-  providers: [Service],
-  // register: container => {
-  //   container.bind(Service).toSelf();
-  // }
-});
+builder.addControllers(WithServiceController, SampleHttpController, WithTypeUtilityController);
+builder.addProviders(Service);
+// builder.register(container => {
+//   container.bind(Service).toSelf();
+// });
+
 /**
- * Using env var to enable the build process 
+ * Using env var to enable the build process
  */
 builder.build();
 
-export default builder.createApp();
+export default builder.getApp();
 
+// TODO: Prevent Duplicate Controller in both root module and custom modules;
 
+// TODO: Prevent Service in each module
+
+// TODO: FunctionApp.run (in each function)
+
+/**
+ * TODO: Not Support custom module
+ */
 // builder.addModule({
 //   controllers: [WithServiceController],
 //   providers: [Service],
@@ -29,13 +36,6 @@ export default builder.createApp();
 //   }
 // });
 
-/**
- * funcBoostrap()
- * import app from '';
- *
- * app.run({
-    classTarget: SampleHttpController,
-    methodName: 'getName',
-    azureFunctionParams: [context, ...args]
-  });
- */
+
+
+

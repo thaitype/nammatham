@@ -1,4 +1,5 @@
 import ts from 'typescript';
+import _ from 'lodash';
 
 type ImportName = string;
 type ModuleSpecifierName = string;
@@ -14,8 +15,8 @@ export class ControllerLocator {
     const node = ts.createSourceFile('x.ts', code, ts.ScriptTarget.Latest);
     const importClauses: ImportClauses = {};
     for (const statement of node.statements) {
-      // TODO: Fix JSON.parse(JSON.stringify(...)) later
-      const plainObjectStatement = JSON.parse(JSON.stringify(statement));
+      const plainObjectStatement: any = _.cloneDeep(statement);
+      // console.log(`Controller Locator: `, plainObjectStatement);
       if (plainObjectStatement.importClause === undefined) continue;
       const { importClause, moduleSpecifier } = plainObjectStatement;
       if (!Array.isArray(importClause.namedBindings.elements)) continue;

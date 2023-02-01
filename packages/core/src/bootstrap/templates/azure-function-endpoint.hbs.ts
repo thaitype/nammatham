@@ -6,19 +6,20 @@ export interface IAzFunctionHandlebarsTemplateData {
   controllerRelativePath: string;
   methodName: string;
   functionName: string;
+  startupPath: string;
 }
 
 export const azFunctionHandlebarsTemplate = stripIndent(`
   import 'reflect-metadata';
   import { AzureFunction, Context } from '@azure/functions';
-  import { funcBootstrap } from 'nammatham';
   import { {{controllerName}} } from '{{controllerRelativePath}}';
+  import app from '{{startupPath}}';
 
   const {{functionName}}: AzureFunction = async function (
     context: Context,
     ...args: any[]
   ): Promise<void> {
-    funcBootstrap({
+    app.run({
       classTarget: {{controllerName}},
       methodName: '{{methodName}}',
       azureFunctionParams: [context, ...args]
