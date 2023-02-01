@@ -22,20 +22,3 @@ export default builder.getApp();
 // TODO: Prevent Duplicate Controller in both root module and custom modules;
 
 // TODO: Prevent Service in each module
-
-// TODO: FunctionApp.run (in each function)
-
-/**
- * TODO: Not Support custom module
- */
-// builder.addModule({
-//   controllers: [WithServiceController],
-//   providers: [Service],
-//   register: container => {
-//     container.bind(Service).toSelf();
-//   }
-// });
-
-
-
-

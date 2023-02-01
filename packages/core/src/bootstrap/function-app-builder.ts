@@ -19,8 +19,7 @@ export class FunctionAppBuilder {
       bootstrapPath,
       container: this.container,
       controllers: [],
-      providers: [],
-      modules: []
+      providers: []
     };
   }
 
@@ -55,17 +54,6 @@ export class FunctionAppBuilder {
    */
   public register(register: NonNullable<IFunctionModule['register']>) {
     this.functionAppOption.register = register;
-    return this;
-  }
-
-  /**
-   * Add module 
-   * @param module 
-   * @returns 
-   */
-  public addModule(module: IFunctionModule) {
-    this.functionAppOption.modules?.push(module);
-    // if (module.register) module.register(this.container);
     return this;
   }
 

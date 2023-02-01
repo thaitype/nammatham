@@ -49,10 +49,6 @@ export interface IFunctionAppOption extends IFunctionModule {
    */
   bootstrapPath: string;
   /**
-   * Register modules
-   */
-  modules?: IFunctionModule[];
-  /**
    * Automatic add gitignore for function endpoint, default = true
    */
   gitignore?: boolean;
