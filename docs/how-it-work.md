@@ -38,16 +38,16 @@ it will autogenerate, 2 files per function
     ```ts
     import 'reflect-metadata';
     import { AzureFunction, Context } from '@azure/functions';
-    import { funcBootstrap } from 'nammatham';
     import { UserController } from '../src/controllers/user.controller';
+    import app from '../src/startup';
 
     const GetUsers: AzureFunction = async function (
       context: Context,
       ...args: any[]
     ): Promise<void> {
-      funcBootstrap({
+      app.run({
         classTarget: UserController,
-        methodName: 'getUsers',
+        methodName: 'getName',
         azureFunctionParams: [context, ...args]
       });
     };
