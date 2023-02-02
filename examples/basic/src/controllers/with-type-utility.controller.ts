@@ -5,7 +5,8 @@ import {
   GetContextBindings,
   HttpTriggerRequestBinding,
   HttpTriggerResponseBinding,
-  CustomFunctionBinding
+  CustomFunctionBinding,
+  FunctionBinding
 } from 'nammatham';
 
 const functionConfig = [
@@ -20,6 +21,12 @@ const functionConfig = [
     type: 'http',
   } as HttpTriggerResponseBinding<'res'>,
 ];
+
+const functionConfig3: readonly FunctionBinding<unknown>[] = [{
+  name: 'req',
+  type: 'httpTrigger',
+  direction: 'in',
+}] as const;
 
 const unsupportType : CustomFunctionBinding<'unsupport'> = {
   name: 'unsupport',

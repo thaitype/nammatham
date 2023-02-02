@@ -8,6 +8,10 @@ import { BaseFunctionBinding } from '../base-function-binding';
 export interface TimerTriggerBinding<T> extends BaseFunctionBinding<'timerTrigger', T> {
   type: 'timerTrigger';
   /**
+   * timerTrigger requires direction `in`
+   */
+  direction: 'in';
+  /**
    * A [CRON expression](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-javascript#ncrontab-expressions)
    * or a [TimeSpan](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-javascript#timespan) value. A TimeSpan can be used only for a function app
    * that runs on an App Service Plan. You can put the schedule expression in an app setting

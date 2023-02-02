@@ -62,19 +62,18 @@ Full examples please, go to [examples](examples) directory
 
 This is basic to use partially type support, you can follow steps below:
 
-1. define `main.ts` (or any name)
+1. define `startup.ts` (or any name)
     ```ts
-    // File: main.ts
+    // File: src/startup.ts
     import 'reflect-metadata';
-    import { bootstrap } from 'nammatham';
-    import { UserController } from './controllers/user.controller';
+    import { NammathamApp } from 'nammatham';
+    import { SampleHttpController } from './controllers/sample-http.controller';
 
-    bootstrap({
-      // Require passing `__filename` to `bootstrapPath` prop
-      bootstrapPath: __filename,
-      // Add Controller to register function
-      controllers: [UserController],
-    });
+    const builder = NammathamApp.createBuilder(__filename);
+    builder.addControllers(SampleHttpController);
+    builder.build();
+
+    export default builder.getApp();
     ```
    
 2. Write controller, extend with `BaseController` we will auto inject Azure Function's Context
@@ -106,7 +105,7 @@ This is basic to use partially type support, you can follow steps below:
     - `local.settings.json`
 4. Run `ts-node` to generate all Azure Functions 
     ```ts
-    ts-node src/main.ts && tsc
+    export nammatham_env=build; ts-node src/startup.ts && tsc
     ```
 5. Start Azure Functions
     ```
@@ -144,6 +143,66 @@ export class HelloTypeController extends BaseController {
     this.context.res = {
       body: `hello HelloType with ${name}`,
     };
+  }
+}
+```
+
+### 3. Provider Concept
+
+
+In Nammatham Framework, providers are classes that can be injected as dependencies into other classes. Providers can include services, factories, repositories, and other basic classes in the framework. The injection of providers is handled by Inversify using a class as a Service Identifier. Providers can be added to a Nammatham application using the `addProviders` method on the Nammatham app builder. In a class that needs to use a provider, the provider can be injected into the constructor using the `inject` decorator from Inversify.
+
+```ts
+// src/startup.ts
+import 'reflect-metadata';
+import { NammathamApp } from 'nammatham';
+import { UserService } from './services/user.services';
+import { UserController } from './controllers/user.controller';
+
+const builder = NammathamApp.createBuilder(__filename);
+builder.addControllers(UserController);
+builder.addProviders(UserService);
+builder.build();
+
+export default builder.getApp();
+```
+
+controller
+
+```ts
+import { AuthorizationLevel, BaseController, controller, functionName, httpTrigger } from 'nammatham';
+import { HttpRequest } from '@azure/functions';
+import { UserService } from '../services/user.service';
+import { inject } from 'inversify';
+
+@controller()
+export class UserController extends BaseController {
+
+  constructor(@inject(UserService) private userService: UserService){
+    super();
+  }
+  
+  @functionName('GetUsers', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
+  public getUsers(req: HttpRequest): void {
+    const name = req.query.name;
+    const message = `hello get user with ${name}, service data: ${userService.getData()}`;
+    this.context.log(message);
+    this.res.send(message);
+  }
+}
+```
+
+service:
+
+```ts
+import { injectable } from 'inversify';
+
+@injectable()
+export class Service {
+  constructor() {}
+
+  public getData() {
+    return `Hey I'm service`;
   }
 }
 ```

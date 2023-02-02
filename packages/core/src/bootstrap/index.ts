@@ -1,2 +1,1 @@
-export * from './bootstrap';
-export * from './function-bootstrap';
+export * from './nammatham-app';

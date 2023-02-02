@@ -1,9 +1,19 @@
 # How Nammatham works?
 
-Nammatham is a framework for building Azure Functions using TypeScript. It works by running two steps during the development process:
+Nammatham is a framework for building Azure Functions using TypeScript. It works by running two steps:
 
-1. The `bootstrap` phase generates two files for each function: `index.js` and `function.json`.
-2. The `functionBootstrap` phase is called by `index.js` from the previous step and it loads all dependencies and returns the actual method defined in the controller.
+1. The `bootstrap` phase generates two files for each function: `index.js` and `function.json`, using following command
+    ```ts
+    const builder = NammathamApp.createBuilder(__filename);
+    builder.build();
+    export default builder.getApp(); // Default export for each function, will use in `functionBootstrap` phase
+    ```
+2. The `functionBootstrap` phase is called by `index.js` from the previous step and it loads all dependencies and returns the actual method defined in the controller, using following command
+    ```ts
+    import app from '../src/startup'; // from the `bootstrap` phase
+    // Start exectue the function
+    app.run(/** ... **/);
+    ```
 
 Both phases use the `attachControllers()` function to inject the dependencies defined in the decorator such as `controller` and `functionName` decorator. In production, only the `functionBootstrap` phase is run to execute each function endpoint. This allows for better performance and lower overhead.
 
@@ -38,16 +48,16 @@ it will autogenerate, 2 files per function
     ```ts
     import 'reflect-metadata';
     import { AzureFunction, Context } from '@azure/functions';
-    import { funcBootstrap } from 'nammatham';
     import { UserController } from '../src/controllers/user.controller';
+    import app from '../src/startup';
 
     const GetUsers: AzureFunction = async function (
       context: Context,
       ...args: any[]
     ): Promise<void> {
-      funcBootstrap({
+      app.run({
         classTarget: UserController,
-        methodName: 'getUsers',
+        methodName: 'getName',
         azureFunctionParams: [context, ...args]
       });
     };
@@ -201,4 +211,31 @@ const functionConfig = [
     useHelper: true
   } as TimerTriggerBinding<'timer'>,
 ];
+```
+
+## 4. Resolve dependency in the container at startup time
+
+Resolves dependency in the container at startup time.
+
+when the user call `builder.build()`, it will resolve at startup time in both `bootstrap` and `funcBootstrap` phases
+
+```ts
+/**
+ * Binding at root in both build & runtime mode
+ */
+this.functionApp.bindModuleWithContainer(this.container);
+```
+
+The bindModuleWithContainer will bind all controllers, providers, and custom register with giving container. 
+
+```ts
+public bindModuleWithContainer(container: Container) {
+  const { register } = this.option;
+  /**
+   * Binding root module
+   */
+  attachProviders(container, this.option.providers || []);
+  attachControllers(container, this.option.controllers || []);
+  if(register) register(container);
+}
 ```

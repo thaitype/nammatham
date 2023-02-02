@@ -10,7 +10,7 @@ export class SampleHttpController extends BaseController {
 
     // this.res.send(`hello get user with ${name}`);
     this.res.json({
-      data: `hello get user with ${name}`,
+      data: `hello get user  with ${name}`,
     });
   }
 }

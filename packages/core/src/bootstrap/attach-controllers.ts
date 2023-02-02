@@ -3,20 +3,23 @@ import {
   getAzureFunctionMethodMetadata,
   getControllerMetadata,
   getControllersFromContainer,
-  getControllersFromMetadata,
 } from './utils';
 import { TYPE } from '../contants';
 import { AzureFunctionMethodMetadata } from '../interfaces';
-import { Context } from '@azure/functions';
 
 const config = {
   forceControllers: true, // throw if no controller assigned
 };
 
 export function attachControllers(container: Container, controllers: NewableFunction[]) {
+  console.log(controllers.length)
   for (const controller of controllers) {
     const controllerMetadata = getControllerMetadata(controller);
     console.log('controllerMetadata', controllerMetadata);
+    if(!controllerMetadata){
+      console.warn('controllerMetadata is undefined');
+      continue;
+    }
     const constructor = controllerMetadata.target;
 
     container
@@ -32,11 +35,11 @@ export function attachControllers(container: Container, controllers: NewableFunc
     //   .toConstantValue({} as Context)
     // .whenTargetNamed(controller.name);
   }
+}
 
-  console.log('test heyy');
 
+export function resolveAllAzureFunctions(container: Container){
   const _controllers = getControllersFromContainer(container, config.forceControllers);
-  console.log('test heyy');
 
   const azureFunctions: AzureFunctionMethodMetadata[] = [];
 
