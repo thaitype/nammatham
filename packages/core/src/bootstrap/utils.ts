@@ -14,7 +14,7 @@
 
 import path from 'path';
 
-export function extractRuntimeWorkingDirectory(cwd: string, absolutePath: string) {
+export function extractRelativeWorkingDirectory(cwd: string, absolutePath: string) {
   return path.dirname(absolutePath).replace(cwd, '');
 }
 
