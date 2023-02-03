@@ -1,9 +1,8 @@
 import { Container } from 'inversify';
 import { TYPE } from '../contants';
-import { attachControllers } from './attach-controllers';
-import { AzureFunction, Context } from '@azure/functions';
+import { AzureFunction } from '@azure/functions';
 import { BaseController } from '../base-controller';
-import { getAzureFunctionMethodMetadata } from './utils';
+import { getAzureFunctionMethodMetadata } from './decorator-utils';
 import { isUseHelper } from '../bindings';
 type AzureFunctionParams = Parameters<AzureFunction>;
 

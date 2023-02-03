@@ -5,7 +5,8 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava --verbose",
+    "test:watch": "ava --watch",
     "prepublishOnly": "npm run build",
     "build": "tsup src/main.ts --dts",
     "dev": "nodemon --watch src --ext ts --exec 'npm run build'"

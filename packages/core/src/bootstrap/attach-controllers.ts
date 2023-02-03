@@ -3,7 +3,7 @@ import {
   getAzureFunctionMethodMetadata,
   getControllerMetadata,
   getControllersFromContainer,
-} from './utils';
+} from './decorator-utils';
 import { TYPE } from '../contants';
 import { AzureFunctionMethodMetadata } from '../interfaces';
 
