@@ -227,6 +227,7 @@ Please read the [full documentation in the repo](docs)
 - [inversify-express-utils](https://github.com/inversify/inversify-express-utils) - We use inversify as a Dependency Injection Tool.
 - [Nestjs](https://nestjs.com/)
 - [typestack/routing-controllers](https://github.com/typestack/routing-controllers)
+- [azure-middleware](https://github.com/emanuelcasco/azure-middleware) - Azure Functions Middleware Libray
 
 ## Author
 - Thada Wangthammang, Software Engineer, Thailand

@@ -125,13 +125,7 @@ export class FunctionApp {
   }
 
   public bindModuleWithContainer(container: Container) {
-    const { register } = this.option;
-    /**
-     * Binding root module
-     */
-    attachProviders(container, this.option.providers || []);
     attachControllers(container, this.option.controllers || []);
-    if(register) register(container);
   }
 
   /**
