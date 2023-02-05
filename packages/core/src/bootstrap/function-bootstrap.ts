@@ -9,7 +9,6 @@ type AzureFunctionParams = Parameters<AzureFunction>;
 export interface IFuncBootstrapOption {
   container?: Container;
   classTarget: NewableFunction;
-  methodName: string;
   azureFunctionParams: AzureFunctionParams;
 }
 
@@ -27,5 +26,6 @@ export function funcBootstrap(option: IFuncBootstrapOption) {
   const controllerInstance = container.getNamed<BaseFunction<any>>(TYPE.Controller, option.classTarget.name);
   // Set context to in
   controllerInstance.init(azureFunctionContext);
-  (controllerInstance as any)[option.methodName](azureFunctionContext, ...azureFunctionArgs);
+  // Fix method when execute the function
+  (controllerInstance as any)['execute'](azureFunctionContext, ...azureFunctionArgs);
 }

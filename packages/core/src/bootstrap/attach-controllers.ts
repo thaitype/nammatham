@@ -5,7 +5,8 @@ import {
   getControllersFromContainer,
 } from './utils';
 import { TYPE } from '../contants';
-import { AzureFunctionMethodMetadata } from '../interfaces';
+import { ControllerMetadata } from '../interfaces';
+// import { AzureFunctionMethodMetadata } from '../interfaces';
 
 const config = {
   forceControllers: true, // throw if no controller assigned
@@ -38,20 +39,25 @@ export function attachControllers(container: Container, controllers: NewableFunc
 }
 
 
-export function resolveAllAzureFunctions(container: Container){
-  const _controllers = getControllersFromContainer(container, config.forceControllers);
-
-  const azureFunctions: AzureFunctionMethodMetadata[] = [];
-
-  for (const controller of _controllers) {
-    console.log(controller, controller.constructor, controller.name);
-
-    const methodMetadata = getAzureFunctionMethodMetadata(controller.constructor);
-    methodMetadata.forEach((metadata: AzureFunctionMethodMetadata) => {
-      azureFunctions.push({
-        ...metadata,
-      });
-    });
+export function resolveAllAzureFunctions(container: Container, controllers: NewableFunction[]){
+  const azureFunctions: ControllerMetadata[] = [];
+  for (const controller of controllers) {
+    const controllerMetadata = getControllerMetadata(controller);
+    azureFunctions.push(controllerMetadata);
   }
+  // const _controllers = getControllersFromContainer(container, config.forceControllers);
+
+  // const azureFunctions: AzureFunctionMethodMetadata[] = [];
+
+  // for (const controller of _controllers) {
+  //   console.log(controller, controller.constructor, controller.name);
+
+  //   const methodMetadata = getAzureFunctionMethodMetadata(controller.constructor);
+  //   methodMetadata.forEach((metadata: AzureFunctionMethodMetadata) => {
+  //     azureFunctions.push({
+  //       ...metadata,
+  //     });
+  //   });
+  // }
   return azureFunctions;
 }

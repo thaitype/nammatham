@@ -1,5 +1,4 @@
 import { Container } from 'inversify';
-import { AzureFunctionMethodMetadata } from '../interfaces';
 
 import fsPromise from 'node:fs/promises';
 import fs from 'node:fs';
@@ -11,6 +10,7 @@ import { azFunctionTemplate } from './templates';
 import { ControllerLocator } from './controller-locator';
 import { attachProviders } from './attach-providers';
 import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
+import { ControllerMetadata } from '../interfaces';
 
 /**
  * Scoped service locators
@@ -142,7 +142,9 @@ export class FunctionApp {
     const enableGitignore = option.gitignore ?? true;
     const enableClean = option.clean ?? true;
 
-    const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = resolveAllAzureFunctions(container);
+    const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(container, this.option.controllers || []);
+
+    console.log('hey: ', azureFunctionsMethodMetadata);
 
     const runtimeWorkingDirectory = extractRuntimeWorkingDirectory(cwd, option.bootstrapPath);
     const startupPath = slash(
@@ -152,10 +154,11 @@ export class FunctionApp {
     const controllerLocator = new ControllerLocator(bootstrapCode);
 
     for (const metadata of azureFunctionsMethodMetadata) {
-      const controllerName = (metadata.target.constructor as { name: string }).name;
+      const controllerName = (metadata.target as { name: string }).name;
+      console.log('>> ',controllerName, metadata.name)
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
-      const methodName = metadata.key;
+      // const methodName = metadata.key;
       const functionName = metadata.name;
 
       const functionPath = path.join(output, functionName);
@@ -177,7 +180,7 @@ export class FunctionApp {
       const azFunctionEndpointCode: string = azFunctionTemplate({
         controllerName,
         controllerRelativePath,
-        methodName,
+        // methodName,
         functionName,
         startupPath,
       });

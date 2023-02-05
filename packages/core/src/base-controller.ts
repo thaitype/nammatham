@@ -13,5 +13,5 @@ export abstract class BaseFunction<T extends readonly FunctionBinding<unknown>[]
     this.res = new HttpResponseContext(context);
   }
 
-  public execute(...args: []){}
+  public execute(...args: any[]){}
 }

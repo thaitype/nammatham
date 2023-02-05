@@ -17,14 +17,15 @@ type Prototype<T> = {
   constructor: NewableFunction;
 };
 
-export interface AzureFunctionMethodMetadata<T = null> extends ControllerMetadata {
-  key: string;
+// export interface AzureFunctionMethodMetadata<T = null> extends ControllerMetadata {
+//   name: string;
+//   binding: Array<BaseFunctionBinding<T, string>>;
+// }
+
+export interface ControllerMetadata<T = null> {
+  // middleware: Array<Middleware>;
   name: string;
   binding: Array<BaseFunctionBinding<T, string>>;
-}
-
-export interface ControllerMetadata {
-  // middleware: Array<Middleware>;
   target: DecoratorTarget;
 }
 
