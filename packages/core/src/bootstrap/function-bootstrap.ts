@@ -27,5 +27,5 @@ export function funcBootstrap(option: IFuncBootstrapOption) {
   // Set context to in
   controllerInstance.init(azureFunctionContext);
   // Fix method when execute the function
-  (controllerInstance as any)['execute'](azureFunctionContext, ...azureFunctionArgs);
+  controllerInstance.execute(...azureFunctionArgs);
 }
