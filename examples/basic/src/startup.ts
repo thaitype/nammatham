@@ -1,12 +1,10 @@
 import 'reflect-metadata';
 import { NammathamApp } from 'nammatham';
-import { SampleHttpController } from './controllers/sample-http.controller';
-import { WithServiceController } from './controllers/with-service.controller';
 import { WithTypeUtilityController } from './controllers/with-type-utility.controller';
 import { Service } from './controllers/services';
 
 const builder = NammathamApp.createBuilder(__filename);
-builder.addControllers(WithServiceController, SampleHttpController, WithTypeUtilityController);
+builder.addControllers(WithTypeUtilityController);
 builder.configureServices(services => {
   services.addSingleton(Service);
   // services.addScoped(Service);

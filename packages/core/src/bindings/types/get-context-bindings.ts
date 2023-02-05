@@ -1,12 +1,13 @@
 import { ContextBindings } from '@azure/functions';
 import { FunctionBinding } from '../interfaces/function-binding';
-import { AllBindingTypes, Binding } from './binding';
+import { AllBindingTypes, BindingType } from './binding';
 import { Zipper, UnionToArray } from '../../types';
+
 
 type GetBindingObjectArray<T extends AllBindingTypes[]> = T extends [infer Head, ...infer Tail]
   ? Head extends AllBindingTypes
     ? Tail extends AllBindingTypes[]
-      ? [Binding<Head>, ...GetBindingObjectArray<Tail>]
+      ? [BindingType<Head>, ...GetBindingObjectArray<Tail>]
       : []
     : []
   : [];

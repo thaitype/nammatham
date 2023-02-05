@@ -1,49 +1,18 @@
-import {
-  BaseController,
-  controller,
-  functionName,
-  GetContextBindings,
-  HttpTriggerRequestBinding,
-  HttpTriggerResponseBinding,
-  CustomFunctionBinding,
-  FunctionBinding
-} from 'nammatham';
+import { BaseController, Binding, controller, functionName } from 'nammatham';
 
-const functionConfig = [
-  {
-    name: 'req',
-    type: 'httpTrigger',
-    direction: 'in',
-  } as HttpTriggerRequestBinding<'req'>,
-  {
-    name: 'res',
-    direction: 'out',
-    type: 'http',
-  } as HttpTriggerResponseBinding<'res'>,
+const bindings = [
+  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
+  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
 ];
 
-const functionConfig3: readonly FunctionBinding<unknown>[] = [{
-  name: 'req',
-  type: 'httpTrigger',
-  direction: 'in',
-}] as const;
-
-const unsupportType : CustomFunctionBinding<'unsupport'> = {
-  name: 'unsupport',
-  type: 'unsupport-type',
-  direction: 'in',
-};
-
 @controller()
-export class WithTypeUtilityController extends BaseController {
-  
-  // `unsupport-type` will make the function disable
-  // This only show how to use `CustomFunctionBinding`
-  @functionName('WithTypeUtility', ...functionConfig, /** unsupportType **/)
-  public getName({ req, unsupport }: GetContextBindings<typeof functionConfig>): void {
+export class WithTypeUtilityController extends BaseController<typeof bindings> {
+  @functionName('WithTypeUtility', ...bindings)
+  public execute(): void {
+    const { req, res } = this.context.bindings;
     const name = req.query.name;
     this.context.res = {
-      body: `hello WithTypeUtility with ${name}, unsupport value = ${unsupport}`
-    }
+      body: `hello WithTypeUtility with ${name}`,
+    };
   }
 }

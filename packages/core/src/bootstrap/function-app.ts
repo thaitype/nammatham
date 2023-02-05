@@ -165,14 +165,7 @@ export class FunctionApp {
       }
       await fsPromise.mkdir(functionPath, { recursive: true });
       const functionBinding: AzureFunctionJsonConfig = {
-        bindings: metadata.binding.map(binding => {
-          /**
-           * Remove `useHelper` option from function.json
-           * Use internal only
-           **/
-          delete binding.useHelper;
-          return binding;
-        }),
+        bindings: metadata.binding,
         scriptFile: slash(path.join('..', outDir, functionPath, `index.${extension}`)),
       };
       await fsPromise.writeFile(

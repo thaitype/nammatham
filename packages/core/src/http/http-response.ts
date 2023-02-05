@@ -17,6 +17,7 @@ type Dictionary = {
 //   body?: any;
 // };
 
+// TODO: Duplicate with TypedContext
 export interface Context extends FunctionContext {
   /**
    * Add prop from the base interface
