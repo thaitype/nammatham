@@ -42,7 +42,7 @@ export class FunctionAppBuilder {
    * @param controllers
    * @returns
    */
-  public addControllers(...controllers: NonNullable<IFunctionModule['controllers']>) {
+  public addFunctions(...controllers: NonNullable<IFunctionModule['controllers']>) {
     this.functionAppOption.controllers?.push(...controllers);
     return this;
   }

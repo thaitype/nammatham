@@ -3,7 +3,7 @@ import { HttpResponseContext, Context } from './http';
 import { FunctionBinding, TypedContext } from './bindings';
 
 @injectable()
-export abstract class BaseController<T extends readonly FunctionBinding<unknown>[]> {
+export abstract class BaseFunction<T extends readonly FunctionBinding<unknown>[] = any> {
   protected context!: TypedContext<T>;
   // @injectContext protected readonly context!: Context;
   protected res!: HttpResponseContext;

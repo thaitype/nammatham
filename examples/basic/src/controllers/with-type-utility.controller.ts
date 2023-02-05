@@ -1,4 +1,4 @@
-import { BaseController, Binding, controller, functionName } from 'nammatham';
+import {  BaseFunction, Binding, controller, functionName } from 'nammatham';
 
 const bindings = [
   Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
@@ -6,7 +6,8 @@ const bindings = [
 ];
 
 @controller()
-export class WithTypeUtilityController extends BaseController<typeof bindings> {
+export class WithTypeUtilityFunction extends BaseFunction<typeof bindings> {
+  // TODO: Move functionName to class level 
   @functionName('WithTypeUtility', ...bindings)
   public execute(): void {
     const { req, res } = this.context.bindings;
