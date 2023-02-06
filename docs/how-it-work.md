@@ -239,3 +239,7 @@ public bindModuleWithContainer(container: Container) {
   if(register) register(container);
 }
 ```
+
+## 5. Why a single class per azure function
+
+...
