@@ -11,18 +11,18 @@ type Bindings<T> = Array<
 
 function flattenBindingsArray<T>(bindings: Bindings<T>) {
   const flattenBindings: BaseFunctionBinding<T, string>[] = [];
-    for (const binding of bindings) {
-      if (Array.isArray(binding)) {
-        flattenBindings.push(...binding);
-      } else {
-        flattenBindings.push(binding);
-      }
+  for (const binding of bindings) {
+    if (Array.isArray(binding)) {
+      flattenBindings.push(...binding);
+    } else {
+      flattenBindings.push(binding);
     }
+  }
 
-    for (const binding of flattenBindings) {
-      console.log(`[Binding] '' register ${binding.name} with type ${binding.type}`);
-    }
-    return flattenBindings;
+  for (const binding of flattenBindings) {
+    console.log(`[Binding] '' register ${binding.name} with type ${binding.type}`);
+  }
+  return flattenBindings;
 }
 
 export function functionName<T = null>(
@@ -32,7 +32,7 @@ export function functionName<T = null>(
 ) {
   return (target: NewableFunction): void => {
     decorate(injectable(), target);
-  
+
     console.log(`Register controller target ${target.name}`);
     const currentMetadata: ControllerMetadata<T> = {
       binding: flattenBindingsArray<T>(bindings),

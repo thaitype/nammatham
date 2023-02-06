@@ -3,7 +3,6 @@ import { HttpResponseContext } from './http';
 import { FunctionBinding } from './bindings';
 import { TypedContext } from './interfaces';
 
-
 @injectable()
 export abstract class BaseFunction<T extends readonly FunctionBinding<unknown>[] = any> {
   protected context!: TypedContext<T>;
@@ -15,5 +14,5 @@ export abstract class BaseFunction<T extends readonly FunctionBinding<unknown>[]
     this.res = new HttpResponseContext(context);
   }
 
-  public execute(...args: any[]){}
+  public execute(...args: any[]) {}
 }

@@ -9,7 +9,7 @@ builder.configureServices(services => {
   services.addSingleton(Service);
   // services.addScoped(Service);
   // services.addTransient(Service);
-})
+});
 
 // https://stackoverflow.com/questions/38138100/addtransient-addscoped-and-addsingleton-services-differences
 

@@ -1,12 +1,12 @@
 import { AuthorizationLevel, FunctionBinding, RequestMethod } from '../';
 
 /**
- * Built-in Helper, 
- * 
- * @param authLevel 
- * @param methods 
- * @param route 
- * @returns 
+ * Built-in Helper,
+ *
+ * @param authLevel
+ * @param methods
+ * @param route
+ * @returns
  */
 // TODO: Refactor to using binding object instead
 export function httpTrigger(

@@ -33,5 +33,5 @@ export function timeTrigger<T extends Omit<TimerTriggerBinding<unknown>, 'type' 
 export default {
   httpTriggerRequest,
   httpTriggerResponse,
-  timeTrigger
+  timeTrigger,
 };

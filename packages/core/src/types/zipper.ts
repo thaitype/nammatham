@@ -1,5 +1,5 @@
 /**
- * Ref: 
+ * Ref:
  * - https://catchts.com/tuples
  * - https://stackoverflow.com/questions/67021405/ts-types-convert-arrays-of-keys-and-array-of-values-to-object
  */
