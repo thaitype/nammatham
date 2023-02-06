@@ -1,11 +1,15 @@
 import { Container } from 'inversify';
-import { IFunctionModule, FunctionApp, IFunctionAppOption } from './function-app';
+import { FunctionApp, IFunctionAppOption } from './function-app';
 import { Services } from './services';
 import { exit } from 'process';
 
 interface IFunctionAppBuilderOption {
   container?: Container;
 }
+
+/**
+ * This class will map `Controller` and `FunctionClass`
+ */
 
 export class FunctionAppBuilder {
   protected functionApp!: FunctionApp;
@@ -20,7 +24,6 @@ export class FunctionAppBuilder {
       bootstrapPath,
       container: this.container,
       controllers: [],
-      providers: [],
     };
   }
 
@@ -37,12 +40,12 @@ export class FunctionAppBuilder {
   }
 
   /**
-   * Add Controller into root modules
-   * @param controllers
-   * @returns
+   * Register Function Class
+   * @param functions
+   * @returns `FunctionAppBuilder`
    */
-  public addFunctions(...controllers: NonNullable<IFunctionModule['controllers']>) {
-    this.functionAppOption.controllers?.push(...controllers);
+  public addFunctions(...functions: NewableFunction[]) {
+    this.functionAppOption.controllers?.push(...functions);
     return this;
   }
 
@@ -64,7 +67,7 @@ export class FunctionAppBuilder {
     /**
      * Binding at root in both build & runtime mode
      */
-    this.functionApp.bindModuleWithContainer(this.container);
+    this.functionApp.bindControllersWithContainer(this.container);
     /**
      * Deciding run mode
      */

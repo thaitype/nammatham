@@ -1,5 +1,4 @@
 import { Container } from 'inversify';
-
 import fsPromise from 'node:fs/promises';
 import fs from 'node:fs';
 import slash from 'slash';
@@ -11,25 +10,7 @@ import { ControllerLocator } from './controller-locator';
 import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 import { ControllerMetadata } from '../interfaces';
 
-/**
- * Scoped service locators
- */
-export interface IFunctionModule {
-  /**
-   * Register Controller
-   */
-  controllers?: NewableFunction[];
-  /**
-   * Register Providers
-   */
-  providers?: NewableFunction[];
-  /**
-   * Register custom service by inversify
-   */
-  register?: (container: Container) => void;
-}
-
-export interface IFunctionAppOption extends IFunctionModule {
+export interface IFunctionAppOption {
   /**
    * Allow self define container
    */
@@ -67,6 +48,10 @@ export interface IFunctionAppOption extends IFunctionModule {
   /**
    * TODO: Incremental build file
    */
+  /**
+   * Register Controller
+   */
+  controllers?: NewableFunction[];
 }
 
 async function appendGitignore(cwd: string, functionName: string) {
@@ -110,9 +95,6 @@ export class FunctionApp {
 
   public run(funcBootstrapOption: IFuncBootstrapOption) {
     const { container } = this.option;
-    /**
-     *  TODO: app.run('getName', [context, ...args]);
-     */
     // Reuse container and passing into `funcBootstrap`
     if (!container) {
       throw new Error(`Something went wrong, the container should be set when FunctionApp object is created`);
@@ -123,7 +105,7 @@ export class FunctionApp {
     });
   }
 
-  public bindModuleWithContainer(container: Container) {
+  public bindControllersWithContainer(container: Container) {
     attachControllers(container, this.option.controllers || []);
   }
 
@@ -133,7 +115,6 @@ export class FunctionApp {
    */
   public async build() {
     const option = this.option;
-    const container = option.container ?? new Container();
     const cwd = option.cwd ?? process.cwd();
     const output = option.output ?? '';
     const outDir = option.outDir ?? 'dist';
@@ -154,7 +135,6 @@ export class FunctionApp {
       const controllerName = (metadata.target as { name: string }).name;
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
-      // const methodName = metadata.key;
       const functionName = metadata.name;
 
       const functionPath = path.join(output, functionName);
@@ -176,7 +156,6 @@ export class FunctionApp {
       const azFunctionEndpointCode: string = azFunctionTemplate({
         controllerName,
         controllerRelativePath,
-        // methodName,
         functionName,
         startupPath,
       });
