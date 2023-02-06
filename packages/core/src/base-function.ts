@@ -1,6 +1,8 @@
 import { injectable } from 'inversify';
-import { HttpResponseContext, Context } from './http';
-import { FunctionBinding, TypedContext } from './bindings';
+import { HttpResponseContext } from './http';
+import { FunctionBinding } from './bindings';
+import { TypedContext } from './interfaces';
+
 
 @injectable()
 export abstract class BaseFunction<T extends readonly FunctionBinding<unknown>[] = any> {
