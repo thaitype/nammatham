@@ -14,7 +14,6 @@ export class FunctionAppBuilder {
   protected services: Services;
 
   constructor(bootstrapPath: string, option?: IFunctionAppBuilderOption) {
-    console.log(`init FunctionAppBuilder`);
     this.container = option?.container ?? new Container();
     this.services = new Services(this.container);
     this.functionAppOption = {
@@ -70,9 +69,6 @@ export class FunctionAppBuilder {
      * Deciding run mode
      */
     if (nammathamMode === 'build') {
-      /**
-       * TODO: Resolve container in each endpoint
-       */
       console.log(`FunctionAppBuilder running build mode`);
       this.functionApp.build();
     } else if (nammathamMode === 'runtime') {

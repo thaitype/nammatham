@@ -8,7 +8,6 @@ import { attachControllers, resolveAllAzureFunctions } from './attach-controller
 import { AzureFunctionJsonConfig } from '../bindings';
 import { azFunctionTemplate } from './templates';
 import { ControllerLocator } from './controller-locator';
-import { attachProviders } from './attach-providers';
 import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 import { ControllerMetadata } from '../interfaces';
 
@@ -144,8 +143,6 @@ export class FunctionApp {
 
     const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(container, this.option.controllers || []);
 
-    console.log('hey: ', azureFunctionsMethodMetadata);
-
     const runtimeWorkingDirectory = extractRuntimeWorkingDirectory(cwd, option.bootstrapPath);
     const startupPath = slash(
       path.join('..', runtimeWorkingDirectory, removeExtension(path.basename(option.bootstrapPath)))
@@ -155,7 +152,6 @@ export class FunctionApp {
 
     for (const metadata of azureFunctionsMethodMetadata) {
       const controllerName = (metadata.target as { name: string }).name;
-      console.log('>> ',controllerName, metadata.name)
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
       // const methodName = metadata.key;

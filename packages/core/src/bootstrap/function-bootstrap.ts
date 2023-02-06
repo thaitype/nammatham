@@ -27,14 +27,14 @@ export function funcBootstrap(option: IFuncBootstrapOption) {
   // Set context to in
   controllerInstance.init(azureFunctionContext);
   // TODO: Move Check to check on build processs
-  if(!(controllerInstance.hasOwnProperty('execute'))){
-    console.error( `No execute method overrided in the BaseFunction`)
-    azureFunctionContext.res = {
-      status: 500,
-      body: `No execute method overrided in the BaseFunction`
-    }
-    return;
-  }
+  // if(!(controllerInstance.hasOwnProperty('execute'))){
+  //   console.error( `No execute method overrided in the BaseFunction`)
+  //   azureFunctionContext.res = {
+  //     status: 500,
+  //     body: `No execute method overrided in the BaseFunction`
+  //   }
+  //   return;
+  // }
   // Fix method when execute the function
   controllerInstance.execute(...azureFunctionArgs);
 }
