@@ -141,7 +141,7 @@ export class FunctionApp {
     const enableGitignore = option.gitignore ?? true;
     const enableClean = option.clean ?? true;
 
-    const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(container, this.option.controllers || []);
+    const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(this.option.controllers || []);
 
     const runtimeWorkingDirectory = extractRuntimeWorkingDirectory(cwd, option.bootstrapPath);
     const startupPath = slash(
