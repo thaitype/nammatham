@@ -1,9 +1,7 @@
-import { inject, injectable, decorate } from 'inversify';
+import { injectable, decorate } from 'inversify';
 import { METADATA_KEY, TYPE } from './contants';
-import { ControllerMetadata, DecoratorTarget, HandlerDecorator } from './interfaces';
-import { FunctionBinding, BaseFunctionBinding } from './bindings';
-
-export const injectContext = inject(TYPE.Context);
+import { ControllerMetadata } from './interfaces';
+import { BaseFunctionBinding } from './bindings';
 
 type Bindings<T> = Array<
   BaseFunctionBinding<T, string> | [BaseFunctionBinding<T, string>, BaseFunctionBinding<T, string>]

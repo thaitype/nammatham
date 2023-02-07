@@ -8,10 +8,10 @@ Nammatham is a framework for building Azure Functions using TypeScript. It works
     builder.build();
     export default builder.getApp(); // Default export for each function, will use in `functionBootstrap` phase
     ```
-2. The `functionBootstrap` phase is called by `index.js` from the previous step and it loads all dependencies and returns the actual method defined in the controller, using following command
+2. The `functionBootstrap` phase is called by `index.js` from the previous step, and it loads all dependencies and returns the actual method defined in the controller, using following command
     ```ts
     import app from '../src/startup'; // from the `bootstrap` phase
-    // Start exectue the function
+    // Start execute the function
     app.run(/** ... **/);
     ```
 
@@ -19,7 +19,7 @@ Both phases use the `attachControllers()` function to inject the dependencies de
 
 Note: We use the word "Controller" to same meaning as "Function Class", to avoid confusing in the library development.
 
-## 1. How it work
+## 1. How does it work?
 
 it will autogenerate, 2 files per function
 
@@ -79,7 +79,7 @@ This argument is made up of two parts:
 - the **first argument**, which is injected with a `Context` object.
 - the **rest of the arguments**, which are injected with any other objects specified in the `function.json` file.
 
-For example, if you setup `function.json` like this:
+For example, if you set up `function.json` like this:
 
 ```json
 {
@@ -87,7 +87,7 @@ For example, if you setup `function.json` like this:
     {
       "type": "httpTrigger",
       "direction": "in",
-      "name": "req",
+      "name": "req"
     },
     {
       "type": "http",
@@ -102,15 +102,15 @@ For example, if the `function.json` file includes bindings for `httpTrigger` and
 
 ```ts
 import { AzureFunction, HttpRequest, HttpResponse } from '@azure/functions'; // 3.5.0
-const httpTrigger: AzureFunction = async function(context: Context, req: HttpRequest, res: HttpReponse) {
+const httpTrigger: AzureFunction = async function(context: Context, req: HttpRequest, res: HttpResponse) {
   // do something
 }
 ```
 
-However, we cannot use `HttpReponse` from the function arguments, so we usually provide only `HttpRequest`:
+However, we cannot use `HttpResponse` from the function arguments, so we usually provide only `HttpRequest`:
 
 ```ts
-function(context: Context, req: HttpRequest){}
+const httpTrigger = function(context: Context, req: HttpRequest){}
 ```
 
 Moreover, the Azure Functions Runtime will inject the same object in `Context.bindings`, the key name will match with prop `name` in `function.json`. so, it should be a type:
@@ -122,7 +122,7 @@ type MyContextBindings = {
 }
 ```
 
-And Azure Functions Runtime will inject `req` as `HttpRequest` and `res` as `Record<string,any>` in the `Context` object, we usally use both objects in the `Context`, we usually use `Context.res` for giving response:
+And Azure Functions Runtime will inject `req` as `HttpRequest` and `res` as `Record<string,any>` in the `Context` object, we usually use both objects in the `Context`, we usually use `Context.res` for giving response:
 
 ```ts
 this.context.res = {
@@ -163,8 +163,8 @@ export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding
 Previous design, we're required to create a function bindings config (same as `function.json`) before starting declare the class.
 Because we need a type of function bindings and using `GetContextBindings<T>` type to extract type from it.
 
-This can make inconvenience we using this library in a couple reasons:
-1. When you have to delare more than 1 function in a single class, the function bindings config will be seperated from the method (`@functionName` decorator) you defined the azure functions.
+This can make inconvenience we're using this library in a couple of reasons:
+1. When you have to declare more than 1 function in a single class, the function bindings config will be seperated from the method (`@functionName` decorator) you defined the azure functions.
 2. We need to use `GetContextBindings` type to extract type from `Context.bindings` to passing into the method arguments.
 
 As you can see the example below:
@@ -222,7 +222,7 @@ export class MyController extends BaseController {
 From the above reasons, we want go get type when `Context` object already injected by Azure Functions runtime.
 So, we decided to design 1 azure function per a single class which extends `BaseFunction`, and allow only implement azure function handler inside `execute` method only. 
 
-The  `BaseFunction` will accept type of function bindings config when creating this object, the `Context` object will know the exact type, by using `this.context`. This can make the azure function class below more cleaner and simple.
+The  `BaseFunction` will accept type of function bindings config when creating this object, the `Context` object will know the exact type, by using `this.context`. This can make the azure function class below cleaner and simple.
 
 ```ts
 import { BaseFunction, Binding, functionName } from 'nammatham';
