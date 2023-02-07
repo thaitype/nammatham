@@ -15,7 +15,9 @@ Nammatham is a framework for building Azure Functions using TypeScript. It works
     app.run(/** ... **/);
     ```
 
-Both phases use the `attachControllers()` function to inject the dependencies defined in the decorator such as `controller` and `functionName` decorator. In production, only the `functionBootstrap` phase is run to execute each function endpoint. This allows for better performance and lower overhead.
+Both phases use the `attachControllers()` function to inject the dependencies defined in the decorator `functionName` decorator. In production, only the `functionBootstrap` phase is run to execute each function endpoint. This allows for better performance and lower overhead.
+
+Note: We use the word "Controller" to same meaning as "Function Class", to avoid confusing in the library development.
 
 ## 1. How it work
 
@@ -40,7 +42,7 @@ it will autogenerate, 2 files per function
           "name": "res"
         }
       ],
-      "scriptFile": "../dist/src/controllers/user.controller.js"
+      "scriptFile": "../dist/src/functions/user.function.js"
     }
     ```
 
@@ -48,7 +50,7 @@ it will autogenerate, 2 files per function
     ```ts
     import 'reflect-metadata';
     import { AzureFunction, Context } from '@azure/functions';
-    import { UserController } from '../src/controllers/user.controller';
+    import { UserController } from '../src/functions/user.function';
     import app from '../src/startup';
 
     const GetUsers: AzureFunction = async function (
@@ -57,7 +59,6 @@ it will autogenerate, 2 files per function
     ): Promise<void> {
       app.run({
         classTarget: UserController,
-        methodName: 'getName',
         azureFunctionParams: [context, ...args]
       });
     };
@@ -132,114 +133,137 @@ this.context.res = {
 
 However, the Azure Functions library (@azure/functions@3.5.0) does not provide a specific type for the `Context.bindings` object. This can make it difficult for developers to correctly type the objects being injected into the function. 
 
-Nammatham solves this problem by using a `GetContextBindings` type to extract the type from the `function.json` file, which is defined in a TypeScript object. This allows developers to correctly type the objects being injected, such as in the example provided where the `req` object is correctly typed as an `HttpRequest` object.
+<!-- Nammatham solves this problem by using a `GetContextBindings` type to extract the type from the `function.json` file, which is defined in a TypeScript object. This allows developers to correctly type the objects being injected, such as in the example provided where the `req` object is correctly typed as an `HttpRequest` object. -->
 
 ```ts
-@controller()
-export class HelloTypeController extends BaseController {
-  @functionName('HelloType', ...functionConfig)
-  public getName({ req }: GetContextBindings<typeof functionConfig>): void {
+@functionName('WithTypeUtility', ...functionBinding1)
+export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding1> {
+
+  public execute() {
+    const { req, res } = this.context.bindings;
     const name = req.query.name;
-    this.res.send(`hello get user with ${name}`);
+    this.context.res = {
+      body: `hello WithTypeUtility with ${name}`,
+    };
   }
 }
 ```
 
 ## 3. Method Injection Mode
 
-In the `functionBootstrap` phase, it will check `useHelper` is true or not, for code below:
-
-```ts
-export function funcBootstrap(option: IFuncBootstrapOption) {
-  // ... the other code
-  controllerInstance.init(azureFunctionContext);
-  if(useHelper){
-    /** Use Helper Mode **/
-    (controllerInstance as any)[option.methodName](...azureFunctionArgs);
-  } else {
-    /** Use Manual Mode **/
-    (controllerInstance as any)[option.methodName](azureFunctionContext.bindings, ...azureFunctionArgs);
-  }
-}
-```
-
-### 3.1 Use Helper Mode
-
-When you using `useHelper` to be `true`, because the built-in like `httpTrigger` already has a key `useHelper` to be `true`, for example: 
-
-```ts
-@functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
-public getUsers(req: HttpRequest): void {
-  const name = req.query.name;  
-  this.res.send(`hello get user with ${name}`);
-}
-```
-
-### 3.2 Use Manual Mode
-
-When using `useHelper` to be `false` or unset, for example:
-
-```ts        
-const functionConfig = [
-  {
-    name: 'timer',
-    direction: 'in',
-    type: 'timerTrigger'
-  } as TimerTriggerBinding<'timer'>,
-];
-
-@controller()
-export class TimerController extends BaseController {
-  
-  @functionName('Timer', ...functionConfig)
-  public run({ timer }: GetContextBindings<typeof functionConfig>): void {
-    if(timer.isPastDue){
-      this.context.log('The functions is past due');
-    }
-  }
-}
-```
-
-but if you still first argument injection with `ContextBindings`, just simply add `useHelper` to be true:
-
-```ts
-const functionConfig = [
-  {
-    name: 'timer',
-    direction: 'in',
-    type: 'timerTrigger'
-    useHelper: true
-  } as TimerTriggerBinding<'timer'>,
-];
-```
+...
 
 ## 4. Resolve dependency in the container at startup time
 
-Resolves dependency in the container at startup time.
+....
 
-when the user call `builder.build()`, it will resolve at startup time in both `bootstrap` and `funcBootstrap` phases
-
-```ts
-/**
- * Binding at root in both build & runtime mode
- */
-this.functionApp.bindModuleWithContainer(this.container);
-```
-
-The bindModuleWithContainer will bind all controllers, providers, and custom register with giving container. 
-
-```ts
-public bindModuleWithContainer(container: Container) {
-  const { register } = this.option;
-  /**
-   * Binding root module
-   */
-  attachProviders(container, this.option.providers || []);
-  attachControllers(container, this.option.controllers || []);
-  if(register) register(container);
-}
-```
 
 ## 5. Why a single class per azure function
 
-...
+Previous design, we're required to create a function bindings config (same as `function.json`) before starting declare the class.
+Because we need a type of function bindings and using `GetContextBindings<T>` type to extract type from it.
+
+This can make inconvenience we using this library in a couple reasons:
+1. When you have to delare more than 1 function in a single class, the function bindings config will be seperated from the method (`@functionName` decorator) you defined the azure functions.
+2. We need to use `GetContextBindings` type to extract type from `Context.bindings` to passing into the method arguments.
+
+As you can see the example below:
+
+```ts
+// nammatham@0.4.0-alpha
+import { BaseController, controller, functionName, GetContextBindings, HttpTriggerRequestBinding, HttpTriggerResponseBinding } from 'nammatham';
+
+const functionBinding1 = [
+  {
+    name: 'req',
+    type: 'httpTrigger',
+    direction: 'in',
+  } as HttpTriggerRequestBinding<'req'>,
+  {
+    name: 'res',
+    direction: 'out',
+    type: 'http',
+  } as HttpTriggerResponseBinding<'res'>,
+];
+
+const functionBinding2 = [
+  {
+    name: 'req',
+    type: 'httpTrigger',
+    direction: 'in',
+  } as HttpTriggerRequestBinding<'req'>,
+  {
+    name: 'res',
+    direction: 'out',
+    type: 'http',
+  } as HttpTriggerResponseBinding<'res'>,
+];
+
+@controller()
+export class MyController extends BaseController {
+  @functionName('function1', ...functionBinding1)
+  public function1({ req }: GetContextBindings<typeof functionBinding1>): void {
+    const name = req.query.name;
+    this.context.res = {
+      body: `hello function1 with ${name}`,
+    };
+  }
+
+  @functionName('function2', ...functionBinding2)
+  public function2({ req }: GetContextBindings<typeof functionBinding2>): void {
+    const name = req.query.name;
+    this.context.res = {
+      body: `hello function1 with ${name}`,
+    };
+  }
+}
+```
+
+From the above reasons, we want go get type when `Context` object already injected by Azure Functions runtime.
+So, we decided to design 1 azure function per a single class which extends `BaseFunction`, and allow only implement azure function handler inside `execute` method only. 
+
+The  `BaseFunction` will accept type of function bindings config when creating this object, the `Context` object will know the exact type, by using `this.context`. This can make the azure function class below more cleaner and simple.
+
+```ts
+import { BaseFunction, Binding, functionName } from 'nammatham';
+
+const functionBinding1 = [
+  {
+    name: 'req',
+    type: 'httpTrigger',
+    direction: 'in',
+  } as HttpTriggerRequestBinding<'req'>,
+  {
+    name: 'res',
+    direction: 'out',
+    type: 'http',
+  } as HttpTriggerResponseBinding<'res'>,
+];
+
+
+@functionName('WithTypeUtility', ...functionBinding1)
+export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding1> {
+
+  public execute() {
+    const { req, res } = this.context.bindings;
+    const name = req.query.name;
+    this.context.res = {
+      body: `hello WithTypeUtility with ${name}`,
+    };
+  }
+}
+```
+
+Moreover, we can use `Binding` object which a helper to create a function binding with confident type, as show below:
+
+```ts
+import { Binding } from 'nammatham';
+
+const functionBinding1 = [
+  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
+  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
+];
+```
+
+This is the same value as above declaration, but more fluent api.
+
