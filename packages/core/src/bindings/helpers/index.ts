@@ -1,2 +1,2 @@
 export * from './http-trigger';
-export * from './utility';
+export { default as Binding } from './binding';

@@ -10,14 +10,13 @@ Azure Functions is a platform for building event-driven and serverless applicati
 One example of using Nammatham with Azure Functions is an HTTP trigger function, where the `httpTrigger` function returns a JSON binding object that defines the function's input and output. The `@controller` and `@functionName` decorators are used to define the function and specify its bindings.
 
 ```ts
-import { AuthorizationLevel, BaseController, controller, functionName, httpTrigger } from "nammatham";
+import { AuthorizationLevel, BaseFunction, functionName, httpTrigger } from "nammatham";
 import { HttpRequest } from "@azure/functions";
 
-@controller()
-export class UserController extends BaseController {
+@functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
+export class UserFunction extends BaseFunction {
 
-  @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
-  public getUsers(req: HttpRequest): void {
+  public execute(req: HttpRequest): void {
     const name = req.query.name;  
     this.res.send(`hello get user with ${name}`);
   }
@@ -67,33 +66,25 @@ This is basic to use partially type support, you can follow steps below:
     // File: src/startup.ts
     import 'reflect-metadata';
     import { NammathamApp } from 'nammatham';
-    import { SampleHttpController } from './controllers/sample-http.controller';
+    import { SampleHttpFunction } from './functions/sample-http.function';
 
     const builder = NammathamApp.createBuilder(__filename);
-    builder.addControllers(SampleHttpController);
+    builder.addFunctions(SampleHttpFunction);
     builder.build();
 
     export default builder.getApp();
     ```
    
-2. Write controller, extend with `BaseController` we will auto inject Azure Function's Context
+2. Write a function handler, extend with `BaseFunction` we will auto inject Azure Function's Context
     ```ts
-    // src/user.controller.ts
-    import {
-      AuthorizationLevel,
-      BaseController,
-      controller,
-      functionName,
-      httpTrigger,
-    } from "nammatham";
-    import { HttpRequest } from "@azure/functions";
+    // src/functions/sample-http.function.ts
+    import { AuthorizationLevel, BaseFunction, functionName, httpTrigger } from 'nammatham';
+    import { HttpRequest } from '@azure/functions';
 
-    @controller()
-    export class UserController extends BaseController {
-
-      @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
+    @functionName('SampleHttp', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
+    export class SampleHttpFunction extends BaseFunction {
       public getUsers(req: HttpRequest): void {
-        const name = req.query.name;  
+        const name = req.query.name;
         const message = `hello get user with ${name}`;
         this.context.log(message);
         this.res.send(message);
@@ -119,73 +110,66 @@ This method will support full support type when bindings config is set, for exam
 you can define your own `function.json` in Typescript object (as you can see the variable `functionConfig`), this will binding type into `ContextBindings` by using type utility `GetContextBindings`
 
 ```ts
-import { BaseController, controller, functionName, GetContextBindings, HttpTriggerRequestBinding, HttpTriggerResponseBinding, CustomFunctionBinding } from 'nammatham';
+import { BaseFunction, Binding, functionName } from 'nammatham';
 
-const functionConfig = [
-  {
-    name: 'req',
-    type: 'httpTrigger',
-    direction: 'in',
-  } as HttpTriggerRequestBinding<'req'>,
-  {
-    name: 'res',
-    direction: 'out',
-    type: 'http',
-  } as HttpTriggerResponseBinding<'res'>,
+const bindings = [
+  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
+  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
 ];
 
-@controller()
-export class HelloTypeController extends BaseController {
-  @functionName('HelloType', ...functionConfig)
-  public getName({ req }: GetContextBindings<typeof functionConfig>): void {
+@functionName('GetUser', ...bindings)
+export class UserFunction extends BaseFunction<typeof bindings> {
+
+  public execute() {
+    const { req } = this.context.bindings;
     const name = req.query.name;
-    // this context will have the correct type of Response
     this.context.res = {
-      body: `hello HelloType with ${name}`,
+      body: `hello get user with ${name}}`,
     };
   }
 }
 ```
 
-### 3. Provider Concept
+### 3. Add Services
 
-
-In Nammatham Framework, providers are classes that can be injected as dependencies into other classes. Providers can include services, factories, repositories, and other basic classes in the framework. The injection of providers is handled by Inversify using a class as a Service Identifier. Providers can be added to a Nammatham application using the `addProviders` method on the Nammatham app builder. In a class that needs to use a provider, the provider can be injected into the constructor using the `inject` decorator from Inversify.
 
 ```ts
 // src/startup.ts
 import 'reflect-metadata';
 import { NammathamApp } from 'nammatham';
 import { UserService } from './services/user.services';
-import { UserController } from './controllers/user.controller';
+import { UserFunction } from './functions/user.function';
 
 const builder = NammathamApp.createBuilder(__filename);
-builder.addControllers(UserController);
-builder.addProviders(UserService);
+builder.addControllers(UserFunction);
+builder.configureServices(services => {
+  services.addSingleton(Service);
+  // services.addScoped(Service);
+  // services.addTransient(Service);
+});
 builder.build();
 
 export default builder.getApp();
 ```
 
-controller
+define a function handler
 
 ```ts
-import { AuthorizationLevel, BaseController, controller, functionName, httpTrigger } from 'nammatham';
+import { AuthorizationLevel, BaseFunction, functionName, httpTrigger } from 'nammatham';
 import { HttpRequest } from '@azure/functions';
 import { UserService } from '../services/user.service';
 import { inject } from 'inversify';
 
-@controller()
-export class UserController extends BaseController {
+@functionName('GetUsers', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
+export class UserController extends BaseFunction {
 
   constructor(@inject(UserService) private userService: UserService){
     super();
   }
   
-  @functionName('GetUsers', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
   public getUsers(req: HttpRequest): void {
     const name = req.query.name;
-    const message = `hello get user with ${name}, service data: ${userService.getData()}`;
+    const message = `hello get user with ${name}, service data: ${this.userService.getData()}`;
     this.context.log(message);
     this.res.send(message);
   }
@@ -198,7 +182,7 @@ service:
 import { injectable } from 'inversify';
 
 @injectable()
-export class Service {
+export class UserService {
   constructor() {}
 
   public getData() {
@@ -227,6 +211,7 @@ Please read the [full documentation in the repo](docs)
 - [inversify-express-utils](https://github.com/inversify/inversify-express-utils) - We use inversify as a Dependency Injection Tool.
 - [Nestjs](https://nestjs.com/)
 - [typestack/routing-controllers](https://github.com/typestack/routing-controllers)
+- [azure-middleware](https://github.com/emanuelcasco/azure-middleware) - Azure Functions Middleware Libray
 
 ## Author
 - Thada Wangthammang, Software Engineer, Thailand

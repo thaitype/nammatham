@@ -1,25 +1,29 @@
 import { Container } from 'inversify';
-import { IFunctionModule, FunctionApp, IFunctionAppOption } from './function-app';
+import { FunctionApp, IFunctionAppOption } from './function-app';
+import { Services } from './services';
 import { exit } from 'process';
 
 interface IFunctionAppBuilderOption {
   container?: Container;
 }
 
-export class FunctionAppBuilder {
+/**
+ * This class will map `Controller` and `FunctionClass`
+ */
 
+export class FunctionAppBuilder {
   protected functionApp!: FunctionApp;
   protected functionAppOption: IFunctionAppOption;
   protected container: Container;
+  protected services: Services;
 
   constructor(bootstrapPath: string, option?: IFunctionAppBuilderOption) {
-    console.log(`init FunctionAppBuilder`);
     this.container = option?.container ?? new Container();
+    this.services = new Services(this.container);
     this.functionAppOption = {
       bootstrapPath,
       container: this.container,
       controllers: [],
-      providers: []
     };
   }
 
@@ -27,40 +31,27 @@ export class FunctionAppBuilder {
     this.container = container;
   }
 
-  /**
-   * Add Controller into root modules
-   * @param controllers 
-   * @returns 
-   */
-  public addControllers(...controllers: NonNullable<IFunctionModule['controllers']>) {
-    this.functionAppOption.controllers?.push(...controllers);
-    return this;
+  public getContainer() {
+    return this.container;
+  }
+
+  public configureServices(callback: (services: Services) => void) {
+    callback(this.services);
   }
 
   /**
-   * Add Providers into root modules, this will automatically resolve
-   * @param controllers 
-   * @returns 
+   * Register Function Class
+   * @param functions
+   * @returns `FunctionAppBuilder`
    */
-  public addProviders(...providers: NonNullable<IFunctionModule['providers']>) {
-    this.functionAppOption.providers?.push(...providers);
+  public addFunctions(...functions: NewableFunction[]) {
+    this.functionAppOption.controllers?.push(...functions);
     return this;
   }
 
-  /**
-   * Register custom provider into root modules
-   * @param register 
-   * @returns 
-   */
-  public register(register: NonNullable<IFunctionModule['register']>) {
-    this.functionAppOption.register = register;
-    return this;
-  }
-
-
-  private isUnique<T>(array: Array<T>, name?: string){
+  private isUnique<T>(array: Array<T>, name?: string) {
     const set = new Set(array);
-    if(array.length !== set.size){
+    if (array.length !== set.size) {
       console.error(`The array '${name}' is not unique`);
       exit(1);
     }
@@ -69,27 +60,22 @@ export class FunctionAppBuilder {
    * Start generate files
    */
   build() {
-
     this.isUnique(this.functionAppOption.controllers || [], 'controller');
-    this.isUnique(this.functionAppOption.providers || [], 'provider');
 
-    const nammathamMode = (process.env.nammatham_env ?? 'runtime').toLowerCase() as 'build'| 'runtime';
+    const nammathamMode = (process.env.nammatham_env ?? 'runtime').toLowerCase() as 'build' | 'runtime';
     this.functionApp = new FunctionApp(this.functionAppOption);
     /**
      * Binding at root in both build & runtime mode
      */
-    this.functionApp.bindModuleWithContainer(this.container);
+    this.functionApp.bindControllersWithContainer(this.container);
     /**
      * Deciding run mode
      */
     if (nammathamMode === 'build') {
-      /**
-       * TODO: Resolve container in each endpoint
-       */
-      console.log(`FunctionAppBuilder running build mode`)
+      console.log(`FunctionAppBuilder running build mode`);
       this.functionApp.build();
-    } else if(nammathamMode === 'runtime') {
-      console.log('runtime mode')
+    } else if (nammathamMode === 'runtime') {
+      console.log('runtime mode');
     } else {
       console.error(`Not support '${nammathamMode}' mode, only support 'runtime' and 'build'`);
       exit(1);
