@@ -2,9 +2,10 @@ import 'reflect-metadata';
 import { NammathamApp } from 'nammatham';
 import { WithTypeUtilityFunction } from './controllers/with-type-utility.controller';
 import { Service } from './controllers/services';
+import { CustomTypeFunction } from './controllers/custom-type.function';
 
 const builder = NammathamApp.createBuilder(__filename);
-builder.addFunctions(WithTypeUtilityFunction);
+builder.addFunctions(WithTypeUtilityFunction, CustomTypeFunction);
 builder.configureServices(services => {
   services.addSingleton(Service);
   // services.addScoped(Service);

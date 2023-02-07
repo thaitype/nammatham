@@ -113,55 +113,31 @@ In case you want custom type for binding, please read the section [Custom Bindin
 
 In `@functionName` decorator support any JSON Binding Object that you can self-define it.
 
-For example, if you want to use `custom-type`, you can simply do like this:
+For example, if you want to use `customTrigger`, you can simply do like this:
 
-> Note: `custom-type` type is not available in Azure Functions, just show the example of the custom type
+> Note: `customTrigger` type is not available in Azure Functions, just show the example of the custom type
 
 ```ts
-import {
-  BaseController,
-  controller,
-  functionName,
-  GetContextBindings,
-  HttpTriggerRequestBinding,
-  HttpTriggerResponseBinding,
-  CustomFunctionBinding
-} from 'nammatham';
+import { BaseFunction, Binding, functionName } from 'nammatham';
 
-const functionConfig = [
-  {
-    name: 'req',
-    type: 'httpTrigger',
-    direction: 'in',
-  } as HttpTriggerRequestBinding<'req'>,
-  {
-    name: 'res',
-    direction: 'out',
-    type: 'http',
-  } as HttpTriggerResponseBinding<'res'>,
+const bindings = [
+  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
+  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
 ];
 
- /**
-   * To support other trigger type,
-   * Using Custom Function Binding instead
-   */
-const unsupportType : CustomFunctionBinding<'unsupport'> = {
-  name: 'unsupport',
-  type: 'unsupport-type',
-  direction: 'in',
-};
+// the type should be supported by Azure Functions runtime
+const customBindings = Binding.custom({ name: 'custom' as const, direction: 'in', type: 'customTrigger' });
 
-@controller()
-export class WithTypeUtilityController extends BaseController {
-  
-  // `unsupport-type` will make the function disable
-  // This only show how to use `CustomFunctionBinding`
-  @functionName('WithTypeUtility', ...functionConfig, unsupportType)
-  public getName({ req, unsupport }: GetContextBindings<typeof functionConfig>): void {
+@functionName('CustomType', ...bindings, customBindings)
+export class CustomTypeFunction extends BaseFunction<typeof bindings> {
+  public execute() {
+    const { req, custom } = this.context.bindings;
+    console.log(`Do something with custom binding ${custom}`);
     const name = req.query.name;
+
     this.context.res = {
-      body: `xx hello WithTypeUtility with ${name}, unsupport value = ${unsupport}`
-    }
+      body: `hello get user with ${name}}`,
+    };
   }
 }
 ```
@@ -169,7 +145,7 @@ export class WithTypeUtilityController extends BaseController {
 Or can use simply object like this:
 
 ```ts
-const functionConfig = [
+const bindings = [
   {
     name: 'req',
     type: 'httpTrigger',
@@ -181,4 +157,10 @@ const functionConfig = [
     type: 'http',
   },
 ] as const;
+
+const customBindings = {
+  name: 'custom',
+  direction: 'in',
+  type: 'customTrigger',
+} as const;
 ```

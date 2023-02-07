@@ -1,4 +1,4 @@
-# How Nammatham works?
+# How does Nammatham works?
 
 Nammatham is a framework for building Azure Functions using TypeScript. It works by running two steps:
 
