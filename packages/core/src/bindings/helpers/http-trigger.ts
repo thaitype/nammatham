@@ -1,4 +1,4 @@
-import { AuthorizationLevel, FunctionBinding, RequestMethod } from '../';
+import { AuthorizationLevel, Binding, RequestMethod } from '../';
 
 /**
  * Built-in Helper,
@@ -8,26 +8,15 @@ import { AuthorizationLevel, FunctionBinding, RequestMethod } from '../';
  * @param route
  * @returns
  */
-// TODO: Refactor to using binding object instead
-export function httpTrigger(
-  authLevel: AuthorizationLevel,
-  methods: RequestMethod[],
-  route?: string
-): [FunctionBinding<'req'>, FunctionBinding<'res'>] {
-  const requestBinding: FunctionBinding<'req'> = {
+export function httpTrigger(authLevel: AuthorizationLevel, methods: RequestMethod[], route?: string) {
+  const requestBinding = Binding.httpTriggerRequest({
+    name: 'req' as const,
     authLevel,
-    type: 'httpTrigger',
-    direction: 'in',
-    name: 'req',
     methods,
-  };
+  });
   if (route !== undefined) {
     requestBinding.route = route;
   }
-  const responseBinding: FunctionBinding<'res'> = {
-    type: 'http',
-    direction: 'out',
-    name: 'res',
-  };
+  const responseBinding = Binding.httpTriggerResponse({ name: 'res' as const });
   return [requestBinding, responseBinding];
 }
