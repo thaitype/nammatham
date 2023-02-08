@@ -34,7 +34,7 @@ import { HttpRequest } from "@azure/functions";
 @functionName("GetUsers", httpTrigger(AuthorizationLevel.Anonymous, ["get"]))
 export class UserFunction extends BaseFunction {
 
-  public execute(req: HttpRequest): void {
+  public override execute(req: HttpRequest): void {
     const name = req.query.name;  
     this.res.send(`hello get user with ${name}`);
   }
@@ -84,7 +84,7 @@ const bindings = [
 @functionName('GetUser', ...bindings)
 export class UserFunction extends BaseFunction<typeof bindings> {
 
-  public execute() {
+  public override execute() {
     const { req } = this.context.bindings;
     const name = req.query.name;
     this.context.res = {
@@ -130,7 +130,7 @@ const customBindings = Binding.custom({ name: 'custom' as const, direction: 'in'
 
 @functionName('CustomType', ...bindings, customBindings)
 export class CustomTypeFunction extends BaseFunction<typeof bindings> {
-  public execute() {
+  public override execute() {
     const { req, custom } = this.context.bindings;
     console.log(`Do something with custom binding ${custom}`);
     const name = req.query.name;

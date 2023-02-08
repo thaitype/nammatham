@@ -14,7 +14,7 @@ export class WithTypeUtilityFunction extends BaseFunction<typeof bindings> {
     super();
   }
   
-  public execute() {
+  public override execute() {
     const { req, res } = this.context.bindings;
     const name = req.query.name;
     this.context.res = {

@@ -10,7 +10,7 @@ const customBindings = Binding.custom({ name: 'custom' as const, direction: 'in'
 
 @functionName('CustomType', ...bindings, customBindings)
 export class CustomTypeFunction extends BaseFunction<typeof bindings> {
-  public execute() {
+  public override execute() {
     const { req, custom } = this.context.bindings;
     console.log(`Do something with custom binding ${custom}`);
     const name = req.query.name;

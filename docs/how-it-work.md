@@ -139,7 +139,7 @@ However, the Azure Functions library (@azure/functions@3.5.0) does not provide a
 @functionName('WithTypeUtility', ...functionBinding1)
 export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding1> {
 
-  public execute() {
+  public override execute() {
     const { req, res } = this.context.bindings;
     const name = req.query.name;
     this.context.res = {
@@ -244,7 +244,7 @@ const functionBinding1 = [
 @functionName('WithTypeUtility', ...functionBinding1)
 export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding1> {
 
-  public execute() {
+  public override execute() {
     const { req, res } = this.context.bindings;
     const name = req.query.name;
     this.context.res = {
