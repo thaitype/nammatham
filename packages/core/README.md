@@ -83,7 +83,7 @@ This is basic to use partially type support, you can follow steps below:
 
     @functionName('SampleHttp', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
     export class SampleHttpFunction extends BaseFunction {
-      public getUsers(req: HttpRequest): void {
+      public override execute(req: HttpRequest): void {
         const name = req.query.name;
         const message = `hello get user with ${name}`;
         this.context.log(message);
