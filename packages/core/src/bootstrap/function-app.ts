@@ -1,6 +1,4 @@
 import { Container } from 'inversify';
-import { AzureFunctionMethodMetadata } from '../interfaces';
-
 import fsPromise from 'node:fs/promises';
 import fs from 'node:fs';
 import slash from 'slash';
@@ -9,29 +7,11 @@ import { attachControllers, resolveAllAzureFunctions } from './attach-controller
 import { AzureFunctionJsonConfig } from '../bindings';
 import { azFunctionTemplate } from './templates';
 import { ControllerLocator } from './controller-locator';
-import { attachProviders } from './attach-providers';
 import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 import { extractRelativeWorkingDirectory, removeExtension } from './utils';
+import { ControllerMetadata } from '../interfaces';
 
-/**
- * Scoped service locators
- */
-export interface IFunctionModule {
-  /**
-   * Register Controller
-   */
-  controllers?: NewableFunction[];
-  /**
-   * Register Providers
-   */
-  providers?: NewableFunction[];
-  /**
-   * Register custom service by inversify
-   */
-  register?: (container: Container) => void;
-}
-
-export interface IFunctionAppOption extends IFunctionModule {
+export interface IFunctionAppOption {
   /**
    * Allow self define container
    */
@@ -69,6 +49,10 @@ export interface IFunctionAppOption extends IFunctionModule {
   /**
    * TODO: Incremental build file
    */
+  /**
+   * Register Controller
+   */
+  controllers?: NewableFunction[];
 }
 
 async function appendGitignore(cwd: string, functionName: string) {
@@ -90,9 +74,6 @@ export class FunctionApp {
 
   public run(funcBootstrapOption: IFuncBootstrapOption) {
     const { container } = this.option;
-    /**
-     *  TODO: app.run('getName', [context, ...args]);
-     */
     // Reuse container and passing into `funcBootstrap`
     if (!container) {
       throw new Error(`Something went wrong, the container should be set when FunctionApp object is created`);
@@ -103,14 +84,8 @@ export class FunctionApp {
     });
   }
 
-  public bindModuleWithContainer(container: Container) {
-    const { register } = this.option;
-    /**
-     * Binding root module
-     */
-    attachProviders(container, this.option.providers || []);
+  public bindControllersWithContainer(container: Container) {
     attachControllers(container, this.option.controllers || []);
-    if(register) register(container);
   }
 
   /**
@@ -119,7 +94,6 @@ export class FunctionApp {
    */
   public async build() {
     const option = this.option;
-    const container = option.container ?? new Container();
     const cwd = option.cwd ?? process.cwd();
     const output = option.output ?? '';
     const outDir = option.outDir ?? 'dist';
@@ -127,7 +101,7 @@ export class FunctionApp {
     const enableGitignore = option.gitignore ?? true;
     const enableClean = option.clean ?? true;
 
-    const azureFunctionsMethodMetadata: AzureFunctionMethodMetadata[] = resolveAllAzureFunctions(container);
+    const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(this.option.controllers || []);
 
     const runtimeWorkingDirectory = extractRelativeWorkingDirectory(cwd, option.bootstrapPath);
     const startupPath = slash(
@@ -137,10 +111,9 @@ export class FunctionApp {
     const controllerLocator = new ControllerLocator(bootstrapCode);
 
     for (const metadata of azureFunctionsMethodMetadata) {
-      const controllerName = (metadata.target.constructor as { name: string }).name;
+      const controllerName = (metadata.target as { name: string }).name;
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
-      const methodName = metadata.key;
       const functionName = metadata.name;
 
       const functionPath = path.join(output, functionName);
@@ -150,14 +123,7 @@ export class FunctionApp {
       }
       await fsPromise.mkdir(functionPath, { recursive: true });
       const functionBinding: AzureFunctionJsonConfig = {
-        bindings: metadata.binding.map(binding => {
-          /**
-           * Remove `useHelper` option from function.json
-           * Use internal only
-           **/
-          delete binding.useHelper;
-          return binding;
-        }),
+        bindings: metadata.binding,
         scriptFile: slash(path.join('..', outDir, functionPath, `index.${extension}`)),
       };
       await fsPromise.writeFile(
@@ -169,7 +135,6 @@ export class FunctionApp {
       const azFunctionEndpointCode: string = azFunctionTemplate({
         controllerName,
         controllerRelativePath,
-        methodName,
         functionName,
         startupPath,
       });

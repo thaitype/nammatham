@@ -1,48 +1,31 @@
 import { Container } from 'inversify';
 import { TYPE } from '../contants';
 import { AzureFunction } from '@azure/functions';
-import { BaseController } from '../base-controller';
-import { getAzureFunctionMethodMetadata } from './decorator-utils';
-import { isUseHelper } from '../bindings';
+import { BaseFunction } from '../base-function';
 type AzureFunctionParams = Parameters<AzureFunction>;
 
 export interface IFuncBootstrapOption {
   container?: Container;
   classTarget: NewableFunction;
-  methodName: string;
   azureFunctionParams: AzureFunctionParams;
-}
-
-function findBindingMethod(classTarget: NewableFunction, methodName: string) {
-  const azureFunctionsMethodMetadata = getAzureFunctionMethodMetadata(classTarget);
-  const found = azureFunctionsMethodMetadata.filter(method => method.key === methodName);
-  if(found.length > 0) {
-    return found[0].binding;
-  }
-  throw new Error(`Cannot find ${methodName} in ${classTarget.name}`);
 }
 
 export function funcBootstrap(option: IFuncBootstrapOption) {
   const container = option.container ?? new Container();
   const [azureFunctionContext, ...azureFunctionArgs] = option.azureFunctionParams;
 
-  // Unbind the Fake Context in attachControllers
-  // container.unbind(TYPE.Context);
-  // // Binding Azure Function Context
-  // container
-  //   .bind<Context>(TYPE.Context)
-  //   .toConstantValue(azureFunctionContext)
-
-  const useHelper = isUseHelper(findBindingMethod(option.classTarget, option.methodName));
-
-  const controllerInstance = container.getNamed<BaseController>(TYPE.Controller, option.classTarget.name);
+  const controllerInstance = container.getNamed<BaseFunction<any>>(TYPE.Controller, option.classTarget.name);
   // Set context to in
   controllerInstance.init(azureFunctionContext);
-  if(useHelper){
-    /** Use Helper Mode **/
-    (controllerInstance as any)[option.methodName](...azureFunctionArgs);
-  } else {
-    /** Use Manual Mode **/
-    (controllerInstance as any)[option.methodName](azureFunctionContext.bindings, ...azureFunctionArgs);
-  }
+  // TODO: Move Check to check on build processs
+  // if(!(controllerInstance.hasOwnProperty('execute'))){
+  //   console.error( `No execute method overrided in the BaseFunction`)
+  //   azureFunctionContext.res = {
+  //     status: 500,
+  //     body: `No execute method overrided in the BaseFunction`
+  //   }
+  //   return;
+  // }
+  // Fix method when execute the function
+  controllerInstance.execute(...azureFunctionArgs);
 }

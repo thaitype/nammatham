@@ -1,6 +1,19 @@
 // Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 
-import type { BaseFunctionBinding } from './main';
+import { Context, HttpResponse } from '@azure/functions';
+import { GetContextBindings, FunctionBinding, BaseFunctionBinding } from './bindings';
+
+export interface TypedContext<T extends readonly FunctionBinding<unknown>[]> extends Context {
+  /**
+   * Add prop from the base interface
+   */
+  res?: HttpResponse;
+
+  /**
+   * Provide more specific type from FunctionBinding
+   */
+  bindings: GetContextBindings<T>;
+}
 
 export type HandlerDecorator = (target: DecoratorTarget, key: string, value: unknown) => void;
 
@@ -17,14 +30,10 @@ type Prototype<T> = {
   constructor: NewableFunction;
 };
 
-export interface AzureFunctionMethodMetadata<T = null> extends ControllerMetadata {
-  key: string;
+export interface ControllerMetadata<T = null> {
+  // middleware: Array<Middleware>;
   name: string;
   binding: Array<BaseFunctionBinding<T, string>>;
-}
-
-export interface ControllerMetadata {
-  // middleware: Array<Middleware>;
   target: DecoratorTarget;
 }
 
