@@ -16,7 +16,6 @@ export class ControllerLocator {
     const importClauses: ImportClauses = {};
     for (const statement of node.statements) {
       const plainObjectStatement: any = _.cloneDeep(statement);
-      // console.log(`Controller Locator: `, plainObjectStatement);
       if (plainObjectStatement.importClause === undefined) continue;
       const { importClause, moduleSpecifier } = plainObjectStatement;
       if (!Array.isArray(importClause.namedBindings.elements)) continue;

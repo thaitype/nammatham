@@ -4,7 +4,7 @@ import stripIndent from 'strip-indent';
 export interface IAzFunctionHandlebarsTemplateData {
   controllerName: string;
   controllerRelativePath: string;
-  methodName: string;
+  // methodName: string;
   functionName: string;
   startupPath: string;
 }
@@ -21,7 +21,6 @@ export const azFunctionHandlebarsTemplate = stripIndent(`
   ): Promise<void> {
     app.run({
       classTarget: {{controllerName}},
-      methodName: '{{methodName}}',
       azureFunctionParams: [context, ...args]
     });
   };
