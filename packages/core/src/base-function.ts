@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { HttpResponse } from '@azure/functions';
 import { HttpResponseContext } from './http';
 import { FunctionBinding } from './bindings';
 import { TypedContext } from './interfaces';
@@ -14,5 +15,5 @@ export abstract class BaseFunction<T extends readonly FunctionBinding<unknown>[]
     this.res = new HttpResponseContext(context);
   }
 
-  public execute(...args: any[]) {}
+  public abstract execute(...args: any[]): void | HttpResponse;
 }
