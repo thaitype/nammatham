@@ -1,3 +1,4 @@
+import path from 'path';
 /**
  *
  * Example:
@@ -11,8 +12,6 @@
  * @param absolutePath Absolute Path file
  * @returns
  */
-
-import path from 'path';
 
 export function extractRelativeWorkingDirectory(cwd: string, absolutePath: string) {
   return path.dirname(absolutePath).replace(cwd, '');
