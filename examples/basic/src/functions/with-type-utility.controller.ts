@@ -3,8 +3,8 @@ import { BaseFunction, Binding, functionName } from 'nammatham';
 import { Service } from './services';
 
 const bindings = [
-  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
-  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
+  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  Binding.http({ name: 'res' as const }), // make string to literal type
 ];
 
 @functionName('WithTypeUtility', ...bindings)

@@ -5,8 +5,8 @@ import {
   GetContextBindings,
   FunctionBinding,
   BaseFunctionBinding,
-  HttpTriggerResponseType,
-  HttpTriggerRequestType,
+  HttpType,
+  httpTriggerType,
 } from './bindings';
 
 export type GetReturnType<ReturnType, FallbackReturnType> = FallbackReturnType extends undefined
@@ -25,12 +25,12 @@ export interface TypedContext<T extends readonly FunctionBinding<unknown>[]> ext
   /**
    * Add prop from the base interface, based on FunctionBinding
    */
-  res: IsBindingWith<T, HttpTriggerResponseType, HttpResponse, OriginalContextRes>;
+  res: IsBindingWith<T, HttpType, HttpResponse, OriginalContextRes>;
 
   /**
    * Override prop req from the base interface, based on FunctionBinding
    */
-  req: IsBindingWith<T, HttpTriggerRequestType, HttpRequest>;
+  req: IsBindingWith<T, httpTriggerType, HttpRequest>;
 
   /**
    * Provide more specific type from FunctionBinding

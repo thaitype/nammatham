@@ -1,7 +1,7 @@
 import { BaseFunction, Binding, functionName } from 'nammatham';
 
 const bindings = [
-  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
+  Binding.http({ name: 'res' as const }), // make string to literal type
 ];
 
 // the type should be supported by Azure Functions runtime
