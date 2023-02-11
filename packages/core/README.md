@@ -1,5 +1,5 @@
 # Nammatham
-Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`) is Azure Function Nodejs Lightweight frameworks with Dependency Injection, 
+Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs Lightweight frameworks with Dependency Injection, 
 
 [![npm version](https://img.shields.io/npm/v/nammatham)](https://www.npmjs.com/package/nammatham) [![npm download](https://img.shields.io/npm/dt/nammatham)](https://www.npmjs.com/package/nammatham)
 
@@ -52,6 +52,10 @@ We heavily get inspired from Azure Functions .NET version which provide clearly 
         1. [index.js](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#indexjs) which must have only one export.
         2. [function.json](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#functionjson) which is a plain JSON file with no autocomplete or easy-to-use configuration, requiring the user to open the documentation to configure it.
 - **No Dependecy Injection** - Azure Functions Node.js does not provide any built-in Dependency Injection tool, unlike the [.NET Azure Function provides built-in Dependency Injection](https://learn.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection)
+
+## Starter Project
+
+- [Basic Nammtham Starter Template](https://github.com/mildronize/nammatham-starter)
 
 ## Getting Started
 
@@ -113,8 +117,8 @@ you can define your own `function.json` in Typescript object (as you can see the
 import { BaseFunction, Binding, functionName } from 'nammatham';
 
 const bindings = [
-  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
-  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
+  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  Binding.http({ name: 'res' as const }), // make string to literal type
 ];
 
 @functionName('GetUser', ...bindings)

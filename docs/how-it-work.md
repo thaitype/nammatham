@@ -171,19 +171,19 @@ As you can see the example below:
 
 ```ts
 // nammatham@0.4.0-alpha
-import { BaseController, controller, functionName, GetContextBindings, HttpTriggerRequestBinding, HttpTriggerResponseBinding } from 'nammatham';
+import { BaseController, controller, functionName, GetContextBindings, httpTriggerBinding, HttpBinding } from 'nammatham';
 
 const functionBinding1 = [
   {
     name: 'req',
     type: 'httpTrigger',
     direction: 'in',
-  } as HttpTriggerRequestBinding<'req'>,
+  } as httpTriggerBinding<'req'>,
   {
     name: 'res',
     direction: 'out',
     type: 'http',
-  } as HttpTriggerResponseBinding<'res'>,
+  } as HttpBinding<'res'>,
 ];
 
 const functionBinding2 = [
@@ -191,12 +191,12 @@ const functionBinding2 = [
     name: 'req',
     type: 'httpTrigger',
     direction: 'in',
-  } as HttpTriggerRequestBinding<'req'>,
+  } as httpTriggerBinding<'req'>,
   {
     name: 'res',
     direction: 'out',
     type: 'http',
-  } as HttpTriggerResponseBinding<'res'>,
+  } as HttpBinding<'res'>,
 ];
 
 @controller()
@@ -232,12 +232,12 @@ const functionBinding1 = [
     name: 'req',
     type: 'httpTrigger',
     direction: 'in',
-  } as HttpTriggerRequestBinding<'req'>,
+  } as httpTriggerBinding<'req'>,
   {
     name: 'res',
     direction: 'out',
     type: 'http',
-  } as HttpTriggerResponseBinding<'res'>,
+  } as HttpBinding<'res'>,
 ];
 
 
@@ -260,8 +260,8 @@ Moreover, we can use `Binding` object which a helper to create a function bindin
 import { Binding } from 'nammatham';
 
 const functionBinding1 = [
-  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
-  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
+  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  Binding.http({ name: 'res' as const }), // make string to literal type
 ];
 ```
 

@@ -1,9 +1,9 @@
 import { CustomFunctionBinding } from './custom-function-binding';
-import { HttpTriggerRequestBinding, HttpTriggerResponseBinding, TimerTriggerBinding } from './triggers';
+import { httpTriggerBinding, HttpBinding, TimerTriggerBinding } from './triggers';
 
 export type DefinedFunctionBinding<T extends unknown> =
-  | HttpTriggerRequestBinding<T>
-  | HttpTriggerResponseBinding<T>
+  | httpTriggerBinding<T>
+  | HttpBinding<T>
   | TimerTriggerBinding<T>;
 
 /**

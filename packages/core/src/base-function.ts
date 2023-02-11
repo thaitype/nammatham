@@ -1,18 +1,22 @@
 import { injectable } from 'inversify';
-import { HttpResponse } from '@azure/functions';
+import { HttpRequest, HttpResponse } from '@azure/functions';
 import { HttpResponseContext } from './http';
-import { FunctionBinding } from './bindings';
-import { TypedContext } from './interfaces';
+import { FunctionBinding, HttpType, httpTriggerType } from './bindings';
+import { IsBindingWith, TypedContext } from './interfaces';
 
 @injectable()
 export abstract class BaseFunction<T extends readonly FunctionBinding<unknown>[] = any> {
+  
   protected context!: TypedContext<T>;
-  // @injectContext protected readonly context!: Context;
-  protected res!: HttpResponseContext;
+  protected res!: IsBindingWith<T, HttpType, HttpResponseContext>;
+  protected req!: IsBindingWith<T, httpTriggerType, HttpRequest>;
 
   public init(context: TypedContext<T>) {
     this.context = context;
-    this.res = new HttpResponseContext(context);
+    if (context.res !== undefined)
+      this.res = new HttpResponseContext(context) as IsBindingWith<T, HttpType, HttpResponseContext>;
+    if(context.req !== undefined)
+      this.req = context.req;
   }
 
   public abstract execute(...args: any[]): void | HttpResponse;
