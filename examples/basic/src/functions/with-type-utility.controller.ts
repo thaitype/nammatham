@@ -1,7 +1,6 @@
 import { inject } from 'inversify';
 import { BaseFunction, Binding, functionName } from 'nammatham';
 import { Service } from './services';
-import { HttpResponse } from '@azure/functions';
 
 const bindings = [
   Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type

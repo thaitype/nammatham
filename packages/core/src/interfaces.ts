@@ -1,17 +1,31 @@
 // Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 
 import { Context, HttpRequest, HttpResponse } from '@azure/functions';
-import { GetContextBindings, FunctionBinding, BaseFunctionBinding, HttpTriggerResponseType, HttpTriggerRequestType } from './bindings';
+import {
+  GetContextBindings,
+  FunctionBinding,
+  BaseFunctionBinding,
+  HttpTriggerResponseType,
+  HttpTriggerRequestType,
+} from './bindings';
 
-export type IsBindingWith<T extends readonly FunctionBinding<unknown>[], Type, ReturnType> = Type extends T[number]['type']
+export type GetReturnType<ReturnType, FallbackReturnType> = FallbackReturnType extends undefined
   ? ReturnType
-  : ReturnType | undefined;
+  : FallbackReturnType;
+export type IsBindingWith<
+  T extends readonly FunctionBinding<unknown>[],
+  Type,
+  ReturnType,
+  FallbackReturnType = undefined
+> = Type extends T[number]['type'] ? ReturnType : GetReturnType<ReturnType, FallbackReturnType> | undefined;
+
+type OriginalContextRes = NonNullable<Context['res']>;
 
 export interface TypedContext<T extends readonly FunctionBinding<unknown>[]> extends Omit<Context, 'req'> {
   /**
    * Add prop from the base interface, based on FunctionBinding
    */
-  res: IsBindingWith<T, HttpTriggerResponseType, HttpResponse>;
+  res: IsBindingWith<T, HttpTriggerResponseType, HttpResponse, OriginalContextRes>;
 
   /**
    * Override prop req from the base interface, based on FunctionBinding
