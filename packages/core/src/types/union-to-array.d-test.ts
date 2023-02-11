@@ -1,4 +1,4 @@
-import type { Equal, Expect } from '../type-tests/test-assertion';
+import type { Equal, Expect } from '@type-challenges/utils';
 import type { UnionToArray } from './union-to-array';
 
 type Cases = [
