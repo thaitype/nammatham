@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "run-s build start",
     "debug": "tsc && npm run start",
-    "build": "cross-env nammatham_env=build ts-node src/startup.ts && tsc",
+    "build": "cross-env nammatham_env=build tsx src/startup.ts && tsc",
     "serve:watch": "nodemon --watch src --ext ts --exec 'npm run serve'",
     "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",
     "start:watch": "nodemon --watch dist --delay 0.3 --exec  'npm start'",
@@ -25,7 +25,6 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "npm-run-all": "^4.1.5",
-    "ts-node": "^10.9.1",
     "tsx": "latest",
     "typescript": "latest"
   }
