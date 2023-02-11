@@ -9,16 +9,12 @@ const bindings = [
 
 @functionName('WithTypeUtility', ...bindings)
 export class WithTypeUtilityFunction extends BaseFunction<typeof bindings> {
-
-  constructor(@inject(Service) private service: Service){
+  constructor(@inject(Service) private service: Service) {
     super();
   }
-  
+
   public override execute() {
-    const { req, res } = this.context.bindings;
-    const name = req.query.name;
-    this.context.res = {
-      body: `hello WithTypeUtility with ${name} ${this.service.getData()}`,
-    };
+    const { name } = this.req.query;
+    this.res.send(`hello WithTypeUtility with ${name} ${this.service.getData()}`);
   }
 }
