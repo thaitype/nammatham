@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "test": "ava --verbose",
+    "test": "ava",
     "test:watch": "ava --watch",
     "test:coverage": "c8 ava",
     "prepublishOnly": "npm run build",

@@ -1,0 +1,34 @@
+name: "Build & Test"
+
+on:
+  push:
+    branches: [ main.issues-17 ]
+    paths-ignore:
+      - '**/*.md'
+      - '.github'
+
+env:
+  pnpm_version: 7
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: ${{ env.pnpm_version }}
+      - run: pnpm install
+      - run: npx nx run nammatham:build
+      - run: npx nx run nammatham:typecheck
