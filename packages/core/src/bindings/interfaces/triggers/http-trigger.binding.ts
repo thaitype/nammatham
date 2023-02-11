@@ -6,15 +6,20 @@ export enum AuthorizationLevel {
 }
 
 /**
+ * Azure Functions Http Trigger Request Type
+ */
+export type HttpTriggerRequestType = 'httpTrigger';
+
+/**
  * HttpTrigger Binding
  *
  * read more: [HttpTrigger Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#configuration)
  */
-export interface HttpTriggerRequestBinding<T> extends BaseFunctionBinding<'httpTrigger', T> {
+export interface HttpTriggerRequestBinding<T> extends BaseFunctionBinding<HttpTriggerRequestType, T> {
   /**
    * Required - must be set to `httpTrigger`.
    */
-  type: 'httpTrigger';
+  type: HttpTriggerRequestType;
   /**
    * Required - must be set to in.
    */
@@ -36,7 +41,14 @@ export interface HttpTriggerRequestBinding<T> extends BaseFunctionBinding<'httpT
   route?: string;
 }
 
-export interface HttpTriggerResponseBinding<T> extends BaseFunctionBinding<'http', T> {
-  type: 'http';
+
+/**
+ * Azure Functions Http Response Type
+ */
+export type HttpTriggerResponseType = 'http';
+
+// TODO: rename from HttpTriggerResponseBinding to HttpResponseBinding
+export interface HttpTriggerResponseBinding<T> extends BaseFunctionBinding<HttpTriggerResponseType, T> {
+  type: HttpTriggerResponseType;
   direction: 'out';
 }

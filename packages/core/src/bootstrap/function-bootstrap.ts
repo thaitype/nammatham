@@ -16,7 +16,7 @@ export function funcBootstrap(option: IFuncBootstrapOption) {
 
   const controllerInstance = container.getNamed<BaseFunction<any>>(TYPE.Controller, option.classTarget.name);
   // Set context to in
-  controllerInstance.init(azureFunctionContext);
+  controllerInstance.init(azureFunctionContext as any);
   // TODO: Move Check to check on build processs
   // if(!(controllerInstance.hasOwnProperty('execute'))){
   //   console.error( `No execute method overrided in the BaseFunction`)
