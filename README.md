@@ -113,8 +113,8 @@ you can define your own `function.json` in Typescript object (as you can see the
 import { BaseFunction, Binding, functionName } from 'nammatham';
 
 const bindings = [
-  Binding.httpTriggerRequest({ name: 'req' as const }), // make string to literal type
-  Binding.httpTriggerResponse({ name: 'res' as const }), // make string to literal type
+  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  Binding.http({ name: 'res' as const }), // make string to literal type
 ];
 
 @functionName('GetUser', ...bindings)

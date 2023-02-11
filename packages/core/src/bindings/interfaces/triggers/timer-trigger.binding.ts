@@ -1,12 +1,17 @@
 import { BaseFunctionBinding } from '../base-function-binding';
 
 /**
+ * Azure Functions Timer Trigger Type
+ */
+export type TimerTriggerType = 'timerTrigger';
+
+/**
  * TimerTrigger Binding
  *
  * read more: [TimerTrigger Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-javascript#configuration)
  */
-export interface TimerTriggerBinding<T> extends BaseFunctionBinding<'timerTrigger', T> {
-  type: 'timerTrigger';
+export interface TimerTriggerBinding<T> extends BaseFunctionBinding<TimerTriggerType, T> {
+  type: TimerTriggerType;
   /**
    * timerTrigger requires direction `in`
    */

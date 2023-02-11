@@ -1,4 +1,4 @@
-import {CustomFunctionBinding, HttpTriggerRequestBinding, HttpTriggerResponseBinding, TimerTriggerBinding } from '../interfaces';
+import {CustomFunctionBinding, httpTriggerBinding, HttpBinding, TimerTriggerBinding } from '../interfaces';
 
 export function custom<T extends CustomFunctionBinding<unknown>>(
   bindings: T
@@ -6,9 +6,9 @@ export function custom<T extends CustomFunctionBinding<unknown>>(
   return bindings;
 }
 
-export function httpTriggerRequest<T extends Omit<HttpTriggerRequestBinding<unknown>, 'type' | 'direction'>>(
+export function httpTrigger<T extends Omit<httpTriggerBinding<unknown>, 'type' | 'direction'>>(
   bindings: T
-): HttpTriggerRequestBinding<T['name']> {
+): httpTriggerBinding<T['name']> {
   return {
     ...bindings,
     type: 'httpTrigger',
@@ -16,9 +16,9 @@ export function httpTriggerRequest<T extends Omit<HttpTriggerRequestBinding<unkn
   };
 }
 
-export function httpTriggerResponse<T extends Omit<HttpTriggerResponseBinding<unknown>, 'type' | 'direction'>>(
+export function http<T extends Omit<HttpBinding<unknown>, 'type' | 'direction'>>(
   bindings: T
-): HttpTriggerResponseBinding<T['name']> {
+): HttpBinding<T['name']> {
   return {
     ...bindings,
     type: 'http',
@@ -37,8 +37,8 @@ export function timeTrigger<T extends Omit<TimerTriggerBinding<unknown>, 'type' 
 }
 
 export default {
-  httpTriggerRequest,
-  httpTriggerResponse,
+  httpTrigger,
+  http,
   timeTrigger,
   custom,
 };
