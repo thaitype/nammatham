@@ -9,7 +9,7 @@ import { AuthorizationLevel, Binding, RequestMethod } from '../';
  * @returns
  */
 export function httpTrigger(authLevel: AuthorizationLevel, methods: RequestMethod[], route?: string) {
-  const requestBinding = Binding.httpTriggerRequest({
+  const requestBinding = Binding.httpTrigger({
     name: 'req' as const,
     authLevel,
     methods,
@@ -17,6 +17,6 @@ export function httpTrigger(authLevel: AuthorizationLevel, methods: RequestMetho
   if (route !== undefined) {
     requestBinding.route = route;
   }
-  const responseBinding = Binding.httpTriggerResponse({ name: 'res' as const });
+  const responseBinding = Binding.http({ name: 'res' as const });
   return [requestBinding, responseBinding];
 }

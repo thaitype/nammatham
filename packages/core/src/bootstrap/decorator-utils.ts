@@ -1,7 +1,6 @@
 import { interfaces } from 'inversify';
 import { METADATA_KEY, TYPE } from '../contants';
 import {
-  AzureFunctionMethodMetadata,
   Controller,
   ControllerMetadata,
   NO_CONTROLLERS_FOUND,
@@ -27,24 +26,4 @@ export function getControllerMetadata(constructor: NewableFunction): ControllerM
     constructor
   ) as ControllerMetadata;
   return controllerMetadata;
-}
-
-export function getAzureFunctionMethodMetadata(constructor: NewableFunction): Array<AzureFunctionMethodMetadata> {
-  const methodMetadata = Reflect.getOwnMetadata(
-    METADATA_KEY.azureFunction,
-    constructor
-  ) as Array<AzureFunctionMethodMetadata>;
-
-  const genericMetadata = Reflect.getMetadata(
-    METADATA_KEY.azureFunction,
-    Reflect.getPrototypeOf(constructor) as NewableFunction
-  ) as Array<AzureFunctionMethodMetadata>;
-
-  if (genericMetadata !== undefined && methodMetadata !== undefined) {
-    return methodMetadata.concat(genericMetadata);
-  }
-  if (genericMetadata !== undefined) {
-    return genericMetadata;
-  }
-  return methodMetadata;
 }
