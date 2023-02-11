@@ -7,6 +7,7 @@
   "scripts": {
     "test": "ava --verbose",
     "test:watch": "ava --watch",
+    "test:coverage": "c8 ava",
     "prepublishOnly": "npm run build",
     "build": "tsup src/main.ts --dts",
     "dev": "nodemon --watch src --ext ts --exec 'npm run build'"
