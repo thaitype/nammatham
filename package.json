@@ -28,6 +28,7 @@
     "nx": "^15.6.1",
     "prettier": "^2.8.3",
     "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.9.1",
     "tsup": "^6.5.0"
   },
   "publishConfig": {
