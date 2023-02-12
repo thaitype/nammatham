@@ -8,6 +8,7 @@ import { AzureFunctionJsonConfig } from '../bindings';
 import { azFunctionTemplate } from './templates';
 import { ControllerLocator } from './controller-locator';
 import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
+import { extractRelativeWorkingDirectory, removeExtension } from './utils';
 import { ControllerMetadata } from '../interfaces';
 
 export interface IFunctionAppOption {
@@ -68,28 +69,6 @@ async function appendGitignore(cwd: string, functionName: string) {
   await fsPromise.writeFile(gitignorePath, gitignoreLines.join('\n'), 'utf8');
 }
 
-/**
- *
- * Example:
- *  - cwd = '/home/nammatham/examples/crud'
- *  - absolutePath = '/home/nammatham/examples/crud/src/main.ts'
- *
- * Return:
- *  - 'src/'
- *
- * @param cwd Working Directory
- * @param absolutePath Absolute Path file
- * @returns
- */
-
-function extractRuntimeWorkingDirectory(cwd: string, absolutePath: string) {
-  return path.dirname(absolutePath).replace(cwd, '');
-}
-
-function removeExtension(filename: string) {
-  return filename.substring(0, filename.lastIndexOf('.'));
-}
-
 export class FunctionApp {
   constructor(protected option: IFunctionAppOption) {}
 
@@ -124,7 +103,7 @@ export class FunctionApp {
 
     const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(this.option.controllers || []);
 
-    const runtimeWorkingDirectory = extractRuntimeWorkingDirectory(cwd, option.bootstrapPath);
+    const runtimeWorkingDirectory = extractRelativeWorkingDirectory(cwd, option.bootstrapPath);
     const startupPath = slash(
       path.join('..', runtimeWorkingDirectory, removeExtension(path.basename(option.bootstrapPath)))
     );

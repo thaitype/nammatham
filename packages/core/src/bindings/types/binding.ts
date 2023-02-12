@@ -16,5 +16,3 @@ export type BindingType<T extends AllBindingTypes> = T extends httpTriggerType
   ? HttpResponse
   : any;
 
-type TimeTrigger = BindingType<'timerTrigger'>;
-type HttpTrigger = BindingType<'httpTrigger'>;

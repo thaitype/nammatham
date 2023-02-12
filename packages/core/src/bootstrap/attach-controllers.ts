@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { getControllerMetadata } from './utils';
+import { getControllerMetadata } from './decorator-utils';
 import { TYPE } from '../contants';
 import { ControllerMetadata } from '../interfaces';
 

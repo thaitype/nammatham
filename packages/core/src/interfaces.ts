@@ -1,13 +1,8 @@
 // Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 
 import { Context, HttpRequest, HttpResponse } from '@azure/functions';
-import {
-  GetContextBindings,
-  FunctionBinding,
-  BaseFunctionBinding,
-  HttpType,
-  httpTriggerType,
-} from './bindings';
+import { GetContextBindings, FunctionBinding, BaseFunctionBinding, HttpType, httpTriggerType } from './bindings';
+import { NotAny } from '@type-challenges/utils';
 
 export type GetReturnType<ReturnType, FallbackReturnType> = FallbackReturnType extends undefined
   ? ReturnType
@@ -17,7 +12,11 @@ export type IsBindingWith<
   Type,
   ReturnType,
   FallbackReturnType = undefined
-> = Type extends T[number]['type'] ? ReturnType : GetReturnType<ReturnType, FallbackReturnType> | undefined;
+> = NotAny<T> extends true
+  ? Type extends T[number]['type']
+    ? ReturnType
+    : GetReturnType<ReturnType, FallbackReturnType> | undefined
+  : GetReturnType<ReturnType, FallbackReturnType> | undefined;
 
 type OriginalContextRes = NonNullable<Context['res']>;
 

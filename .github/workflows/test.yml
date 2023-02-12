@@ -1,0 +1,41 @@
+name: "Build & Test"
+
+on:
+  push:
+    branches: [ main.issues-17 ]
+    paths-ignore:
+      - '**/*.md'
+      - '.github'
+
+env:
+  pnpm_version: 7
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [16, 18]
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: ${{ env.pnpm_version }}
+      - run: pnpm install
+      - run: npx nx run nammatham:build
+      - run: npx nx run nammatham:typecheck
+      - run: npx nx run nammatham:test
+      - run: npx nx run nammatham:test:coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          name: ${{ matrix.os }}/${{ matrix.node-version }}
