@@ -1,6 +1,6 @@
 {
   "name": "nammatham",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -49,6 +49,9 @@
 		],
 		"require": [
 			"ts-node/register"
-		]
+		],
+    "ignoredByWatcher": [
+      "tests/**"
+    ]
 	}
 }
