@@ -2,6 +2,7 @@ import { Container } from 'inversify';
 import { FunctionApp, IFunctionAppOption } from './function-app';
 import { Services } from './services';
 import { exit } from 'process';
+import { resolveAllAzureFunctions } from './attach-controllers';
 
 interface IFunctionAppBuilderOption {
   container?: Container;
@@ -84,5 +85,10 @@ export class FunctionAppBuilder {
 
   public getApp() {
     return this.functionApp;
+  }
+
+  public getFunctionNames(): string[] {
+    const azureFunctionsMethodMetadata = resolveAllAzureFunctions(this.functionAppOption.controllers || []);
+    return azureFunctionsMethodMetadata.map(m => m.name);
   }
 }
