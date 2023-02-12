@@ -1,4 +1,5 @@
 import { Context, Logger } from '@azure/functions';
+import { TypedContext } from '../interfaces';
 
 const logger = {
   error: (...args: any[]) => {},
@@ -14,12 +15,12 @@ export class ContextFactory {
 }
 
 export class ContextBuilder {
-  public context: Context;
+  public context: TypedContext<any>;
   constructor() {
     this.context = this.initEmptyContext();
   }
 
-  private initEmptyContext(): Context {
+  private initEmptyContext(): TypedContext<any> {
     return {
       bindingData: {
         invocationId: '',
@@ -34,10 +35,10 @@ export class ContextBuilder {
       res: {} as Context['res'],
       suppressAsyncDoneError: undefined,
       done: () => {},
-    } as Context;
+    } as TypedContext<any>;
   }
 
-  public setInvocationId(id: Context['invocationId']){
+  public setInvocationId(id: Context['invocationId']) {
     // TODO: this should confirm the Azure Function Runtime injection again.
     this.context.bindingData.invocationId = id;
     this.context.executionContext.invocationId = id;
@@ -45,20 +46,19 @@ export class ContextBuilder {
     return this;
   }
 
-  public setRequest(req: Partial<Context['req']>, bindingName: string = 'req'){
+  public setRequest(req: Partial<Context['req']>, bindingName: string = 'req') {
     this.context.req = req as Context['req'];
     this.context.bindings[bindingName] = req;
     return this;
   }
 
-  public setResponse(res: Partial<Context['res']>, bindingName: string = 'res'){
+  public setResponse(res: Partial<Context['res']>, bindingName: string = 'res') {
     this.context.res = res as Context['res'];
     this.context.bindings[bindingName] = res;
     return this;
   }
 
-  public getContext(): Context {
+  public getContext(): TypedContext<any> {
     return this.context;
   }
-
 }

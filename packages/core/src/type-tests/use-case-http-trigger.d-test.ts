@@ -1,7 +1,6 @@
 import type { Equal, Expect } from '@type-challenges/utils';
 import { Context, HttpRequest, HttpResponse, Timer } from '@azure/functions';
 import { BaseFunction, Binding, functionName } from '../../';
-import { HttpResponseContext } from '../http';
 
 /**
  * Case 1: Binding with httpTrigger and http

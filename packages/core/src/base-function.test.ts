@@ -1,7 +1,6 @@
 import test from 'ava';
 import 'reflect-metadata';
 import { BaseFunction } from './base-function';
-import { TypedContext } from './interfaces';
 import { ContextFactory, HttpResponseContext_TestHelper } from './test-helpers';
 
 class MyTestFunction extends BaseFunction {
@@ -22,7 +21,7 @@ test('BaseFunction class should inject the context object properly', t => {
       body
     })
     .getContext();
-  myObject.init(mockContext as TypedContext<any>);
+  myObject.init(mockContext);
   // Assert Context should be injected
   t.is(myObject.getContext().invocationId, invocationId);
   // Assert Request should be injected

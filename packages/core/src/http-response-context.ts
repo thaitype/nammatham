@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { TypedContext } from './interfaces';
 
-type HttpStatus = StatusCodes | number;
+export type HttpStatus = StatusCodes | number;
 
 export interface ISendOption<T> {
   status: HttpStatus;
@@ -9,7 +9,7 @@ export interface ISendOption<T> {
 }
 
 export class HttpResponseContext {
-  private statusCode: HttpStatus = StatusCodes.OK;
+  protected statusCode: HttpStatus = StatusCodes.OK;
 
   constructor(protected readonly context: TypedContext<any>) {}
 
