@@ -1,4 +1,4 @@
-import { AuthorizationLevel, Binding, RequestMethod } from '../';
+import { AuthorizationLevel, BaseFunctionBinding, Binding, RequestMethod } from '../';
 
 /**
  * Built-in Helper,
@@ -8,7 +8,11 @@ import { AuthorizationLevel, Binding, RequestMethod } from '../';
  * @param route
  * @returns
  */
-export function httpTrigger(authLevel: AuthorizationLevel, methods: RequestMethod[], route?: string) {
+export function httpTrigger(
+  authLevel: AuthorizationLevel,
+  methods: RequestMethod[],
+  route?: string
+): [BaseFunctionBinding<'httpTrigger', 'req'>, BaseFunctionBinding<'http', 'res'>] {
   const requestBinding = Binding.httpTrigger({
     name: 'req' as const,
     authLevel,
