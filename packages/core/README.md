@@ -7,7 +7,7 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **a
 
 Azure Functions is a platform for building event-driven and serverless applications. **Nammatham** is a framework that allows you to use Azure Functions with TypeScript and decorators. It provides pre-defined JSON binding objects and utility functions, such as `httpTrigger`, to make it easier to create Azure Functions.
 
-One example of using Nammatham with Azure Functions is an HTTP trigger function, where the `httpTrigger` function returns a JSON binding object that defines the function's input and output. The `@controller` and `@functionName` decorators are used to define the function and specify its bindings.
+One example of using Nammatham with Azure Functions is an HTTP trigger function, where the `httpTrigger` function returns a JSON binding object that defines the function's input and output. The `@functionName` decorators are used to define the function and specify its bindings.
 
 ```ts
 import { AuthorizationLevel, BaseFunction, functionName, httpTrigger } from "nammatham";
