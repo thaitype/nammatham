@@ -1,5 +1,6 @@
+import 'reflect-metadata';
 import { inject } from 'inversify';
-import { BaseFunction, Binding, functionName } from '../../../../../src/main';
+import { BaseFunction, Binding, functionName } from '../../../../src/main';
 import { Service } from './services';
 
 const bindings = [

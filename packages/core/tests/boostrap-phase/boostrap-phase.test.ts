@@ -2,10 +2,10 @@ import test from 'ava';
 import execa from 'execa';
 import path from 'path';
 import fs from 'node:fs';
-import app, { builder } from './src/startup';
+import { builder } from './fixtures/startup';
 
-const startupPath = 'src/startup.ts';
-const workingDirectory = 'tests/fixture/boostrap-phase';
+const startupPath = 'fixtures/startup.ts';
+const workingDirectory = 'tests/boostrap-phase';
 
 const execaOption: execa.Options = {
   cwd: workingDirectory,

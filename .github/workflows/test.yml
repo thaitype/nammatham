@@ -39,7 +39,6 @@ jobs:
       - run: npx nx run nammatham:build
       - run: npx nx run nammatham:typecheck
       - run: npx nx run nammatham:test
-      - run: npx nx run nammatham:test:fixture
       - run: npx nx run nammatham:test:coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3

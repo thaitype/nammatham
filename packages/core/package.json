@@ -7,7 +7,6 @@
   "scripts": {
     "test": "ava",
     "test:watch": "ava --watch",
-    "test:fixture": "ava tests/fixture/**/*.ts",
     "test:coverage": "c8 --reporter=lcov ava && c8 report",
     "prepublishOnly": "npm run build",
     "build": "tsup src/main.ts --dts",
