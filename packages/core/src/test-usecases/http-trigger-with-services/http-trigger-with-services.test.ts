@@ -1,9 +1,9 @@
 import test from 'ava';
-import app from './src/startup';
-import { WithTypeUtilityFunction } from './src/functions/with-type-utility.controller';
+import app from './fixtures/startup';
+import { WithTypeUtilityFunction } from './fixtures/functions/with-type-utility.controller';
 import { ContextFactory } from '../../test-helpers';
 import { HttpRequest, HttpResponse } from '@azure/functions';
-import { responseHelper, serviceData } from './src/response-helper';
+import { responseHelper, serviceData } from './fixtures/response-helper';
 
 test('Passing query param and check the response is gotten', t => {
   const name = 'bobby';
