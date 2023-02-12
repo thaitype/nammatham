@@ -3,13 +3,9 @@ import execa from 'execa';
 import path from 'path';
 import fs from 'node:fs';
 import app, { builder } from './src/startup';
-import { WithTypeUtilityFunction } from './src/functions/with-type-utility.controller';
-import { ContextFactory } from '../../../src/test-helpers';
-import { HttpRequest, HttpResponse } from '@azure/functions';
-import { responseHelper, serviceData } from './src/response-helper';
 
 const startupPath = 'src/startup.ts';
-const workingDirectory = 'tests/fixture/http-trigger-with-services';
+const workingDirectory = 'tests/fixture/boostrap-phase';
 
 const execaOption: execa.Options = {
   cwd: workingDirectory,
@@ -22,8 +18,8 @@ test.beforeEach(async t => {
   await execa.command(`npx ts-node ${startupPath}`, execaOption);
 });
 
-test('Mock Test', t => {
-  t.is('a','a');
+test('After run boostrap phase, the output script should pass typecheck', async t => {
+  await t.notThrowsAsync(execa.command(`tsc --noEmit`, execaOption));
 });
 
 test.afterEach(async t => {
