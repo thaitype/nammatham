@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { HttpRequest, HttpResponse } from '@azure/functions';
-import { HttpResponseContext } from './http';
+import { HttpResponseContext } from './http-response-context';
 import { FunctionBinding, HttpType, httpTriggerType } from './bindings';
 import { IsBindingWith, TypedContext } from './interfaces';
 

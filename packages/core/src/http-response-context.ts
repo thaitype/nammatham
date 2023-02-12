@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { TypedContext } from '../interfaces';
+import { TypedContext } from './interfaces';
 
 type HttpStatus = StatusCodes | number;
 

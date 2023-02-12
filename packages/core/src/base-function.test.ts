@@ -2,17 +2,10 @@ import test from 'ava';
 import 'reflect-metadata';
 import { BaseFunction } from './base-function';
 import { TypedContext } from './interfaces';
-import { ContextFactory } from './test-helpers';
-import { HttpResponseContext } from './http';
+import { ContextFactory, HttpResponseContext_TestHelper } from './test-helpers';
 
 class MyTestFunction extends BaseFunction {
   public override execute() {}
-}
-
-class HttpResponsePublicContext extends HttpResponseContext {
-  constructor(public readonly context: TypedContext<any>) {
-    super(context);
-  }
 }
 
 test('BaseFunction class should inject the context object properly', t => {
@@ -37,6 +30,6 @@ test('BaseFunction class should inject the context object properly', t => {
   t.is(myObject.getRequest()?.method, httpMethod);
   // Assert Response should be injected
   t.not(myObject.getResponse(), undefined);
-  t.not((myObject.getResponse() as HttpResponsePublicContext).context.res, undefined);
-  t.is((myObject.getResponse() as HttpResponsePublicContext).context.res?.body, body);
+  t.not((myObject.getResponse() as HttpResponseContext_TestHelper).context.res, undefined);
+  t.is((myObject.getResponse() as HttpResponseContext_TestHelper).context.res?.body, body);
 });
