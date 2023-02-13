@@ -1,9 +1,14 @@
 import { BaseFunctionBinding } from '../base-function-binding';
 
 export type RequestMethod = 'get' | 'post' | 'delete' | 'options' | 'put';
-export enum AuthorizationLevel {
-  Anonymous = 'anonymous',
-}
+
+export const AuthorizationLevel = {
+  Anonymous: 'anonymous',
+  Function: 'function',
+  Admin: 'admin'
+} as const;
+
+export type AuthorizationLevelType = typeof AuthorizationLevel[keyof typeof AuthorizationLevel];
 
 /**
  * Azure Functions Http Trigger Request Type
@@ -28,7 +33,7 @@ export interface httpTriggerBinding<T> extends BaseFunctionBinding<httpTriggerTy
    * Determines what keys, if any, need to be present on the request in order
    * to invoke the function. For supported values, see [Authorization level](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#http-auth).
    */
-  authLevel?: AuthorizationLevel;
+  authLevel?: AuthorizationLevelType;
   /**
    * An array of the HTTP methods to which the function responds. If not specified,
    * the function responds to all HTTP methods. See [customize the HTTP endpoint](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#customize-the-http-endpoint).
