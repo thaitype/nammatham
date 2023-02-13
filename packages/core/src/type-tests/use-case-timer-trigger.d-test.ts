@@ -3,15 +3,15 @@ import { Context, HttpRequest, HttpResponse, Timer } from '@azure/functions';
 import { BaseFunction, Binding, functionName } from '../../dist/main';
 
 /**
- * Case 1: Binding with timeTrigger
+ * Case 1: Binding with timerTrigger
  */
 
 const bindings_case1 = [
-  Binding.timeTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
+  Binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
 ];
 
-@functionName('TimeTrigger', ...bindings_case1)
-class TimeTriggerFunction extends BaseFunction<typeof bindings_case1> {
+@functionName('timerTrigger', ...bindings_case1)
+class TimerTriggerFunction extends BaseFunction<typeof bindings_case1> {
   public override execute() {
     /**
      * Start type assertion here:
@@ -35,8 +35,8 @@ class TimeTriggerFunction extends BaseFunction<typeof bindings_case1> {
  * Case 2: No bindings
  */
 
-@functionName('TimeTrigger2')
-class TimeTriggerFunction2 extends BaseFunction {
+@functionName('timerTrigger2')
+class TimerTriggerFunction2 extends BaseFunction {
   public override execute() {
     /**
      * Start type assertion here:

@@ -1,10 +1,11 @@
+import type { PartialBy }  from '../../types';
 import { CustomFunctionBinding, httpTriggerBinding, HttpBinding, TimerTriggerBinding } from '../interfaces';
 
 function custom<T extends CustomFunctionBinding<unknown>>(bindings: T): CustomFunctionBinding<T['name']> {
   return bindings;
 }
 
-function httpTrigger<T extends Omit<httpTriggerBinding<unknown>, 'type' | 'direction'>>(
+function httpTrigger<T extends PartialBy<httpTriggerBinding<unknown>, 'type' | 'direction'>>(
   bindings: T
 ): httpTriggerBinding<T['name']> {
   return {
@@ -14,7 +15,8 @@ function httpTrigger<T extends Omit<httpTriggerBinding<unknown>, 'type' | 'direc
   };
 }
 
-function http<T extends Omit<HttpBinding<unknown>, 'type' | 'direction'>>(bindings: T): HttpBinding<T['name']> {
+
+function http<T extends PartialBy<HttpBinding<unknown>, 'type' | 'direction'>>(bindings: T): HttpBinding<T['name']> {
   return {
     ...bindings,
     type: 'http',
@@ -22,7 +24,7 @@ function http<T extends Omit<HttpBinding<unknown>, 'type' | 'direction'>>(bindin
   };
 }
 
-function timeTrigger<T extends Omit<TimerTriggerBinding<unknown>, 'type' | 'direction'>>(
+function timerTrigger<T extends PartialBy<TimerTriggerBinding<unknown>, 'type' | 'direction'>>(
   bindings: T
 ): TimerTriggerBinding<T['name']> {
   return {
@@ -35,6 +37,6 @@ function timeTrigger<T extends Omit<TimerTriggerBinding<unknown>, 'type' | 'dire
 export default {
   httpTrigger,
   http,
-  timeTrigger,
+  timerTrigger,
   custom,
 };
