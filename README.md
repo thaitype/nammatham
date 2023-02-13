@@ -165,7 +165,7 @@ import { UserService } from '../services/user.service';
 import { inject } from 'inversify';
 
 @functionName('GetUsers', httpTrigger(AuthorizationLevel.Anonymous, ['get']))
-export class UserController extends BaseFunction {
+export class UserFunction extends BaseFunction {
 
   constructor(@inject(UserService) private userService: UserService){
     super();
