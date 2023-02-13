@@ -111,7 +111,7 @@ This is basic to use partially type support, you can follow steps below:
 
 This method will support full support type when bindings config is set, for example below:
 
-you can define your own `function.json` in Typescript object (as you can see the variable `functionConfig`), this will binding type into `ContextBindings` by using type utility `GetContextBindings`
+you can define your own `function.json` in Typescript object (as you can see the variable `bindings`), this will binding type into `ContextBindings` by using type utility `GetContextBindings`
 
 ```ts
 import { BaseFunction, Binding, functionName } from 'nammatham';
@@ -145,7 +145,7 @@ import { UserService } from './services/user.services';
 import { UserFunction } from './functions/user.function';
 
 const builder = NammathamApp.createBuilder(__filename);
-builder.addControllers(UserFunction);
+builder.addFunctions(UserFunction);
 builder.configureServices(services => {
   services.addSingleton(Service);
   // services.addScoped(Service);
@@ -201,13 +201,9 @@ Please read the [full documentation in the repo](docs)
 
 ## TODO
 - [ ] Add Log at boostrap level
-- [X] Inject **Context** in Class Dependency
-- [ ] `@controller()` should accept prefix path, e.g. `@controller('users')`
 - [ ] allow to add Middleware
-- [ ] Unit Test
 - [ ] functionName must be unique
 - [ ] Clean generated function endpoint (already remove controller)
-- [ ] Cannot Resolve Serivce from Bootstrap script
 
 
 ## Inspiration 
