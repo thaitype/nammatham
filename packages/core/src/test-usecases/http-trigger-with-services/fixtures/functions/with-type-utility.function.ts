@@ -6,7 +6,7 @@ import { responseHelper, serviceData } from '../response-helper';
 const bindings = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   Binding.http({ name: 'res' as const }), // make string to literal type
-  Binding.timeTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
+  Binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
 ];
 
 const customBindings = Binding.custom({ name: 'req' as const, type: 'custom', 'direction': 'in' })
