@@ -1,4 +1,4 @@
-import { AuthorizationLevel, BaseFunctionBinding, Binding, RequestMethod } from '../';
+import { AuthorizationLevelType, BaseFunctionBinding, Binding, RequestMethod } from '../';
 
 /**
  * Built-in Helper,
@@ -9,7 +9,7 @@ import { AuthorizationLevel, BaseFunctionBinding, Binding, RequestMethod } from 
  * @returns
  */
 export function httpTrigger(
-  authLevel: AuthorizationLevel,
+  authLevel: AuthorizationLevelType,
   methods: RequestMethod[],
   route?: string
 ): [BaseFunctionBinding<'httpTrigger', 'req'>, BaseFunctionBinding<'http', 'res'>] {
