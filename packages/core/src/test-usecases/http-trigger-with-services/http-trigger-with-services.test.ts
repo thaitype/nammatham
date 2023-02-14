@@ -3,7 +3,7 @@ import app from './fixtures/startup';
 import { WithTypeUtilityFunction } from './fixtures/functions/with-type-utility.function';
 import { ContextFactory } from '../../test-helpers';
 import { HttpRequest, HttpResponse } from '@azure/functions';
-import { responseHelper, serviceData } from './fixtures/response-helper';
+import { responseHelper, serviceData } from '../response-helper';
 import { HttpTriggerHelperFunction } from './fixtures/functions/http-trigger-helper.function';
 
 test('Test WithTypeUtilityFunction, Passing query param and check the response is gotten', t => {

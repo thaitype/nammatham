@@ -1,7 +1,7 @@
 import { inject } from 'inversify';
 import { BaseFunction, httpTrigger, functionName, AuthorizationLevel } from '../../../../main';
 import { SingletonService } from '../services/singleton-service';
-import { responseHelper, serviceData } from '../response-helper';
+import { responseHelper, serviceData } from '../../../response-helper';
 
 @functionName('httpTriggerHelper', httpTrigger(AuthorizationLevel.Anonymous, ["get"], 'test'))
 export class HttpTriggerHelperFunction extends BaseFunction {

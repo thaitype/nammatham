@@ -1,7 +1,7 @@
 import { inject } from 'inversify';
 import { BaseFunction, Binding, functionName } from '../../../../main';
 import { SingletonService } from '../services/singleton-service';
-import { responseHelper, serviceData } from '../response-helper';
+import { responseHelper, serviceData } from '../../../response-helper';
 
 const bindings = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
