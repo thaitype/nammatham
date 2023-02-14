@@ -1,14 +1,14 @@
 import type { Equal, Expect } from '@type-challenges/utils';
 import { GetContextBindings } from './get-context-bindings';
 import { ContextBindings, HttpRequest, HttpResponse, Timer } from '@azure/functions';
-import { HttpBinding, TimerTriggerBinding, httpTriggerBinding } from '../interfaces';
+import { HttpBinding, TimerTriggerBinding, HttpTriggerBinding } from '../interfaces';
 
 const bindings = [
   {
     name: 'req',
     type: 'httpTrigger',
     direction: 'in',
-  } as httpTriggerBinding<'req'>,
+  } as HttpTriggerBinding<'req'>,
   {
     name: 'res',
     direction: 'out',

@@ -27,5 +27,5 @@ export function funcBootstrap(option: IFuncBootstrapOption) {
   //   return;
   // }
   // Fix method when execute the function
-  controllerInstance.execute(...azureFunctionArgs);
+  return controllerInstance.execute(...azureFunctionArgs);
 }
