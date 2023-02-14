@@ -115,7 +115,7 @@ export class FunctionApp {
       const controllerName = (metadata.target as { name: string }).name;
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
-      const functionName = _.camelCase(metadata.name);
+      const functionName = metadata.name;
 
       const functionPath = path.join(output, functionName);
       // TODO: Make concurrent later
@@ -136,7 +136,7 @@ export class FunctionApp {
       const azFunctionEndpointCode: string = azFunctionTemplate({
         controllerName,
         controllerRelativePath,
-        functionName,
+        functionName: _.camelCase(functionName),
         startupPath,
       });
 

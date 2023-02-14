@@ -20,7 +20,7 @@ export type IsBindingWith<
 
 type OriginalContextRes = NonNullable<Context['res']>;
 
-export interface TypedContext<T extends readonly FunctionBinding<unknown>[]> extends Omit<Context, 'req'> {
+export interface TypedContext<T extends readonly FunctionBinding<unknown>[]> extends Omit<Context, 'req' | 'bindingDefinitions'> {
   /**
    * Add prop from the base interface, based on FunctionBinding
    */
@@ -35,6 +35,11 @@ export interface TypedContext<T extends readonly FunctionBinding<unknown>[]> ext
    * Provide more specific type from FunctionBinding
    */
   bindings: GetBindings<T>;
+
+  /**
+   * Provide more specific type from FunctionBinding
+   */
+  bindingDefinitions: T;
 }
 
 export type HandlerDecorator = (target: DecoratorTarget, key: string, value: unknown) => void;

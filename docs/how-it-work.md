@@ -225,6 +225,7 @@ So, we decided to design 1 azure function per a single class which extends `Base
 The  `BaseFunction` will accept type of function bindings config when creating this object, the `Context` object will know the exact type, by using `this.context`. This can make the azure function class below cleaner and simple.
 
 ```ts
+// nammatham version 0.5.0-alpha or above
 import { BaseFunction, Binding, functionName } from 'nammatham';
 
 const functionBinding1 = [
