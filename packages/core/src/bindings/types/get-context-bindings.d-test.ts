@@ -1,5 +1,5 @@
 import type { Equal, Expect } from '@type-challenges/utils';
-import { GetContextBindings } from './get-context-bindings';
+import { GetBindings } from './get-context-bindings';
 import { ContextBindings, HttpRequest, HttpResponse, Timer } from '@azure/functions';
 import { HttpBinding, TimerTriggerBinding, HttpTriggerBinding } from '../interfaces';
 
@@ -29,5 +29,5 @@ type ExpectedType = ContextBindings &
 
 type Cases = [
   // Test all cases
-  Expect<Equal<GetContextBindings<typeof bindings>, ExpectedType>>
+  Expect<Equal<GetBindings<typeof bindings>, ExpectedType>>
 ];

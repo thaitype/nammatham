@@ -1,12 +1,10 @@
 import { inject } from 'inversify';
 import { BaseFunction, Binding, functionName } from 'nammatham';
 import { Service } from './services';
-import { HttpResponse } from '@azure/functions';
 
 const bindings = [
-  Binding.httpTrigger({ name: 'req' as const, direction: 'in', type: 'httpTrigger' }), // make string to literal type
-  // Binding.http({ name: '$return' as const }), // make string to literal type
-  Binding.httpWithReturn(),
+  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  Binding.http({ name: 'res' as const }), // make string to literal type
 ];
 
 @functionName('WithTypeUtility', ...bindings)
@@ -15,8 +13,8 @@ export class WithTypeUtilityFunction extends BaseFunction<typeof bindings> {
     super();
   }
 
-  public override async execute() {
+  public override execute() {
     const { name } = this.req.query;
-    return this.res.send();
+    this.res.send(`hello WithTypeUtility with ${name} ${this.service.getData()}`);
   }
 }
