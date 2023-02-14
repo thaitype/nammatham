@@ -111,7 +111,7 @@ This is basic to use partially type support, you can follow steps below:
 
 This method will support full support type when bindings config is set, for example below:
 
-you can define your own `function.json` in Typescript object (as you can see the variable `bindings`), this will binding type into `ContextBindings` by using type utility `GetBindings`
+you can define your own `function.json` in Typescript object (as you can see the variable `bindings`), this will binding type into `this.context.bindings`.
 
 ```ts
 import { BaseFunction, Binding, functionName } from 'nammatham';
@@ -126,6 +126,7 @@ export class UserFunction extends BaseFunction<typeof bindings> {
 
   public override execute() {
     const { req } = this.context.bindings;
+    //       ^---- `req` will be type HttpRequest
     const name = req.query.name;
     this.context.res = {
       body: `hello get user with ${name}}`,
@@ -171,7 +172,8 @@ export class UserFunction extends BaseFunction {
     super();
   }
   
-  public getUsers(req: HttpRequest): void {
+  public getUsers(): void {
+    const { req } = this.context.bindings;
     const name = req.query.name;
     const message = `hello get user with ${name}, service data: ${this.userService.getData()}`;
     this.context.log(message);
