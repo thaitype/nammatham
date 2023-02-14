@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { NammathamApp } from '../../../src/main';
+import { NammathamApp } from '../../../../src/main';
 import { WithTypeUtilityFunction } from './functions/with-type-utility.controller';
 import { Service } from './functions/services';
 
