@@ -13,18 +13,18 @@ export type AuthorizationLevelType = typeof AuthorizationLevel[keyof typeof Auth
 /**
  * Azure Functions Http Trigger Request Type
  */
-export type httpTriggerType = 'httpTrigger';
+export type HttpTriggerType = 'httpTrigger';
 
 /**
  * HttpTrigger Binding
  *
  * read more: [HttpTrigger Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#configuration)
  */
-export interface httpTriggerBinding<T> extends BaseFunctionBinding<httpTriggerType, T> {
+export interface HttpTriggerBinding<T> extends BaseFunctionBinding<HttpTriggerType, T> {
   /**
    * Required - must be set to `httpTrigger`.
    */
-  type: httpTriggerType;
+  type: HttpTriggerType;
   /**
    * Required - must be set to in.
    */
@@ -52,6 +52,10 @@ export interface httpTriggerBinding<T> extends BaseFunctionBinding<httpTriggerTy
  */
 export type HttpType = 'http';
 
+
+/**
+ * Binding output Http Trigger with [Http Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-output?tabs=in-process&pivots=programming-language-javascript)
+ */
 // TODO: rename from HttpBinding to HttpResponseBinding
 export interface HttpBinding<T> extends BaseFunctionBinding<HttpType, T> {
   type: HttpType;

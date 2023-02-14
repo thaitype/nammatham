@@ -133,7 +133,7 @@ this.context.res = {
 
 However, the Azure Functions library (@azure/functions@3.5.0) does not provide a specific type for the `Context.bindings` object. This can make it difficult for developers to correctly type the objects being injected into the function. 
 
-<!-- Nammatham solves this problem by using a `GetContextBindings` type to extract the type from the `function.json` file, which is defined in a TypeScript object. This allows developers to correctly type the objects being injected, such as in the example provided where the `req` object is correctly typed as an `HttpRequest` object. -->
+<!-- Nammatham solves this problem by using a `GetBindings` type to extract the type from the `function.json` file, which is defined in a TypeScript object. This allows developers to correctly type the objects being injected, such as in the example provided where the `req` object is correctly typed as an `HttpRequest` object. -->
 
 ```ts
 @functionName('WithTypeUtility', ...functionBinding1)
@@ -161,17 +161,17 @@ export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding
 ## 5. Why a single class per azure function
 
 Previous design, we're required to create a function bindings config (same as `function.json`) before starting declare the class.
-Because we need a type of function bindings and using `GetContextBindings<T>` type to extract type from it.
+Because we need a type of function bindings and using `GetBindings<T>` type to extract type from it.
 
 This can make inconvenience we're using this library in a couple of reasons:
 1. When you have to declare more than 1 function in a single class, the function bindings config will be seperated from the method (`@functionName` decorator) you defined the azure functions.
-2. We need to use `GetContextBindings` type to extract type from `Context.bindings` to passing into the method arguments.
+2. We need to use `GetBindings` type to extract type from `Context.bindings` to passing into the method arguments.
 
 As you can see the example below:
 
 ```ts
 // nammatham@0.4.0-alpha
-import { BaseController, controller, functionName, GetContextBindings, httpTriggerBinding, HttpBinding } from 'nammatham';
+import { BaseController, controller, functionName, GetBindings, httpTriggerBinding, HttpBinding } from 'nammatham';
 
 const functionBinding1 = [
   {
@@ -202,7 +202,7 @@ const functionBinding2 = [
 @controller()
 export class MyController extends BaseController {
   @functionName('function1', ...functionBinding1)
-  public function1({ req }: GetContextBindings<typeof functionBinding1>): void {
+  public function1({ req }: GetBindings<typeof functionBinding1>): void {
     const name = req.query.name;
     this.context.res = {
       body: `hello function1 with ${name}`,
@@ -210,7 +210,7 @@ export class MyController extends BaseController {
   }
 
   @functionName('function2', ...functionBinding2)
-  public function2({ req }: GetContextBindings<typeof functionBinding2>): void {
+  public function2({ req }: GetBindings<typeof functionBinding2>): void {
     const name = req.query.name;
     this.context.res = {
       body: `hello function1 with ${name}`,

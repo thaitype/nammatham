@@ -19,7 +19,7 @@ export const azFunctionHandlebarsTemplate = stripIndent(`
     context: Context,
     ...args: any[]
   ): Promise<void> {
-    app.run({
+    return app.run({
       classTarget: {{controllerName}},
       azureFunctionParams: [context, ...args]
     });

@@ -111,7 +111,7 @@ This is basic to use partially type support, you can follow steps below:
 
 This method will support full support type when bindings config is set, for example below:
 
-you can define your own `function.json` in Typescript object (as you can see the variable `bindings`), this will binding type into `ContextBindings` by using type utility `GetContextBindings`
+you can define your own `function.json` in Typescript object (as you can see the variable `bindings`), this will binding type into `ContextBindings` by using type utility `GetBindings`
 
 ```ts
 import { BaseFunction, Binding, functionName } from 'nammatham';
