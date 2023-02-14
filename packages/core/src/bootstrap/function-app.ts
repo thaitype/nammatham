@@ -12,6 +12,8 @@ import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 import { extractRelativeWorkingDirectory, removeExtension } from './utils';
 import { ControllerMetadata } from '../interfaces';
 
+const nammathamCacheDir = '.nammatham';
+
 export interface IFunctionAppOption {
   /**
    * Allow self define container
@@ -67,6 +69,9 @@ async function appendGitignore(cwd: string, functionName: string) {
   if (!gitignoreLines.includes(functionName)) {
     gitignoreLines.push(functionName);
   }
+  if(!gitignoreLines.includes(nammathamCacheDir)){
+    gitignoreLines.push(nammathamCacheDir);
+  }
   await fsPromise.writeFile(gitignorePath, gitignoreLines.join('\n'), 'utf8');
 }
 
@@ -94,21 +99,22 @@ export class FunctionApp {
    * Only 'Build' mode will execute this method.
    */
   public async build() {
-    const option = this.option;
-    const cwd = option.cwd ?? process.cwd();
-    const output = option.output ?? '';
-    const outDir = option.outDir ?? 'dist';
-    const extension = option.extension ?? 'js';
-    const enableGitignore = option.gitignore ?? true;
-    const enableClean = option.clean ?? true;
+    // const option = this.option;
+    this.option.cwd = this.option.cwd ?? process.cwd();
+  
+    this.option.output = this.option.output ?? '';
+    this.option.outDir = this.option.outDir ?? 'dist';
+    this.option.extension = this.option.extension ?? 'js';
+    this.option.gitignore = this.option.gitignore ?? true;
+    this.option.clean = this.option.clean ?? true;
 
     const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(this.option.controllers || []);
 
-    const runtimeWorkingDirectory = extractRelativeWorkingDirectory(cwd, option.bootstrapPath);
+    const runtimeWorkingDirectory = extractRelativeWorkingDirectory(this.option.cwd, this.option.bootstrapPath);
     const startupPath = slash(
-      path.join('..', runtimeWorkingDirectory, removeExtension(path.basename(option.bootstrapPath)))
+      path.join('..', runtimeWorkingDirectory, removeExtension(path.basename(this.option.bootstrapPath)))
     );
-    const bootstrapCode = await fsPromise.readFile(option.bootstrapPath, 'utf8');
+    const bootstrapCode = await fsPromise.readFile(this.option.bootstrapPath, 'utf8');
     const controllerLocator = new ControllerLocator(bootstrapCode);
 
     for (const metadata of azureFunctionsMethodMetadata) {
@@ -117,15 +123,16 @@ export class FunctionApp {
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
       const functionName = metadata.name;
 
-      const functionPath = path.join(output, functionName);
+      const functionPath = path.join(this.option.output, functionName);
       // TODO: Make concurrent later
-      if (enableClean) {
+      if (this.option.clean) {
         fs.rmSync(functionPath, { recursive: true, force: true });
       }
       await fsPromise.mkdir(functionPath, { recursive: true });
+      await fsPromise.mkdir(nammathamCacheDir, { recursive: true });
       const functionBinding: AzureFunctionJsonConfig = {
         bindings: metadata.binding,
-        scriptFile: slash(path.join('..', outDir, functionPath, `index.${extension}`)),
+        scriptFile: slash(path.join('..', this.option.outDir, functionPath, `index.${this.option.extension}`)),
       };
       await fsPromise.writeFile(
         path.join(functionPath, 'function.json'),
@@ -142,7 +149,7 @@ export class FunctionApp {
 
       await fsPromise.writeFile(path.join(functionPath, 'index.ts'), azFunctionEndpointCode, 'utf8');
 
-      if (enableGitignore) await appendGitignore(cwd, functionName);
+      if (this.option.gitignore) await appendGitignore(this.option.cwd, functionName);
     }
   }
 }
