@@ -1,7 +1,7 @@
 # Define Azure Functions
 
 In order to define Azure Functions, simply do the following steps:
-1. Define a `Function` Class which extend class `BaseController` 
+1. Define a `Function` Class which extend class `BaseFunction` 
 2. Using `@functionName` decorator at the class to define our Azure Functions
 
 ## @functionName decorator

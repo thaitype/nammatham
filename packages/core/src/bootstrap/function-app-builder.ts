@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import { FunctionApp, IFunctionAppOption } from './function-app';
 import { Services } from './services';
-import { exit } from 'process';
+import process from 'process';
 import { resolveAllAzureFunctions } from './attach-controllers';
 
 interface IFunctionAppBuilderOption {
@@ -54,16 +54,30 @@ export class FunctionAppBuilder {
     const set = new Set(array);
     if (array.length !== set.size) {
       console.error(`The array '${name}' is not unique`);
-      exit(1);
+      process.exit(1);
     }
+  }
+
+  // TODO: Refactor for isolated log class
+  private throwError(message: string, verbose: boolean, error: unknown = null, exitCode = 1){
+    if(error instanceof Error){
+      console.error(`${message} ${error.message}`);
+    } else {
+      console.error(error);
+    }
+    if(verbose) console.error(error);
+    process.exit(exitCode);
   }
   /**
    * Start generate files
    */
   build() {
+    const env = {
+      nammatham_env: process.env.nammatham_env,
+      nammatham_verbose: process.env.nammatham_verbose === 'true' ? true : false,
+    }
     this.isUnique(this.functionAppOption.controllers || [], 'controller');
-
-    const nammathamMode = (process.env.nammatham_env ?? 'runtime').toLowerCase() as 'build' | 'runtime';
+    const nammathamMode = (env.nammatham_env ?? 'runtime').toLowerCase() as 'build' | 'runtime';
     this.functionApp = new FunctionApp(this.functionAppOption);
     /**
      * Binding at root in both build & runtime mode
@@ -73,13 +87,18 @@ export class FunctionAppBuilder {
      * Deciding run mode
      */
     if (nammathamMode === 'build') {
-      console.log(`FunctionAppBuilder running build mode`);
-      this.functionApp.build();
+      this.functionApp
+        .build()
+        .then(() => {
+          console.log(`Nammatham generates Azure Function handlers successfully`);
+        })
+        .catch((error: unknown) => {
+          this.throwError(`Nammatham generates failed with reason:`, env.nammatham_verbose, error);
+        });
     } else if (nammathamMode === 'runtime') {
-      console.log('runtime mode');
+      console.log(`Nammatham initializes completed`);
     } else {
-      console.error(`Not support '${nammathamMode}' mode, only support 'runtime' and 'build'`);
-      exit(1);
+      this.throwError(`Not support '${nammathamMode}' mode, only support 'runtime' and 'build'`, env.nammatham_verbose);
     }
   }
 

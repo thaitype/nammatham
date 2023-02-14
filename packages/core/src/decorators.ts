@@ -1,5 +1,5 @@
 import { injectable, decorate } from 'inversify';
-import { METADATA_KEY, TYPE } from './contants';
+import { METADATA_KEY } from './contants';
 import { ControllerMetadata } from './interfaces';
 import { BaseFunctionBinding } from './bindings';
 
@@ -17,23 +17,26 @@ function flattenBindingsArray<T>(bindings: Bindings<T>) {
     }
   }
 
-  for (const binding of flattenBindings) {
-    console.log(`[Binding] '' register ${binding.name} with type ${binding.type}`);
-  }
   return flattenBindings;
 }
 
+/**
+ * Use for attach the Function Class into Dependency Injection tool. It requires to bind with Inversify's Container.
+ * 
+ * @param name - Function Name
+ * @param bindings - Azure Function Binding, which is accept array of `BaseFunctionBinding` Object or `BaseFunctionBinding` Object. This will be convert to [function.json](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#functionjson) (The configuration file of Azure Function)
+ */
 export function functionName<T = null>(
   name: string,
-  // ...middleware: Array<Middleware>
   ...bindings: Bindings<T>
 ) {
   return (target: NewableFunction): void => {
     decorate(injectable(), target);
-
-    console.log(`Register controller target ${target.name}`);
+    const flattenBindings = flattenBindingsArray<T>(bindings);
+    const bindingMessage = flattenBindings.map(b => b.type).sort().join(', ');
+    console.log(`Function: '${name}' - Binding with [${bindingMessage}]`);
     const currentMetadata: ControllerMetadata<T> = {
-      binding: flattenBindingsArray<T>(bindings),
+      binding: flattenBindings,
       name,
       target,
     };
@@ -54,43 +57,3 @@ export function functionName<T = null>(
     Reflect.defineMetadata(METADATA_KEY.controller, newMetadata, Reflect);
   };
 }
-
-// export function functionName<T = null>(
-//   name: string,
-//   // ...middleware: Array<Middleware>
-//   ...bindings: Array<BaseFunctionBinding<T, string> | [BaseFunctionBinding<T, string>, BaseFunctionBinding<T, string>]>
-// ): HandlerDecorator {
-//   return (target: DecoratorTarget, key: string): void => {
-//     const flattenBindings: BaseFunctionBinding<T, string>[] = [];
-//     for (const binding of bindings) {
-//       if (Array.isArray(binding)) {
-//         flattenBindings.push(...binding);
-//       } else {
-//         flattenBindings.push(binding);
-//       }
-//     }
-
-//     for (const binding of flattenBindings) {
-//       console.log(`[Binding] '${name}' register ${binding.name} with type ${binding.type}`);
-//     }
-
-//     const metadata: AzureFunctionMethodMetadata<T> = {
-//       // key,
-//       name,
-//       target,
-//       binding: flattenBindings,
-//     };
-
-//     let metadataList: Array<AzureFunctionMethodMetadata<T>> = [];
-
-//     if (!Reflect.hasOwnMetadata(METADATA_KEY.azureFunction, target.constructor)) {
-//       Reflect.defineMetadata(METADATA_KEY.azureFunction, metadataList, target.constructor);
-//     } else {
-//       metadataList = Reflect.getOwnMetadata(METADATA_KEY.azureFunction, target.constructor) as Array<
-//         AzureFunctionMethodMetadata<T>
-//       >;
-//     }
-
-//     metadataList.push(metadata);
-//   };
-// }
