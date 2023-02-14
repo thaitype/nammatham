@@ -30,8 +30,8 @@
     "lodash": "^4.17.21",
     "slash": "^3.0.0",
     "strip-indent": "^3.0.0",
-    "typescript": "^4.9.4",
-    "type-fest": "^3.5.3"
+    "type-fest": "^3.5.3",
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.191"
@@ -44,14 +44,14 @@
     "registry": "https://registry.npmjs.org/"
   },
   "ava": {
-		"extensions": [
-			"ts"
-		],
-		"require": [
-			"ts-node/register"
-		],
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
     "ignoredByWatcher": [
       "tests/**"
     ]
-	}
+  }
 }

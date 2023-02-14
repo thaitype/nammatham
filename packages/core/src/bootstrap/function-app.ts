@@ -3,6 +3,7 @@ import fsPromise from 'node:fs/promises';
 import fs from 'node:fs';
 import slash from 'slash';
 import path from 'node:path';
+import _ from 'lodash';
 import { attachControllers, resolveAllAzureFunctions } from './attach-controllers';
 import { AzureFunctionJsonConfig } from '../bindings';
 import { azFunctionTemplate } from './templates';
@@ -114,7 +115,7 @@ export class FunctionApp {
       const controllerName = (metadata.target as { name: string }).name;
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
-      const functionName = metadata.name;
+      const functionName = _.camelCase(metadata.name);
 
       const functionPath = path.join(output, functionName);
       // TODO: Make concurrent later
