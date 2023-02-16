@@ -15,29 +15,33 @@ interface IFunctionAppBuilderOption {
 export class FunctionAppBuilder {
   protected functionApp!: FunctionApp;
   protected functionAppOption: IFunctionAppOption;
-  protected container: Container;
-  protected services: Services;
+  protected _container: Container;
+  protected _services: Services;
 
   constructor(bootstrapPath: string, option?: IFunctionAppBuilderOption) {
-    this.container = option?.container ?? new Container();
-    this.services = new Services(this.container);
+    this._container = option?.container ?? new Container();
+    this._services = new Services(this._container);
     this.functionAppOption = {
       bootstrapPath,
-      container: this.container,
+      container: this._container,
       controllers: [],
     };
   }
 
   public setContainer(container: Container) {
-    this.container = container;
+    this._container = container;
   }
 
-  public getContainer() {
-    return this.container;
+  get container() {
+    return this._container;
+  }
+
+  get services(){
+    return this._services;
   }
 
   public configureServices(callback: (services: Services) => void) {
-    callback(this.services);
+    callback(this._services);
   }
 
   /**
@@ -82,7 +86,7 @@ export class FunctionAppBuilder {
     /**
      * Binding at root in both build & runtime mode
      */
-    this.functionApp.bindControllersWithContainer(this.container);
+    this.functionApp.bindControllersWithContainer(this._container);
     /**
      * Deciding run mode
      */
