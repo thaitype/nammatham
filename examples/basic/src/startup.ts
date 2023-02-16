@@ -20,8 +20,6 @@ builder.configureServices(services => {
 
 // Singleton objects are the same for every object and every request.
 
-// builder.getContainer().bind(Service).toSelf();
-
 /**
  * Using env var to enable the build process
  */
