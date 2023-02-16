@@ -200,7 +200,7 @@ export class UserService {
 ## Using Inversify API for Binding Services
 
 In some cases, if you want to binding services with [Inversify Container](https://github.com/inversify/InversifyJS/blob/master/wiki/container_api.md) by yourself.
-In the startup file, you can simply get the Container from `builder.getContainer()` as shown in the example below:
+In the startup file, you can simply get the Container from `builder.container` as shown in the example below:
 
 ```ts
 // src/startup.ts
@@ -211,10 +211,8 @@ import { UserFunction } from './functions/user.function';
 
 const builder = NammathamApp.createBuilder(__filename);
 builder.addFunctions(UserFunction);
-// Get container from builder
-const contaienr = builder.getContainer();
 // Using Inversify Container API
-contaienr.bind(Service).toSelf();
+builder.container.bind(Service).toSelf();
 
 builder.build();
 
