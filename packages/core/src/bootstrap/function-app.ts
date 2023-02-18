@@ -1,6 +1,5 @@
 import { Container } from 'inversify';
 import fsPromise from 'node:fs/promises';
-import fs from 'node:fs';
 import slash from 'slash';
 import path from 'node:path';
 import _ from 'lodash';
@@ -11,6 +10,8 @@ import { ControllerLocator } from './controller-locator';
 import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 import { extractRelativeWorkingDirectory, removeExtension } from './utils';
 import { ControllerMetadata } from '../interfaces';
+import { GitignoreManager } from './gitignore-manager';
+import { NammathamCacheManager } from './nammatham-cache-manager';
 
 export interface IFunctionAppOption {
   /**
@@ -56,20 +57,6 @@ export interface IFunctionAppOption {
   controllers?: NewableFunction[];
 }
 
-async function appendGitignore(cwd: string, functionName: string) {
-  const gitignorePath = path.join(cwd, '.gitignore');
-  if (!fs.existsSync(gitignorePath)) {
-    await fsPromise.writeFile(gitignorePath, functionName, 'utf8');
-    return;
-  }
-  // Assume the gitignore file is a small file, more secure: https://geshan.com.np/blog/2021/10/nodejs-read-file-line-by-line/
-  const gitignoreLines = (await fsPromise.readFile(gitignorePath, 'utf8')).split(/\r?\n/);
-  if (!gitignoreLines.includes(functionName)) {
-    gitignoreLines.push(functionName);
-  }
-  await fsPromise.writeFile(gitignorePath, gitignoreLines.join('\n'), 'utf8');
-}
-
 export class FunctionApp {
   constructor(protected option: IFunctionAppOption) {}
 
@@ -94,38 +81,35 @@ export class FunctionApp {
    * Only 'Build' mode will execute this method.
    */
   public async build() {
-    const option = this.option;
-    const cwd = option.cwd ?? process.cwd();
-    const output = option.output ?? '';
-    const outDir = option.outDir ?? 'dist';
-    const extension = option.extension ?? 'js';
-    const enableGitignore = option.gitignore ?? true;
-    const enableClean = option.clean ?? true;
+    this.option.cwd = this.option.cwd ?? process.cwd();
+    this.option.output = this.option.output ?? '';
+    this.option.outDir = this.option.outDir ?? 'dist';
+    this.option.extension = this.option.extension ?? 'js';
+    this.option.gitignore = this.option.gitignore ?? true;
+    this.option.clean = this.option.clean ?? true;
 
     const azureFunctionsMethodMetadata: ControllerMetadata[] = resolveAllAzureFunctions(this.option.controllers || []);
 
-    const runtimeWorkingDirectory = extractRelativeWorkingDirectory(cwd, option.bootstrapPath);
+    const runtimeWorkingDirectory = extractRelativeWorkingDirectory(this.option.cwd, this.option.bootstrapPath);
     const startupPath = slash(
-      path.join('..', runtimeWorkingDirectory, removeExtension(path.basename(option.bootstrapPath)))
+      path.join('..', runtimeWorkingDirectory, removeExtension(path.basename(this.option.bootstrapPath)))
     );
-    const bootstrapCode = await fsPromise.readFile(option.bootstrapPath, 'utf8');
+    const bootstrapCode = await fsPromise.readFile(this.option.bootstrapPath, 'utf8');
     const controllerLocator = new ControllerLocator(bootstrapCode);
+    const functionNames = azureFunctionsMethodMetadata.map(m => m.name);
 
+    await this.cleanFunctions(functionNames);
     for (const metadata of azureFunctionsMethodMetadata) {
       const controllerName = (metadata.target as { name: string }).name;
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
       const controllerRelativePath = slash(path.join('..', runtimeWorkingDirectory, controllerImportPath));
       const functionName = metadata.name;
 
-      const functionPath = path.join(output, functionName);
-      // TODO: Make concurrent later
-      if (enableClean) {
-        fs.rmSync(functionPath, { recursive: true, force: true });
-      }
+      const functionPath = path.join(this.option.output, functionName);
       await fsPromise.mkdir(functionPath, { recursive: true });
       const functionBinding: AzureFunctionJsonConfig = {
         bindings: metadata.binding,
-        scriptFile: slash(path.join('..', outDir, functionPath, `index.${extension}`)),
+        scriptFile: slash(path.join('..', this.option.outDir, functionPath, `index.${this.option.extension}`)),
       };
       await fsPromise.writeFile(
         path.join(functionPath, 'function.json'),
@@ -141,8 +125,21 @@ export class FunctionApp {
       });
 
       await fsPromise.writeFile(path.join(functionPath, 'index.ts'), azFunctionEndpointCode, 'utf8');
-
-      if (enableGitignore) await appendGitignore(cwd, functionName);
     }
+    if (this.option.gitignore) {
+      await this.addFunctionInGitignore(this.option.cwd, functionNames);
+    }
+  }
+
+  private async addFunctionInGitignore(cwd: string, functionNames: string[]) {
+    const gitignoreManager = new GitignoreManager('Nammatham/AzureFunctions/GeneratedFiles', this.option.cwd);
+    await gitignoreManager.readLines();
+    gitignoreManager.appendContentLines(...functionNames);
+    await gitignoreManager.writeLines();
+  }
+
+  private async cleanFunctions(functionNames: string[]){
+    const cacheManager = new NammathamCacheManager(this.option, functionNames);
+    await cacheManager.execute();
   }
 }
