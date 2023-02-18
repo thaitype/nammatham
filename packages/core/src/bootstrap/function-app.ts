@@ -13,8 +13,6 @@ import { extractRelativeWorkingDirectory, removeExtension } from './utils';
 import { ControllerMetadata } from '../interfaces';
 import { GitignoreManager } from './gitignore-manager';
 
-const nammathamCacheDir = '.nammatham';
-
 export interface IFunctionAppOption {
   /**
    * Allow self define container
@@ -101,7 +99,7 @@ export class FunctionApp {
     const bootstrapCode = await fsPromise.readFile(this.option.bootstrapPath, 'utf8');
     const controllerLocator = new ControllerLocator(bootstrapCode);
 
-    const gitignoreManager = new GitignoreManager(this.option.cwd);
+    const gitignoreManager = new GitignoreManager('Nammatham/AzureFunctions/GeneratedFiles' ,this.option.cwd);
     await gitignoreManager.readLines();
     for (const metadata of azureFunctionsMethodMetadata) {
       const controllerName = (metadata.target as { name: string }).name;
@@ -115,7 +113,6 @@ export class FunctionApp {
         fs.rmSync(functionPath, { recursive: true, force: true });
       }
       await fsPromise.mkdir(functionPath, { recursive: true });
-      await fsPromise.mkdir(nammathamCacheDir, { recursive: true });
       const functionBinding: AzureFunctionJsonConfig = {
         bindings: metadata.binding,
         scriptFile: slash(path.join('..', this.option.outDir, functionPath, `index.${this.option.extension}`)),

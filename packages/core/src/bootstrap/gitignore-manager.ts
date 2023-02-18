@@ -5,12 +5,11 @@ import _ from 'lodash';
 
 export class GitignoreManager {
   readonly gitignoreFile = '.gitignore';
-  readonly scopeIdentifier = 'Nammatham/AzureFunctions/GeneratedFiles';
   gitignorePath!: string;
   public gitignoreLines: string[] = [];
   protected contentLines: string[] = [];
 
-  constructor(cwd?: string) {
+  constructor(private scopeIdentifier = 'Nammatham/AzureFunctions', cwd?: string) {
     cwd = cwd ?? process.cwd();
     this.gitignorePath = path.join(cwd, this.gitignoreFile);
   }
