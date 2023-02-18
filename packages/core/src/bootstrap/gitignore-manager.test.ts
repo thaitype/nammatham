@@ -61,7 +61,7 @@ test('GitignoreManager Full Cycle when no existing scope', t => {
   ]);
 });
 
-test('GitignoreManager Full Cycle when wrong format scope 1', t => {
+test('GitignoreManager Full Cycle when mismatch format scope 1', t => {
   const gitignoreManager = new GitignoreManager();
   gitignoreManager.gitignoreLines = [
     'line1',
@@ -79,6 +79,49 @@ test('GitignoreManager Full Cycle when wrong format scope 1', t => {
     'line2', 
   ]);
 });
+
+test('GitignoreManager Full Cycle when mismatch format scope 2', t => {
+  const gitignoreManager = new GitignoreManager();
+  gitignoreManager.gitignoreLines = [
+    'line1',
+    gitignoreManager.endScope(),
+    gitignoreManager.startScope(),
+    gitignoreManager.endScope(),
+    'line2',  
+  ];
+  gitignoreManager.appendFunctionName('functionA');
+  gitignoreManager.constructWriteScope();
+  t.deepEqual(gitignoreManager.gitignoreLines, [
+    gitignoreManager.startScope(),
+    'functionA',
+    gitignoreManager.endScope(),
+    'line1',
+    'line2', 
+  ]);
+});
+
+test('GitignoreManager Full Cycle when mismatch format scope 3', t => {
+  const gitignoreManager = new GitignoreManager();
+  gitignoreManager.gitignoreLines = [
+    'line1',
+    gitignoreManager.endScope(),
+    gitignoreManager.startScope(),
+    'line-xx',
+    gitignoreManager.endScope(),
+    'line2',  
+  ];
+  gitignoreManager.appendFunctionName('functionA');
+  gitignoreManager.constructWriteScope();
+  t.deepEqual(gitignoreManager.gitignoreLines, [
+    gitignoreManager.startScope(),
+    'functionA',
+    gitignoreManager.endScope(),
+    'line1',
+    'line-xx',
+    'line2', 
+  ]);
+});
+
 
 test('GitignoreManager Full Cycle when have existing scope', t => {
   const gitignoreManager = new GitignoreManager();
