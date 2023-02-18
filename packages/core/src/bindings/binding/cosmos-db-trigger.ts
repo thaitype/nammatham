@@ -1,5 +1,5 @@
 import type { PartialBy } from '../../types';
-import { CosmosDBTriggerBinding_v4, CosmosDBTriggerBinding_v2 } from '../interfaces';
+import { CosmosDBTriggerInputBinding_v4, CosmosDBTriggerInputBinding_v2 } from '../interfaces';
 
 /**
  * Create cosmosDBTrigger type binding for Bundle Extension v2 or v3. It requires to install [Bundle extension v2 or v3](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#install-bundle)
@@ -36,9 +36,9 @@ import { CosmosDBTriggerBinding_v4, CosmosDBTriggerBinding_v2 } from '../interfa
  * @param bindings - `CosmosDBTriggerBinding_v2`
  * @returns `CosmosDBTriggerBinding_v2` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger_v2<T extends PartialBy<CosmosDBTriggerBinding_v2<unknown>, 'type' | 'direction'>>(
+export function cosmosDBTrigger_v2<T extends PartialBy<CosmosDBTriggerInputBinding_v2<unknown>, 'type' | 'direction'>>(
   bindings: T
-): CosmosDBTriggerBinding_v2<T['name']> {
+): CosmosDBTriggerInputBinding_v2<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -81,9 +81,9 @@ export function cosmosDBTrigger_v2<T extends PartialBy<CosmosDBTriggerBinding_v2
  * @param bindings - `CosmosDBTriggerBinding_v4`
  * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger_v4<T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>>(
+export function cosmosDBTrigger_v4<T extends PartialBy<CosmosDBTriggerInputBinding_v4<unknown>, 'type' | 'direction'>>(
   bindings: T
-): CosmosDBTriggerBinding_v4<T['name']> {
+): CosmosDBTriggerInputBinding_v4<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -126,7 +126,7 @@ export function cosmosDBTrigger_v4<T extends PartialBy<CosmosDBTriggerBinding_v4
  * @param bindings - `CosmosDBTriggerBinding_v4`
  * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger<T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>>(
+export function cosmosDBTrigger<T extends PartialBy<CosmosDBTriggerInputBinding_v4<unknown>, 'type' | 'direction'>>(
   bindings: T
 ) {
   return cosmosDBTrigger_v4(bindings);
