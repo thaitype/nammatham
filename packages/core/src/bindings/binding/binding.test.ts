@@ -1,5 +1,5 @@
 import test from 'ava';
-import Binding from './binding';
+import Binding from './';
 
 test('Binding httpTrigger', t => {
   const expected = {
