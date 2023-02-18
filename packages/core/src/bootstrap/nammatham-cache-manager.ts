@@ -3,6 +3,7 @@ import path from 'node:path';
 import fsPromise from 'node:fs/promises';
 import fs from 'node:fs';
 import _ from 'lodash';
+import { GitignoreManager } from './gitignore-manager';
 
 const config = {
   cacheDir: '.nammatham',
@@ -67,6 +68,14 @@ export class NammathamCacheManager {
     }
     await fsPromise.mkdir(path.join(this.functionAppOption.cwd || '', config.cacheDir), { recursive: true });
     await fsPromise.writeFile(this.cachePath, JSON.stringify(newCacheData, null, 2), 'utf8');
+    await this.addGitignore();
+  }
+
+  public async addGitignore(){
+    const gitignoreManager = new GitignoreManager('Nammatham/AzureFunctions/Cache', this.functionAppOption.cwd);
+    await gitignoreManager.readLines();
+    gitignoreManager.appendContentLines(config.cacheDir);
+    await gitignoreManager.writeLines();
   }
 
 }
