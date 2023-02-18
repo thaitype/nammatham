@@ -1,20 +1,18 @@
+/**
+ * Equivalent `BindingDefinition` in `@azure/functions@3.5.0`
+ */
+
 export interface BaseFunctionBinding<T, N> {
   /**
-   * Binding Type
-   *
-   * Required
+   * The type of your binding, as defined in function.json.
    */
   type: T;
   /**
-   * Binding Direction
-   *
-   * Required
+   * The direction of your binding, as defined in function.json.
    */
-  direction: 'in' | 'out';
+  direction: 'in' | 'out' | 'inout' | undefined;
   /**
-   * Binding Name
-   *
-   * Required - the variable name used in function code for the request or request body.
+   * The name of your binding, as defined in function.json.
    */
   name: N;
 }
