@@ -11,6 +11,7 @@ import { ControllerLocator } from './controller-locator';
 import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 import { extractRelativeWorkingDirectory, removeExtension } from './utils';
 import { ControllerMetadata } from '../interfaces';
+import { GitignoreManager } from './gitignore-manager';
 
 const nammathamCacheDir = '.nammatham';
 
@@ -69,9 +70,6 @@ async function appendGitignore(cwd: string, functionName: string) {
   if (!gitignoreLines.includes(functionName)) {
     gitignoreLines.push(functionName);
   }
-  if(!gitignoreLines.includes(nammathamCacheDir)){
-    gitignoreLines.push(nammathamCacheDir);
-  }
   await fsPromise.writeFile(gitignorePath, gitignoreLines.join('\n'), 'utf8');
 }
 
@@ -101,7 +99,7 @@ export class FunctionApp {
   public async build() {
     // const option = this.option;
     this.option.cwd = this.option.cwd ?? process.cwd();
-  
+
     this.option.output = this.option.output ?? '';
     this.option.outDir = this.option.outDir ?? 'dist';
     this.option.extension = this.option.extension ?? 'js';
@@ -117,6 +115,8 @@ export class FunctionApp {
     const bootstrapCode = await fsPromise.readFile(this.option.bootstrapPath, 'utf8');
     const controllerLocator = new ControllerLocator(bootstrapCode);
 
+    const gitignoreManager = new GitignoreManager(this.option.cwd);
+    await gitignoreManager.readLines();
     for (const metadata of azureFunctionsMethodMetadata) {
       const controllerName = (metadata.target as { name: string }).name;
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
@@ -149,7 +149,11 @@ export class FunctionApp {
 
       await fsPromise.writeFile(path.join(functionPath, 'index.ts'), azFunctionEndpointCode, 'utf8');
 
-      if (this.option.gitignore) await appendGitignore(this.option.cwd, functionName);
+      gitignoreManager.appendFunctionName(functionName);
     }
+    if (this.option.gitignore){
+      await gitignoreManager.writeLines();
+    }
+    
   }
 }
