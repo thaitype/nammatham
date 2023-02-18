@@ -1,6 +1,5 @@
 import { Container } from 'inversify';
 import fsPromise from 'node:fs/promises';
-import fs from 'node:fs';
 import slash from 'slash';
 import path from 'node:path';
 import _ from 'lodash';
@@ -12,6 +11,7 @@ import { IFuncBootstrapOption, funcBootstrap } from './function-bootstrap';
 import { extractRelativeWorkingDirectory, removeExtension } from './utils';
 import { ControllerMetadata } from '../interfaces';
 import { GitignoreManager } from './gitignore-manager';
+import { NammathamCacheManager } from './nammatham-cache-manager';
 
 export interface IFunctionAppOption {
   /**
@@ -81,9 +81,7 @@ export class FunctionApp {
    * Only 'Build' mode will execute this method.
    */
   public async build() {
-    // const option = this.option;
     this.option.cwd = this.option.cwd ?? process.cwd();
-
     this.option.output = this.option.output ?? '';
     this.option.outDir = this.option.outDir ?? 'dist';
     this.option.extension = this.option.extension ?? 'js';
@@ -98,9 +96,9 @@ export class FunctionApp {
     );
     const bootstrapCode = await fsPromise.readFile(this.option.bootstrapPath, 'utf8');
     const controllerLocator = new ControllerLocator(bootstrapCode);
+    const functionNames = azureFunctionsMethodMetadata.map(m => m.name);
 
-    const gitignoreManager = new GitignoreManager('Nammatham/AzureFunctions/GeneratedFiles' ,this.option.cwd);
-    await gitignoreManager.readLines();
+    await this.cleanFunctions(functionNames);
     for (const metadata of azureFunctionsMethodMetadata) {
       const controllerName = (metadata.target as { name: string }).name;
       const controllerImportPath = controllerLocator.getControllerImportPath(controllerName);
@@ -108,10 +106,6 @@ export class FunctionApp {
       const functionName = metadata.name;
 
       const functionPath = path.join(this.option.output, functionName);
-      // TODO: Make concurrent later
-      if (this.option.clean) {
-        fs.rmSync(functionPath, { recursive: true, force: true });
-      }
       await fsPromise.mkdir(functionPath, { recursive: true });
       const functionBinding: AzureFunctionJsonConfig = {
         bindings: metadata.binding,
@@ -131,12 +125,21 @@ export class FunctionApp {
       });
 
       await fsPromise.writeFile(path.join(functionPath, 'index.ts'), azFunctionEndpointCode, 'utf8');
+    }
+    if (this.option.gitignore) {
+      await this.addFunctionInGitignore(this.option.cwd, functionNames);
+    }
+  }
 
-      gitignoreManager.appendContentLines(functionName);
-    }
-    if (this.option.gitignore){
-      await gitignoreManager.writeLines();
-    }
-    
+  private async addFunctionInGitignore(cwd: string, functionNames: string[]) {
+    const gitignoreManager = new GitignoreManager('Nammatham/AzureFunctions/GeneratedFiles', this.option.cwd);
+    await gitignoreManager.readLines();
+    gitignoreManager.appendContentLines(...functionNames);
+    await gitignoreManager.writeLines();
+  }
+
+  private async cleanFunctions(functionNames: string[]){
+    const cacheManager = new NammathamCacheManager(this.option, functionNames);
+    await cacheManager.execute();
   }
 }
