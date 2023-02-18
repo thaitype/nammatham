@@ -8,7 +8,7 @@ export class GitignoreManager {
   readonly scopeIdentifier = 'Nammatham/AzureFunctions/GeneratedFiles';
   gitignorePath!: string;
   public gitignoreLines: string[] = [];
-  protected functionNames: string[] = [];
+  protected contentLines: string[] = [];
 
   constructor(cwd?: string) {
     cwd = cwd ?? process.cwd();
@@ -40,12 +40,12 @@ export class GitignoreManager {
     const startScopePosition = this.gitignoreLines.indexOf(this.startScope());
     const endScopePosition = this.gitignoreLines.indexOf(this.endScope());
     const scopeLength = endScopePosition - startScopePosition;
-    const functionNamesScope = [this.startScope(), ...this.functionNames, this.endScope()];
+    const writingScope = [this.startScope(), ...this.contentLines, this.endScope()];
     if (this.isValidateScope(startScopePosition, endScopePosition)) {
       this.gitignoreLines.splice(startScopePosition, scopeLength + 1);
-      this.insertScope(startScopePosition, functionNamesScope);
+      this.insertScope(startScopePosition, writingScope);
     } else {
-      this.insertScope(0, functionNamesScope);
+      this.insertScope(0, writingScope);
     }
   }
 
@@ -93,9 +93,8 @@ export class GitignoreManager {
     return this.gitignoreLines.splice(index, 0, ...lines);
   }
 
-  public appendFunctionName(functionName: string) {
-    this.functionNames.push(functionName);
-    // for(const [index, line] of this.gitignoreLines.entries()){
+  public appendContentLines(...lines: string[]) {
+    this.contentLines.push(...lines);
   }
 
   public startScope() {

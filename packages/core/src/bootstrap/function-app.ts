@@ -135,7 +135,7 @@ export class FunctionApp {
 
       await fsPromise.writeFile(path.join(functionPath, 'index.ts'), azFunctionEndpointCode, 'utf8');
 
-      gitignoreManager.appendFunctionName(functionName);
+      gitignoreManager.appendContentLines(functionName);
     }
     if (this.option.gitignore){
       await gitignoreManager.writeLines();
