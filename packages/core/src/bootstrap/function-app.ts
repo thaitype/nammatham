@@ -59,20 +59,6 @@ export interface IFunctionAppOption {
   controllers?: NewableFunction[];
 }
 
-async function appendGitignore(cwd: string, functionName: string) {
-  const gitignorePath = path.join(cwd, '.gitignore');
-  if (!fs.existsSync(gitignorePath)) {
-    await fsPromise.writeFile(gitignorePath, functionName, 'utf8');
-    return;
-  }
-  // Assume the gitignore file is a small file, more secure: https://geshan.com.np/blog/2021/10/nodejs-read-file-line-by-line/
-  const gitignoreLines = (await fsPromise.readFile(gitignorePath, 'utf8')).split(/\r?\n/);
-  if (!gitignoreLines.includes(functionName)) {
-    gitignoreLines.push(functionName);
-  }
-  await fsPromise.writeFile(gitignorePath, gitignoreLines.join('\n'), 'utf8');
-}
-
 export class FunctionApp {
   constructor(protected option: IFunctionAppOption) {}
 
