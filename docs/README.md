@@ -4,6 +4,7 @@
 
 - [Introduction](introduction.md)
 - [Define Azure Functions](define-azure-function.md)
+- [All Built-in Binding Type](binding-type.md)
 - [How Nammatham work?](how-it-work.md)
 - [Local Dev](local-dev.md)
 

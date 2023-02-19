@@ -1,3 +1,8 @@
+# All Built-in Binding Type
+
+You can see all built-in binding type in [test case](packages/core/src/test-usecases/all-bindings/fixtures/functions/all-bindings.function.ts) as shown below:
+
+```ts
 import { BaseFunction, Binding, functionName } from '../../../../main';
 import { responseHelper } from '../../../response-helper';
 import { HttpRequest, HttpResponse, Timer} from '@azure/functions';
@@ -64,3 +69,4 @@ export class AllBindingsFunction extends BaseFunction<typeof bindings> {
     this.res.send(responseHelper(name));
   }
 }
+```

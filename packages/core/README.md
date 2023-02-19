@@ -26,7 +26,12 @@ export class UserFunction extends BaseFunction {
 ## Features
 - Provide basic utility for writing Azure Functions
 - Only support TypeScript and [InversifyJS](https://github.com/inversify/Inversify) as the [Most Popular Inversion of Control Container and Dependency Injection Approach](https://npmtrends.com/awilix-vs-bottlejs-vs-inversify-vs-node-dependency-injection-vs-tsyringe-vs-typedi-vs-typescript-ioc) 
-- Built-in support HTTP trigger, and also [support all types of Trigger](docs/define-azure-function.md#custom-binding)
+- Binding & Trigger Built-in type support
+  - HttpTrigger
+  - TimerTrigger
+  - CosmosDBTrigger
+  - If your binding type isn't in the list, please use [Support custom type](docs/define-azure-function.md#custom-binding)
+  - You can see [All available type support](docs/binding-type.md) or create a PR ;).
 - Build Tool Agnostic, this framework just provide the library. It can work with all TypeScript build tool e.g. tsc, esbuild, etc.
 
 ## Installation
@@ -222,13 +227,6 @@ export default builder.getApp();
 ## Documentation
 
 Please read the [full documentation in the repo](docs)
-
-## TODO
-- [ ] Add Log at boostrap level
-- [ ] allow to add Middleware
-- [ ] functionName must be unique
-- [ ] Clean generated function endpoint (already remove controller)
-
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
