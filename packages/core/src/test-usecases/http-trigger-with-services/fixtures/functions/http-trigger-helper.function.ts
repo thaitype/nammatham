@@ -3,14 +3,16 @@ import { BaseFunction, httpTrigger, functionName, AuthorizationLevel } from '../
 import { SingletonService } from '../services/singleton-service';
 import { responseHelper, serviceData } from '../../../response-helper';
 
-@functionName('httpTriggerHelper', httpTrigger(AuthorizationLevel.Anonymous, ["get"], 'test'))
-export class HttpTriggerHelperFunction extends BaseFunction {
+const bindings = httpTrigger(AuthorizationLevel.Anonymous, ["get"], 'test');
+
+@functionName('httpTriggerHelper', bindings)
+export class HttpTriggerHelperFunction extends BaseFunction<typeof bindings> {
   constructor(@inject(SingletonService) private service: SingletonService) {
     super();
   }
 
   public override execute() {
-    const query = this.req?.query;
-    this.res?.send(responseHelper(query?.name, this.service.getData(serviceData)));
+    const query = this.req.query;
+    this.res?.send(responseHelper(query.name, this.service.getData(serviceData)));
   }
 }
