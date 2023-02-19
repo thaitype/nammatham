@@ -1,9 +1,9 @@
 import type { PartialBy } from '../../types';
 import {
-  CosmosDBTriggerBinding_v4,
-  CosmosDBTriggerBinding_v2,
-  CosmosDBBinding_Output_v2,
-  CosmosDBBinding_Output_v4,
+  CosmosDBTriggerBinding_V4,
+  CosmosDBTriggerBinding_V2,
+  CosmosDBBinding_Output_V2,
+  CosmosDBBinding_Output_V4,
 } from '../interfaces';
 
 /**
@@ -38,12 +38,12 @@ import {
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBTriggerBinding_v4`
- * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
+ * @param bindings - `CosmosDBTriggerBinding_V4`
+ * @returns `CosmosDBTriggerBinding_V4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
 export function cosmosDBTrigger_v2<
-  T extends PartialBy<CosmosDBTriggerBinding_v2<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBTriggerBinding_v2<T['name']> {
+  T extends PartialBy<CosmosDBTriggerBinding_V2<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBTriggerBinding_V2<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -83,12 +83,12 @@ export function cosmosDBTrigger_v2<
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBTriggerBinding_v4`
- * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
+ * @param bindings - `CosmosDBTriggerBinding_V4`
+ * @returns `CosmosDBTriggerBinding_V4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
 export function cosmosDBTrigger_v4<
-  T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBTriggerBinding_v4<T['name']> {
+  T extends PartialBy<CosmosDBTriggerBinding_V4<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBTriggerBinding_V4<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -128,11 +128,11 @@ export function cosmosDBTrigger_v4<
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBTriggerBinding_v4`
- * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
+ * @param bindings - `CosmosDBTriggerBinding_V4`
+ * @returns `CosmosDBTriggerBinding_V4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
 export function cosmosDBTrigger<
-  T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>
+  T extends PartialBy<CosmosDBTriggerBinding_V4<unknown>, 'type' | 'direction'>
 >(bindings: T) {
   return cosmosDBTrigger_v4(bindings);
 }
@@ -169,12 +169,12 @@ export function cosmosDBTrigger<
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBBinding_Output_v2`
- * @returns `CosmosDBBinding_Output_v2` Object with `{ type: 'cosmosDB', direction: 'out' }`
+ * @param bindings - `CosmosDBBinding_Output_V2`
+ * @returns `CosmosDBBinding_Output_V2` Object with `{ type: 'cosmosDB', direction: 'out' }`
  */
 export function cosmosDB_output_v2<
-  T extends PartialBy<CosmosDBBinding_Output_v2<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBBinding_Output_v2<T['name']> {
+  T extends PartialBy<CosmosDBBinding_Output_V2<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBBinding_Output_V2<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDB',
@@ -214,12 +214,12 @@ export function cosmosDB_output_v2<
     ```
     @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
-  * @param bindings - `CosmosDBBinding_Output_v4`
-  * @returns `CosmosDBBinding_Output_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
+  * @param bindings - `CosmosDBBinding_Output_V4`
+  * @returns `CosmosDBBinding_Output_V4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
 export function cosmosDB_output_v4<
-  T extends PartialBy<CosmosDBBinding_Output_v4<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBBinding_Output_v4<T['name']> {
+  T extends PartialBy<CosmosDBBinding_Output_V4<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBBinding_Output_V4<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDB',
@@ -259,11 +259,11 @@ export function cosmosDB_output_v4<
     ```
     @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
-  * @param bindings - `CosmosDBBinding_Output_v4`
-  * @returns `CosmosDBBinding_Output_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
+  * @param bindings - `CosmosDBBinding_Output_V4`
+  * @returns `CosmosDBBinding_Output_V4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
 export function cosmosDB_output<
-  T extends PartialBy<CosmosDBBinding_Output_v4<unknown>, 'type' | 'direction'>
+  T extends PartialBy<CosmosDBBinding_Output_V4<unknown>, 'type' | 'direction'>
 >(bindings: T) {
   return cosmosDB_output_v4(bindings);
 }

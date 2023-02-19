@@ -3,20 +3,20 @@ import {
   HttpTriggerBinding,
   HttpBinding,
   TimerTriggerBinding,
-  CosmosDBTriggerBinding_v2,
-  CosmosDBTriggerBinding_v4,
-  CosmosDBBinding_Output_v2,
-  CosmosDBBinding_Output_v4,
+  CosmosDBTriggerBinding_V2,
+  CosmosDBTriggerBinding_V4,
+  CosmosDBBinding_Output_V2,
+  CosmosDBBinding_Output_V4,
 } from './triggers';
 
 export type DefinedFunctionBinding<T extends unknown> =
   | HttpTriggerBinding<T>
   | HttpBinding<T>
   | TimerTriggerBinding<T>
-  | CosmosDBTriggerBinding_v2<T>
-  | CosmosDBTriggerBinding_v4<T>
-  | CosmosDBBinding_Output_v2<T>
-  | CosmosDBBinding_Output_v4<T>;
+  | CosmosDBTriggerBinding_V2<T>
+  | CosmosDBTriggerBinding_V4<T>
+  | CosmosDBBinding_Output_V2<T>
+  | CosmosDBBinding_Output_V4<T>;
 
 /**
  * If `T` type is `null`, then return `DefinedFunctionBinding`,

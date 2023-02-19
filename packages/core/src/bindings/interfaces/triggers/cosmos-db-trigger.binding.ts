@@ -9,7 +9,7 @@ export type CosmosDBTriggerType = 'cosmosDBTrigger';
  * CosmosDBTrigger Type v2 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
 
-export interface CosmosDBTriggerBinding_v2<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
+export interface CosmosDBTriggerBinding_V2<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
   /**
    * Required - Must be set to `cosmosDBTrigger`.
    */
@@ -100,7 +100,7 @@ export interface CosmosDBTriggerBinding_v2<Name> extends BaseFunctionBinding<Cos
 /**
  * CosmosDBTrigger Type v4 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
-export interface CosmosDBTriggerBinding_v4<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
+export interface CosmosDBTriggerBinding_V4<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
   /**
    * Required - Must be set to `cosmosDBTrigger`.
    */
@@ -166,7 +166,7 @@ export interface CosmosDBTriggerBinding_v4<Name> extends BaseFunctionBinding<Cos
  */
 export type CosmosDBType = 'cosmosDB';
 
-export interface CosmosDBBinding_Output_v2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+export interface CosmosDBBinding_Output_V2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
   /**
    * Required - Must be set to `cosmosDB`.
    */
@@ -207,7 +207,7 @@ export interface CosmosDBBinding_Output_v2<Name> extends BaseFunctionBinding<Cos
   useMultipleWriteLocations?: any;
 }
 
-export interface CosmosDBBinding_Output_v4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+export interface CosmosDBBinding_Output_V4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
   /**
    * Required - Must be set to `cosmosDB`.
    */
@@ -244,7 +244,7 @@ export interface CosmosDBBinding_Output_v4<Name> extends BaseFunctionBinding<Cos
   preferredLocations?: any;
 }
 
-export interface CosmosDBBinding_Input_v2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+export interface CosmosDBBinding_Input_V2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
   /**
    * Required - Must be set to `cosmosDB`.
    */
@@ -282,7 +282,7 @@ export interface CosmosDBBinding_Input_v2<Name> extends BaseFunctionBinding<Cosm
   preferredLocations?: any;
 }
 
-export interface CosmosDBBinding_Input_v4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+export interface CosmosDBBinding_Input_V4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
   /**
    * Required - Must be set to `cosmosDB`.
    */
