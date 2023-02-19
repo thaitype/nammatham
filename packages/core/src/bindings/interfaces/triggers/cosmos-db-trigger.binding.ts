@@ -9,17 +9,43 @@ export type CosmosDBTriggerType = 'cosmosDBTrigger';
  * CosmosDBTrigger Type v2 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
 
-export interface CosmosDBTriggerBinding_V2<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
+interface CosmosDBTriggerBinding_Base<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
   /**
    * Required - Must be set to `cosmosDBTrigger`.
    */
   type: CosmosDBTriggerType;
 
   direction: 'in';
+
   /**
    * The name of the Azure Cosmos DB database with the collection being monitored.
    */
   databaseName: string;
+
+  /** 
+  (Optional) The name of the database that holds the collection used to store leases. When not set, the value of the databaseName setting is used.
+  */
+  leaseDatabaseName?: any;
+  /** 
+  (Optional) The time (in milliseconds) for the delay between polling a partition for new changes on the feed, after all current changes are drained. Default is 5,000 milliseconds, or 5 seconds.
+  */
+  feedPollDelay?: any;
+
+  /** 
+  (Optional) When set, it defines, in milliseconds, the interval to kick off a task to compute if partitions are distributed evenly among known host instances. Default is 13000 (13 seconds).
+  */
+  leaseAcquireInterval?: any;
+  /** 
+  (Optional) When set, it defines, in milliseconds, the interval for which the lease is taken on a lease representing a partition. If the lease is not renewed within this interval, it will cause it to expire and ownership of the partition will move to another instance. Default is 60000 (60 seconds).
+  */
+  leaseExpirationInterval?: any;
+}
+
+/**
+ * CosmosDBTrigger Type v2 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
+ */
+
+export interface CosmosDBTriggerBinding_V2<Name> extends CosmosDBTriggerBinding_Base<Name> {
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
@@ -35,10 +61,7 @@ export interface CosmosDBTriggerBinding_V2<Name> extends BaseFunctionBinding<Cos
   When not set, the connectionStringSetting value is used. This parameter is automatically set when the binding is created in the portal. The connection string for the leases collection must have write permissions.
   */
   leaseConnectionStringSetting?: any;
-  /** 
-  (Optional) The name of the database that holds the collection used to store leases. When not set, the value of the databaseName setting is used.
-  */
-  leaseDatabaseName?: any;
+
   /** 
   (Optional) The name of the collection used to store leases. When not set, the value leases is used.
   */
@@ -55,18 +78,7 @@ export interface CosmosDBTriggerBinding_V2<Name> extends BaseFunctionBinding<Cos
   (Optional) When set, the value is added as a prefix to the leases created in the Lease collection for this function. Using a prefix allows two separate Azure Functions to share the same Lease collection by using different prefixes.
   */
   leaseCollectionPrefix?: any;
-  /** 
-  (Optional) The time (in milliseconds) for the delay between polling a partition for new changes on the feed, after all current changes are drained. Default is 5,000 milliseconds, or 5 seconds.
-  */
-  feedPollDelay?: any;
-  /** 
-  (Optional) When set, it defines, in milliseconds, the interval to kick off a task to compute if partitions are distributed evenly among known host instances. Default is 13000 (13 seconds).
-  */
-  leaseAcquireInterval?: any;
-  /** 
-  (Optional) When set, it defines, in milliseconds, the interval for which the lease is taken on a lease representing a partition. If the lease is not renewed within this interval, it will cause it to expire and ownership of the partition will move to another instance. Default is 60000 (60 seconds).
-  */
-  leaseExpirationInterval?: any;
+
   /** 
   (Optional) When set, it defines, in milliseconds, the renew interval for all leases for partitions currently held by an instance. Default is 17000 (17 seconds).
   */
@@ -100,17 +112,7 @@ export interface CosmosDBTriggerBinding_V2<Name> extends BaseFunctionBinding<Cos
 /**
  * CosmosDBTrigger Type v4 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
-export interface CosmosDBTriggerBinding_V4<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
-  /**
-   * Required - Must be set to `cosmosDBTrigger`.
-   */
-  type: CosmosDBTriggerType;
-
-  direction: 'in';
-  /**
-   * The name of the Azure Cosmos DB database with the collection being monitored.
-   */
-  databaseName: string;
+export interface CosmosDBTriggerBinding_V4<Name> extends CosmosDBTriggerBinding_Base<Name> {
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
@@ -128,10 +130,6 @@ export interface CosmosDBTriggerBinding_V4<Name> extends BaseFunctionBinding<Cos
   */
   leaseConnection?: any;
   /** 
-  (Optional) The name of the database that holds the container used to store leases. When not set, the value of the databaseName setting is used.
-  */
-  leaseDatabaseName?: any;
-  /** 
   (Optional) The name of the container used to store leases. When not set, the value leases is used.
   */
   leaseContainerName?: any;
@@ -147,175 +145,4 @@ export interface CosmosDBTriggerBinding_V4<Name> extends BaseFunctionBinding<Cos
   (Optional) When set, the value is added as a prefix to the leases created in the Lease container for this function. Using a prefix allows two separate Azure Functions to share the same Lease container by using different prefixes.
   */
   leaseContainerPrefix?: any;
-  /** 
-  (Optional) The time (in milliseconds) for the delay between polling a partition for new changes on the feed, after all current changes are drained. Default is 5,000 milliseconds, or 5 seconds.
-  */
-  feedPollDelay?: any;
-  /** 
-  (Optional) When set, it defines, in milliseconds, the interval to kick off a task to compute if partitions are distributed evenly among known host instances. Default is 13000 (13 seconds).
-  */
-  leaseAcquireInterval?: any;
-  /** 
-  (Optional) When set, it defines, in milliseconds, the interval for which the lease is taken on a lease representing a partition. If the lease is not renewed within this interval, it will cause it to expire and ownership of the partition will move to another instance. Default is 60000 (60 seconds).
-  */
-  leaseExpirationInterval?: any;
-}
-
-/**
- * Azure Functions Cosmos DB Type
- */
-export type CosmosDBType = 'cosmosDB';
-
-export interface CosmosDBBinding_Output_V2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
-  /**
-   * Required - Must be set to `cosmosDB`.
-   */
-  type: CosmosDBType;
-
-  direction: 'out';
-  /**
-   * The name of the Azure Cosmos DB database with the collection being monitored.
-   */
-  databaseName: string;
-  /** 
-  The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
-  */
-  connectionStringSetting?: string;
-  /** 
-  The name of the collection being monitored.
-  */
-  collectionName: string;
-  /** 
-  A boolean value to indicate whether the collection is created when it doesn't exist. The default is false because new collections are created with reserved throughput, which has cost implications. For more information, see the pricing page.
-  */
-  createIfNotExists: boolean;
-  /** 
-  When createIfNotExists is true, it defines the partition key path for the created collection. May include binding parameters.
-  */
-  partitionKey: string;
-  /** 
-  When createIfNotExists is true, it defines the throughput of the created collection.
-  */
-  collectionThroughput?: any;
-  /** 
-  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
-  */
-  preferredLocations?: any;
-  /** 
-  (Optional) When set to true along with preferredLocations, supports multi-region writes in the Azure Cosmos DB service.
-  */
-  useMultipleWriteLocations?: any;
-}
-
-export interface CosmosDBBinding_Output_V4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
-  /**
-   * Required - Must be set to `cosmosDB`.
-   */
-  type: CosmosDBType;
-
-  direction: 'out';
-  /**
-   * The name of the Azure Cosmos DB database with the collection being monitored.
-   */
-  databaseName: string;
-  /** 
-  The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
-  */
-  connection?: string;
-  /** 
-  The name of the container being monitored.
-  */
-  containerName?: string;
-  /** 
-  A boolean value to indicate whether the container is created when it doesn't exist. The default is false because new containers are created with reserved throughput, which has cost implications. For more information, see the pricing page.
-  */
-  createIfNotExists?: boolean;
-  /** 
-  When createIfNotExists is true, it defines the partition key path for the created container. May include binding parameters.
-  */
-  partitionKey?: string;
-  /** 
-  When createIfNotExists is true, it defines the throughput of the created container.
-  */
-  containerThroughput?: any;
-  /** 
-  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
-  */
-  preferredLocations?: any;
-}
-
-export interface CosmosDBBinding_Input_V2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
-  /**
-   * Required - Must be set to `cosmosDB`.
-   */
-  type: CosmosDBType;
-
-  direction: 'in';
-
-  /** 
-  The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
-  */
-  connectionStringSetting: any;
-  /** 
-  The name of the Azure Cosmos DB database with the collection being monitored.
-  */
-  databaseName: any;
-  /** 
-  The name of the collection being monitored.
-  */
-  collectionName: any;
-  /** 
-  Specifies the partition key value for the lookup. May include binding parameters. It is required for lookups in partitioned collections.
-  */
-  partitionKey: any;
-  /** 
-  The ID of the document to retrieve. This property supports binding expressions. Don't set both the id and sqlQuery properties. If you don't set either one, the entire collection is retrieved.
-  */
-  id: any;
-  /** 
-  An Azure Cosmos DB SQL query used for retrieving multiple documents. The property supports runtime bindings, as in this example: SELECT * FROM c where c.departmentId = {departmentId}. Don't set both the id and sqlQuery properties. If you don't set either one, the entire collection is retrieved.
-  */
-  sqlQuery: any;
-  /** 
-  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
-  */
-  preferredLocations?: any;
-}
-
-export interface CosmosDBBinding_Input_V4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
-  /**
-   * Required - Must be set to `cosmosDB`.
-   */
-  type: CosmosDBType;
-
-  direction: 'in';
-
-  /** 
-  The name of an app setting or setting container that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
-  */
-  connection: any;
-  /** 
-  The name of the Azure Cosmos DB database with the container being monitored.
-  */
-  databaseName: any;
-  /** 
-  The name of the container being monitored.
-  */
-  containerName: any;
-  /** 
-  Specifies the partition key value for the lookup. May include binding parameters. It is required for lookups in partitioned containers.
-  */
-  partitionKey: any;
-  /** 
-  The ID of the document to retrieve. This property supports binding expressions. Don't set both the id and sqlQuery properties. If you don't set either one, the entire container is retrieved.
-  */
-  id: any;
-  /** 
-  An Azure Cosmos DB SQL query used for retrieving multiple documents. The property supports runtime bindings, as in this example: SELECT * FROM c where c.departmentId = {departmentId}. Don't set both the id and sqlQuery properties. If you don't set either one, the entire container is retrieved.
-  */
-  sqlQuery: any;
-  /** 
-  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
-  */
-  preferredLocations?: any;
 }

@@ -30,21 +30,23 @@ const bindings = [
   Binding.cosmosDB_output_v2({
     name: 'document_output_v2' as const,
     collectionName: '',
+    connectionStringSetting: '',
     createIfNotExists: true,
-    databaseName: '',
-    partitionKey: ''
+    databaseName: ''
   }),
   Binding.cosmosDB_output_v4({
     name: 'document_output_v4' as const,
-    connection: '',
-    containerName: '',
+    createIfNotExists: true,
     databaseName: '',
+    connection: '',
+    containerName: ''
   }),
   Binding.cosmosDB_output({
     name: 'document_output_default' as const,
-    connection: '',
-    containerName: '',
+    createIfNotExists: true,
     databaseName: '',
+    connection: '',
+    containerName: ''
   }),
 ] as const;
 
