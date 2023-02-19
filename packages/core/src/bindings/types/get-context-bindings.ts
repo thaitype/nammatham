@@ -1,19 +1,19 @@
 import { ContextBindings } from '@azure/functions';
 import { FunctionBinding } from '../interfaces/function-binding';
-import { AllBindingTypes, BindingType } from './binding';
+import { BindingType } from './binding';
 import { Zipper, UnionToArray } from '../../types';
 
-type GetBindingObjectArray<T extends AllBindingTypes[]> = T extends [infer Head, ...infer Tail]
-  ? Head extends AllBindingTypes
-    ? Tail extends AllBindingTypes[]
-      ? [BindingType<Head>, ...GetBindingObjectArray<Tail>]
-      : []
+type GetTypeTuple<T extends  readonly FunctionBinding<unknown>[]> = T extends readonly [infer Head, ...infer Tail]
+? Head extends FunctionBinding<unknown>
+  ? Tail extends FunctionBinding<unknown>[]
+    ? [BindingType<Head['type']>, ...GetTypeTuple<Tail>]
     : []
-  : [];
+  : []
+: [];
 
 /**
- * `GetBindingContext`, extract type from `FunctionBinding<unknown>[]`
- * 
+ * `GetBindings`, extract type from `FunctionBinding<unknown>[]`
+ *
  * Ref: @ts-ignore not included in .d.ts file when it's needed
  * https://github.com/microsoft/TypeScript/issues/38628#issuecomment-1378644305
  */
@@ -22,8 +22,5 @@ export type GetBindings<T extends readonly FunctionBinding<unknown>[]> = Context
   Zipper<
     /** @ts-ignore **/
     UnionToArray<T[number]['name']>,
-    GetBindingObjectArray<
-      /** @ts-ignore **/
-      UnionToArray<T[number]['type']>
-    >
+    GetTypeTuple<T>
   >;

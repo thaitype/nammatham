@@ -1,11 +1,11 @@
-import { BaseFunctionBinding } from '../base-function-binding';
+import { BaseFunctionBinding, DirectionType } from '../base-function-binding';
 
 /**
  * Azure Functions Cosmos DB Trigger Type
  */
 export type CosmosDBTriggerType = 'cosmosDBTrigger';
 
-export interface CosmosDBTriggerBinding_Base<T> extends BaseFunctionBinding<CosmosDBTriggerType, T> {
+export interface CosmosDBTriggerBinding_Base<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
   /**
    * Required - Must be set to `cosmosDBTrigger`.
    */
@@ -20,8 +20,8 @@ export interface CosmosDBTriggerBinding_Base<T> extends BaseFunctionBinding<Cosm
  * CosmosDBTrigger Type v2 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
 
-export interface CosmosDBTriggerInputBinding_v2<T> extends CosmosDBTriggerBinding_Base<T> {
-  direction: 'in',
+export interface CosmosDBTriggerInputBinding_v2<Name> extends CosmosDBTriggerBinding_Base<Name> {
+  direction: 'in';
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
@@ -102,8 +102,8 @@ export interface CosmosDBTriggerInputBinding_v2<T> extends CosmosDBTriggerBindin
 /**
  * CosmosDBTrigger Type v4 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
-export interface CosmosDBTriggerInputBinding_v4<T> extends CosmosDBTriggerBinding_Base<T> {
-  direction: 'in',
+export interface CosmosDBTriggerInputBinding_v4<Name> extends CosmosDBTriggerBinding_Base<Name> {
+  direction: 'in';
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
@@ -152,4 +152,64 @@ export interface CosmosDBTriggerInputBinding_v4<T> extends CosmosDBTriggerBindin
   (Optional) When set, it defines, in milliseconds, the interval for which the lease is taken on a lease representing a partition. If the lease is not renewed within this interval, it will cause it to expire and ownership of the partition will move to another instance. Default is 60000 (60 seconds).
   */
   leaseExpirationInterval?: any;
+}
+
+export interface CosmosDBTriggerOutputBinding_v2<Name> extends CosmosDBTriggerBinding_Base<Name> {
+  direction: 'out';
+  /** 
+  The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
+  */
+  connectionStringSetting?: string;
+  /** 
+  The name of the collection being monitored.
+  */
+  collectionName: string;
+  /** 
+  A boolean value to indicate whether the collection is created when it doesn't exist. The default is false because new collections are created with reserved throughput, which has cost implications. For more information, see the pricing page.
+  */
+  createIfNotExists: boolean;
+  /** 
+  When createIfNotExists is true, it defines the partition key path for the created collection. May include binding parameters.
+  */
+  partitionKey: string;
+  /** 
+  When createIfNotExists is true, it defines the throughput of the created collection.
+  */
+  collectionThroughput?: any;
+  /** 
+  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
+  */
+  preferredLocations?: any;
+  /** 
+  (Optional) When set to true along with preferredLocations, supports multi-region writes in the Azure Cosmos DB service.
+  */
+  useMultipleWriteLocations?: any;
+}
+
+export interface CosmosDBTriggerOutputBinding_v4<Name> extends CosmosDBTriggerBinding_Base<Name> {
+  direction: 'out';
+  /** 
+  The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
+  */
+  connection?: string;
+  /** 
+  The name of the container being monitored.
+  */
+  containerName?: string;
+  /** 
+  A boolean value to indicate whether the container is created when it doesn't exist. The default is false because new containers are created with reserved throughput, which has cost implications. For more information, see the pricing page.
+  */
+  createIfNotExists?: boolean;
+  /** 
+  When createIfNotExists is true, it defines the partition key path for the created container. May include binding parameters.
+  */
+  partitionKey?: string;
+  /** 
+  When createIfNotExists is true, it defines the throughput of the created container.
+  */
+  containerThroughput?: any;
+  /** 
+  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
+  */
+  preferredLocations?: any;
 }

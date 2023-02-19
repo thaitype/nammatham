@@ -6,7 +6,7 @@ import { Service } from './services';
 const bindings = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   Binding.http({ name: 'res' as const }), // make string to literal type
-];
+] as const;
 
 @functionName('WithTypeUtility', ...bindings)
 export class WithTypeUtilityFunction extends BaseFunction<typeof bindings> {

@@ -119,7 +119,7 @@ import { BaseFunction, Binding, functionName } from 'nammatham';
 const bindings = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   Binding.http({ name: 'res' as const }), // make string to literal type
-];
+] as const;
 
 @functionName('GetUser', ...bindings)
 export class UserFunction extends BaseFunction<typeof bindings> {

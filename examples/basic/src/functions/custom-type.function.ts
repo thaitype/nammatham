@@ -2,7 +2,7 @@ import { BaseFunction, Binding, functionName } from 'nammatham';
 
 const bindings = [
   Binding.http({ name: 'res' as const }), // make string to literal type
-];
+] as const;
 
 // the type should be supported by Azure Functions runtime
 const customBindings = Binding.custom({ name: 'req' as const, direction: 'in', type: 'httpTrigger' });

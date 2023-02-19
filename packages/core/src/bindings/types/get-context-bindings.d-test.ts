@@ -19,7 +19,7 @@ const bindings = [
     direction: 'in',
     type: 'timerTrigger',
   } as TimerTriggerBinding<'timer'>,
-];
+] as const;
 
 type ExpectedType = ContextBindings &
   // Expected map name with Azure Functions Type

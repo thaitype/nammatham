@@ -79,7 +79,7 @@ import { BaseFunction, Binding, functionName } from 'nammatham';
 const bindings = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   Binding.http({ name: 'res' as const }), // make string to literal type
-];
+] as const;
 
 @functionName('GetUser', ...bindings)
 export class UserFunction extends BaseFunction<typeof bindings> {
@@ -123,7 +123,7 @@ import { BaseFunction, Binding, functionName } from 'nammatham';
 const bindings = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   Binding.http({ name: 'res' as const }), // make string to literal type
-];
+] as const;
 
 // the type should be supported by Azure Functions runtime
 const customBindings = Binding.custom({ name: 'custom' as const, direction: 'in', type: 'customTrigger' });
