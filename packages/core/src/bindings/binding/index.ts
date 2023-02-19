@@ -9,6 +9,9 @@ import {
   cosmosDB_output,
   cosmosDB_output_v2,
   cosmosDB_output_v4,
+  cosmosDB_input,
+  cosmosDB_input_v2,
+  cosmosDB_input_v4
 } from './cosmos-db-trigger';
 
 export default {
@@ -23,4 +26,7 @@ export default {
   cosmosDB_output,
   cosmosDB_output_v2,
   cosmosDB_output_v4,
+  cosmosDB_input,
+  cosmosDB_input_v2,
+  cosmosDB_input_v4
 };

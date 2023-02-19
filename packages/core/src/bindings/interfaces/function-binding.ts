@@ -7,6 +7,8 @@ import {
   CosmosDBTriggerBinding_V4,
   CosmosDBBinding_Output_V2,
   CosmosDBBinding_Output_V4,
+  CosmosDBBinding_Input_V2,
+  CosmosDBBinding_Input_V4
 } from './triggers';
 
 export type DefinedFunctionBinding<T extends unknown> =
@@ -16,7 +18,9 @@ export type DefinedFunctionBinding<T extends unknown> =
   | CosmosDBTriggerBinding_V2<T>
   | CosmosDBTriggerBinding_V4<T>
   | CosmosDBBinding_Output_V2<T>
-  | CosmosDBBinding_Output_V4<T>;
+  | CosmosDBBinding_Output_V4<T>
+  | CosmosDBBinding_Input_V2<T>
+  | CosmosDBBinding_Input_V4<T>;
 
 /**
  * If `T` type is `null`, then return `DefinedFunctionBinding`,
