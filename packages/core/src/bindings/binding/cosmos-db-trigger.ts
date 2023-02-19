@@ -38,8 +38,8 @@ import {
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBTriggerInputBinding_v2`
- * @returns `CosmosDBTriggerInputBinding_v2` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
+ * @param bindings - `CosmosDBTriggerBinding_v4`
+ * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
 export function cosmosDBTrigger_v2<
   T extends PartialBy<CosmosDBTriggerBinding_v2<unknown>, 'type' | 'direction'>
@@ -83,8 +83,8 @@ export function cosmosDBTrigger_v2<
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBTriggerInputBinding_v4`
- * @returns `CosmosDBTriggerInputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
+ * @param bindings - `CosmosDBTriggerBinding_v4`
+ * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
 export function cosmosDBTrigger_v4<
   T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>
@@ -128,8 +128,8 @@ export function cosmosDBTrigger_v4<
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBTriggerInputBinding_v4`
- * @returns `CosmosDBTriggerInputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
+ * @param bindings - `CosmosDBTriggerBinding_v4`
+ * @returns `CosmosDBTriggerBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
 export function cosmosDBTrigger<
   T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>
@@ -138,20 +138,20 @@ export function cosmosDBTrigger<
 }
 
 /**
- * Create cosmosDBTrigger type binding for Bundle Extension v2 or v3. It requires to install [Bundle extension v2 or v3](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#install-bundle)
+ * Create cosmosDB type binding for Bundle Extension v2 or v3. It requires to install [Bundle extension v2 or v3](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#install-bundle)
  * 
- * Use for Binding output with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
+ * Use for Binding output with [cosmosDB Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  * 
  * @example
  *  ```
-    // Option 1: Using cosmosDBTrigger implicitly 
+    // Option 1: Using cosmosDB implicitly 
     Binding.cosmosDB_v2({ name: 'documents' as const })
 
-    // Option 2: Using cosmosDBTrigger explicitly
+    // Option 2: Using cosmosDB explicitly
     Binding.cosmosDB_v2({ 
       name: 'documents' as const,
       direction: 'out',
-      type: 'cosmosDBTrigger'
+      type: 'cosmosDB'
     })
     ```
 
@@ -162,15 +162,15 @@ export function cosmosDBTrigger<
         {
           "name": "documents",
           "direction": "out",
-          "type": "cosmosDBTrigger"
+          "type": "cosmosDB"
         }
       ]
     }
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBTriggerOutputBinding_v2`
- * @returns `CosmosDBTriggerOutputBinding_v2` Object with `{ type: 'cosmosDBTrigger', direction: 'out' }`
+ * @param bindings - `CosmosDBBinding_v2`
+ * @returns `CosmosDBBinding_v2` Object with `{ type: 'cosmosDB', direction: 'out' }`
  */
 export function cosmosDB_v2<
   T extends PartialBy<CosmosDBBinding_v2<unknown>, 'type' | 'direction'>
@@ -183,20 +183,20 @@ export function cosmosDB_v2<
 }
 
 /**
- * Create cosmosDBTrigger type binding for Bundle Extension v4. It required to install [Bundle extension v4](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#install-bundle)
+ * Create cosmosDB type binding for Bundle Extension v4. It required to install [Bundle extension v4](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#install-bundle)
  * 
- * Use for Binding output with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
+ * Use for Binding output with [cosmosDB Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  * 
  * @example
  *  ```
-    // Option 1: Using cosmosDBTrigger implicitly 
+    // Option 1: Using cosmosDB implicitly 
     Binding.cosmosDB_v4({ name: 'documents' as const })
 
-    // Option 2: Using cosmosDBTrigger explicitly
+    // Option 2: Using cosmosDB explicitly
     Binding.cosmosDB_v4({ 
       name: 'documents' as const,
       direction: 'out',
-      type: 'cosmosDBTrigger'
+      type: 'cosmosDB'
     })
     ```
 
@@ -207,15 +207,15 @@ export function cosmosDB_v2<
         {
           "name": "documents",
           "direction": "out",
-          "type": "cosmosDBTrigger"
+          "type": "cosmosDB"
         }
       ]
     }
     ```
     @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
-  * @param bindings - `CosmosDBTriggerOutputBinding_v4`
-  * @returns `CosmosDBTriggerOutputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'out' }`
+  * @param bindings - `CosmosDBBinding_v4`
+  * @returns `CosmosDBBinding_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
 export function cosmosDB_v4<
   T extends PartialBy<CosmosDBBinding_v4<unknown>, 'type' | 'direction'>
@@ -228,20 +228,20 @@ export function cosmosDB_v4<
 }
 
 /**
- * Create cosmosDBTrigger type binding for Bundle Extension v4. It required to install [Bundle extension v4](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#install-bundle)
+ * Create cosmosDB type binding for Bundle Extension v4. It required to install [Bundle extension v4](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#install-bundle)
  * 
- * Use for Binding output with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
+ * Use for Binding output with [cosmosDB Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  * 
  * @example
  *  ```
-    // Option 1: Using cosmosDBTrigger implicitly 
+    // Option 1: Using cosmosDB implicitly 
     Binding.cosmosDB({ name: 'documents' as const })
 
-    // Option 2: Using cosmosDBTrigger explicitly
+    // Option 2: Using cosmosDB explicitly
     Binding.cosmosDB({ 
       name: 'documents' as const,
       direction: 'out',
-      type: 'cosmosDBTrigger'
+      type: 'cosmosDB'
     })
     ```
 
@@ -252,15 +252,15 @@ export function cosmosDB_v4<
         {
           "name": "documents",
           "direction": "out",
-          "type": "cosmosDBTrigger"
+          "type": "cosmosDB"
         }
       ]
     }
     ```
     @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
-  * @param bindings - `CosmosDBTriggerOutputBinding_v4`
-  * @returns `CosmosDBTriggerOutputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'out' }`
+  * @param bindings - `CosmosDBBinding_v4`
+  * @returns `CosmosDBBinding_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
 export function cosmosDB<
   T extends PartialBy<CosmosDBBinding_v4<unknown>, 'type' | 'direction'>

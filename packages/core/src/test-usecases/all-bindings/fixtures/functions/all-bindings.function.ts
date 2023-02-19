@@ -15,6 +15,18 @@ const bindings = [
     containerName: '',
     databaseName: '',
   }),
+  Binding.cosmosDBTrigger_v4({
+    name: 'document_input_v4' as const,
+    connection: '',
+    containerName: '',
+    databaseName: '',
+  }),
+  Binding.cosmosDBTrigger({
+    name: 'document_input_default' as const,
+    connection: '',
+    containerName: '',
+    databaseName: '',
+  }),
   Binding.cosmosDB_v2({
     name: 'document_output_v2' as const,
     collectionName: '',
@@ -22,20 +34,8 @@ const bindings = [
     databaseName: '',
     partitionKey: ''
   }),
-  Binding.cosmosDBTrigger_v4({
-    name: 'document_input_v4' as const,
-    connection: '',
-    containerName: '',
-    databaseName: '',
-  }),
   Binding.cosmosDB_v4({
     name: 'document_output_v4' as const,
-    connection: '',
-    containerName: '',
-    databaseName: '',
-  }),
-  Binding.cosmosDBTrigger({
-    name: 'document_input_default' as const,
     connection: '',
     containerName: '',
     databaseName: '',
