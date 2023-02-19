@@ -27,9 +27,9 @@ export class UserFunction extends BaseFunction {
 - Provide basic utility for writing Azure Functions
 - Only support TypeScript and [InversifyJS](https://github.com/inversify/Inversify) as the [Most Popular Inversion of Control Container and Dependency Injection Approach](https://npmtrends.com/awilix-vs-bottlejs-vs-inversify-vs-node-dependency-injection-vs-tsyringe-vs-typedi-vs-typescript-ioc) 
 - Binding & Trigger Built-in type support
-  - HttpTrigger
-  - TimerTrigger
-  - CosmosDBTrigger
+  - Http Trigger
+  - Timer Trigger
+  - Cosmos DB Trigger
   - If your binding type isn't in the list, please use [Support custom type](docs/define-azure-function.md#custom-binding)
   - You can see [All available type support](docs/binding-type.md) or create a PR ;).
 - Build Tool Agnostic, this framework just provide the library. It can work with all TypeScript build tool e.g. tsc, esbuild, etc.
