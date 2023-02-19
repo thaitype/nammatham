@@ -48,13 +48,13 @@ export class ContextBuilder {
 
   public setRequest(req: Partial<Context['req']>, bindingName: string = 'req') {
     this.context.req = req as Context['req'];
-    this.context.bindings[bindingName] = req;
+    (this.context.bindings as any)[bindingName] = req;
     return this;
   }
 
   public setResponse(res: Partial<Context['res']>, bindingName: string = 'res') {
     this.context.res = res as Context['res'];
-    this.context.bindings[bindingName] = res;
+    (this.context.bindings as any)[bindingName] = res;
     return this;
   }
 

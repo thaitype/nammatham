@@ -18,7 +18,7 @@ test('Test WithTypeUtilityFunction, Passing query param and check the response i
     azureFunctionParams: [mockContext, httpRequest, httpResponse],
   });
 
-  t.is(mockContext.res?.body, responseHelper(name, serviceData));
+  t.is(mockContext.res?.body, responseHelper(name, serviceData, serviceData, serviceData));
 });
 
 test('Test HttpTriggerHelperFunction, Passing query param and check the response is gotten', t => {

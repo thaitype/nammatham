@@ -9,7 +9,7 @@ import { BaseFunction, Binding, functionName } from '../../';
 const bindings_case1 = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   Binding.http({ name: 'res' as const }), // make string to literal type
-];
+] as const;
 
 @functionName('HttpTrigger', ...bindings_case1)
 class HttpTriggerFunction extends BaseFunction<typeof bindings_case1> {

@@ -15,19 +15,25 @@ const bindings = [
     type: 'http',
   } as HttpBinding<'res'>,
   {
+    name: '$return',
+    direction: 'out',
+    type: 'http',
+  } as HttpBinding<'$return'>,
+  {
     name: 'timer',
     direction: 'in',
     type: 'timerTrigger',
   } as TimerTriggerBinding<'timer'>,
-];
+] as const;
 
 type ExpectedType = ContextBindings &
   // Expected map name with Azure Functions Type
   Record<'req', HttpRequest> &
   Record<'res', HttpResponse> &
+  Record<'$return', HttpResponse> & // Duplicate type still work!
   Record<'timer', Timer>;
 
-type Cases = [
+type Cases = [ 
   // Test all cases
   Expect<Equal<GetBindings<typeof bindings>, ExpectedType>>
 ];

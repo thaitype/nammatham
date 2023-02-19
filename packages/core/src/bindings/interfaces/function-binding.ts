@@ -1,10 +1,22 @@
 import { CustomFunctionBinding } from './custom-function-binding';
-import { HttpTriggerBinding, HttpBinding, TimerTriggerBinding } from './triggers';
+import {
+  HttpTriggerBinding,
+  HttpBinding,
+  TimerTriggerBinding,
+  CosmosDBTriggerBinding_v2,
+  CosmosDBTriggerBinding_v4,
+  CosmosDBBinding_v2,
+  CosmosDBBinding_v4,
+} from './triggers';
 
 export type DefinedFunctionBinding<T extends unknown> =
   | HttpTriggerBinding<T>
   | HttpBinding<T>
-  | TimerTriggerBinding<T>;
+  | TimerTriggerBinding<T>
+  | CosmosDBTriggerBinding_v2<T>
+  | CosmosDBTriggerBinding_v4<T>
+  | CosmosDBBinding_v2<T>
+  | CosmosDBBinding_v4<T>;
 
 /**
  * If `T` type is `null`, then return `DefinedFunctionBinding`,
