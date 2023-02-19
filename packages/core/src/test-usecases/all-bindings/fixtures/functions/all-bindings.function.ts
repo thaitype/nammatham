@@ -7,38 +7,40 @@ const bindings = [
   Binding.http({ name: 'res' as const }), // make string to literal type
   Binding.httpWithReturn(),
   Binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
-  Binding.cosmosDBTrigger_Input_v2({
-    name: 'document_input_v2' as const,
+  Binding.cosmosDBTrigger_v2({
+    name: 'document_input_v2',
     collectionName: '',
+    connection: '',
+    connectionStringSetting: '',
+    containerName: '',
     databaseName: '',
-    connectionStringSetting: '' ,
   }),
-  Binding.cosmosDBTrigger_Output_v2({
+  Binding.cosmosDB_v2({
     name: 'document_output_v2' as const,
     collectionName: '',
     createIfNotExists: true,
     databaseName: '',
     partitionKey: ''
   }),
-  Binding.cosmosDBTrigger_Input_v4({
+  Binding.cosmosDBTrigger_v4({
     name: 'document_input_v4' as const,
     connection: '',
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDBTrigger_Output_v4({
+  Binding.cosmosDB_v4({
     name: 'document_output_v4' as const,
     connection: '',
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDBTrigger_Input({
+  Binding.cosmosDBTrigger({
     name: 'document_input_default' as const,
     connection: '',
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDBTrigger_Output({
+  Binding.cosmosDB({
     name: 'document_output_default' as const,
     connection: '',
     containerName: '',

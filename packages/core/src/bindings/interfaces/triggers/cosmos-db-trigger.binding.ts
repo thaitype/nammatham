@@ -5,23 +5,21 @@ import { BaseFunctionBinding, DirectionType } from '../base-function-binding';
  */
 export type CosmosDBTriggerType = 'cosmosDBTrigger';
 
-export interface CosmosDBTriggerBinding_Base<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
-  /**
-   * Required - Must be set to `cosmosDBTrigger`.
-   */
-  type: CosmosDBTriggerType;
-  /**
-   * The name of the Azure Cosmos DB database with the collection being monitored.
-   */
-  databaseName: string;
-}
-
 /**
  * CosmosDBTrigger Type v2 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
 
-export interface CosmosDBTriggerInputBinding_v2<Name> extends CosmosDBTriggerBinding_Base<Name> {
+export interface CosmosDBTriggerBinding_v2<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
+  /**
+   * Required - Must be set to `cosmosDBTrigger`.
+   */
+  type: CosmosDBTriggerType;
+
   direction: 'in';
+  /**
+   * The name of the Azure Cosmos DB database with the collection being monitored.
+   */
+  databaseName: string;
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
@@ -102,8 +100,17 @@ export interface CosmosDBTriggerInputBinding_v2<Name> extends CosmosDBTriggerBin
 /**
  * CosmosDBTrigger Type v4 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
-export interface CosmosDBTriggerInputBinding_v4<Name> extends CosmosDBTriggerBinding_Base<Name> {
+export interface CosmosDBTriggerBinding_v4<Name> extends BaseFunctionBinding<CosmosDBTriggerType, Name> {
+  /**
+   * Required - Must be set to `cosmosDBTrigger`.
+   */
+  type: CosmosDBTriggerType;
+  
   direction: 'in';
+  /**
+   * The name of the Azure Cosmos DB database with the collection being monitored.
+   */
+  databaseName: string;
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
@@ -154,8 +161,22 @@ export interface CosmosDBTriggerInputBinding_v4<Name> extends CosmosDBTriggerBin
   leaseExpirationInterval?: any;
 }
 
-export interface CosmosDBTriggerOutputBinding_v2<Name> extends CosmosDBTriggerBinding_Base<Name> {
+/**
+ * Azure Functions Cosmos DB Type
+ */
+export type CosmosDBType = 'cosmosDB';
+
+export interface CosmosDBBinding_v2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+  /**
+   * Required - Must be set to `cosmosDB`.
+   */
+  type: CosmosDBType;
+
   direction: 'out';
+  /**
+   * The name of the Azure Cosmos DB database with the collection being monitored.
+   */
+  databaseName: string;
   /** 
   The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
   */
@@ -186,8 +207,17 @@ export interface CosmosDBTriggerOutputBinding_v2<Name> extends CosmosDBTriggerBi
   useMultipleWriteLocations?: any;
 }
 
-export interface CosmosDBTriggerOutputBinding_v4<Name> extends CosmosDBTriggerBinding_Base<Name> {
+export interface CosmosDBBinding_v4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+  /**
+   * Required - Must be set to `cosmosDB`.
+   */
+  type: CosmosDBType;
+
   direction: 'out';
+  /**
+   * The name of the Azure Cosmos DB database with the collection being monitored.
+   */
+  databaseName: string;
   /** 
   The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
   */

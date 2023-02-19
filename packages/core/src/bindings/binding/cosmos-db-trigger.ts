@@ -1,9 +1,9 @@
 import type { PartialBy } from '../../types';
 import {
-  CosmosDBTriggerInputBinding_v4,
-  CosmosDBTriggerInputBinding_v2,
-  CosmosDBTriggerOutputBinding_v2,
-  CosmosDBTriggerOutputBinding_v4,
+  CosmosDBTriggerBinding_v4,
+  CosmosDBTriggerBinding_v2,
+  CosmosDBBinding_v2,
+  CosmosDBBinding_v4,
 } from '../interfaces';
 
 /**
@@ -14,10 +14,10 @@ import {
  * @example
  *  ```
     // Option 1: Using cosmosDBTrigger implicitly 
-    Binding.cosmosDBTrigger_Input_v2({ name: 'documents' as const })
+    Binding.cosmosDBTrigger_v2({ name: 'documents' as const })
 
     // Option 2: Using cosmosDBTrigger explicitly
-    Binding.cosmosDBTrigger_Input_v2({ 
+    Binding.cosmosDBTrigger_v2({ 
       name: 'documents' as const,
       direction: 'in',
       type: 'cosmosDBTrigger'
@@ -41,9 +41,9 @@ import {
  * @param bindings - `CosmosDBTriggerInputBinding_v2`
  * @returns `CosmosDBTriggerInputBinding_v2` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger_Input_v2<
-  T extends PartialBy<CosmosDBTriggerInputBinding_v2<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBTriggerInputBinding_v2<T['name']> {
+export function cosmosDBTrigger_v2<
+  T extends PartialBy<CosmosDBTriggerBinding_v2<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBTriggerBinding_v2<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -59,10 +59,10 @@ export function cosmosDBTrigger_Input_v2<
  * @example
  *  ```
     // Option 1: Using cosmosDBTrigger implicitly 
-    Binding.cosmosDBTrigger_Input_v4({ name: 'documents' as const })
+    Binding.cosmosDBTrigger_v4({ name: 'documents' as const })
 
     // Option 2: Using cosmosDBTrigger explicitly
-    Binding.cosmosDBTrigger_Input_v4({ 
+    Binding.cosmosDBTrigger_v4({ 
       name: 'documents' as const,
       direction: 'in',
       type: 'cosmosDBTrigger'
@@ -86,9 +86,9 @@ export function cosmosDBTrigger_Input_v2<
  * @param bindings - `CosmosDBTriggerInputBinding_v4`
  * @returns `CosmosDBTriggerInputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger_Input_v4<
-  T extends PartialBy<CosmosDBTriggerInputBinding_v4<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBTriggerInputBinding_v4<T['name']> {
+export function cosmosDBTrigger_v4<
+  T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBTriggerBinding_v4<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -104,10 +104,10 @@ export function cosmosDBTrigger_Input_v4<
  * @example
  *  ```
     // Option 1: Using cosmosDBTrigger implicitly 
-    Binding.cosmosDBTrigger_Input({ name: 'documents' as const })
+    Binding.cosmosDBTrigger({ name: 'documents' as const })
 
     // Option 2: Using cosmosDBTrigger explicitly
-    Binding.cosmosDBTrigger_Input({ 
+    Binding.cosmosDBTrigger({ 
       name: 'documents' as const,
       direction: 'in',
       type: 'cosmosDBTrigger'
@@ -131,10 +131,10 @@ export function cosmosDBTrigger_Input_v4<
  * @param bindings - `CosmosDBTriggerInputBinding_v4`
  * @returns `CosmosDBTriggerInputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger_Input<
-  T extends PartialBy<CosmosDBTriggerInputBinding_v4<unknown>, 'type' | 'direction'>
+export function cosmosDBTrigger<
+  T extends PartialBy<CosmosDBTriggerBinding_v4<unknown>, 'type' | 'direction'>
 >(bindings: T) {
-  return cosmosDBTrigger_Input_v4(bindings);
+  return cosmosDBTrigger_v4(bindings);
 }
 
 /**
@@ -145,10 +145,10 @@ export function cosmosDBTrigger_Input<
  * @example
  *  ```
     // Option 1: Using cosmosDBTrigger implicitly 
-    Binding.cosmosDBTrigger_Output_v2({ name: 'documents' as const })
+    Binding.cosmosDB_v2({ name: 'documents' as const })
 
     // Option 2: Using cosmosDBTrigger explicitly
-    Binding.cosmosDBTrigger_Output_v2({ 
+    Binding.cosmosDB_v2({ 
       name: 'documents' as const,
       direction: 'out',
       type: 'cosmosDBTrigger'
@@ -172,12 +172,12 @@ export function cosmosDBTrigger_Input<
  * @param bindings - `CosmosDBTriggerOutputBinding_v2`
  * @returns `CosmosDBTriggerOutputBinding_v2` Object with `{ type: 'cosmosDBTrigger', direction: 'out' }`
  */
-export function cosmosDBTrigger_Output_v2<
-  T extends PartialBy<CosmosDBTriggerOutputBinding_v2<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBTriggerOutputBinding_v2<T['name']> {
+export function cosmosDB_v2<
+  T extends PartialBy<CosmosDBBinding_v2<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBBinding_v2<T['name']> {
   return {
     ...bindings,
-    type: 'cosmosDBTrigger',
+    type: 'cosmosDB',
     direction: 'out',
   };
 }
@@ -190,10 +190,10 @@ export function cosmosDBTrigger_Output_v2<
  * @example
  *  ```
     // Option 1: Using cosmosDBTrigger implicitly 
-    Binding.cosmosDBTrigger_Output_v4({ name: 'documents' as const })
+    Binding.cosmosDB_v4({ name: 'documents' as const })
 
     // Option 2: Using cosmosDBTrigger explicitly
-    Binding.cosmosDBTrigger_Output_v4({ 
+    Binding.cosmosDB_v4({ 
       name: 'documents' as const,
       direction: 'out',
       type: 'cosmosDBTrigger'
@@ -217,12 +217,12 @@ export function cosmosDBTrigger_Output_v2<
   * @param bindings - `CosmosDBTriggerOutputBinding_v4`
   * @returns `CosmosDBTriggerOutputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'out' }`
   */
-export function cosmosDBTrigger_Output_v4<
-  T extends PartialBy<CosmosDBTriggerOutputBinding_v4<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBTriggerOutputBinding_v4<T['name']> {
+export function cosmosDB_v4<
+  T extends PartialBy<CosmosDBBinding_v4<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBBinding_v4<T['name']> {
   return {
     ...bindings,
-    type: 'cosmosDBTrigger',
+    type: 'cosmosDB',
     direction: 'out',
   };
 }
@@ -235,10 +235,10 @@ export function cosmosDBTrigger_Output_v4<
  * @example
  *  ```
     // Option 1: Using cosmosDBTrigger implicitly 
-    Binding.cosmosDBTrigger_Output({ name: 'documents' as const })
+    Binding.cosmosDB({ name: 'documents' as const })
 
     // Option 2: Using cosmosDBTrigger explicitly
-    Binding.cosmosDBTrigger_Output({ 
+    Binding.cosmosDB({ 
       name: 'documents' as const,
       direction: 'out',
       type: 'cosmosDBTrigger'
@@ -262,8 +262,8 @@ export function cosmosDBTrigger_Output_v4<
   * @param bindings - `CosmosDBTriggerOutputBinding_v4`
   * @returns `CosmosDBTriggerOutputBinding_v4` Object with `{ type: 'cosmosDBTrigger', direction: 'out' }`
   */
-export function cosmosDBTrigger_Output<
-  T extends PartialBy<CosmosDBTriggerOutputBinding_v4<unknown>, 'type' | 'direction'>
+export function cosmosDB<
+  T extends PartialBy<CosmosDBBinding_v4<unknown>, 'type' | 'direction'>
 >(bindings: T) {
-  return cosmosDBTrigger_Output_v4(bindings);
+  return cosmosDB_v4(bindings);
 }
