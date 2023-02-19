@@ -54,10 +54,10 @@ export function http<T extends PartialBy<HttpBinding<unknown>, 'type' | 'directi
    * @example
    *  ```
       // Option 1: Using http implicitly 
-      Binding.httpWithReturn()
+      Binding.http_withReturn()
   
       // Option 2: Using http explicitly
-      Binding.httpWithReturn({ 
+      Binding.http_withReturn({ 
         name: '$return' as const,
         direction: 'out',
         type: 'http'
@@ -80,7 +80,7 @@ export function http<T extends PartialBy<HttpBinding<unknown>, 'type' | 'directi
    * @param bindings - `HttpBinding` (Optional)
    * @returns `HttpBinding` Object with  `{ name: '$return', type: 'http', direction: 'out' }`
    */
-export function httpWithReturn<T extends PartialBy<HttpBinding<unknown>, 'name' | 'type' | 'direction'>>(
+export function http_withReturn<T extends PartialBy<HttpBinding<unknown>, 'name' | 'type' | 'direction'>>(
   bindings?: T
 ): HttpBinding<'$return'> {
   bindings = bindings ?? ({} as T);

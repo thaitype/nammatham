@@ -105,7 +105,7 @@ export interface CosmosDBTriggerBinding_v4<Name> extends BaseFunctionBinding<Cos
    * Required - Must be set to `cosmosDBTrigger`.
    */
   type: CosmosDBTriggerType;
-  
+
   direction: 'in';
   /**
    * The name of the Azure Cosmos DB database with the collection being monitored.
@@ -166,7 +166,7 @@ export interface CosmosDBTriggerBinding_v4<Name> extends BaseFunctionBinding<Cos
  */
 export type CosmosDBType = 'cosmosDB';
 
-export interface CosmosDBBinding_v2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+export interface CosmosDBBinding_Output_v2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
   /**
    * Required - Must be set to `cosmosDB`.
    */
@@ -207,7 +207,7 @@ export interface CosmosDBBinding_v2<Name> extends BaseFunctionBinding<CosmosDBTy
   useMultipleWriteLocations?: any;
 }
 
-export interface CosmosDBBinding_v4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+export interface CosmosDBBinding_Output_v4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
   /**
    * Required - Must be set to `cosmosDB`.
    */
@@ -238,6 +238,82 @@ export interface CosmosDBBinding_v4<Name> extends BaseFunctionBinding<CosmosDBTy
   When createIfNotExists is true, it defines the throughput of the created container.
   */
   containerThroughput?: any;
+  /** 
+  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
+  */
+  preferredLocations?: any;
+}
+
+export interface CosmosDBBinding_Input_v2<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+  /**
+   * Required - Must be set to `cosmosDB`.
+   */
+  type: CosmosDBType;
+
+  direction: 'in';
+
+  /** 
+  The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
+  */
+  connectionStringSetting: any;
+  /** 
+  The name of the Azure Cosmos DB database with the collection being monitored.
+  */
+  databaseName: any;
+  /** 
+  The name of the collection being monitored.
+  */
+  collectionName: any;
+  /** 
+  Specifies the partition key value for the lookup. May include binding parameters. It is required for lookups in partitioned collections.
+  */
+  partitionKey: any;
+  /** 
+  The ID of the document to retrieve. This property supports binding expressions. Don't set both the id and sqlQuery properties. If you don't set either one, the entire collection is retrieved.
+  */
+  id: any;
+  /** 
+  An Azure Cosmos DB SQL query used for retrieving multiple documents. The property supports runtime bindings, as in this example: SELECT * FROM c where c.departmentId = {departmentId}. Don't set both the id and sqlQuery properties. If you don't set either one, the entire collection is retrieved.
+  */
+  sqlQuery: any;
+  /** 
+  (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
+  */
+  preferredLocations?: any;
+}
+
+export interface CosmosDBBinding_Input_v4<Name> extends BaseFunctionBinding<CosmosDBType, Name> {
+  /**
+   * Required - Must be set to `cosmosDB`.
+   */
+  type: CosmosDBType;
+
+  direction: 'in';
+
+  /** 
+  The name of an app setting or setting container that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
+  */
+  connection: any;
+  /** 
+  The name of the Azure Cosmos DB database with the container being monitored.
+  */
+  databaseName: any;
+  /** 
+  The name of the container being monitored.
+  */
+  containerName: any;
+  /** 
+  Specifies the partition key value for the lookup. May include binding parameters. It is required for lookups in partitioned containers.
+  */
+  partitionKey: any;
+  /** 
+  The ID of the document to retrieve. This property supports binding expressions. Don't set both the id and sqlQuery properties. If you don't set either one, the entire container is retrieved.
+  */
+  id: any;
+  /** 
+  An Azure Cosmos DB SQL query used for retrieving multiple documents. The property supports runtime bindings, as in this example: SELECT * FROM c where c.departmentId = {departmentId}. Don't set both the id and sqlQuery properties. If you don't set either one, the entire container is retrieved.
+  */
+  sqlQuery: any;
   /** 
   (Optional) Defines preferred locations (regions) for geo-replicated database accounts in the Azure Cosmos DB service. Values should be comma-separated. For example, East US,South Central US,North Europe.
   */

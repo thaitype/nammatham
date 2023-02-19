@@ -10,7 +10,7 @@ import { HttpRequest, HttpResponse, Timer} from '@azure/functions';
 const bindings = [
   Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   Binding.http({ name: 'res' as const }), // make string to literal type
-  Binding.httpWithReturn(),
+  Binding.http_withReturn(),
   Binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
   Binding.cosmosDBTrigger_v2({
     name: 'document_input_v2' as const,
@@ -18,7 +18,7 @@ const bindings = [
     databaseName: '',
     connectionStringSetting: '' ,
   }),
-  Binding.cosmosDB_v2({
+  Binding.cosmosDB_output_v2({
     name: 'document_output_v2' as const,
     collectionName: '',
     createIfNotExists: true,
@@ -31,7 +31,7 @@ const bindings = [
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDB_v4({
+  Binding.cosmosDB_output_v4({
     name: 'document_output_v4' as const,
     connection: '',
     containerName: '',
@@ -43,7 +43,7 @@ const bindings = [
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDB({
+  Binding.cosmosDB_output({
     name: 'document_output_default' as const,
     connection: '',
     containerName: '',

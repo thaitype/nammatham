@@ -2,8 +2,8 @@ import type { PartialBy } from '../../types';
 import {
   CosmosDBTriggerBinding_v4,
   CosmosDBTriggerBinding_v2,
-  CosmosDBBinding_v2,
-  CosmosDBBinding_v4,
+  CosmosDBBinding_Output_v2,
+  CosmosDBBinding_Output_v4,
 } from '../interfaces';
 
 /**
@@ -145,10 +145,10 @@ export function cosmosDBTrigger<
  * @example
  *  ```
     // Option 1: Using cosmosDB implicitly 
-    Binding.cosmosDB_v2({ name: 'documents' as const })
+    Binding.cosmosDB_output_v2({ name: 'documents' as const })
 
     // Option 2: Using cosmosDB explicitly
-    Binding.cosmosDB_v2({ 
+    Binding.cosmosDB_output_v2({ 
       name: 'documents' as const,
       direction: 'out',
       type: 'cosmosDB'
@@ -169,12 +169,12 @@ export function cosmosDBTrigger<
     ```
    @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
- * @param bindings - `CosmosDBBinding_v2`
- * @returns `CosmosDBBinding_v2` Object with `{ type: 'cosmosDB', direction: 'out' }`
+ * @param bindings - `CosmosDBBinding_Output_v2`
+ * @returns `CosmosDBBinding_Output_v2` Object with `{ type: 'cosmosDB', direction: 'out' }`
  */
-export function cosmosDB_v2<
-  T extends PartialBy<CosmosDBBinding_v2<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBBinding_v2<T['name']> {
+export function cosmosDB_output_v2<
+  T extends PartialBy<CosmosDBBinding_Output_v2<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBBinding_Output_v2<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDB',
@@ -190,10 +190,10 @@ export function cosmosDB_v2<
  * @example
  *  ```
     // Option 1: Using cosmosDB implicitly 
-    Binding.cosmosDB_v4({ name: 'documents' as const })
+    Binding.cosmosDB_output_v4({ name: 'documents' as const })
 
     // Option 2: Using cosmosDB explicitly
-    Binding.cosmosDB_v4({ 
+    Binding.cosmosDB_output_v4({ 
       name: 'documents' as const,
       direction: 'out',
       type: 'cosmosDB'
@@ -214,12 +214,12 @@ export function cosmosDB_v2<
     ```
     @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
-  * @param bindings - `CosmosDBBinding_v4`
-  * @returns `CosmosDBBinding_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
+  * @param bindings - `CosmosDBBinding_Output_v4`
+  * @returns `CosmosDBBinding_Output_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
-export function cosmosDB_v4<
-  T extends PartialBy<CosmosDBBinding_v4<unknown>, 'type' | 'direction'>
->(bindings: T): CosmosDBBinding_v4<T['name']> {
+export function cosmosDB_output_v4<
+  T extends PartialBy<CosmosDBBinding_Output_v4<unknown>, 'type' | 'direction'>
+>(bindings: T): CosmosDBBinding_Output_v4<T['name']> {
   return {
     ...bindings,
     type: 'cosmosDB',
@@ -235,10 +235,10 @@ export function cosmosDB_v4<
  * @example
  *  ```
     // Option 1: Using cosmosDB implicitly 
-    Binding.cosmosDB({ name: 'documents' as const })
+    Binding.cosmosDB_output({ name: 'documents' as const })
 
     // Option 2: Using cosmosDB explicitly
-    Binding.cosmosDB({ 
+    Binding.cosmosDB_output({ 
       name: 'documents' as const,
       direction: 'out',
       type: 'cosmosDB'
@@ -259,11 +259,11 @@ export function cosmosDB_v4<
     ```
     @remark Always mark the name prop `as const`, to convert the string into literal type. So, the Nammatham will detect only literal type to map the binding object in `Context`
 
-  * @param bindings - `CosmosDBBinding_v4`
-  * @returns `CosmosDBBinding_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
+  * @param bindings - `CosmosDBBinding_Output_v4`
+  * @returns `CosmosDBBinding_Output_v4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
-export function cosmosDB<
-  T extends PartialBy<CosmosDBBinding_v4<unknown>, 'type' | 'direction'>
+export function cosmosDB_output<
+  T extends PartialBy<CosmosDBBinding_Output_v4<unknown>, 'type' | 'direction'>
 >(bindings: T) {
-  return cosmosDB_v4(bindings);
+  return cosmosDB_output_v4(bindings);
 }
