@@ -3,6 +3,12 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **a
 
 [![Build & Test](https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/mildronize/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) [![npm version](https://img.shields.io/npm/v/nammatham)](https://www.npmjs.com/package/nammatham) [![npm download](https://img.shields.io/npm/dt/nammatham)](https://www.npmjs.com/package/nammatham)
 
+## Compatibility with Azure Functions
+- [Azure Function NodeJs](https://github.com/Azure/azure-functions-nodejs-worker/) : v3.x (`@azure/functions`)
+- [Runtime Version](https://docs.microsoft.com/azure/azure-functions/functions-versions): 4 ([Source Code](https://github.dev/Azure/azure-functions-host/tree/release/4.x))
+- Node.js Versions: 16, 18
+
+
 ## Introduction
 
 Azure Functions is a platform for building event-driven and serverless applications. **Nammatham** is a framework that allows you to use Azure Functions with TypeScript and decorators. It provides pre-defined JSON binding objects and utility functions, such as `httpTrigger`, to make it easier to create Azure Functions.
