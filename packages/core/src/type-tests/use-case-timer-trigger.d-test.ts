@@ -8,7 +8,7 @@ import { BaseFunction, Binding, functionName } from '../../dist/main';
 
 const bindings_case1 = [
   Binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
-];
+] as const;
 
 @functionName('timerTrigger', ...bindings_case1)
 class TimerTriggerFunction extends BaseFunction<typeof bindings_case1> {
