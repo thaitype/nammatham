@@ -125,11 +125,11 @@ This method will support full support type when bindings config is set, for exam
 you can define your own `function.json` in Typescript object (as you can see the variable `bindings`), this will binding type into `this.context.bindings`.
 
 ```ts
-import { BaseFunction, Binding, functionName } from 'nammatham';
+import { BaseFunction, binding, functionName } from 'nammatham';
 
 const bindings = [
-  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
-  Binding.http({ name: 'res' as const }), // make string to literal type
+  binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
 ] as const;
 
 @functionName('GetUser', ...bindings)
