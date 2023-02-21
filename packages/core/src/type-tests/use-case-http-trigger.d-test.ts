@@ -1,14 +1,14 @@
 import type { Equal, Expect } from '@type-challenges/utils';
 import { Context, HttpRequest, HttpResponse, Timer } from '@azure/functions';
-import { BaseFunction, Binding, functionName } from '../../';
+import { BaseFunction, binding, functionName } from '../../';
 
 /**
  * Case 1: Binding with httpTrigger and http
  */
 
 const bindings_case1 = [
-  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
-  Binding.http({ name: 'res' as const }), // make string to literal type
+  binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
 ] as const;
 
 @functionName('HttpTrigger', ...bindings_case1)

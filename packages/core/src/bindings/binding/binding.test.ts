@@ -1,5 +1,5 @@
 import test from 'ava';
-import Binding from './';
+import * as binding from './';
 
 test('Binding httpTrigger', t => {
   const expected = {
@@ -8,21 +8,21 @@ test('Binding httpTrigger', t => {
     direction: 'in',
   };
   t.deepEqual(
-    Binding.httpTrigger({
+    binding.httpTrigger({
       name: 'test',
     }),
     expected
   );
   t.deepEqual(
-    Binding.httpTrigger({
+    binding.httpTrigger({
       name: 'test',
       type: 'not httpTrigger' as any,
-      direction: 'not in' as any
+      direction: 'not i2n' as any
     }),
     expected
   );
   t.deepEqual(
-    Binding.httpTrigger({
+    binding.httpTrigger({
       name: 'test',
       type: 'httpTrigger',
       direction: 'in'
@@ -38,13 +38,13 @@ test('Binding http', t => {
     direction: 'out',
   };
   t.deepEqual(
-    Binding.http({
+    binding.http({
       name: 'test',
     }),
     expected
   );
   t.deepEqual(
-    Binding.http({
+    binding.http({
       name: 'test',
       type: 'not http' as any,
       direction: 'not out' as any
@@ -52,7 +52,7 @@ test('Binding http', t => {
     expected
   );
   t.deepEqual(
-    Binding.http({
+    binding.http({
       name: 'test',
       type: 'http',
       direction: 'out'
@@ -69,14 +69,14 @@ test('Binding timerTrigger', t => {
     schedule: '*'
   };
   t.deepEqual(
-    Binding.timerTrigger({
+    binding.timerTrigger({
       name: 'test',
       schedule: '*'
     }),
     expected
   );
   t.deepEqual(
-    Binding.timerTrigger({
+    binding.timerTrigger({
       name: 'test',
       type: 'not timerTrigger' as any,
       direction: 'not in' as any,
@@ -85,7 +85,7 @@ test('Binding timerTrigger', t => {
     expected
   );
   t.deepEqual(
-    Binding.timerTrigger({
+    binding.timerTrigger({
       name: 'test',
       type: 'timerTrigger',
       direction: 'in',
