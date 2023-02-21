@@ -2,12 +2,12 @@ name: "Build & Test"
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
     paths-ignore:
       - '**/*.md'
       - '.github'
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
     paths-ignore:
       - '**/*.md'
       - '.github'
