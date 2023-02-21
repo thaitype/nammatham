@@ -45,7 +45,7 @@ interface CosmosDBTriggerBinding_Base<Name> extends BaseFunctionBinding<CosmosDB
  * CosmosDBTrigger Type v2 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
 
-export interface CosmosDBTriggerBinding_V2<Name> extends CosmosDBTriggerBinding_Base<Name> {
+export interface CosmosDBTriggerBinding_V2<Name = unknown> extends CosmosDBTriggerBinding_Base<Name> {
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
@@ -112,7 +112,7 @@ export interface CosmosDBTriggerBinding_V2<Name> extends CosmosDBTriggerBinding_
 /**
  * CosmosDBTrigger Type v4 with [cosmosDBTrigger Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration)
  */
-export interface CosmosDBTriggerBinding_V4<Name> extends CosmosDBTriggerBinding_Base<Name> {
+export interface CosmosDBTriggerBinding_V4<Name = unknown> extends CosmosDBTriggerBinding_Base<Name> {
   /**
    * The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see [Connections](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#connections).
    */
