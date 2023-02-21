@@ -1,12 +1,7 @@
+import { AuthorizationLevel } from '../../helpers';
 import { BaseFunctionBinding } from '../base-function-binding';
 
 export type RequestMethod = 'get' | 'post' | 'delete' | 'options' | 'put';
-
-export const AuthorizationLevel = {
-  Anonymous: 'anonymous',
-  Function: 'function',
-  Admin: 'admin'
-} as const;
 
 export type AuthorizationLevelType = typeof AuthorizationLevel[keyof typeof AuthorizationLevel];
 
@@ -20,7 +15,7 @@ export type HttpTriggerType = 'httpTrigger';
  *
  * read more: [HttpTrigger Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#configuration)
  */
-export interface HttpTriggerBinding<T> extends BaseFunctionBinding<HttpTriggerType, T> {
+export interface HttpTriggerBinding<Name = unknown> extends BaseFunctionBinding<HttpTriggerType, Name> {
   /**
    * Required - must be set to `httpTrigger`.
    */
@@ -57,7 +52,7 @@ export type HttpType = 'http';
  * Binding output Http Trigger with [Http Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-output?tabs=in-process&pivots=programming-language-javascript)
  */
 // TODO: rename from HttpBinding to HttpResponseBinding
-export interface HttpBinding<T> extends BaseFunctionBinding<HttpType, T> {
+export interface HttpBinding<Name = unknown> extends BaseFunctionBinding<HttpType, Name> {
   type: HttpType;
   direction: 'out';
 }

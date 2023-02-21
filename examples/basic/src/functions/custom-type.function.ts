@@ -1,11 +1,11 @@
-import { BaseFunction, Binding, functionName } from 'nammatham';
+import { BaseFunction, binding, functionName } from 'nammatham';
 
 const bindings = [
-  Binding.http({ name: 'res' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
 ] as const;
 
 // the type should be supported by Azure Functions runtime
-const customBindings = Binding.custom({ name: 'req' as const, direction: 'in', type: 'httpTrigger' });
+const customBindings = binding.custom({ name: 'req' as const, direction: 'in', type: 'httpTrigger' });
 
 @functionName('CustomType', ...bindings, customBindings)
 export class CustomTypeFunction extends BaseFunction<typeof bindings> {

@@ -14,5 +14,5 @@ export type BindingType<T extends AllBindingTypes> = T extends HttpTriggerType
   ? Timer
   : T extends HttpType
   ? HttpResponse
-  : any;
+  : unknown;
 

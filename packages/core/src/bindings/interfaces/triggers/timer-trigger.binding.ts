@@ -10,7 +10,7 @@ export type TimerTriggerType = 'timerTrigger';
  *
  * read more: [TimerTrigger Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-javascript#configuration)
  */
-export interface TimerTriggerBinding<T> extends BaseFunctionBinding<TimerTriggerType, T> {
+export interface TimerTriggerBinding<Name = unknown> extends BaseFunctionBinding<TimerTriggerType, Name> {
   type: TimerTriggerType;
   /**
    * timerTrigger requires direction `in`

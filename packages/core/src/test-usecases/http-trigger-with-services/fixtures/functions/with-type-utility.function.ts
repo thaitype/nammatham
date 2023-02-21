@@ -1,13 +1,13 @@
 import { inject } from 'inversify';
-import { BaseFunction, Binding, functionName } from '../../../../main';
+import { BaseFunction, binding, functionName } from '../../../../main';
 import { SingletonService } from '../services/singleton-service';
 import { responseHelper, serviceData } from '../../../response-helper';
 import { TransientService } from '../services/transient-service';
 import { ScopedService } from '../services/scoped-service';
 
 const bindings = [
-  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
-  Binding.http({ name: 'res' as const }), // make string to literal type
+  binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
 ] as const;
 
 @functionName('WithTypeUtility', ...bindings)

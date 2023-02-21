@@ -1,13 +1,13 @@
 import type { Equal, Expect } from '@type-challenges/utils';
 import { Context, HttpRequest, HttpResponse, Timer } from '@azure/functions';
-import { BaseFunction, Binding, functionName } from '../../dist/main';
+import { BaseFunction, binding, functionName } from '../../dist/main';
 
 /**
  * Case 1: Binding with timerTrigger
  */
 
 const bindings_case1 = [
-  Binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
+  binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
 ] as const;
 
 @functionName('timerTrigger', ...bindings_case1)

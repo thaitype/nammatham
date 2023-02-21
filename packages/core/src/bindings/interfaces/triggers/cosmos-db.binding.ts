@@ -33,7 +33,7 @@ interface CosmosDBBinding_Output_Base<Name> extends CosmosDBBinding_Base<Name> {
   partitionKey?: string;
 }
 
-export interface CosmosDBBinding_Output_V2<Name> extends CosmosDBBinding_Output_Base<Name> {
+export interface CosmosDBBinding_Output_V2<Name = unknown> extends CosmosDBBinding_Output_Base<Name> {
   /** 
   The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
   */
@@ -52,7 +52,7 @@ export interface CosmosDBBinding_Output_V2<Name> extends CosmosDBBinding_Output_
   useMultipleWriteLocations?: any;
 }
 
-export interface CosmosDBBinding_Output_V4<Name> extends CosmosDBBinding_Output_Base<Name> {
+export interface CosmosDBBinding_Output_V4<Name = unknown> extends CosmosDBBinding_Output_Base<Name> {
   /** 
   The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
   */
@@ -83,7 +83,7 @@ export interface CosmosDBBinding_Input_Base<Name> extends CosmosDBBinding_Base<N
   sqlQuery: string;
 }
 
-export interface CosmosDBBinding_Input_V2<Name> extends CosmosDBBinding_Input_Base<Name> {
+export interface CosmosDBBinding_Input_V2<Name = unknown> extends CosmosDBBinding_Input_Base<Name> {
   /** 
   The name of an app setting or setting collection that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
   */
@@ -94,7 +94,7 @@ export interface CosmosDBBinding_Input_V2<Name> extends CosmosDBBinding_Input_Ba
   collectionName: string;
 }
 
-export interface CosmosDBBinding_Input_V4<Name> extends CosmosDBBinding_Input_Base<Name> {
+export interface CosmosDBBinding_Input_V4<Name = unknown> extends CosmosDBBinding_Input_Base<Name> {
   /** 
   The name of an app setting or setting container that specifies how to connect to the Azure Cosmos DB account being monitored. For more information, see Connections.
   */
