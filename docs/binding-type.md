@@ -3,16 +3,16 @@
 You can see all built-in binding type in [test case](packages/core/src/test-usecases/all-bindings/fixtures/functions/all-bindings.function.ts) as shown below:
 
 ```ts
-import { BaseFunction, Binding, functionName } from '../../../../main';
+import { BaseFunction, binding, functionName } from '../../../../main';
 import { responseHelper } from '../../../response-helper';
 import { HttpRequest, HttpResponse, Timer } from '@azure/functions';
 
 const bindings = [
-  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
-  Binding.http({ name: 'res' as const }), // make string to literal type
-  Binding.http_withReturn(),
-  Binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
-  Binding.cosmosDBTrigger_v2({
+  binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
+  binding.http_withReturn(),
+  binding.timerTrigger({ name: 'timer' as const, schedule: '*' }), // make string to literal type
+  binding.cosmosDBTrigger_v2({
     name: 'document_trigger_v2',
     collectionName: '',
     connection: '',
@@ -20,40 +20,40 @@ const bindings = [
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDBTrigger_v4({
+  binding.cosmosDBTrigger_v4({
     name: 'document_trigger_v4' as const,
     connection: '',
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDBTrigger({
+  binding.cosmosDBTrigger({
     name: 'document_trigger_default' as const,
     connection: '',
     containerName: '',
     databaseName: '',
   }),
-  Binding.cosmosDB_output_v2({
+  binding.cosmosDB_output_v2({
     name: 'document_output_v2' as const,
     collectionName: '',
     connectionStringSetting: '',
     createIfNotExists: true,
     databaseName: '',
   }),
-  Binding.cosmosDB_output_v4({
+  binding.cosmosDB_output_v4({
     name: 'document_output_v4' as const,
     createIfNotExists: true,
     databaseName: '',
     connection: '',
     containerName: '',
   }),
-  Binding.cosmosDB_output({
+  binding.cosmosDB_output({
     name: 'document_output_default' as const,
     createIfNotExists: true,
     databaseName: '',
     connection: '',
     containerName: '',
   }),
-  Binding.cosmosDB_input_v2({
+  binding.cosmosDB_input_v2({
     name: 'document_input_v2' as const,
     collectionName: '',
     connectionStringSetting: '',
@@ -62,7 +62,7 @@ const bindings = [
     partitionKey: '',
     sqlQuery: '',
   }),
-  Binding.cosmosDB_input_v4({
+  binding.cosmosDB_input_v4({
     name: 'document_input_v4' as const,
     databaseName: '',
     id: '',
@@ -71,7 +71,7 @@ const bindings = [
     connection: '',
     containerName: '',
   }),
-  Binding.cosmosDB_input({
+  binding.cosmosDB_input({
     name: 'document_input_default' as const,
     databaseName: '',
     id: '',
@@ -82,7 +82,7 @@ const bindings = [
   }),
 ] as const;
 
-const customBindings = Binding.custom({ name: 'req' as const, type: 'custom', direction: 'in' });
+const customBindings = binding.custom({ name: 'req' as const, type: 'custom', direction: 'in' });
 
 @functionName('AllBindingsFunction', ...bindings, customBindings)
 export class AllBindingsFunction extends BaseFunction<typeof bindings> {

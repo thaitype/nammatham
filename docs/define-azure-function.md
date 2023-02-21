@@ -77,8 +77,8 @@ In case your want to define your [function.json](https://learn.microsoft.com/en-
 import { BaseFunction, Binding, functionName } from 'nammatham';
 
 const bindings = [
-  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
-  Binding.http({ name: 'res' as const }), // make string to literal type
+  binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
 ] as const;
 
 @functionName('GetUser', ...bindings)
@@ -121,12 +121,12 @@ For example, if you want to use `customTrigger`, you can simply do like this:
 import { BaseFunction, Binding, functionName } from 'nammatham';
 
 const bindings = [
-  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
-  Binding.http({ name: 'res' as const }), // make string to literal type
+  binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
 ] as const;
 
 // the type should be supported by Azure Functions runtime
-const customBindings = Binding.custom({ name: 'custom' as const, direction: 'in', type: 'customTrigger' });
+const customBindings = binding.custom({ name: 'custom' as const, direction: 'in', type: 'customTrigger' });
 
 @functionName('CustomType', ...bindings, customBindings)
 export class CustomTypeFunction extends BaseFunction<typeof bindings> {

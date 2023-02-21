@@ -258,11 +258,11 @@ export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding
 Moreover, we can use `Binding` object which a helper to create a function binding with confident type, as show below:
 
 ```ts
-import { Binding } from 'nammatham';
+import { binding} from 'nammatham';
 
 const functionBinding1 = [
-  Binding.httpTrigger({ name: 'req' as const }), // make string to literal type
-  Binding.http({ name: 'res' as const }), // make string to literal type
+  binding.httpTrigger({ name: 'req' as const }), // make string to literal type
+  binding.http({ name: 'res' as const }), // make string to literal type
 ];
 ```
 
