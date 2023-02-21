@@ -1,6 +1,6 @@
 {
   "name": "nammatham-mono",
-  "version": "1.0.0-beta",
+  "version": "1.1.0-beta",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
