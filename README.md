@@ -1,7 +1,18 @@
-# Nammatham
+
+<p align="center">
+  <a href="http://thadaw.com/" target="blank"><img src="https://i.ibb.co/QmTh7x4/Nammatham-Logo-v2.png" width="120" alt="Nammatham Logo" /></a>
+</p>
+
+<p align="center">
+Azure Function Lightweight frameworks with DI, providing type safe function bindings
+</p>
+
+<p align="center"><a href="https://github.com/mildronize/nammatham/actions/workflows/test.yml"><img src="https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg" alt="Build &amp; Test"></a> <a href="https://codecov.io/gh/mildronize/nammatham"><img src="https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN" alt="codecov"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/v/nammatham" alt="npm version"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
+
+
+## Description
 Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs Lightweight frameworks with Dependency Injection, 
 
-[![Build & Test](https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/mildronize/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) [![npm version](https://img.shields.io/npm/v/nammatham)](https://www.npmjs.com/package/nammatham) [![npm download](https://img.shields.io/npm/dt/nammatham)](https://www.npmjs.com/package/nammatham)
 
 ## Compatibility with Azure Functions
 - [Azure Function NodeJs](https://github.com/Azure/azure-functions-nodejs-worker/) : v3.x (`@azure/functions`)
@@ -11,9 +22,9 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **a
 
 ## Introduction
 
-Azure Functions is a platform for building event-driven and serverless applications. **Nammatham** is a framework that allows you to use Azure Functions with TypeScript and decorators. It provides pre-defined JSON binding objects and utility functions, such as `httpTrigger`, to make it easier to create Azure Functions.
+**Nammatham** is a framework that allows you to use Azure Functions with TypeScript and decorators. It provides pre-defined JSON binding objects and utility functions, such as `httpTrigger`, to make it easier to create Azure Functions.
 
-One example of using Nammatham with Azure Functions is an HTTP trigger function, where the `httpTrigger` function returns a JSON binding object that defines the function's input and output. The `@functionName` decorators are used to define the function and specify its bindings.
+Example:
 
 ```ts
 import { AuthorizationLevel, BaseFunction, functionName, httpTrigger } from "nammatham";
@@ -47,22 +58,7 @@ You can install nammatham using npm:
 npm install nammatham inversify reflect-metadata --save
 ```
 
-The `nammatham` type definitions are included in the npm module and require TypeScript 2.0 and above. Please refer to the [InversifyJS](https://github.com/inversify/InversifyJS#-installation) documentation to learn more about the installation process.
-
-## Motivation
-
-This framework aims to improve the development experience for Azure Functions using Node.js by providing a clear project structure, built-in Azure Function Configuration with the code, and built-in Dependency Injection.
-
-.NET is a first-class supported in Azure Function which ... (Write Later)
-
-We heavily get inspired from Azure Functions .NET version which provide clearly project strucutre, built-in Azure Function Configuration with the Code, and also provide built-in Dependency Injection.
-
-- **Ugly Project Structure** -The Azure Functions Node.js library only provides basic tools to connect with the Azure Function Runtime. All function endpoints are located in the root of the project and only accept one export in the `index.js` file, which is the Azure Function Runtime will inject runtime object for that such as `Context`. Other code such as services, constants, and middleware must be located at the same level as the function endpoints.
-- **Separate JS Code and the Function configuration** - The separation of JS code and function configuration makes it harder to understand how the function app works. In contrast, the [.NET version also provide configuration inline of the C# Code](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process#httpexamplecs), no type support when binding input and output from `function.json`
-    - To create an Azure Function endpoint, two files are required:
-        1. [index.js](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#indexjs) which must have only one export.
-        2. [function.json](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser#functionjson) which is a plain JSON file with no autocomplete or easy-to-use configuration, requiring the user to open the documentation to configure it.
-- **No Dependecy Injection** - Azure Functions Node.js does not provide any built-in Dependency Injection tool, unlike the [.NET Azure Function provides built-in Dependency Injection](https://learn.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection)
+For the [InversifyJS](https://github.com/inversify/InversifyJS#-installation), please refer the documentation for usage.
 
 ## Starter Project
 
