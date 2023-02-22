@@ -11,7 +11,7 @@ Azure Function Lightweight frameworks with DI, providing type safe function bind
 
 
 ## Description
-Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs Lightweight frameworks with Dependency Injection, 
+Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs Lightweight framework with Dependency Injection. Provide type safety wrapping `function.json`
 
 
 ## Compatibility with Azure Functions
@@ -41,14 +41,16 @@ export class UserFunction extends BaseFunction {
 ```
 
 ## Features
-- Provide basic utility for writing Azure Functions
-- Only support TypeScript and [InversifyJS](https://github.com/inversify/Inversify) as the [Most Popular Inversion of Control Container and Dependency Injection Approach](https://npmtrends.com/awilix-vs-bottlejs-vs-inversify-vs-node-dependency-injection-vs-tsyringe-vs-typedi-vs-typescript-ioc) 
+- Simple Framework, support all functionality with Azure Functions features
+- Provide type utiltiy wrapping around `function.json`
+- Better project orgnization
 - Binding & Trigger Built-in type support
   - Http Trigger
   - Timer Trigger
   - Cosmos DB Trigger
-  - If your binding type isn't in the list, please use [Support custom type](docs/define-azure-function.md#custom-binding)
+  - If your binding type isn't in the list, please use [custom type](docs/define-azure-function.md#custom-binding)
   - You can see [All available type support](docs/binding-type.md) or create a PR ;).
+- Support TypeScript and [InversifyJS](https://github.com/inversify/Inversify) as the [Most Popular Inversion of Control Container and Dependency Injection Approach](https://npmtrends.com/awilix-vs-bottlejs-vs-inversify-vs-node-dependency-injection-vs-tsyringe-vs-typedi-vs-typescript-ioc) 
 - Build Tool Agnostic, this framework just provide the library. It can work with all TypeScript build tool e.g. tsc, esbuild, etc.
 
 ## Installation
