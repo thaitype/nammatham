@@ -57,7 +57,7 @@ it will autogenerate, 2 files per function
       context: Context,
       ...args: any[]
     ): Promise<void> {
-      app.run({
+      return app.run({
         classTarget: UserController,
         azureFunctionParams: [context, ...args]
       });
@@ -149,16 +149,12 @@ export class WithTypeUtilityFunction extends BaseFunction<typeof functionBinding
 }
 ```
 
-## 3. Method Injection Mode
-
-...
-
-## 4. Resolve dependency in the container at startup time
+## 3. Resolve dependency in the container at startup time
 
 ....
 
 
-## 5. Why a single class per azure function
+## 4. Why a single class per azure function
 
 Previous design, we're required to create a function bindings config (same as `function.json`) before starting declare the class.
 Because we need a type of function bindings and using `GetBindings<T>` type to extract type from it.
@@ -226,20 +222,20 @@ The  `BaseFunction` will accept type of function bindings config when creating t
 
 ```ts
 // nammatham version 0.5.0-alpha or above
-import { BaseFunction, Binding, functionName } from 'nammatham';
+import { BaseFunction, binding, functionName } from 'nammatham';
 
 const functionBinding1 = [
   {
     name: 'req',
     type: 'httpTrigger',
     direction: 'in',
-  } as httpTriggerBinding<'req'>,
+  } as binding.HttpTriggerBinding,
   {
     name: 'res',
     direction: 'out',
     type: 'http',
-  } as HttpBinding<'res'>,
-];
+  } as binding.HttpBinding,
+] as const;
 
 
 @functionName('WithTypeUtility', ...functionBinding1)
@@ -263,7 +259,7 @@ import { binding} from 'nammatham';
 const functionBinding1 = [
   binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   binding.http({ name: 'res' as const }), // make string to literal type
-];
+] as const;
 ```
 
 This is the same value as above declaration, but more fluent api.
