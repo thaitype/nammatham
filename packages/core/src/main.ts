@@ -12,5 +12,4 @@ export { StatusCodes as HttpStatus } from 'http-status-codes';
 import * as _bindings from './bindings';
 export { _bindings as binding };
 
-// import * as bindings from "./bindings";
-// export * from "./external";
+export type { Context , TypedContext } from './interfaces';
