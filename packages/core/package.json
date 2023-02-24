@@ -1,6 +1,6 @@
 {
   "name": "nammatham",
-  "version": "1.1.2-beta",
+  "version": "1.2.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
