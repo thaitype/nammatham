@@ -44,7 +44,7 @@ export class UserFunction extends BaseFunction {
 - Simple Framework, support all functionality with Azure Functions features
 - Provide type utiltiy wrapping around `function.json`
 - Better project orgnization
-- Binding & Trigger Built-in type support
+- Bindings & Triggers Built-in type support
   - Http Trigger
   - Timer Trigger
   - Cosmos DB Trigger
