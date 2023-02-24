@@ -51,6 +51,16 @@ importers:
       tsx: 3.12.3
       typescript: 4.9.5
 
+  examples/compare-with-azure-functions:
+    specifiers:
+      '@azure/functions': latest
+      inversify: ^6.0.1
+      nammatham: workspace:*
+    dependencies:
+      '@azure/functions': 3.5.0
+      inversify: 6.0.1
+      nammatham: link:../../packages/core
+
   packages/core:
     specifiers:
       '@types/lodash': ^4.14.191

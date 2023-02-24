@@ -1,0 +1,13 @@
+{
+  "name": "compare-with-azure-functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Thada Wangthammang",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/functions": "latest",
+    "inversify": "^6.0.1",
+    "nammatham": "workspace:*"
+  }
+}
