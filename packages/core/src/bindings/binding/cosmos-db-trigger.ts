@@ -43,9 +43,9 @@ import {
  * @param bindings - `CosmosDBTriggerBinding_V4`
  * @returns `CosmosDBTriggerBinding_V4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger_v2<T extends PartialBy<CosmosDBTriggerBinding_V2<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): CosmosDBTriggerBinding_V2<T['name']> {
+export function cosmosDBTrigger_v2<Binding extends CosmosDBTriggerBinding_V2<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBTriggerBinding_V2<Name>, 'type' | 'direction'>
+): CosmosDBTriggerBinding_V2<Name> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -88,9 +88,9 @@ export function cosmosDBTrigger_v2<T extends PartialBy<CosmosDBTriggerBinding_V2
  * @param bindings - `CosmosDBTriggerBinding_V4`
  * @returns `CosmosDBTriggerBinding_V4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger_v4<T extends PartialBy<CosmosDBTriggerBinding_V4<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): CosmosDBTriggerBinding_V4<T['name']> {
+export function cosmosDBTrigger_v4<Binding extends CosmosDBTriggerBinding_V4<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBTriggerBinding_V4<Name>, 'type' | 'direction'>
+): CosmosDBTriggerBinding_V4<Name> {
   return {
     ...bindings,
     type: 'cosmosDBTrigger',
@@ -133,9 +133,15 @@ export function cosmosDBTrigger_v4<T extends PartialBy<CosmosDBTriggerBinding_V4
  * @param bindings - `CosmosDBTriggerBinding_V4`
  * @returns `CosmosDBTriggerBinding_V4` Object with `{ type: 'cosmosDBTrigger', direction: 'in' }`
  */
-export function cosmosDBTrigger<T extends PartialBy<CosmosDBTriggerBinding_V4<unknown>, 'type' | 'direction'>>(
-  bindings: T
-) {
+// export function cosmosDBTrigger<T extends PartialBy<CosmosDBTriggerBinding_V4<unknown>, 'type' | 'direction'>>(
+//   bindings: T
+// ) {
+//   return cosmosDBTrigger_v4(bindings);
+// }
+
+export function cosmosDBTrigger<Binding extends CosmosDBTriggerBinding_V4<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBTriggerBinding_V4<Name>, 'type' | 'direction'>
+): CosmosDBTriggerBinding_V4<Name> {
   return cosmosDBTrigger_v4(bindings);
 }
 
@@ -174,9 +180,9 @@ export function cosmosDBTrigger<T extends PartialBy<CosmosDBTriggerBinding_V4<un
  * @param bindings - `CosmosDBBinding_Output_V2`
  * @returns `CosmosDBBinding_Output_V2` Object with `{ type: 'cosmosDB', direction: 'out' }`
  */
-export function cosmosDB_output_v2<T extends PartialBy<CosmosDBBinding_Output_V2<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): CosmosDBBinding_Output_V2<T['name']> {
+export function cosmosDB_output_v2<Binding extends CosmosDBBinding_Output_V2<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBBinding_Output_V2<Name>, 'type' | 'direction'>
+): CosmosDBBinding_Output_V2<Name> {
   return {
     ...bindings,
     type: 'cosmosDB',
@@ -219,9 +225,9 @@ export function cosmosDB_output_v2<T extends PartialBy<CosmosDBBinding_Output_V2
   * @param bindings - `CosmosDBBinding_Output_V4`
   * @returns `CosmosDBBinding_Output_V4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
-export function cosmosDB_output_v4<T extends PartialBy<CosmosDBBinding_Output_V4<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): CosmosDBBinding_Output_V4<T['name']> {
+export function cosmosDB_output_v4<Binding extends CosmosDBBinding_Output_V4<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBBinding_Output_V4<Name>, 'type' | 'direction'>
+): CosmosDBBinding_Output_V4<Name> {
   return {
     ...bindings,
     type: 'cosmosDB',
@@ -264,9 +270,9 @@ export function cosmosDB_output_v4<T extends PartialBy<CosmosDBBinding_Output_V4
   * @param bindings - `CosmosDBBinding_Output_V4`
   * @returns `CosmosDBBinding_Output_V4` Object with `{ type: 'cosmosDB', direction: 'out' }`
   */
-export function cosmosDB_output<T extends PartialBy<CosmosDBBinding_Output_V4<unknown>, 'type' | 'direction'>>(
-  bindings: T
-) {
+export function cosmosDB_output<Binding extends CosmosDBBinding_Output_V4<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBBinding_Output_V4<Name>, 'type' | 'direction'>
+): CosmosDBBinding_Output_V4<Name> {
   return cosmosDB_output_v4(bindings);
 }
 
@@ -305,13 +311,13 @@ export function cosmosDB_output<T extends PartialBy<CosmosDBBinding_Output_V4<un
  * @param bindings - `CosmosDBBinding_Input_V2`
  * @returns `CosmosDBBinding_Input_V2` Object with `{ type: 'cosmosDB', direction: 'out' }`
  */
-export function cosmosDB_input_v2<T extends PartialBy<CosmosDBBinding_Input_V2<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): CosmosDBBinding_Input_V2<T['name']> {
+export function cosmosDB_input_v2<Binding extends CosmosDBBinding_Input_V2<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBBinding_Input_V2<Name>, 'type' | 'direction'>
+): CosmosDBBinding_Input_V2<Name> {
   return {
     ...bindings,
     type: 'cosmosDB',
-    direction: 'out',
+    direction: 'in',
   };
 }
 
@@ -350,13 +356,13 @@ export function cosmosDB_input_v2<T extends PartialBy<CosmosDBBinding_Input_V2<u
    * @param bindings - `CosmosDBBinding_Input_V4`
    * @returns `CosmosDBBinding_Input_V4` Object with `{ type: 'cosmosDB', direction: 'out' }`
    */
-export function cosmosDB_input_v4<T extends PartialBy<CosmosDBBinding_Input_V4<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): CosmosDBBinding_Input_V4<T['name']> {
+export function cosmosDB_input_v4<Binding extends CosmosDBBinding_Input_V4<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBBinding_Input_V4<Name>, 'type' | 'direction'>
+): CosmosDBBinding_Input_V4<Name> {
   return {
     ...bindings,
     type: 'cosmosDB',
-    direction: 'out',
+    direction: 'in',
   };
 }
 
@@ -395,8 +401,8 @@ export function cosmosDB_input_v4<T extends PartialBy<CosmosDBBinding_Input_V4<u
    * @param bindings - `CosmosDBBinding_Input_V4`
    * @returns `CosmosDBBinding_Input_V4` Object with `{ type: 'cosmosDB', direction: 'out' }`
    */
-export function cosmosDB_input<T extends PartialBy<CosmosDBBinding_Input_V4<unknown>, 'type' | 'direction'>>(
-  bindings: T
-) {
+export function cosmosDB_input<Binding extends CosmosDBBinding_Input_V4<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<CosmosDBBinding_Input_V4<Name>, 'type' | 'direction'>
+): CosmosDBBinding_Input_V4<Name> {
   return cosmosDB_input_v4(bindings);
 }

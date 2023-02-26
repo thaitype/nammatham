@@ -36,9 +36,9 @@ import { TimerTriggerBinding } from '../interfaces';
  * @param bindings - `TimerTriggerBinding` Object
  * @returns `TimerTriggerBinding` Object Object with `{ type: 'timerTrigger', direction: 'in' }`
  */
-export function timerTrigger<T extends PartialBy<TimerTriggerBinding<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): TimerTriggerBinding<T['name']> {
+export function timerTrigger<Binding extends TimerTriggerBinding<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<TimerTriggerBinding<Name>, 'type' | 'direction'>
+): TimerTriggerBinding<Name> {
   return {
     ...bindings,
     type: 'timerTrigger',

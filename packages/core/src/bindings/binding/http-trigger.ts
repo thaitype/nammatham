@@ -36,9 +36,9 @@ import { HttpTriggerBinding } from '../interfaces';
  * @param bindings - `HttpTriggerBinding`
  * @returns `HttpTriggerBinding` Object with `{ type: 'httpTrigger', direction: 'in' }`
  */
-export function httpTrigger<T extends PartialBy<HttpTriggerBinding<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): HttpTriggerBinding<T['name']> {
+export function httpTrigger<Binding extends HttpTriggerBinding<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<HttpTriggerBinding<Name>, 'type' | 'direction'>
+): HttpTriggerBinding<Name> {
   return {
     ...bindings,
     type: 'httpTrigger',

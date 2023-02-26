@@ -10,9 +10,7 @@ const bindings = [
   binding.cosmosDBTrigger_v2({
     name: 'document_trigger_v2' as const,
     collectionName: '',
-    connection: '',
     connectionStringSetting: '',
-    containerName: '',
     databaseName: '',
   }),
   binding.cosmosDBTrigger_v4({
