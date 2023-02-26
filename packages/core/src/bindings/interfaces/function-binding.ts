@@ -1,3 +1,4 @@
+import { BlobTriggerBinding } from 'packages/core/dist/main';
 import { CustomFunctionBinding } from './custom-function-binding';
 import {
   HttpTriggerBinding,
@@ -8,7 +9,9 @@ import {
   CosmosDBBinding_Output_V2,
   CosmosDBBinding_Output_V4,
   CosmosDBBinding_Input_V2,
-  CosmosDBBinding_Input_V4
+  CosmosDBBinding_Input_V4,
+  BlobBinding_Input,
+  BlobBinding_Output
 } from './triggers';
 
 export type DefinedFunctionBinding<T extends unknown> =
@@ -20,7 +23,12 @@ export type DefinedFunctionBinding<T extends unknown> =
   | CosmosDBBinding_Output_V2<T>
   | CosmosDBBinding_Output_V4<T>
   | CosmosDBBinding_Input_V2<T>
-  | CosmosDBBinding_Input_V4<T>;
+  | CosmosDBBinding_Input_V4<T>
+  | BlobTriggerBinding<T>
+  | BlobBinding_Input<T>
+  | BlobBinding_Output<T>
+
+
 
 /**
  * If `T` type is `null`, then return `DefinedFunctionBinding`,
