@@ -10,9 +10,7 @@ const bindings = [
   binding.cosmosDBTrigger_v2({
     name: 'document_trigger_v2' as const,
     collectionName: '',
-    connection: '',
     connectionStringSetting: '',
-    containerName: '',
     databaseName: '',
   }),
   binding.cosmosDBTrigger_v4({
@@ -75,6 +73,27 @@ const bindings = [
     connection: '',
     containerName: '',
   }),
+  binding.blobTrigger({
+    connection: '',
+    name: 'blob_trigger' as const,
+    path: '',
+  }),
+  binding.blob_input({
+    connection: '',
+    name: 'blob_input' as const,
+    path: '',
+  }),
+  binding.blob_output({
+    connection: '',
+    name: 'blob_output' as const,
+    path: '',
+  }),
+  binding.serviceBusTrigger({
+    name: 'queue' as const,
+  }),
+  binding.serviceBus_output({
+    name: 'queue_out' as const,
+  })
 ] as const;
 
 const customBindings = binding.custom({ name: 'req' as const, type: 'custom', direction: 'in' });
@@ -97,6 +116,13 @@ export class AllBindingsFunction extends BaseFunction<typeof bindings> {
     const document_trigger_v2: any = this.bindings.document_trigger_v2;
     const document_trigger_v4: any = this.bindings.document_trigger_v4;
     const document_trigger_default: any = this.bindings.document_trigger_default;
+
+    const blob_trigger: any = this.bindings.blob_trigger;
+    const blob_input: any = this.bindings.blob_input;
+    const blob_output: any = this.bindings.blob_output;
+
+    const queue: any = this.bindings.queue;
+    const queue_out: any = this.bindings.queue_out;
 
     const { name } = this.req.query;
     this.res.send(responseHelper(name));

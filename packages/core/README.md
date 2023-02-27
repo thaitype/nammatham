@@ -45,9 +45,11 @@ export class UserFunction extends BaseFunction {
 - Provide type utiltiy wrapping around `function.json`
 - Better project orgnization
 - Bindings & Triggers Built-in type support
-  - Http Trigger
-  - Timer Trigger
-  - Cosmos DB Trigger
+  - Http
+  - Timer
+  - Cosmos DB, support both [v2](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript#configuration) and [v4](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2-trigger?tabs=in-process%2Cextensionv4&pivots=programming-language-javascript#configuration).
+  - Blob
+  - Service Bus
   - If your binding type isn't in the list, please use [custom type](docs/define-azure-function.md#custom-binding)
   - You can see [All available type support](docs/binding-type.md) or create a PR ;).
 - Support TypeScript and [InversifyJS](https://github.com/inversify/Inversify) as the [Most Popular Inversion of Control Container and Dependency Injection Approach](https://npmtrends.com/awilix-vs-bottlejs-vs-inversify-vs-node-dependency-injection-vs-tsyringe-vs-typedi-vs-typescript-ioc) 

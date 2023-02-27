@@ -36,9 +36,9 @@ import { HttpBinding } from '../interfaces';
  * @param bindings - `HttpBinding` Object
  * @returns `HttpBinding` Object Object with `{ type: 'http', direction: 'out' }`
  */
-export function http<T extends PartialBy<HttpBinding<unknown>, 'type' | 'direction'>>(
-  bindings: T
-): HttpBinding<T['name']> {
+export function http<Binding extends HttpBinding<unknown>, Name extends Binding['name']>(
+  bindings: PartialBy<HttpBinding<Name>, 'type' | 'direction'>
+): HttpBinding<Name> {
   return {
     ...bindings,
     type: 'http',
@@ -80,10 +80,10 @@ export function http<T extends PartialBy<HttpBinding<unknown>, 'type' | 'directi
    * @param bindings - `HttpBinding` (Optional)
    * @returns `HttpBinding` Object with  `{ name: '$return', type: 'http', direction: 'out' }`
    */
-export function http_withReturn<T extends PartialBy<HttpBinding<unknown>, 'name' | 'type' | 'direction'>>(
-  bindings?: T
+
+export function http_withReturn<Binding extends HttpBinding<unknown>, Name extends Binding['name']>(
+  bindings?: PartialBy<HttpBinding<Name>, 'name' | 'type' | 'direction'>
 ): HttpBinding<'$return'> {
-  bindings = bindings ?? ({} as T);
   return {
     ...bindings,
     name: '$return' as const,

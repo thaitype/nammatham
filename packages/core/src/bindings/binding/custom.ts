@@ -28,6 +28,6 @@ import { CustomFunctionBinding } from '../interfaces';
  * @param bindings - `CustomFunctionBinding` Object
  * @returns `CustomFunctionBinding` Object
  */
-export function custom<T extends CustomFunctionBinding<unknown>>(bindings: T): CustomFunctionBinding<T['name']> {
+export function custom<Binding extends CustomFunctionBinding<unknown>>(bindings: Binding): CustomFunctionBinding<Binding['name']> {
   return bindings;
 }

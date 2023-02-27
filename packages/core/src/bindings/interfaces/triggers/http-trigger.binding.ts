@@ -3,7 +3,7 @@ import { BaseFunctionBinding } from '../base-function-binding';
 
 export type RequestMethod = 'get' | 'post' | 'delete' | 'options' | 'put';
 
-export type AuthorizationLevelType = typeof AuthorizationLevel[keyof typeof AuthorizationLevel];
+export type AuthorizationLevelType = (typeof AuthorizationLevel)[keyof typeof AuthorizationLevel];
 
 /**
  * Azure Functions Http Trigger Request Type
@@ -41,12 +41,10 @@ export interface HttpTriggerBinding<Name = unknown> extends BaseFunctionBinding<
   route?: string;
 }
 
-
 /**
  * Azure Functions Http Response Type
  */
 export type HttpType = 'http';
-
 
 /**
  * Binding output Http Trigger with [Http Type](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-output?tabs=in-process&pivots=programming-language-javascript)
@@ -55,4 +53,22 @@ export type HttpType = 'http';
 export interface HttpBinding<Name = unknown> extends BaseFunctionBinding<HttpType, Name> {
   type: HttpType;
   direction: 'out';
+}
+
+/**
+ * HttpTrigger ContextBindingData
+ */
+
+export interface HttpTriggerContextBindingData {
+  query: {
+    [name: string]: any;
+  };
+  headers: {
+    [name: string]: any;
+  };
+  sys: {
+    methodName: string;
+    utcNow: string;
+    randGuid: string;
+  };
 }
