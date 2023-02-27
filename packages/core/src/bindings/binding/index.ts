@@ -6,3 +6,5 @@ export * from './cosmos-db-trigger';
 export * from './cosmos-db';
 export * from './blob-trigger';
 export * from './blob';
+export * from './service-bus';
+export * from './service-bus-trigger';

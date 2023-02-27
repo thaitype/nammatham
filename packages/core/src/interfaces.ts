@@ -1,7 +1,7 @@
 // Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 
 import { Context as AzureFuncContext, HttpRequest, HttpResponse } from '@azure/functions';
-import { GetBindings, FunctionBinding, BaseFunctionBinding, HttpType, HttpTriggerType } from './bindings';
+import { GetBindings, FunctionBinding, BaseFunctionBinding, HttpType, HttpTriggerType, TypedContextBindingData } from './bindings';
 import { NotAny } from '@type-challenges/utils';
 
 export type GetReturnType<ReturnType, FallbackReturnType> = FallbackReturnType extends undefined
@@ -81,6 +81,10 @@ export interface TypedContext<T extends readonly FunctionBinding<unknown>[]>
    * Provide more specific type from FunctionBinding
    */
   bindingDefinitions: T;
+  /**
+   * Trigger metadata and function invocation data.
+   */
+  bindingData: TypedContextBindingData<T>;
 }
 
 export type HandlerDecorator = (target: DecoratorTarget, key: string, value: unknown) => void;
