@@ -5,9 +5,6 @@ import { Service } from './services';
 const bindings = [
   binding.httpTrigger({ name: 'req' as const }), // make string to literal type
   binding.http({ name: 'res' as const }), // make string to literal type
-  binding.serviceBus_output({
-    name: 'queue' as const 
-  })
 ] as const;
 
 @functionName('WithTypeUtility', ...bindings)

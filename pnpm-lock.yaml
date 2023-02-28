@@ -61,6 +61,31 @@ importers:
       inversify: 6.0.1
       nammatham: link:../../packages/core
 
+  examples/trigger-blob-output-blob:
+    specifiers:
+      '@azure/functions': latest
+      cross-env: ^7.0.3
+      dotenv: ^16.0.3
+      inversify: ^6.0.1
+      nammatham: workspace:*
+      nodemon: ^2.0.20
+      npm-run-all: ^4.1.5
+      reflect-metadata: ^0.1.13
+      tsx: latest
+      typescript: latest
+    dependencies:
+      '@azure/functions': 3.5.0
+      dotenv: 16.0.3
+      inversify: 6.0.1
+      nammatham: link:../../packages/core
+      nodemon: 2.0.20
+      reflect-metadata: 0.1.13
+    devDependencies:
+      cross-env: 7.0.3
+      npm-run-all: 4.1.5
+      tsx: 3.12.3
+      typescript: 4.9.5
+
   packages/core:
     specifiers:
       '@types/lodash': ^4.14.191
@@ -838,6 +863,11 @@ packages:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}

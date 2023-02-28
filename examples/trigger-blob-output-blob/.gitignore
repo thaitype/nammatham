@@ -1,0 +1,9 @@
+# Nammatham/AzureFunctions/Cache:start
+.nammatham
+# Nammatham/AzureFunctions/Cache:end
+# Nammatham/AzureFunctions/GeneratedFiles:start
+AutoResizeBlob
+# Nammatham/AzureFunctions/GeneratedFiles:end
+package-lock.json
+pnpm-lock.yaml
+local.settings.json
