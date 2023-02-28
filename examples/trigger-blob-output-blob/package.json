@@ -1,0 +1,31 @@
+{
+  "name": "trigger-blob-output-blob",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "serve": "run-s build start",
+    "debug": "tsc && npm run start",
+    "build": "cross-env nammatham_env=build tsx src/startup.ts && tsc",
+    "serve:watch": "nodemon --watch src --ext ts --exec 'npm run serve'",
+    "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",
+    "start:watch": "nodemon --watch dist --delay 0.3 --exec  'npm start'",
+    "start": "func start",
+    "dev": "run-s serve:watch"
+  },
+  "author": "Thada Wangthammang",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/functions": "latest",
+    "dotenv": "^16.0.3",
+    "inversify": "^6.0.1",
+    "nammatham": "workspace:*",
+    "nodemon": "^2.0.20",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}
