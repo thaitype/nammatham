@@ -2,20 +2,20 @@
   "name": "http-trigger",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/src/functions/*.js",
   "scripts": {
     "serve": "run-s build start",
-    "build": "ts-node src/main.ts && tsc",
+    "build": "tsc",
     "serve:watch": "nodemon --watch src --ext ts --exec 'npm run serve'",
-    "build:watch": "nodemon --watch src --ext ts --delay 0.5 --exec 'npm run build'",
-    "start:watch": "nodemon --watch dist --delay 0.3 --exec  'npm start'",
+    "build:watch": "tsc -w",
     "start": "func start",
-    "dev": "run-s serve:watch"
+    "start:watch": "func start -w",
+    "dev": "run-p build:watch start:watch"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "latest",
+    "@azure/functions": "^4.0.0-alpha.8",
     "@nammatham/inversify": "workspace:*",
     "nodemon": "^2.0.20",
     "reflect-metadata": "^0.1.13",

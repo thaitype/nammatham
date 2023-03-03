@@ -7,7 +7,7 @@ import {
 } from './utils';
 import { TYPE } from '../contants';
 import { AzureFunctionMethodMetadata } from '../interfaces';
-import { Context } from '@azure/functions';
+
 
 const config = {
   forceControllers: true, // throw if no controller assigned

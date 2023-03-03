@@ -20,6 +20,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
+    "@azure/functions": "^4.0.0-alpha.8",
     "handlebars": "^4.7.7",
     "http-status-codes": "^2.2.0",
     "inversify": "^6.0.1",

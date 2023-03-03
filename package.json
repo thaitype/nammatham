@@ -20,7 +20,6 @@
     "url": "https://github.com/mildronize/nammatham.git"
   },
   "devDependencies": {
-    "@azure/functions": "^3.5.0",
     "@type-challenges/utils": "^0.1.1",
     "@types/node": "^18.11.18",
     "ava": "^5.1.1",
