@@ -1,12 +1,73 @@
-import { app, HttpRequest, InvocationContext } from '@azure/functions';
+import { app, InvocationContext, HttpRequest, HttpHandler } from '@azure/functions';
+import {
+  Controller,
+  Inject,
+  Injectable,
+  AuthorizationLevel,
+  BlobOutput,
+  BlobTrigger,
+  Context,
+  FunctionName,
+  Get,
+  HttpTrigger,
+  Log,
+  Logger,
+  Post,
+  Req,
+  Res,
+} from '@nammatham/inversify';
 
-app.http('httpTrigger1', {
-  methods: ['POST', 'GET'],
-  handler: async (request: HttpRequest, context: InvocationContext) => {
-    context.log(`Http function processed request for url "${request.url}"`);
+type HttpResponse = ReturnType<HttpHandler>;
 
-    const name = request.query.get('name') || (await request.text()) || 'world';
+@Controller()
+export class MyController {
+  @FunctionName('CopyBlob')
+  public copyBlob(
+    @BlobTrigger({ path: 'samples-workitems/{name}' }) blobInput: Buffer,
+    @BlobOutput({ path: 'export/{name}' }) blobOutput: unknown,
+    @Context() context: InvocationContext,
+    @Logger() log: Log
+  ) {
+    log.info(blobInput.toString());
+    log.info(context.functionName);
+    blobOutput = blobInput;
+  }
 
-    return { body: `Hello test xx, ${name}!` };
-  },
-});
+  @FunctionName('http')
+  public httpTrigger(
+    @HttpTrigger('anonymous', ['get'], '/my-data') req: HttpRequest,
+    @Logger() log: Log
+  ): HttpResponse {
+    log.info(req.toString());
+    return {
+      body: 'Hello',
+    };
+  }
+
+  // Shorthand of httpTrigger
+  // Full Example of Shorthand
+  // Auto generate function name = class name + method name
+  // Default AuthorizationLevel is anonymous, this should be option
+  @AuthorizationLevel('function')
+  @Get('my-data')
+  public simpleGet(
+    @Req() req: HttpRequest,
+    @Res() res: HttpResponse,
+    @Context() context: InvocationContext,
+    @Logger() log: Log
+  ) {
+    log.info(req.toString());
+    // Don't sure for v4 model
+    res = {
+      body: 'Hello',
+    };
+  }
+
+  // Default AuthorizationLevel is anonymous
+  // Typically Use of Shorthand httpTrigger,
+  @Post('my-data')
+  public async simplePost(@Req() req: HttpRequest): Promise<HttpResponse> {
+    const name = req.query.get('name') || (await req.text()) || 'world';
+    return { body: `Hello, ${name}!` };
+  }
+}

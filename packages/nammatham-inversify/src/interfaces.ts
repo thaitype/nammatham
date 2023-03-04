@@ -1,6 +1,6 @@
 // Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 
-import type { BaseFunctionBinding } from './main';
+import type { BaseFunctionBinding } from './bindings';
 
 export type HandlerDecorator = (target: DecoratorTarget, key: string, value: unknown) => void;
 
