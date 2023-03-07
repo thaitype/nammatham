@@ -1,42 +1,41 @@
 import { app, InvocationContext, HttpRequest, HttpHandler } from '@azure/functions';
 import {
-  Controller,
-  Inject,
-  Injectable,
-  AuthorizationLevel,
-  BlobOutput,
-  BlobTrigger,
-  Context,
-  FunctionName,
-  Get,
-  HttpTrigger,
-  Log,
+  controller,
+  authorizationLevel,
+  blobOutput,
+  blobTrigger,
+  context,
+  functionName,
+  httpGet,
+  httpTrigger,
   Logger,
-  Post,
-  Req,
-  Res,
+  logger,
+  httpPost,
+  req,
+  res,
 } from '@nammatham/inversify';
+
 
 type HttpResponse = ReturnType<HttpHandler>;
 
-@Controller()
+@controller()
 export class MyController {
-  @FunctionName('CopyBlob')
+  @functionName('CopyBlob')
   public copyBlob(
-    @BlobTrigger({ path: 'samples-workitems/{name}' }) blobInput: Buffer,
-    @BlobOutput({ path: 'export/{name}' }) blobOutput: unknown,
-    @Context() context: InvocationContext,
-    @Logger() log: Log
+    @blobTrigger({ path: 'samples-workitems/{name}' }) blobInput: Buffer,
+    @blobOutput({ path: 'export/{name}' }) blobOutput: unknown,
+    @context() context: InvocationContext,
+    @logger() log: Logger
   ) {
     log.info(blobInput.toString());
     log.info(context.functionName);
     blobOutput = blobInput;
   }
 
-  @FunctionName('http')
+  @functionName('http')
   public httpTrigger(
-    @HttpTrigger('anonymous', ['get'], '/my-data') req: HttpRequest,
-    @Logger() log: Log
+    @httpTrigger({ authLevel: 'anonymous', methods: ['get'], route: '/my-data' }) req: HttpRequest,
+    @logger() log: Logger
   ): HttpResponse {
     log.info(req.toString());
     return {
@@ -48,13 +47,13 @@ export class MyController {
   // Full Example of Shorthand
   // Auto generate function name = class name + method name
   // Default AuthorizationLevel is anonymous, this should be option
-  @AuthorizationLevel('function')
-  @Get('my-data')
+  @authorizationLevel('function')
+  @httpGet('my-data')
   public simpleGet(
-    @Req() req: HttpRequest,
-    @Res() res: HttpResponse,
-    @Context() context: InvocationContext,
-    @Logger() log: Log
+    @req() req: HttpRequest,
+    @res() res: HttpResponse,
+    @context() context: InvocationContext,
+    @logger() log: Logger
   ) {
     log.info(req.toString());
     // Don't sure for v4 model
@@ -63,10 +62,9 @@ export class MyController {
     };
   }
 
-  // Default AuthorizationLevel is anonymous
   // Typically Use of Shorthand httpTrigger,
-  @Post('my-data')
-  public async simplePost(@Req() req: HttpRequest): Promise<HttpResponse> {
+  @httpPost('my-data')
+  public async simplePost(@req() req: HttpRequest): HttpResponse {
     const name = req.query.get('name') || (await req.text()) || 'world';
     return { body: `Hello, ${name}!` };
   }

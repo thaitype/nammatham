@@ -1,38 +1,38 @@
 import { DecoratorTarget, HandlerDecorator } from './interfaces';
 import { InvocationContext } from '@azure/functions';
 
-export function Controller() {
+export function controller() {
   return (target: NewableFunction): void => {
     console.log(target.name)
   };
 }
 
 
-export function FunctionName(...args: any[]): HandlerDecorator {
+export function functionName(...args: any[]): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {};
 }
 
-export function BlobTrigger(...args: any[]): HandlerDecorator {
+export function blobTrigger(...args: any[]): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {};
 }
 
-export function BlobOutput(...args: any[]): HandlerDecorator {
+export function blobOutput(...args: any[]): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {};
 }
 
-export function HttpTrigger(...args: any[]): HandlerDecorator {
+export function httpTrigger(...args: any[]): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {};
 }
 
-export function Logger(...args: any[]): HandlerDecorator {
+export function logger(...args: any[]): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {};
 }
 
-export function Context(...args: any[]): HandlerDecorator {
+export function context(...args: any[]): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {};
 }
 
-export type Log = {
+export type Logger = {
   error: InvocationContext['error'];
   info: InvocationContext['info'];
 };
