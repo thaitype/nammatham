@@ -1,5 +1,7 @@
-import { BINDING_PARAMETER_TYPE } from '../contants';
-import { bindingParamDecoratorFactory } from './binding-params-factory';
+import { PARAMETER_TYPE } from '../contants';
 import { HttpTriggerOptions } from '@azure/functions';
+import { paramDecoratorFactory } from './params-factory';
 
-export const httpTrigger: (option: HttpTriggerOptions) => ParameterDecorator = bindingParamDecoratorFactory(BINDING_PARAMETER_TYPE.HttpTrigger);
+export const httpTrigger: (option: HttpTriggerOptions) => ParameterDecorator = paramDecoratorFactory(
+  PARAMETER_TYPE.HttpTrigger
+);

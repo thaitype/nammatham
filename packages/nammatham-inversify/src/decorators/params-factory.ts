@@ -1,18 +1,17 @@
 import { METADATA_KEY, PARAMETER_TYPE } from '../contants';
 import { Controller, ControllerParameterMetadata, ParameterMetadata } from '../interfaces';
 
-export function paramDecoratorFactory(parameterType: PARAMETER_TYPE): (name?: string) => ParameterDecorator {
-  return (name?: string): ParameterDecorator => params(parameterType, name);
+export function paramDecoratorFactory<Option>(parameterType: PARAMETER_TYPE): (option?: Option) => ParameterDecorator {
+  return (option?: Option): ParameterDecorator => params(parameterType, option);
 }
 
-export function params(type: PARAMETER_TYPE, parameterName?: string) {
+export function params<Option>(type: PARAMETER_TYPE, option?: Option) {
   return (target: unknown | Controller, methodName: string | symbol, index: number): void => {
     let metadataList: ControllerParameterMetadata = {};
-    let parameterMetadataList: Array<ParameterMetadata> = [];
-    const parameterMetadata: ParameterMetadata = {
+    let parameterMetadataList: Array<ParameterMetadata<Option>> = [];
+    const parameterMetadata: ParameterMetadata<Option> = {
       index,
-      injectRoot: parameterName === undefined,
-      parameterName,
+      option,
       type,
     };
     if (!Reflect.hasOwnMetadata(METADATA_KEY.controllerParameter, (target as Controller).constructor)) {

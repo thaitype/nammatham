@@ -41,9 +41,8 @@ export interface ControllerParameterMetadata {
   [methodName: string]: Array<ParameterMetadata>;
 }
 
-export interface ParameterMetadata {
+export interface ParameterMetadata<T = any> {
   index: number;
-  injectRoot: boolean;
-  parameterName?: string | undefined;
+  option?: T;
   type: PARAMETER_TYPE;
 }

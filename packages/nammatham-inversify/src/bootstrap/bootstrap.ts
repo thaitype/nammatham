@@ -9,28 +9,9 @@ interface IBootstrapOption {
    */
   container?: Container;
   /**
-   * Register Controller, this value is not use to inject DI
-   * TODO: Using register controller to bind the dependencies
+   * Register Controller
    */
   controllers: NewableFunction[];
-}
-
-/**
- *
- * Example:
- *  - cwd = '/home/nammatham/examples/crud'
- *  - absolutePath = '/home/nammatham/examples/crud/src/main.ts'
- *
- * Return:
- *  - 'src/'
- *
- * @param cwd Working Directory
- * @param absolutePath Absolute Path file
- * @returns
- */
-
-function extractRuntimeWorkingDirectory(cwd: string, absolutePath: string) {
-  return path.dirname(absolutePath).replace(cwd, '');
 }
 
 export async function bootstrap(option: IBootstrapOption) {
@@ -43,7 +24,7 @@ export async function bootstrap(option: IBootstrapOption) {
     const functionName = metadata.method.name;
     const params = metadata.params;
 
-    const log = { controllerName, methodName, functionName, params}
-    console.log(log)
+    const log = { controllerName, methodName, functionName}
+    console.log(log, JSON.stringify(params, null, 2))
   }
 }

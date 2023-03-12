@@ -11,12 +11,7 @@ export const TYPE = {
 };
 
 export enum PARAMETER_TYPE {
-  // HttpTrigger = 'HttpTrigger',
+  HttpTrigger = 'HttpTrigger',
   Context = 'Context',
   Logger = 'Logger',
-}
-
-
-export enum BINDING_PARAMETER_TYPE {
-  HttpTrigger = 'HttpTrigger',
 }
