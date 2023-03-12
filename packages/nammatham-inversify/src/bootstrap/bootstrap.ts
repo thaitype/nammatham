@@ -1,7 +1,6 @@
 import { Container } from 'inversify';
-import { ControllerMethodMetadata } from '../interfaces';
-import path from 'node:path';
 import { attachControllers } from './attach-controllers';
+import { getMethodMetadata } from './get-method-metadata';
 
 interface IBootstrapOption {
   /**
@@ -16,7 +15,8 @@ interface IBootstrapOption {
 
 export async function bootstrap(option: IBootstrapOption) {
   const container = option.container ?? new Container();
-  const controllerMethodMetadata = attachControllers(container, option.controllers);
+  attachControllers(container, option.controllers);
+  const controllerMethodMetadata = getMethodMetadata(option.controllers);
 
   for (const metadata of controllerMethodMetadata) {
     const controllerName = (metadata.method.target.constructor as { name: string }).name;
