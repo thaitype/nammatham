@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 
-import { bootstrap } from '@nammatham/core';
-// import { A } from '@nammatham/core';
+import { bootstrap } from '@nammatham/inversify';
 import { MyController } from './functions/http-trigger';
 
 bootstrap({
