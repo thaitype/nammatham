@@ -1,6 +1,7 @@
 import { core } from '@nammatham/core';
 import { Container } from 'inversify';
 import { attachControllers } from './attach-controllers';
+import { InversifyAdapterOption } from './interfaces';
 
 export class InversifyServices extends core.BaseServices<Container> {
   constructor(protected _container: Container) {
@@ -12,9 +13,6 @@ export class InversifyServices extends core.BaseServices<Container> {
   }
 }
 
-export interface InversifyAdapterOption {
-  container?: Container;
-}
 
 export class InversifyAdapter extends core.BaseAdapter<Container> {
   public container: Container;
@@ -30,7 +28,7 @@ export class InversifyAdapter extends core.BaseAdapter<Container> {
   }
 
   public override bootstrap(_option: core.BaseAdapterBootstarp) {
-    core.baseBootstrap({
+    core.bootstrap({
       controllers: _option.controllers,
       instanceResolver: (controller: NewableFunction) =>
         this.container.getNamed(core.TYPE.Controller, controller.name),

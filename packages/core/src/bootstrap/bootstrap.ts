@@ -16,7 +16,7 @@ function controllerFactory<T>(constructor: NewableFunction): T {
   return new (constructor as Newable<T>)();
 }
 
-export async function baseBootstrap(option: IBootstrapOption) {
+export async function bootstrap(option: IBootstrapOption) {
   if (option.bindControllers) option.bindControllers();
   const defaultInstanceResolver = (controller: NewableFunction) => controllerFactory(controller);
   const instanceResolver = option.instanceResolver ?? defaultInstanceResolver;

@@ -1,4 +1,4 @@
-import { baseBootstrap } from '../core';
+import { bootstrap } from '../core';
 import { BaseAdapter, BaseAdapterBootstarp } from './base-adapter';
 import { BaseServices } from './base-services';
 
@@ -20,7 +20,7 @@ export class DefaultAdapter extends BaseAdapter<void> {
   }
 
   public override bootstrap(_option: BaseAdapterBootstarp) {
-    baseBootstrap({
+    bootstrap({
       controllers: _option.controllers,
     });
   }
