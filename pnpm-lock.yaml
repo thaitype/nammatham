@@ -33,6 +33,7 @@ importers:
   examples/http-trigger:
     specifiers:
       '@azure/functions': ^4.0.0-alpha.8
+      '@nammatham/core': workspace:*
       '@nammatham/inversify': workspace:*
       inversify: ^6.0.1
       nodemon: ^2.0.20
@@ -42,7 +43,8 @@ importers:
       typescript: rc
     dependencies:
       '@azure/functions': 4.0.0-alpha.8
-      '@nammatham/inversify': link:../../packages/nammatham-inversify
+      '@nammatham/core': link:../../packages/core
+      '@nammatham/inversify': link:../../packages/inversify
       inversify: 6.0.1
       nodemon: 2.0.21
       reflect-metadata: 0.1.13
@@ -51,21 +53,21 @@ importers:
       tsx: 3.12.3
       typescript: 5.0.1-rc
 
-  packages/nammatham-inversify:
+  packages/core:
     specifiers:
       '@azure/functions': ^4.0.0-alpha.8
       http-status-codes: ^2.2.0
-      inversify: ^6.0.1
-      slash: ^3.0.0
-      type-fest: ^3.5.3
-      typescript: rc
     dependencies:
       '@azure/functions': 4.0.0-alpha.8
       http-status-codes: 2.2.0
+
+  packages/inversify:
+    specifiers:
+      '@azure/functions': ^4.0.0-alpha.8
+      inversify: ^6.0.1
+    dependencies:
+      '@azure/functions': 4.0.0-alpha.8
       inversify: 6.0.1
-      slash: 3.0.0
-      type-fest: 3.5.3
-      typescript: 5.0.1-rc
 
 packages:
 
@@ -2509,6 +2511,7 @@ packages:
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
+    dev: true
 
   /slash/4.0.0:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
@@ -2881,11 +2884,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /type-fest/3.5.3:
-    resolution: {integrity: sha512-V2+og4j/rWReWvaFrse3s9g2xvUv/K9Azm/xo6CjIuq7oeGqsoimC7+9/A3tfvNcbQf8RPSVj/HV81fB4DJrjA==}
-    engines: {node: '>=14.16'}
-    dev: false
-
   /typed-array-length/1.0.4:
     resolution: {integrity: sha512-KjZypGq+I/H7HI5HlOoGHkWUUGq+Q0TPhQurLbyrVrvnKTBgzLhIJ7j6J/XTQOi0d1RjyZ0wdas8bKs2p0x3Ng==}
     dependencies:
@@ -2898,6 +2896,7 @@ packages:
     resolution: {integrity: sha512-zh75jY8gPo/y7fpmlTVN2bb2MigoLx4hGk+Cla9pY6lgSTvzJrmQQrRt5S80VTsEt6biWPZJgLK2nm6f0Ya+mA==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}

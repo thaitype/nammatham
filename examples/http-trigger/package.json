@@ -18,6 +18,7 @@
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.8",
     "@nammatham/inversify": "workspace:*",
+    "@nammatham/core": "workspace:*",
     "nodemon": "^2.0.20",
     "reflect-metadata": "^0.1.13",
     "inversify": "^6.0.1"

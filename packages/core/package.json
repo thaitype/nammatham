@@ -1,5 +1,5 @@
 {
-  "name": "@nammatham/inversify",
+  "name": "@nammatham/core",
   "version": "2.0.0-alpha.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
   "main": "dist/main.js",
@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.8",
-    "http-status-codes": "^2.2.0"
+    "inversify": "^6.0.1"
   },
   "repository": {
     "type": "git",
