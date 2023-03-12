@@ -11,7 +11,7 @@
     "build:watch": "tsc -w",
     "start": "func start",
     "start:watch": "func start -w",
-    "dev": "run-p build:watch start:watch"
+    "dev:watch": "run-p build:watch start:watch"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",

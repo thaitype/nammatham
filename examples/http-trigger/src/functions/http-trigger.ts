@@ -1,5 +1,6 @@
 import { app, InvocationContext, HttpRequest, HttpHandler } from '@azure/functions';
-import { controller, context, functionName, httpTrigger, Logger, logger } from '@nammatham/core';
+import { context, functionName, httpTrigger, Logger, logger } from '@nammatham/core';
+import { controller } from '@nammatham/inversify';
 
 @controller()
 export class MyController {
