@@ -15,12 +15,19 @@ export function getMethodMetadata(controllers: NewableFunction[]) {
     const methodMetadata = utils.getControllerMethodMetadata(controller);
     const parameterMetadata = utils.getControllerParameterMetadata(controller);
 
+    const methodMetadataList: BootstrapControllerMethod['methodMetadataList'] = [];
     methodMetadata.forEach(method => {
       const methodName = method.key;
-      controllerMethods.push({
+
+      methodMetadataList.push({
         method,
         params: getParamsMethod(methodName, parameterMetadata),
       });
+    });
+
+    controllerMethods.push({
+      controller,
+      methodMetadataList,
     });
   }
   return controllerMethods;
