@@ -1,16 +1,16 @@
 import { DecoratorTarget, HandlerDecorator } from './interfaces';
 import { InvocationContext } from '@azure/functions';
 
-export function controller() {
-  return (target: NewableFunction): void => {
-    console.log(target.name)
-  };
-}
+// export function controller() {
+//   return (target: NewableFunction): void => {
+//     console.log(target.name)
+//   };
+// }
 
 
-export function functionName(...args: any[]): HandlerDecorator {
-  return (target: DecoratorTarget, key: string): void => {};
-}
+// export function functionName(...args: any[]): HandlerDecorator {
+//   return (target: DecoratorTarget, key: string): void => {};
+// }
 
 export function blobTrigger(...args: any[]): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {};

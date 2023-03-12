@@ -1,2 +1,2 @@
 export * from './bootstrap';
-export * from './function-bootstrap';
+// export * from './function-bootstrap';

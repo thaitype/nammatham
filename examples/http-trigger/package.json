@@ -2,7 +2,7 @@
   "name": "http-trigger",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/src/functions/*.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "serve": "run-s build start",
     "build": "tsc",

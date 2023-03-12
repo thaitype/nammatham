@@ -76,5 +76,7 @@ export async function bootstrap(option: IBootstrapOption) {
     const methodName = metadata.key;
     const functionName = metadata.name;
 
+    const log = { controllerName, methodName, functionName}
+    console.log(log)
   }
 }

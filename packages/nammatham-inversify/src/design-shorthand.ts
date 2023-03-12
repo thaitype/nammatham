@@ -1,14 +1,14 @@
 import { DecoratorTarget, HandlerDecorator } from './interfaces';
 import { InvocationContext } from '@azure/functions';
-import { functionName } from './design';
+import {functionName} from './decorators'
 
 
 export function httpGet(...args: any[]): HandlerDecorator {
-  return functionName(args);
+  return functionName('');
 }
 
 export function httpPost(...args: any[]): HandlerDecorator {
-  return functionName(args);
+  return functionName('');
 }
 
 

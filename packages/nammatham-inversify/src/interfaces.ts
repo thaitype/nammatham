@@ -20,7 +20,7 @@ type Prototype<T> = {
 export interface AzureFunctionMethodMetadata<T = null> extends ControllerMetadata {
   key: string;
   name: string;
-  binding: Array<BaseFunctionBinding<T, string>>;
+  // binding: Array<BaseFunctionBinding<T, string>>;
 }
 
 export interface ControllerMetadata {

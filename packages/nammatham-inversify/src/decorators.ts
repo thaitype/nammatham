@@ -3,8 +3,6 @@ import { METADATA_KEY, TYPE } from './contants';
 import { AzureFunctionMethodMetadata, ControllerMetadata, DecoratorTarget, HandlerDecorator } from './interfaces';
 import { FunctionBinding, BaseFunctionBinding } from './bindings';
 
-export const injectContext = inject(TYPE.Context);
-
 export function controller() {
   // ...middleware: Array<Middleware>
   return (target: NewableFunction): void => {
@@ -34,28 +32,13 @@ export function controller() {
 
 export function functionName<T = null>(
   name: string,
-  // ...middleware: Array<Middleware>
-  ...bindings: Array<BaseFunctionBinding<T, string> | [BaseFunctionBinding<T, string>, BaseFunctionBinding<T, string>]>
 ): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {
-    const flattenBindings: BaseFunctionBinding<T, string>[] = [];
-    for (const binding of bindings) {
-      if (Array.isArray(binding)) {
-        flattenBindings.push(...binding);
-      } else {
-        flattenBindings.push(binding);
-      }
-    }
-
-    for (const binding of flattenBindings) {
-      console.log(`[Binding] '${name}' register ${binding.name} with type ${binding.type}`);
-    }
 
     const metadata: AzureFunctionMethodMetadata<T> = {
       key,
       name,
       target,
-      binding: flattenBindings,
     };
 
     let metadataList: Array<AzureFunctionMethodMetadata<T>> = [];
