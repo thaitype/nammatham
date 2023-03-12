@@ -6,13 +6,19 @@ export interface IBootstrapOption {
    * Register Controller
    */
   controllers: NewableFunction[];
-  instanceResolver:  (controller: NewableFunction) => unknown;
+  instanceResolver?: (controller: NewableFunction) => unknown;
 
   bindControllers?: () => unknown;
 }
 
+type Newable<T> = new (...args: any[]) => T;
+function controllerFactory<T>(constructor: NewableFunction): T {
+  return new (constructor as Newable<T>)();
+}
+
 export async function baseBootstrap(option: IBootstrapOption) {
-  if(option.bindControllers)
-    option.bindControllers();
-  registerAzureFunctions(getMethodMetadata(option.controllers), option.instanceResolver);
+  if (option.bindControllers) option.bindControllers();
+  const defaultInstanceResolver = (controller: NewableFunction) => controllerFactory(controller);
+  const instanceResolver = option.instanceResolver ?? defaultInstanceResolver;
+  registerAzureFunctions(getMethodMetadata(option.controllers), instanceResolver);
 }

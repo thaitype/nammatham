@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 
-import { bootstrap } from '@nammatham/inversify';
+import { NammathamFactory } from '@nammatham/core';
+import { InversifyAdapter } from '@nammatham/inversify';
 import { MyController } from './functions/http-trigger';
 
-bootstrap({
-  controllers: [MyController],
-});
-
+const app = NammathamFactory.create(new InversifyAdapter());
+app.addControllers(MyController);
+app.run();

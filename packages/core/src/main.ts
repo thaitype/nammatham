@@ -12,3 +12,5 @@ export { StatusCodes as HttpStatus } from 'http-status-codes';
 
 // Re-export core module for using with Di extension
 export * as core from './core';
+
+export * from './app';
