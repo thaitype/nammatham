@@ -19,6 +19,10 @@ class FunctionApp<Adapter extends BaseAdapter<unknown>> {
     return this._services;
   }
 
+  public configureServices(callback: (container: Adapter['container']) => void) {
+    callback(this._services.container);
+  }
+
   public run() {
     this.adapter.bootstrap({
       controllers: this._controllers,

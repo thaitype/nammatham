@@ -8,7 +8,7 @@ export class DefaultServices extends BaseServices<void> {
   }
 }
 
-export class DefaultAdapter extends BaseAdapter<any> {
+export class DefaultAdapter extends BaseAdapter<void> {
   public container: undefined;
 
   constructor() {
