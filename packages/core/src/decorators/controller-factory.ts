@@ -1,8 +1,5 @@
 import { METADATA_KEY, TYPE } from '../contants';
 import { ControllerMetadata } from '../interfaces';
-/**
- * Not Related with DI
- */
 
 export function controllerFactory(target: NewableFunction, decorateFunction?: () => void) {
   const currentMetadata: ControllerMetadata = {
