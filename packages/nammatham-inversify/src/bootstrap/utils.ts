@@ -1,11 +1,12 @@
 import { interfaces } from 'inversify';
 import { METADATA_KEY, TYPE } from '../contants';
 import {
-  AzureFunctionMethodMetadata,
+  ControllerMethodMetadata,
   Controller,
   ControllerMetadata,
   DecoratorTarget,
   NO_CONTROLLERS_FOUND,
+  ControllerParameterMetadata,
 } from '../interfaces';
 
 export function getControllersFromMetadata(): Array<DecoratorTarget> {
@@ -36,16 +37,16 @@ export function getControllerMetadata(constructor: NewableFunction): ControllerM
   return controllerMetadata;
 }
 
-export function getAzureFunctionMethodMetadata(constructor: NewableFunction): Array<AzureFunctionMethodMetadata> {
+export function getControllerMethodMetadata(constructor: NewableFunction): Array<ControllerMethodMetadata> {
   const methodMetadata = Reflect.getOwnMetadata(
     METADATA_KEY.azureFunction,
     constructor
-  ) as Array<AzureFunctionMethodMetadata>;
+  ) as Array<ControllerMethodMetadata>;
 
   const genericMetadata = Reflect.getMetadata(
     METADATA_KEY.azureFunction,
     Reflect.getPrototypeOf(constructor) as NewableFunction
-  ) as Array<AzureFunctionMethodMetadata>;
+  ) as Array<ControllerMethodMetadata>;
 
   if (genericMetadata !== undefined && methodMetadata !== undefined) {
     return methodMetadata.concat(genericMetadata);
@@ -54,4 +55,25 @@ export function getAzureFunctionMethodMetadata(constructor: NewableFunction): Ar
     return genericMetadata;
   }
   return methodMetadata;
+}
+
+export function getControllerParameterMetadata(
+  constructor: NewableFunction,
+): ControllerParameterMetadata {
+  const parameterMetadata: ControllerParameterMetadata = Reflect.getOwnMetadata(
+    METADATA_KEY.controllerParameter,
+    constructor,
+  ) as ControllerParameterMetadata;
+
+  const genericMetadata: ControllerParameterMetadata = Reflect.getMetadata(
+    METADATA_KEY.controllerParameter,
+    Reflect.getPrototypeOf(constructor) as NewableFunction,
+  ) as ControllerParameterMetadata;
+
+  if (genericMetadata !== undefined && parameterMetadata !== undefined) {
+    return { ...parameterMetadata, ...genericMetadata };
+  } if (genericMetadata !== undefined) {
+    return genericMetadata;
+  }
+  return parameterMetadata;
 }

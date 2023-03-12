@@ -1,6 +1,7 @@
 // Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 
 import type { BaseFunctionBinding } from './bindings';
+import { PARAMETER_TYPE } from './contants';
 
 export type HandlerDecorator = (target: DecoratorTarget, key: string, value: unknown) => void;
 
@@ -17,7 +18,7 @@ type Prototype<T> = {
   constructor: NewableFunction;
 };
 
-export interface AzureFunctionMethodMetadata<T = null> extends ControllerMetadata {
+export interface ControllerMethodMetadata extends ControllerMetadata {
   key: string;
   name: string;
   // binding: Array<BaseFunctionBinding<T, string>>;
@@ -33,3 +34,16 @@ export type Controller = Record<string, ControllerHandler>;
 
 export const NO_CONTROLLERS_FOUND =
   'No controllers' + 'have been found! Please ensure that you have register' + 'at least one Controller.';
+
+// Params stuff
+
+export interface ControllerParameterMetadata {
+  [methodName: string]: Array<ParameterMetadata>;
+}
+
+export interface ParameterMetadata {
+  index: number;
+  injectRoot: boolean;
+  parameterName?: string | undefined;
+  type: PARAMETER_TYPE;
+}

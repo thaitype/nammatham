@@ -13,7 +13,7 @@ export class MyController {
 
   @functionName('http')
   public httpTrigger(
-    @httpTrigger({ authLevel: 'anonymous', methods: ['get'], route: '/my-data' }) req: HttpRequest,
+    @httpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: '/my-data' }) req: HttpRequest,
     @context() context: InvocationContext,
     @logger() log: Logger
   ): ReturnType<HttpHandler> {
@@ -21,6 +21,6 @@ export class MyController {
     return {
       body: 'Hello',
     };
+    
   }
-
 }
