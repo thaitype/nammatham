@@ -1,9 +1,15 @@
+
 import { METADATA_KEY, PARAMETER_TYPE } from '../contants';
 import { Controller, ControllerParameterMetadata, ParameterMetadata } from '../interfaces';
 
 export function paramDecoratorFactory<Option>(parameterType: PARAMETER_TYPE): (option?: Option) => ParameterDecorator {
   return (option?: Option): ParameterDecorator => params(parameterType, option);
 }
+
+/**
+ *
+ * Original : https://github.com/inversify/inversify-express-utils
+ */
 
 export function params<Option>(type: PARAMETER_TYPE, option?: Option) {
   return (target: unknown | Controller, methodName: string | symbol, index: number): void => {

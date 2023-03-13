@@ -5,3 +5,7 @@ import { paramDecoratorFactory } from './params-factory';
 export const httpTrigger: (option: HttpTriggerOptions) => ParameterDecorator = paramDecoratorFactory(
   PARAMETER_TYPE.HttpTrigger
 );
+
+export const res: () => ParameterDecorator = paramDecoratorFactory(
+  PARAMETER_TYPE.Response
+);

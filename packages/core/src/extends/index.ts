@@ -1,5 +1,4 @@
 export * from './http';
-export * from './logger';
 
 /**
  * Re-export InvocationContext

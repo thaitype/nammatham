@@ -12,6 +12,7 @@ export const TYPE = {
 
 export enum PARAMETER_TYPE {
   HttpTrigger = 'HttpTrigger',
+  Response = 'Response',
   Context = 'Context',
-  Logger = 'Logger',
+  // Logger = 'Logger',
 }

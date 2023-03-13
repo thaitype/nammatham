@@ -2,19 +2,19 @@ import { app, InvocationContext } from '@azure/functions';
 import { BootstrapControllerMethod } from './interfaces';
 import { ParameterMetadata } from '../interfaces';
 import { PARAMETER_TYPE } from '../contants';
-import { Logger } from '../extends/logger';
+import { Response } from '../extends';
 
-function getLogger(context: InvocationContext) {
-  const logger: Logger = {
-    log: context.log,
-    trace: context.trace,
-    debug: context.debug,
-    info: context.info,
-    warn: context.warn,
-    error: context.error, 
-  };
-  return logger;
-}
+// function getLogger(context: InvocationContext) {
+//   const logger: Logger = {
+//     log: context.log,
+//     trace: context.trace,
+//     debug: context.debug,
+//     info: context.info,
+//     warn: context.warn,
+//     error: context.error,
+//   };
+//   return logger;
+// }
 
 function extractParameters(triggerData: any, context: InvocationContext, params: ParameterMetadata[]) {
   const args: Array<unknown> = [];
@@ -28,13 +28,18 @@ function extractParameters(triggerData: any, context: InvocationContext, params:
         args[index] = context;
         break;
 
-      case PARAMETER_TYPE.Logger:
-        args[index] = getLogger(context);
-        break;
+      // case PARAMETER_TYPE.Logger:
+      //   args[index] = getLogger(context);
+      //   break;
 
       case PARAMETER_TYPE.HttpTrigger:
         args[index] = triggerData;
-  
+        break;
+
+      case PARAMETER_TYPE.Response:
+        args[index] = new Response();
+        break;
+
       default:
         args[index] = context;
         break;
