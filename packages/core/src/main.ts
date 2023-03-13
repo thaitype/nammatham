@@ -2,7 +2,7 @@
 export * as core from './core';
 export * from './app/nammatham-app';
 export * from './decorators';
-export * from './types';
+export * from './extends';
 // Draft Decorator APIs
 export * from './design';
 export * from './design-shorthand';

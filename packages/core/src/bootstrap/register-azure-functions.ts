@@ -2,7 +2,7 @@ import { app, InvocationContext } from '@azure/functions';
 import { BootstrapControllerMethod } from './interfaces';
 import { ParameterMetadata } from '../interfaces';
 import { PARAMETER_TYPE } from '../contants';
-import { Logger } from '../types';
+import { Logger } from '../extends/invocation-context';
 
 function getLogger(context: InvocationContext) {
   const logger: Logger = {

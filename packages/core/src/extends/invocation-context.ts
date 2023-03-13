@@ -1,7 +1,9 @@
 import * as type from '@azure/functions';
-import { StatusCodes } from 'http-status-codes';
 
-// Logger Object
+export type InvocationContext = type.InvocationContext;
+/**
+ * Logger Type from InvocationContext
+ */
 
 export type Logger = {
   /**
@@ -37,46 +39,3 @@ export type Logger = {
   error: type.InvocationContext['error'];
 };
 
-/**
- * HttpResponse from HttpTrigger
- * 
- * azure/functions v4.0.0-alpha.8
- * 
- * They don't export HttpResponse object, they binding in `HttpHandler` type
-    ```
-    export type HttpHandler = (
-        request: HttpRequest,
-        context: InvocationContext
-    ) => FunctionResult<HttpResponseInit | HttpResponse>;
-    ```
- * This type will extract from it.
-    Make a Pull Request into the original project.
- */
-export type HttpResponse = type.HttpResponseInit | type.HttpResponse;
-const a = new type.HttpResponse({
-  headers: { a: '' },
-});
-
-export type HttpStatus = StatusCodes | number;
-
-export type InvocationContext = type.InvocationContext;
-export type Request = type.HttpRequest;
-/**
- * Http Response Builder
- */
-export class Response {
-  protected statusCode: HttpStatus = StatusCodes.OK;
-
-  public send(body?: string) {
-    return new type.HttpResponse();
-  }
-
-  public json(body: any) {
-    return new type.HttpResponse();
-  }
-
-  public status(status: HttpStatus) {
-    this.statusCode = status;
-    return this;
-  }
-}

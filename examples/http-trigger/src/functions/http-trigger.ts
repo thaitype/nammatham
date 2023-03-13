@@ -1,4 +1,14 @@
-import { context, functionName, httpTrigger, Logger, logger, HttpResponse, Request, Response, InvocationContext} from '@nammatham/core';
+import {
+  context,
+  functionName,
+  httpTrigger,
+  Logger,
+  logger,
+  HttpResponse,
+  Request,
+  Response,
+  InvocationContext,
+} from '@nammatham/core';
 import { controller } from '@nammatham/inversify';
 
 @controller()
@@ -9,12 +19,13 @@ export class MyController {
     // @res() res: Response,
     @context() context: InvocationContext,
     @logger() log: Logger
-  ): HttpResponse{
-    // log.info(req.toString());
+  ): HttpResponse {
+    const data = {
+      name: 'aaa',
+    };
+    const res = new Response();
+    res.headers.set('rest', 'aaaa');
     console.log('hello from httpTrigger');
-
-    return {
-      body: 'test'
-    }
+    return res.jsonBody(data);
   }
 }
