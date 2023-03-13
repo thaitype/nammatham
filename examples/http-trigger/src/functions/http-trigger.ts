@@ -3,7 +3,7 @@ import {
   functionName,
   httpTrigger,
   Logger,
-  logger,
+  log,
   HttpResponse,
   Request,
   Response,
@@ -18,14 +18,14 @@ export class MyController {
     @httpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: 'my-data' }) req: Request,
     // @res() res: Response,
     @context() context: InvocationContext,
-    @logger() log: Logger
+    @log() logger: Logger
   ): HttpResponse {
+    const res = new Response();
     const data = {
       name: 'aaa',
     };
-    const res = new Response();
     res.headers.set('rest', 'aaaa');
-    console.log('hello from httpTrigger');
+    logger.info('hello from httpTrigger');
     return res.jsonBody(data);
   }
 }

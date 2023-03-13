@@ -12,7 +12,8 @@ export type Request = type.HttpRequest;
  * Http Response Builder wrapping around azure/functions
  */
 export class Response {
-  public headers: Headers;
+  protected _headers: Headers;
+  protected _cookies: NonNullable<type.HttpResponseInit['cookies']> = [];
   protected _httpResponse: type.HttpResponseInit;
 
   constructor(responseInit?: type.HttpResponseInit) {
@@ -20,13 +21,22 @@ export class Response {
       ...responseInit,
       status: StatusCodes.OK,
     };
-    this.headers = new Headers(responseInit?.headers);
+    this._headers = new Headers(responseInit?.headers);
   }
 
-  private build(): type.HttpResponseInit{
+  get headers() {
+    return this._headers;
+  }
+
+  get cookies() {
+    return this._cookies;
+  }
+
+  private build(): type.HttpResponseInit {
     return {
       ...this._httpResponse,
-      headers: this.headers,
+      headers: this._headers,
+      cookies: this._cookies.length === 0 ? undefined : this._cookies,
     };
   }
 

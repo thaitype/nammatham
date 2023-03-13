@@ -1,6 +1,5 @@
 import * as type from '@azure/functions';
 
-export type InvocationContext = type.InvocationContext;
 /**
  * Logger Type from InvocationContext
  */
