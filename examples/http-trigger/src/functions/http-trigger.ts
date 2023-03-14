@@ -9,21 +9,23 @@ import {
   InvocationContext,
 } from '@nammatham/core';
 import { controller } from '@nammatham/inversify';
+import { MyService } from '../my-service';
+import { inject } from 'inversify';
 
 @controller()
 export class MyController {
+  constructor(@inject(MyService) protected myService: MyService) {}
 
   @functionName('http')
   public httpTrigger(
     @httpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: 'my-data' }) req: Request,
     @res() res: Response,
-    @context() context: InvocationContext,
+    @context() context: InvocationContext
   ): HttpResponse {
-    
     res.headers.set('rest', 'aaaa');
     context.info('hello from httpTrigger');
     return res.jsonBody({
-      name: 'aaa',
+      name: `Service name is '${this.myService.name}'`,
     });
   }
 }

@@ -3,10 +3,10 @@ import 'reflect-metadata';
 import { NammathamFactory } from '@nammatham/core';
 import { InversifyAdapter } from '@nammatham/inversify';
 import { MyController } from './functions/http-trigger';
+import { MyService } from './my-service';
 
 const app = NammathamFactory.create(new InversifyAdapter());
 app.addControllers(MyController);
-// Getting Services...
-// const { container } = app.services;
-// app.configureServices(container => container.bind());
+// Using Inversify Container API to bind service
+app.services.container.bind(MyService).toSelf();
 app.run();
