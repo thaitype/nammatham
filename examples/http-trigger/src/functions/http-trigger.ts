@@ -24,8 +24,6 @@ export class MyController {
   ): HttpResponse {
     res.headers.set('rest', 'aaaa');
     context.info('hello from httpTrigger');
-    return res.jsonBody({
-      name: `Service name is '${this.myService.name}'`,
-    });
+    return res.json({ name: `Service name is '${this.myService.name}'` });
   }
 }

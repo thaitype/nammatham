@@ -40,14 +40,14 @@ export class Response {
     };
   }
 
-  public body(body?: string) {
+  public send(body?: string) {
     return new type.HttpResponse({
       ...this.build(),
       body,
     });
   }
 
-  public jsonBody(jsonBody: any) {
+  public json(jsonBody: any) {
     return new type.HttpResponse({
       ...this.build(),
       jsonBody,
