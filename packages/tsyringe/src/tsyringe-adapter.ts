@@ -29,7 +29,7 @@ export class TsyringeAdapter extends core.BaseAdapter<Container> {
   public override bootstrap(_option: core.BaseAdapterBootstarp) {
     core.bootstrap({
       controllers: _option.controllers,
-      instanceResolver: (controller: NewableFunction) => this.container.resolve(controller as any),
+      instanceResolver: (controller: core.Constructor) => this.container.resolve(controller as any),
       bindControllers: () => attachControllers(this.container, _option.controllers),
     });
   }

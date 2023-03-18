@@ -1,6 +1,6 @@
 import { app, InvocationContext } from '@azure/functions';
 import { BootstrapControllerMethod } from './interfaces';
-import { ParameterMetadata } from '../interfaces';
+import { Constructor, ParameterMetadata } from '../interfaces';
 import { PARAMETER_TYPE } from '../contants';
 import { Response } from '../extends';
 
@@ -50,7 +50,7 @@ function extractParameters(triggerData: any, context: InvocationContext, params:
 
 export function registerAzureFunctions(
   controllerMetadataList: BootstrapControllerMethod[],
-  instanceResolver: (controller: NewableFunction) => unknown
+  instanceResolver: (controller: Constructor) => unknown
 ) {
   for (const controllerMetadata of controllerMetadataList) {
     const instance = instanceResolver(controllerMetadata.controller) as any;

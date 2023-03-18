@@ -3,9 +3,10 @@ import {
   ControllerMethodMetadata,
   ControllerMetadata,
   ControllerParameterMetadata,
+  Constructor,
 } from '../interfaces';
 
-export function getControllerMetadata(constructor: NewableFunction): ControllerMetadata {
+export function getControllerMetadata(constructor: Constructor): ControllerMetadata {
   const controllerMetadata: ControllerMetadata = Reflect.getOwnMetadata(
     METADATA_KEY.controller,
     constructor
@@ -13,7 +14,7 @@ export function getControllerMetadata(constructor: NewableFunction): ControllerM
   return controllerMetadata;
 }
 
-export function getControllerMethodMetadata(constructor: NewableFunction): Array<ControllerMethodMetadata> {
+export function getControllerMethodMetadata(constructor: Constructor): Array<ControllerMethodMetadata> {
   const methodMetadata = Reflect.getOwnMetadata(
     METADATA_KEY.azureFunction,
     constructor
@@ -21,7 +22,7 @@ export function getControllerMethodMetadata(constructor: NewableFunction): Array
 
   const genericMetadata = Reflect.getMetadata(
     METADATA_KEY.azureFunction,
-    Reflect.getPrototypeOf(constructor) as NewableFunction
+    Reflect.getPrototypeOf(constructor) as Constructor
   ) as Array<ControllerMethodMetadata>;
 
   if (genericMetadata !== undefined && methodMetadata !== undefined) {
@@ -34,7 +35,7 @@ export function getControllerMethodMetadata(constructor: NewableFunction): Array
 }
 
 export function getControllerParameterMetadata(
-  constructor: NewableFunction,
+  constructor: Constructor,
 ): ControllerParameterMetadata {
   const parameterMetadata: ControllerParameterMetadata = Reflect.getOwnMetadata(
     METADATA_KEY.controllerParameter,
@@ -43,7 +44,7 @@ export function getControllerParameterMetadata(
 
   const genericMetadata: ControllerParameterMetadata = Reflect.getMetadata(
     METADATA_KEY.controllerParameter,
-    Reflect.getPrototypeOf(constructor) as NewableFunction,
+    Reflect.getPrototypeOf(constructor) as Constructor,
   ) as ControllerParameterMetadata;
 
   if (genericMetadata !== undefined && parameterMetadata !== undefined) {

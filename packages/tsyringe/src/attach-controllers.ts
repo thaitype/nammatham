@@ -1,9 +1,8 @@
 import type { Container } from './interfaces';
 import { core } from '@nammatham/core';
 
-export function attachControllers(container: Container, controllers: NewableFunction[]) {
+export function attachControllers(container: Container, controllers: core.Constructor[]) {
   for (const controller of controllers) {
-    const _controller = controller as core.Constructor;
-    container.register(_controller, { useClass: _controller });
+    container.register(controller, { useClass: controller });
   }
 }

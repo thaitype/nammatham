@@ -1,5 +1,5 @@
 {
-  "name": "with-tsyringe-http-trigger",
+  "name": "@examples/with-tsyringe-http-trigger",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",

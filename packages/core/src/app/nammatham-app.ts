@@ -1,16 +1,17 @@
+import { Constructor } from '../interfaces';
 import { BaseAdapter } from './base-adapter';
 import { BaseServices } from './base-services';
 import { DefaultAdapter } from './default-adapter';
 
 class FunctionApp<Adapter extends BaseAdapter<unknown>> {
-  protected _controllers: NewableFunction[] = [];
+  protected _controllers: Constructor[] = [];
   protected _services!: BaseServices<Adapter['container']>;
 
   constructor(protected adapter: Adapter) {
     if (adapter) this._services = adapter.getServices();
   }
 
-  public addControllers(...controllers: NewableFunction[]) {
+  public addControllers(...controllers: Constructor[]) {
     this._controllers.push(...controllers);
     return this;
   }

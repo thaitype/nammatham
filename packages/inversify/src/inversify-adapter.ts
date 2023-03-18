@@ -30,7 +30,7 @@ export class InversifyAdapter extends core.BaseAdapter<Container> {
   public override bootstrap(_option: core.BaseAdapterBootstarp) {
     core.bootstrap({
       controllers: _option.controllers,
-      instanceResolver: (controller: NewableFunction) =>
+      instanceResolver: (controller: core.Constructor) =>
         this.container.getNamed(core.TYPE.Controller, controller.name),
       bindControllers: () => attachControllers(this.container, _option.controllers),
     });

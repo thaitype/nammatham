@@ -2,8 +2,8 @@ import { injectable, InjectionToken, inject as tsyringeInject } from 'tsyringe';
 import { core } from '@nammatham/core';
 
 export function controller() {
-  return (target: NewableFunction): void =>
-    core.controllerFactory(target, () => injectable()(target as core.Constructor));
+  return (target: core.Constructor): void =>
+    core.controllerFactory(target, () => injectable()(target));
 }
 
 /**

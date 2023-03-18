@@ -1,7 +1,7 @@
-import { ControllerMethodMetadata, ParameterMetadata } from '../interfaces';
+import { Constructor, ControllerMethodMetadata, ParameterMetadata } from '../interfaces';
 
 export interface BootstrapControllerMethod {
-  controller: NewableFunction;
+  controller: Constructor;
   methodMetadataList: {
     method: ControllerMethodMetadata;
     params: ParameterMetadata[];

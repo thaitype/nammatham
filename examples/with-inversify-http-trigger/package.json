@@ -1,5 +1,5 @@
 {
-  "name": "no-dependency-injection",
+  "name": "@examples/with-inversify-http-trigger",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",
@@ -7,6 +7,7 @@
     "serve": "run-s build start",
     "build": "tsc",
     "demo": "tsx ./functions/http-trigger.ts",
+    "serve:watch": "nodemon --watch src --ext ts --exec 'npm run serve'",
     "build:watch": "tsc -w",
     "start": "func start",
     "start:watch": "func start -w",
@@ -16,8 +17,10 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.8",
+    "@nammatham/inversify": "workspace:*",
     "@nammatham/core": "workspace:*",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "inversify": "^6.0.1"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5",

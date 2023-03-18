@@ -1,7 +1,7 @@
 import { METADATA_KEY, TYPE } from '../contants';
-import { ControllerMetadata } from '../interfaces';
+import { Constructor, ControllerMetadata } from '../interfaces';
 
-export function controllerFactory(target: NewableFunction, decorateFunction?: () => void) {
+export function controllerFactory(target: Constructor, decorateFunction?: () => void) {
   const currentMetadata: ControllerMetadata = {
     target,
   };

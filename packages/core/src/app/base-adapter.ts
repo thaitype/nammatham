@@ -1,7 +1,8 @@
+import { Constructor } from '../interfaces';
 import { BaseServices } from './base-services';
 
 export interface BaseAdapterBootstarp {
-  controllers: NewableFunction[]
+  controllers: Constructor[]
 }
 
 export abstract class BaseAdapter<Container> {
