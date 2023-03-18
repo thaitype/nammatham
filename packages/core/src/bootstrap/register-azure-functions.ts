@@ -4,18 +4,6 @@ import { Constructor, ParameterMetadata } from '../interfaces';
 import { PARAMETER_TYPE } from '../contants';
 import { Response } from '../extends';
 
-// function getLogger(context: InvocationContext) {
-//   const logger: Logger = {
-//     log: context.log,
-//     trace: context.trace,
-//     debug: context.debug,
-//     info: context.info,
-//     warn: context.warn,
-//     error: context.error,
-//   };
-//   return logger;
-// }
-
 function extractParameters(triggerData: any, context: InvocationContext, params: ParameterMetadata[]) {
   const args: Array<unknown> = [];
   if (!params || params.length === 0) {
@@ -27,10 +15,6 @@ function extractParameters(triggerData: any, context: InvocationContext, params:
       case PARAMETER_TYPE.Context:
         args[index] = context;
         break;
-
-      // case PARAMETER_TYPE.Logger:
-      //   args[index] = getLogger(context);
-      //   break;
 
       case PARAMETER_TYPE.HttpTrigger:
         args[index] = triggerData;
@@ -58,7 +42,7 @@ export function registerAzureFunctions(
       const methodName = metadata.method.key;
       const functionName = metadata.method.name;
       const params = metadata.params;
-      const handler = (triggerData: any, context: InvocationContext) => {
+      const handler = (triggerData: unknown, context: InvocationContext) => {
         const args = extractParameters(triggerData, context, params);
         return instance[methodName](...args);
       };
