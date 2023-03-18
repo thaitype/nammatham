@@ -15,7 +15,7 @@ importers:
       reflect-metadata: ^0.1.13
       ts-node: ^10.9.1
       tsup: ^6.6.3
-      typescript: rc
+      typescript: ^5.0.2
     devDependencies:
       '@type-challenges/utils': 0.1.1
       '@types/node': 18.11.18
@@ -26,9 +26,9 @@ importers:
       nx: 15.6.1
       prettier: 2.8.3
       reflect-metadata: 0.1.13
-      ts-node: 10.9.1_vnec635cexoq7hw2kwydvubqdm
-      tsup: 6.6.3_uqaw4q4rwcylgwct2fo7vv2zim
-      typescript: 5.0.1-rc
+      ts-node: 10.9.1_dwbejauar3heyjbavp5dng3rsy
+      tsup: 6.6.3_b3krtfsdr4o54pb3ito5mirk64
+      typescript: 5.0.2
 
   examples/http-trigger:
     specifiers:
@@ -39,7 +39,7 @@ importers:
       npm-run-all: ^4.1.5
       reflect-metadata: ^0.1.13
       tsx: latest
-      typescript: rc
+      typescript: ^5.0.2
     dependencies:
       '@azure/functions': 4.0.0-alpha.8
       '@nammatham/core': link:../../packages/core
@@ -49,7 +49,7 @@ importers:
     devDependencies:
       npm-run-all: 4.1.5
       tsx: 3.12.5
-      typescript: 5.0.1-rc
+      typescript: 5.0.2
 
   examples/no-dependency-injection:
     specifiers:
@@ -58,7 +58,7 @@ importers:
       npm-run-all: ^4.1.5
       reflect-metadata: ^0.1.13
       tsx: latest
-      typescript: rc
+      typescript: ^5.0.2
     dependencies:
       '@azure/functions': 4.0.0-alpha.8
       '@nammatham/core': link:../../packages/core
@@ -66,7 +66,28 @@ importers:
     devDependencies:
       npm-run-all: 4.1.5
       tsx: 3.12.5
-      typescript: 5.0.1-rc
+      typescript: 5.0.2
+
+  examples/with-tsyringe-http-trigger:
+    specifiers:
+      '@azure/functions': ^4.0.0-alpha.8
+      '@nammatham/core': workspace:*
+      '@nammatham/tsyringe': workspace:*
+      npm-run-all: ^4.1.5
+      reflect-metadata: ^0.1.13
+      tsx: latest
+      tsyringe: ^4.7.0
+      typescript: ^5.0.2
+    dependencies:
+      '@azure/functions': 4.0.0-alpha.8
+      '@nammatham/core': link:../../packages/core
+      '@nammatham/tsyringe': link:../../packages/tsyringe
+      reflect-metadata: 0.1.13
+      tsyringe: 4.7.0
+    devDependencies:
+      npm-run-all: 4.1.5
+      tsx: 3.12.5
+      typescript: 5.0.2
 
   packages/core:
     specifiers:
@@ -87,6 +108,16 @@ importers:
       '@azure/functions': 4.0.0-alpha.8
       '@nammatham/core': link:../core
       inversify: 6.0.1
+
+  packages/tsyringe:
+    specifiers:
+      '@azure/functions': ^4.0.0-alpha.8
+      '@nammatham/core': workspace:*
+      tsyringe: ^4.7.0
+    dependencies:
+      '@azure/functions': 4.0.0-alpha.8
+      '@nammatham/core': link:../core
+      tsyringe: 4.7.0
 
 packages:
 
@@ -2336,7 +2367,7 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.0.6
-      ts-node: 10.9.1_vnec635cexoq7hw2kwydvubqdm
+      ts-node: 10.9.1_dwbejauar3heyjbavp5dng3rsy
       yaml: 1.10.2
     dev: true
 
@@ -2839,7 +2870,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-node/10.9.1_vnec635cexoq7hw2kwydvubqdm:
+  /ts-node/10.9.1_dwbejauar3heyjbavp5dng3rsy:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -2865,7 +2896,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.0.1-rc
+      typescript: 5.0.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true
@@ -2879,11 +2910,15 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
+  /tslib/1.14.1:
+    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: false
+
   /tslib/2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
     dev: true
 
-  /tsup/6.6.3_uqaw4q4rwcylgwct2fo7vv2zim:
+  /tsup/6.6.3_b3krtfsdr4o54pb3ito5mirk64:
     resolution: {integrity: sha512-OLx/jFllYlVeZQ7sCHBuRVEQBBa1tFbouoc/gbYakyipjVQdWy/iQOvmExUA/ewap9iQ7tbJf9pW0PgcEFfJcQ==}
     engines: {node: '>=14.18'}
     hasBin: true
@@ -2913,7 +2948,7 @@ packages:
       source-map: 0.8.0-beta.0
       sucrase: 3.29.0
       tree-kill: 1.2.2
-      typescript: 5.0.1-rc
+      typescript: 5.0.2
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -2930,6 +2965,13 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /tsyringe/4.7.0:
+    resolution: {integrity: sha512-ncFDM1jTLsok4ejMvSW5jN1VGPQD48y2tfAR0pdptWRKYX4bkbqPt92k7KJ5RFJ1KV36JEs/+TMh7I6OUgj74g==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+
   /type-fest/0.13.1:
     resolution: {integrity: sha512-34R7HTnG0XIJcBSn5XhDd7nNFPRcXYRZrBB2O2jdKqYODldSzBAqzsWoZYYvduky73toYS/ESqxPvkDf/F0XMg==}
     engines: {node: '>=10'}
@@ -2943,9 +2985,9 @@ packages:
       is-typed-array: 1.1.10
     dev: true
 
-  /typescript/5.0.1-rc:
-    resolution: {integrity: sha512-zh75jY8gPo/y7fpmlTVN2bb2MigoLx4hGk+Cla9pY6lgSTvzJrmQQrRt5S80VTsEt6biWPZJgLK2nm6f0Ya+mA==}
-    engines: {node: '>=4.2.0'}
+  /typescript/5.0.2:
+    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
+    engines: {node: '>=12.20'}
     hasBin: true
     dev: true
 
