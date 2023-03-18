@@ -1,7 +1,7 @@
-import { METADATA_KEY, TYPE } from '../contants';
-import { ControllerMethodMetadata, ControllerMetadata, DecoratorTarget, HandlerDecorator } from '../interfaces';
+import { METADATA_KEY } from '../contants';
+import { ControllerMethodMetadata, DecoratorTarget, HandlerDecorator } from '../interfaces';
 
-export function functionName(name: string): HandlerDecorator {
+export function FunctionName(name: string): HandlerDecorator {
   return (target: DecoratorTarget, key: string): void => {
     const metadata: ControllerMethodMetadata = {
       key,
@@ -9,7 +9,7 @@ export function functionName(name: string): HandlerDecorator {
       target,
     };
 
-    let metadataList: Array<ControllerMethodMetadata> = [];
+    let metadataList: ControllerMethodMetadata[] = [];
 
     if (!Reflect.hasOwnMetadata(METADATA_KEY.azureFunction, target.constructor)) {
       Reflect.defineMetadata(METADATA_KEY.azureFunction, metadataList, target.constructor);
@@ -17,7 +17,7 @@ export function functionName(name: string): HandlerDecorator {
       metadataList = Reflect.getOwnMetadata(
         METADATA_KEY.azureFunction,
         target.constructor
-      ) as Array<ControllerMethodMetadata>;
+      ) as ControllerMethodMetadata[];
     }
 
     metadataList.push(metadata);

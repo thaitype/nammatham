@@ -1,25 +1,16 @@
-import {
-  context,
-  functionName,
-  httpTrigger,
-  res,
-  Request,
-  Response,
-  InvocationContext,
-} from '@nammatham/core';
-import { controller } from '@nammatham/inversify';
+import { Context, FunctionName, HttpTrigger, Res, Request, Response, InvocationContext } from '@nammatham/core';
+import { Controller, Inject } from '@nammatham/inversify';
 import { MyService } from './my-service';
-import { inject } from 'inversify';
 
-@controller()
+@Controller()
 export class MyController {
-  constructor(@inject(MyService) protected myService: MyService) {}
+  constructor(@Inject(MyService) protected myService: MyService) {}
 
-  @functionName('http')
+  @FunctionName('http')
   public httpTrigger(
-    @httpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: 'my-data' }) req: Request,
-    @res() res: Response,
-    @context() context: InvocationContext
+    @HttpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: 'my-data' }) req: Request,
+    @Res() res: Response,
+    @Context() context: InvocationContext
   ) {
     res.headers.set('rest', 'aaaa');
     context.info('hello from httpTrigger');

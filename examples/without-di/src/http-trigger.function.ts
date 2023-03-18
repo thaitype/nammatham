@@ -1,13 +1,13 @@
 import { InvocationContext } from '@azure/functions';
-import { Request, bareController, context, functionName, httpTrigger, res, Response } from '@nammatham/core';
+import { Request, BareController, Context, FunctionName, HttpTrigger, Res, Response } from '@nammatham/core';
 
-@bareController()
+@BareController()
 export class MyController {
-  @functionName('http')
+  @FunctionName('http')
   public httpTrigger(
-    @httpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: 'my-data' }) req: Request,
-    @res() res: Response,
-    @context() context: InvocationContext
+    @HttpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: 'my-data' }) req: Request,
+    @Res() res: Response,
+    @Context() context: InvocationContext
   ) {
     context.log('Hi from log');
     return res.send('hello from httpTrigger without di');

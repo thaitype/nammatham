@@ -1,4 +1,4 @@
-import { METADATA_KEY, TYPE } from '../contants';
+import { METADATA_KEY } from '../contants';
 import { Constructor, ControllerMetadata } from '../interfaces';
 
 export function controllerFactory(target: Constructor, decorateFunction?: () => void) {
@@ -6,7 +6,6 @@ export function controllerFactory(target: Constructor, decorateFunction?: () => 
     target,
   };
 
-  // decorate(injectable(), target);
   if (decorateFunction) decorateFunction();
   Reflect.defineMetadata(METADATA_KEY.controller, currentMetadata, target);
 
@@ -16,8 +15,8 @@ export function controllerFactory(target: Constructor, decorateFunction?: () => 
   // We attach metadata to the Reflect object itself to avoid
   // declaring additonal globals. Also, the Reflect is avaiable
   // in both node and web browsers.
-  const previousMetadata: Array<ControllerMetadata> =
-    (Reflect.getMetadata(METADATA_KEY.controller, Reflect) as Array<ControllerMetadata>) || [];
+  const previousMetadata: ControllerMetadata[] =
+    (Reflect.getMetadata(METADATA_KEY.controller, Reflect) as ControllerMetadata[] | undefined) ?? [];
 
   const newMetadata = [currentMetadata, ...previousMetadata];
 
