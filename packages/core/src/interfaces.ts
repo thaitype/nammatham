@@ -2,6 +2,13 @@
 
 import { PARAMETER_TYPE } from './contants';
 
+
+export type Constructor<T = unknown> = {
+  new (...args: any[]): T;
+};
+
+// export type Class<T = unknown> = Constructor<T> | NewableFunction; 
+
 export type HandlerDecorator = (target: DecoratorTarget, key: string, value: unknown) => void;
 
 export type DecoratorTarget<T = unknown> = ConstructorFunction<T> | Prototype<T>;
