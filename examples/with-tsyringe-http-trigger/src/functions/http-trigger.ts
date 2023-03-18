@@ -8,13 +8,13 @@ import {
   Response,
   InvocationContext,
 } from '@nammatham/core';
-import { controller } from '@nammatham/tsyringe';
+// TODO: using `inject` from `tsyringe` when they already fix type issue #221
+import { controller, inject } from '@nammatham/tsyringe';
 import { MyService } from '../my-service';
-import { inject } from 'tsyringe';
 
 @controller()
 export class MyController {
-  constructor(@inject('MyService') protected myService: MyService) {}
+  constructor(@inject(MyService) protected myService: MyService) {}
 
   @functionName('http')
   public httpTrigger(

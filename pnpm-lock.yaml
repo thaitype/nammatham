@@ -68,6 +68,27 @@ importers:
       tsx: 3.12.5
       typescript: 5.0.1-rc
 
+  examples/with-tsyringe-http-trigger:
+    specifiers:
+      '@azure/functions': ^4.0.0-alpha.8
+      '@nammatham/core': workspace:*
+      '@nammatham/tsyringe': workspace:*
+      npm-run-all: ^4.1.5
+      reflect-metadata: ^0.1.13
+      tsx: latest
+      tsyringe: ^4.7.0
+      typescript: ^5.0.2
+    dependencies:
+      '@azure/functions': 4.0.0-alpha.8
+      '@nammatham/core': link:../../packages/core
+      '@nammatham/tsyringe': link:../../packages/tsyringe
+      reflect-metadata: 0.1.13
+      tsyringe: 4.7.0
+    devDependencies:
+      npm-run-all: 4.1.5
+      tsx: 3.12.5
+      typescript: 5.0.2
+
   packages/core:
     specifiers:
       '@azure/functions': ^4.0.0-alpha.8
@@ -87,6 +108,16 @@ importers:
       '@azure/functions': 4.0.0-alpha.8
       '@nammatham/core': link:../core
       inversify: 6.0.1
+
+  packages/tsyringe:
+    specifiers:
+      '@azure/functions': ^4.0.0-alpha.8
+      '@nammatham/core': workspace:*
+      tsyringe: ^4.7.0
+    dependencies:
+      '@azure/functions': 4.0.0-alpha.8
+      '@nammatham/core': link:../core
+      tsyringe: 4.7.0
 
 packages:
 
@@ -2879,6 +2910,10 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
+  /tslib/1.14.1:
+    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: false
+
   /tslib/2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
     dev: true
@@ -2930,6 +2965,13 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /tsyringe/4.7.0:
+    resolution: {integrity: sha512-ncFDM1jTLsok4ejMvSW5jN1VGPQD48y2tfAR0pdptWRKYX4bkbqPt92k7KJ5RFJ1KV36JEs/+TMh7I6OUgj74g==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+
   /type-fest/0.13.1:
     resolution: {integrity: sha512-34R7HTnG0XIJcBSn5XhDd7nNFPRcXYRZrBB2O2jdKqYODldSzBAqzsWoZYYvduky73toYS/ESqxPvkDf/F0XMg==}
     engines: {node: '>=10'}
@@ -2946,6 +2988,12 @@ packages:
   /typescript/5.0.1-rc:
     resolution: {integrity: sha512-zh75jY8gPo/y7fpmlTVN2bb2MigoLx4hGk+Cla9pY6lgSTvzJrmQQrRt5S80VTsEt6biWPZJgLK2nm6f0Ya+mA==}
     engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
+  /typescript/5.0.2:
+    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
+    engines: {node: '>=12.20'}
     hasBin: true
     dev: true
 
