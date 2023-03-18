@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { NammathamFactory } from '@nammatham/core';
 import { TsyringeAdapter } from '@nammatham/tsyringe';
-import { MyController } from './functions/http-trigger';
+import { MyController } from './http-trigger.function';
 import { MyService } from './my-service';
 
 const app = NammathamFactory.create(new TsyringeAdapter());

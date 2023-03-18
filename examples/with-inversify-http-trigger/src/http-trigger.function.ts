@@ -8,7 +8,7 @@ import {
   InvocationContext,
 } from '@nammatham/core';
 import { controller } from '@nammatham/inversify';
-import { MyService } from '../my-service';
+import { MyService } from './my-service';
 import { inject } from 'inversify';
 
 @controller()

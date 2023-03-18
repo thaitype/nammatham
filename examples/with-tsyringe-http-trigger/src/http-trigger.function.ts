@@ -9,7 +9,7 @@ import {
 } from '@nammatham/core';
 // TODO: using `inject` from `tsyringe` when they already fix type issue #221
 import { controller, inject } from '@nammatham/tsyringe';
-import { MyService } from '../my-service';
+import { MyService } from './my-service';
 
 @controller()
 export class MyController {
