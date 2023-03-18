@@ -3,7 +3,6 @@ import {
   functionName,
   httpTrigger,
   res,
-  HttpResponse,
   Request,
   Response,
   InvocationContext,
@@ -21,7 +20,7 @@ export class MyController {
     @httpTrigger({ authLevel: 'anonymous', methods: ['GET'], route: 'my-data' }) req: Request,
     @res() res: Response,
     @context() context: InvocationContext
-  ): HttpResponse {
+  ) {
     res.headers.set('rest', 'aaaa');
     context.info('hello from httpTrigger');
     return res.json({ name: `Service name is '${this.myService.name}'` });

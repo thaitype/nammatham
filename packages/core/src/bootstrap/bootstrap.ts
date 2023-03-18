@@ -16,7 +16,7 @@ function controllerFactory<T>(constructor: Constructor): T {
   return new (constructor as Constructor<T>)();
 }
 
-export async function bootstrap(option: IBootstrapOption) {
+export function bootstrap(option: IBootstrapOption) {
   if (option.bindControllers) option.bindControllers();
   const defaultInstanceResolver = (controller: Constructor) => controllerFactory(controller);
   const instanceResolver = option.instanceResolver ?? defaultInstanceResolver;
