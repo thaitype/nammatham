@@ -1,5 +1,5 @@
 {
-  "name": "http-trigger",
+  "name": "@examples/with-inversify-http-trigger",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",

@@ -1,7 +1,7 @@
 {
-  "name": "@nammatham/inversify",
+  "name": "@nammatham/tsyringe",
   "version": "2.0.0-alpha.0",
-  "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
+  "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (tsyringe Extension)",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
@@ -22,8 +22,8 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.8",
-    "inversify": "^6.0.1",
-    "@nammatham/core": "workspace:*"
+    "@nammatham/core": "workspace:*",
+    "tsyringe": "^4.7.0"
   },
   "repository": {
     "type": "git",

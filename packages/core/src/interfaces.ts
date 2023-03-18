@@ -1,7 +1,13 @@
-// Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
+
 
 import { PARAMETER_TYPE } from './contants';
 
+
+export type Constructor<T = unknown> = {
+  new (...args: any[]): T;
+};
+
+// Ref: https://github.com/inversify/inversify-express-utils/blob/master/src/interfaces.ts
 export type HandlerDecorator = (target: DecoratorTarget, key: string, value: unknown) => void;
 
 export type DecoratorTarget<T = unknown> = ConstructorFunction<T> | Prototype<T>;

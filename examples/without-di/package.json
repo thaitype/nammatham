@@ -1,5 +1,5 @@
 {
-  "name": "no-dependency-injection",
+  "name": "@examples/without-di",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",

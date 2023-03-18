@@ -1,4 +1,4 @@
-import { ControllerParameterMetadata } from '../interfaces';
+import { Constructor, ControllerParameterMetadata } from '../interfaces';
 import { BootstrapControllerMethod } from './interfaces';
 import * as utils from './utils';
 
@@ -7,7 +7,7 @@ function getParamsMethod(methodName: string, paramsMetadata: ControllerParameter
   return [];
 }
 
-export function getMethodMetadata(controllers: NewableFunction[]) {
+export function getMethodMetadata(controllers: Constructor[]) {
   const controllerMethods: BootstrapControllerMethod[] = [];
 
   for (const controller of controllers) {
