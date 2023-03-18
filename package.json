@@ -31,7 +31,7 @@
     "reflect-metadata": "^0.1.13",
     "ts-node": "^10.9.1",
     "tsup": "^6.6.3",
-    "typescript": "rc"
+    "typescript": "^5.0.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
