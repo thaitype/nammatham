@@ -8,5 +8,5 @@ import { MyService } from './my-service';
 const app = NammathamFactory.create(new InversifyAdapter());
 app.addControllers(MyController);
 // Using Inversify Container API to bind service
-app.services.container.bind(MyService).toSelf();
+app.container.bind(MyService).toSelf();
 app.run();

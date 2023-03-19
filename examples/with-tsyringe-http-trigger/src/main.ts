@@ -8,5 +8,5 @@ import { MyService } from './my-service';
 const app = NammathamFactory.create(new TsyringeAdapter());
 app.addControllers(MyController);
 // Using tsyringe Container API to bind service
-app.services.container.register<MyService>(MyService, { useClass: MyService });
+app.container.register<MyService>(MyService, { useClass: MyService });
 app.run();

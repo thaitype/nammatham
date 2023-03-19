@@ -16,6 +16,10 @@ class FunctionApp<Adapter extends BaseAdapter<unknown>> {
     return this;
   }
 
+  get container(){
+    return this._services.container;
+  }
+
   get services() {
     return this._services;
   }
