@@ -1,11 +1,17 @@
 import { InvocationContext } from '@azure/functions';
-import { BootstrapControllerMethod } from './interfaces';
+import { BootstrapControllerMethod, Extras } from './interfaces';
 import { Constructor, ParameterMetadata } from '../interfaces';
 import { PARAMETER_TYPE } from '../contants';
 import { Response } from '../extends';
 import { bindTriggerWithAzureFunctions } from './bind-azure-functions';
+import { extractExtras, getExtras } from './extra';
 
-function extractParameters(triggerData: unknown, context: InvocationContext, params: ParameterMetadata[]) {
+function extractParameters(
+  triggerData: unknown,
+  context: InvocationContext,
+  params: ParameterMetadata[],
+  extras: Extras
+) {
   const args: Array<unknown> = [];
   if (!params || params.length === 0) {
     return [triggerData, context];
@@ -25,8 +31,12 @@ function extractParameters(triggerData: unknown, context: InvocationContext, par
         args[index] = triggerData;
         break;
 
-      case PARAMETER_TYPE.BlobOutput:
-        args[index] = null;
+      case PARAMETER_TYPE.BlobOutputRef:
+        args[index] = getExtras('outputs', extras, index).config;
+        break;
+
+      case PARAMETER_TYPE.BlobInputRef:
+        args[index] =  getExtras('inputs', extras, index).config;
         break;
 
       case PARAMETER_TYPE.Response:
@@ -34,7 +44,7 @@ function extractParameters(triggerData: unknown, context: InvocationContext, par
         break;
 
       default:
-        args[index] = context;
+        args[index] = null;
         break;
     }
   });
@@ -46,16 +56,18 @@ export function registerAzureFunctions(
   instanceResolver: (controller: Constructor) => unknown
 ) {
   for (const controllerMetadata of controllerMetadataList) {
-    const instance = instanceResolver(controllerMetadata.controller) as any;
+    const instance = instanceResolver(controllerMetadata.controller) as Record<string, (...args: unknown[]) => unknown>;
     controllerMetadata.methodMetadataList.forEach(metadata => {
       const methodName = metadata.method.key;
       const functionName = metadata.method.name;
       const params = metadata.params;
+      const extras = extractExtras(params);
+      // This will called at runtime
       const handler = (triggerData: unknown, context: InvocationContext) => {
-        const args = extractParameters(triggerData, context, params);
+        const args = extractParameters(triggerData, context, params, extras);
         return instance[methodName](...args);
       };
-      bindTriggerWithAzureFunctions(functionName, handler, params);
+      bindTriggerWithAzureFunctions(functionName, handler, params, extras);
     });
   }
 }

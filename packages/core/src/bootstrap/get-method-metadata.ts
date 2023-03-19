@@ -1,6 +1,6 @@
 import { Constructor, ControllerParameterMetadata } from '../interfaces';
 import { BootstrapControllerMethod } from './interfaces';
-import * as utils from './utils';
+import * as utils from './decorator-utils';
 
 function getParamsMethod(methodName: string, paramsMetadata: ControllerParameterMetadata) {
   if (paramsMetadata.hasOwnProperty(methodName)) return paramsMetadata[methodName];

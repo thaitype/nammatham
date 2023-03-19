@@ -1,6 +1,7 @@
 import { InvocationContext, app } from '@azure/functions';
 import { PARAMETER_TYPE } from '../contants';
 import { ParameterMetadata } from '../interfaces';
+import { Extras } from './interfaces';
 
 type Handler<T = unknown> = (triggerData: T, context: InvocationContext) => void;
 
@@ -22,11 +23,32 @@ function identifyTriggerType(params: ParameterMetadata[]) {
   return triggers[0];
 }
 
-export function bindTriggerWithAzureFunctions(functionName: string, handler: Handler, params: ParameterMetadata[]) {
+export function bindTriggerWithAzureFunctions(
+  functionName: string,
+  handler: Handler,
+  params: ParameterMetadata[],
+  extra: Extras
+) {
   const { index, type } = identifyTriggerType(params);
-  if (type === PARAMETER_TYPE.BlobTrigger)
-    return app.http(functionName, {
-      ...params[index].option,
-      handler,
-    });
+  const commonOption = {
+    extraInputs: extra.inputs.map(input => input.config),
+    extraOutputs: extra.outputs.map(output => output.config),
+    handler,
+  };
+  switch (type) {
+    case PARAMETER_TYPE.HttpTrigger:
+      return app.http(functionName, {
+        ...params[index].option,
+        ...commonOption,
+      });
+
+    case PARAMETER_TYPE.BlobTrigger:
+      return app.storageBlob(functionName, {
+        ...params[index].option,
+        ...commonOption,
+      });
+
+    default:
+      throw new Error('Unsupport trigger type.');
+  }
 }

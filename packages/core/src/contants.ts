@@ -15,6 +15,9 @@ export enum PARAMETER_TYPE {
   Response = 'Response',
   Context = 'Context',
   BlobTrigger = 'BlobTrigger',
-  BlobOutput = 'BlobOutput'
+  BlobOutput = 'BlobOutput',
+  BlobInput = 'BlobInput',
+  BlobOutputRef = 'BlobOutputRef',
+  BlobInputRef = 'BlobInputRef',
   // Logger = 'Logger',
 }

@@ -1,5 +1,5 @@
 import { PARAMETER_TYPE } from '../contants';
-import { StorageBlobTriggerOptions, StorageBlobOutputOptions } from '@azure/functions';
+import { StorageBlobTriggerOptions, StorageBlobOutputOptions, StorageBlobInputOptions } from '@azure/functions';
 import { paramDecoratorFactory } from './params-factory';
 
 export const BlobTrigger: (option: StorageBlobTriggerOptions) => ParameterDecorator = paramDecoratorFactory(
@@ -8,4 +8,8 @@ export const BlobTrigger: (option: StorageBlobTriggerOptions) => ParameterDecora
 
 export const BlobOutput: (option: StorageBlobOutputOptions) => ParameterDecorator = paramDecoratorFactory(
   PARAMETER_TYPE.BlobOutput
+);
+
+export const BlobInput: (option: StorageBlobInputOptions) => ParameterDecorator = paramDecoratorFactory(
+  PARAMETER_TYPE.BlobInput
 );
