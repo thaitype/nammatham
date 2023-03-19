@@ -6,6 +6,16 @@ import { Response } from '../extends';
 import { bindTriggerWithAzureFunctions } from './bind-azure-functions';
 import { extractExtras, getExtras } from './extra';
 
+/**
+ * Automatic Handle 
+ * - context.extraInputs.get(blobInput);
+ * - context.extraOutputs.set(blobOutput, blobInputValue);
+ */
+function getManagedExtraArguments(context: InvocationContext, args: unknown[], extras: Extras) {
+  console.warn('Function not implemented.');
+  return args;
+}
+
 function extractParameters(
   triggerData: unknown,
   context: InvocationContext,
@@ -36,7 +46,7 @@ function extractParameters(
         break;
 
       case PARAMETER_TYPE.BlobInputRef:
-        args[index] =  getExtras('inputs', extras, index).config;
+        args[index] = getExtras('inputs', extras, index).config;
         break;
 
       case PARAMETER_TYPE.Response:
@@ -44,7 +54,7 @@ function extractParameters(
         break;
 
       default:
-        args[index] = null;
+        args[index] = undefined;
         break;
     }
   });
@@ -65,7 +75,8 @@ export function registerAzureFunctions(
       // This will called at runtime
       const handler = (triggerData: unknown, context: InvocationContext) => {
         const args = extractParameters(triggerData, context, params, extras);
-        return instance[methodName](...args);
+        const managedArgs = getManagedExtraArguments(context, args, extras);
+        return instance[methodName](...managedArgs);
       };
       bindTriggerWithAzureFunctions(functionName, handler, params, extras);
     });
