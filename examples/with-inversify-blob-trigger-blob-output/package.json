@@ -1,0 +1,27 @@
+{
+  "name": "@examples/with-inversify-blob-trigger-blob-output",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/src/main.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "build:watch": "tsc -w",
+    "start": "func start",
+    "start:watch": "func start -w",
+    "dev:watch": "run-p build:watch start:watch"
+  },
+  "author": "Thada Wangthammang",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/functions": "^4.0.0-alpha.8",
+    "@nammatham/inversify": "workspace:*",
+    "@nammatham/core": "workspace:*",
+    "reflect-metadata": "^0.1.13",
+    "inversify": "^6.0.1"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.0.2"
+  }
+}

@@ -14,5 +14,7 @@ export enum PARAMETER_TYPE {
   HttpTrigger = 'HttpTrigger',
   Response = 'Response',
   Context = 'Context',
+  BlobTrigger = 'BlobTrigger',
+  BlobOutput = 'BlobOutput'
   // Logger = 'Logger',
 }
