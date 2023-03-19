@@ -1,10 +1,11 @@
-import { app, InvocationContext } from '@azure/functions';
+import { InvocationContext } from '@azure/functions';
 import { BootstrapControllerMethod } from './interfaces';
 import { Constructor, ParameterMetadata } from '../interfaces';
 import { PARAMETER_TYPE } from '../contants';
 import { Response } from '../extends';
+import { bindTriggerWithAzureFunctions } from './bind-azure-functions';
 
-function extractParameters(triggerData: any, context: InvocationContext, params: ParameterMetadata[]) {
+function extractParameters(triggerData: unknown, context: InvocationContext, params: ParameterMetadata[]) {
   const args: Array<unknown> = [];
   if (!params || params.length === 0) {
     return [triggerData, context];
@@ -18,6 +19,14 @@ function extractParameters(triggerData: any, context: InvocationContext, params:
 
       case PARAMETER_TYPE.HttpTrigger:
         args[index] = triggerData;
+        break;
+
+      case PARAMETER_TYPE.BlobTrigger:
+        args[index] = triggerData;
+        break;
+
+      case PARAMETER_TYPE.BlobOutput:
+        args[index] = null;
         break;
 
       case PARAMETER_TYPE.Response:
@@ -46,10 +55,7 @@ export function registerAzureFunctions(
         const args = extractParameters(triggerData, context, params);
         return instance[methodName](...args);
       };
-      app.http(functionName, {
-        ...params[0].option,
-        handler,
-      });
+      bindTriggerWithAzureFunctions(functionName, handler, params);
     });
   }
 }
