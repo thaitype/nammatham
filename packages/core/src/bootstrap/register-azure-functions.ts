@@ -7,12 +7,20 @@ import { bindTriggerWithAzureFunctions } from './bind-azure-functions';
 import { extractExtras, getExtras } from './extra';
 
 /**
- * Automatic Handle 
+ * Automatic Handle
  * - context.extraInputs.get(blobInput);
  * - context.extraOutputs.set(blobOutput, blobInputValue);
  */
 function getManagedExtraArguments(context: InvocationContext, args: unknown[], extras: Extras) {
   console.warn('Function not implemented.');
+  extras.inputs.forEach(({ index, config, type, option }) => {
+    args[index] = context.extraInputs.get(config);
+  });
+  extras.outputs.forEach(({ index, config, type, option }) => {
+    args[index] = {
+      set: (value: unknown) => context.extraOutputs.set(config, value),
+    }
+  });
   return args;
 }
 
