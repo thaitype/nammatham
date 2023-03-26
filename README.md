@@ -13,6 +13,10 @@ Azure Function Lightweight frameworks with DI, providing type safe function trig
 ## Description
 Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs Lightweight framework with Dependency Injection. Provide type safety wrapping `function.json`
 
+## Talks 
+Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @ Microsoft Thailand, 25 Mar 2023
+[![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=j89YLfP8MaY&t=26754s) (Thai speech, subtitle will added later)
+- Slides: https://docs.google.com/presentation/d/1WUIXaUxXaiixZ2bgGCfx-f4Gdrmjl4RfbwKaEfAC6t4/edit?usp=sharing
 
 ## Compatibility with Azure Functions
 - [Azure Function NodeJs](https://github.com/Azure/azure-functions-nodejs-worker/) : v3.x (`@azure/functions`)
