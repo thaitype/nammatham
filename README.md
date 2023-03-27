@@ -15,7 +15,7 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **a
 
 ## Talks 
 Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @ Microsoft Thailand, 25 Mar 2023
-[![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=j89YLfP8MaY&t=26754s) (Thai speech, subtitle will added later)
+[![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=n6B4-5Lt2h0) (Thai speech, subtitle will added later)
 - Slides: https://docs.google.com/presentation/d/1WUIXaUxXaiixZ2bgGCfx-f4Gdrmjl4RfbwKaEfAC6t4/edit?usp=sharing
 
 ## Compatibility with Azure Functions
