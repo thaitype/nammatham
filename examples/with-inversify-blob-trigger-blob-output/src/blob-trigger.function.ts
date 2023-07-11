@@ -6,10 +6,6 @@ type Output<T> = {
   set: (...args: any[]) => void;
 }
 
-type Input<T extends 'blob'> = {
-  set: (...args: any[]) => void;
-}
-
 @Controller()
 export class MyController {
   constructor(@Inject(MyService) protected myService: MyService) {}
@@ -17,7 +13,7 @@ export class MyController {
   @FunctionName('CopyBlob')
   public copyBlob(
     @BlobTrigger({ path: '', connection: '' }) trigger: Buffer,
-    @BlobInput({ path: '', connection: '' }) blobInput: Input<'blob'>,
+    @BlobInput({ path: '', connection: '' }) blobInput: Buffer,
     @BlobOutput({ path: '', connection: '' }) blobOutput: Output<'blob'>,
     @Context() context: InvocationContext
   ) {
