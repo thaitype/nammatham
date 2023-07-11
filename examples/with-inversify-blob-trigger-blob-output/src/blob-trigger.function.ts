@@ -2,8 +2,12 @@ import { Context, FunctionName, InvocationContext, BlobTrigger, BlobOutput, Blob
 import { Controller, Inject } from '@nammatham/inversify';
 import { MyService } from './my-service';
 
-type Output<T> = {
-  set: (...args: any[]) => void;
+// TODO: need to be improved
+class ExtraOutput {
+  constructor(private name: string, private context: InvocationContext){}
+  public set(blob: unknown) {
+    this.context.extraOutputs.set(this.name, blob);
+  }
 }
 
 @Controller()
@@ -13,8 +17,15 @@ export class MyController {
   @FunctionName('CopyBlob')
   public copyBlob(
     @BlobTrigger({ path: '', connection: '' }) trigger: Buffer,
+    /**
+     * Automatically get via `context.extraInputs.get(blobInput)`
+     */
     @BlobInput({ path: '', connection: '' }) blobInput: Buffer,
-    @BlobOutput({ path: '', connection: '' }) blobOutput: Output<'blob'>,
+    /**
+     * Return Output Object
+     *  e.g. blobOutput.set(blobInput)
+     */
+    @BlobOutput({ path: '', connection: '' }) blobOutput: ExtraOutput,
     @Context() context: InvocationContext
   ) {
     context.info(blobInput.toString());
