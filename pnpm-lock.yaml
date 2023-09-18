@@ -54,6 +54,25 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
 
+  examples/with-functional:
+    dependencies:
+      '@azure/functions':
+        specifier: ^4.0.0-alpha.8
+        version: 4.0.0-alpha.12.20230912.4
+      '@nammatham/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      reflect-metadata:
+        specifier: ^0.1.13
+        version: 0.1.13
+    devDependencies:
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      typescript:
+        specifier: ^5.0.2
+        version: 5.0.2
+
   examples/with-inversify-http-trigger:
     dependencies:
       '@azure/functions':
