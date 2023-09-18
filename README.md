@@ -10,6 +10,10 @@ Azure Function Lightweight frameworks with DI, providing type safe function trig
 <p align="center"><a href="https://github.com/mildronize/nammatham/actions/workflows/test.yml"><img src="https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg" alt="Build &amp; Test"></a> <a href="https://codecov.io/gh/mildronize/nammatham"><img src="https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN" alt="codecov"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/v/nammatham" alt="npm version"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
 
 
+> **Nammatham** v1 is stable now (I've currently used in production), due to Nammatham v1 is based on Azure Functions Node.js v3.5.x. Azure will release Azure Functions Node.js v4 in GA (General availability) soon, [See in Roadmap 2023](https://github.com/Azure/azure-functions-nodejs-library/wiki/Roadmap)
+> 
+> **Nammatham** v2 is [currently in development](https://github.com/thaitype/nammatham/issues/77), it will based on Azure Functions Node.js v4. [Tracking issue Nammatham supported with v4](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Afunc-v4)
+
 ## Description
 Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs Lightweight framework with Dependency Injection. Provide type safety wrapping `function.json`
 
