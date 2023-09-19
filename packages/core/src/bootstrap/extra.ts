@@ -1,5 +1,5 @@
 import { ParameterMetadata } from '../interfaces';
-import { Extras } from './interfaces';
+import { Extras } from './types';
 
 export function getExtras(mode: keyof Extras, extras: Extras, index: number) {
   const extra = extras[mode].find(config => config.index === index);
@@ -13,5 +13,6 @@ export function extractExtras(params: ParameterMetadata[]) {
     outputs: [],
   };
   console.log('not implement yet');
+  console.log('extractExtras', params);
   return result;
 }

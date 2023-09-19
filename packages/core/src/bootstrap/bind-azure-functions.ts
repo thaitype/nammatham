@@ -1,7 +1,7 @@
 import { InvocationContext, app } from '@azure/functions';
 import { PARAMETER_TYPE } from '../contants';
 import { ParameterMetadata } from '../interfaces';
-import { Extras } from './interfaces';
+import { Extras } from './types';
 
 type Handler<T = unknown> = (triggerData: T, context: InvocationContext) => void;
 

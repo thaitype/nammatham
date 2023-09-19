@@ -1,5 +1,5 @@
 import { InvocationContext } from '@azure/functions';
-import { BootstrapControllerMethod, Extras } from './interfaces';
+import { BootstrapControllerMethod, Extras } from './types';
 import { Constructor, ParameterMetadata } from '../interfaces';
 import { PARAMETER_TYPE } from '../contants';
 import { Response } from '../extends';
@@ -69,6 +69,14 @@ function extractParameters(
   return args;
 }
 
+/**
+ * When the function is triggered, the function runtime calls the function's entry point.
+ * The runtime passes the function context and any trigger data to the entry point.
+ * 
+ * @param controllerMetadataList Metadata from decorators
+ * @param instanceResolver The function to resolve the instance of controller
+ */
+
 export function registerAzureFunctions(
   controllerMetadataList: BootstrapControllerMethod[],
   instanceResolver: (controller: Constructor) => unknown
@@ -84,6 +92,7 @@ export function registerAzureFunctions(
       const handler = (triggerData: unknown, context: InvocationContext) => {
         const args = extractParameters(triggerData, context, params, extras);
         const managedArgs = getManagedExtraArguments(context, args, extras);
+        console.log('managedArgs', managedArgs);
         return instance[methodName](...managedArgs);
       };
       bindTriggerWithAzureFunctions(functionName, handler, params, extras);
