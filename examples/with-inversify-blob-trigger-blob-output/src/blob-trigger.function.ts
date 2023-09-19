@@ -1,10 +1,20 @@
-import { Context, FunctionName, InvocationContext, BlobTrigger, BlobOutput, BlobInput } from '@nammatham/core';
+import {
+  Context,
+  FunctionName,
+  InvocationContext,
+  BlobTrigger,
+  BlobOutput,
+  BlobInput,
+  HttpTrigger,
+  Res,
+  Response,
+} from '@nammatham/core';
 import { Controller, Inject } from '@nammatham/inversify';
 import { MyService } from './my-service';
 
 // TODO: need to be improved
 class ExtraOutput {
-  constructor(private name: string, private context: InvocationContext){}
+  constructor(private name: string, private context: InvocationContext) {}
   public set(blob: unknown) {
     this.context.extraOutputs.set(this.name, blob);
   }
@@ -16,22 +26,28 @@ export class MyController {
 
   @FunctionName('CopyBlob')
   public copyBlob(
-    @BlobTrigger({ path: '', connection: '' }) trigger: Buffer,
+    @HttpTrigger({ authLevel: 'anonymous', methods: ['GET'] }) req: Request,
+    @Res() res: Response,
+    // @BlobTrigger({ path: '', connection: 'AzureWebJobsStorage' }) trigger: Buffer,
     /**
      * Automatically get via `context.extraInputs.get(blobInput)`
      */
-    @BlobInput({ path: '', connection: '' }) blobInput: Buffer,
+    @BlobInput({ path: 'demo-input', connection: 'AzureWebJobsStorage' }) blobInput: Buffer,
     /**
      * Return Output Object
      *  e.g. blobOutput.set(blobInput)
      */
-    @BlobOutput({ path: '', connection: '' }) blobOutput: ExtraOutput,
+    @BlobOutput({ path: 'demo-output', connection: 'AzureWebJobsStorage' }) blobOutput: ExtraOutput,
     @Context() context: InvocationContext
   ) {
-    context.info(blobInput.toString());
+    // context.log('trigger', trigger);
+    context.log('blobInput', blobInput);
+    context.log('blobOutput', blobOutput);
+    // context.info(blobInput.toString());
     context.info(context.functionName);
     context.info(`Service name is '${this.myService.name}'`);
 
-    blobOutput.set(blobInput);
+    return res.send('Success');
+    // blobOutput.set(blobInput);
   }
 }

@@ -20,4 +20,4 @@ export interface Extras {
   outputs: ParamsFunctionOutput[];
 }
 
-export type ObjectLike = Record<string, (...args: unknown[]) => unknown>;
+export type ObjectLike = Record<string, (...args: unknown[]) => unknown> & Record<string, unknown>;

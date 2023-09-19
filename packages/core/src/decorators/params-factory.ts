@@ -3,7 +3,7 @@ import { METADATA_KEY, PARAMETER_TYPE } from '../contants';
 import { Controller, ControllerParameterMetadata, ParameterMetadata } from '../interfaces';
 
 export function paramDecoratorFactory<Option>(parameterType: PARAMETER_TYPE): (option?: Option) => ParameterDecorator {
-  return (option?: Option): ParameterDecorator => params(parameterType, option);
+  return (option?: Option): ParameterDecorator => params(parameterType, option) as ParameterDecorator ;
 }
 
 /**
