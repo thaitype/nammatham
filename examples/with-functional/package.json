@@ -9,6 +9,7 @@
     "build:watch": "tsc -w",
     "start": "func start",
     "start:watch": "func start -w",
+    "dev": "run-s build start",
     "dev:watch": "run-p build:watch start:watch"
   },
   "author": "Thada Wangthammang",

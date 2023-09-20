@@ -4,7 +4,8 @@
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write '**/*.ts'"
+    "format": "prettier --write '**/*.ts'",
+    "azurite": "npx azurite --silent --location ./.azurite --debug ./.azurite/debug.log"
   },
   "keywords": [
     "azure-functions",
