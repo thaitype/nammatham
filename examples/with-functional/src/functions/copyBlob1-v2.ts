@@ -89,6 +89,10 @@ class NammathamFunction<TTriggerType> extends NammathamBinding {
   handler(func: HandlerFunction<TTriggerType, any>) {
     throw new Error('Function not implemented.');
   }
+
+  bindings(option: any) {
+    return this;
+  }
 }
 
 class NammathamTrigger {
@@ -121,6 +125,7 @@ class NammathamTrigger {
       return new NammathamFunction<unknown>();
     },
   };
+
 }
 
 const nmt = initNammatham.create();
@@ -130,20 +135,30 @@ nmt
     queueName: 'copyblobqueue',
     connection: 'storage_APPSETTING',
   })
-  .addInput(
-    'blobInput',
-    nmt.input.storageBlob({
-      connection: 'sto‰rage_APPSETTING',
+  .bindings({
+    blobInput: nmt.input.storageBlob({
+      connection: 'storage_APPSETTING',
       path: 'helloworld/{queueTrigger}-copy',
-    })
-  )
-  .addOutput(
-    'blobOutput',
-    nmt.output.storageBlob({
+    }),
+    blobOutput: nmt.output.storageBlob({
       connection: 'storage_APPSETTING',
       path: 'helloworld/{queueTrigger}-copy',
     })
-  )
+  })
+  // .addInput(
+  //   'blobInput',
+  //   nmt.input.storageBlob({
+  //     connection: 'sto‰rage_APPSETTING',
+  //     path: 'helloworld/{queueTrigger}-copy',
+  //   })
+  // )
+  // .addOutput(
+  //   'blobOutput',
+  //   nmt.output.storageBlob({
+  //     connection: 'storage_APPSETTING',
+  //     path: 'helloworld/{queueTrigger}-copy',
+  //   })
+  // )
   .handler((request, context) => {
     // const { invocationContext } = context;
     context.log('Storage queue function processed work item:', request);
