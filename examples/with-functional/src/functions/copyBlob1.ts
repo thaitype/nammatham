@@ -96,21 +96,42 @@ export type TriggerType =
   | 'eventGrid'
   | 'cosmosDB';
 
-export type HandlerFunction<TType, TTriggerType = unknown> = (
+export type HandlerFunction<TTriggerType = unknown, TType = unknown> = (
   triggerInput: TTriggerType,
   context: NammathamContext<TType>
 ) => any;
 
-class NammathamFunction<TType, TTriggerType> {
-  addInput(name: string, option: any) {
+export type FunctionAppOption<TTriggerOption = unknown> = {
+  trigger: TTriggerOption;
+  inputs: Record<string, unknown>;
+  outputs: Record<string, unknown>;
+};
+
+class NammathamBinding<
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  TTrigger extends Record<string, unknown> = {},
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  TInput extends Record<string, unknown> = {},
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  TOutput extends Record<string, unknown> = {}
+> {
+  funcTrigger = {} as TTrigger;
+  inputs = {} as TInput;
+  outputs = {} as TOutput;
+
+  addInput<TName extends string>(name: TName, option: any) {
     return this;
   }
 
   addOutput(name: string, option: any) {
     return this;
   }
+}
 
-  handler(func: HandlerFunction<TType, TTriggerType>) {
+class NammathamFunction<
+  TTriggerType
+> extends NammathamBinding {
+  handler(func: HandlerFunction<TTriggerType, any>) {
     throw new Error('Function not implemented.');
   }
 }
@@ -118,20 +139,20 @@ class NammathamFunction<TType, TTriggerType> {
 class NammathamTrigger {
   constructor(public name?: string) {}
 
-  generic() {
-    return new NammathamFunction();
+  generic(funcName: string, option: any) {
+    return new NammathamFunction<unknown>();
   }
 
   httpGet(funcName: string, option: any) {
-    return new NammathamFunction<any, HttpRequest>();
+    return new NammathamFunction<HttpRequest>();
   }
 
-  httpDelete() {
-    return new NammathamFunction<any, HttpRequest>();
+  httpDelete(funcName: string, option: any) {
+    return new NammathamFunction<HttpRequest>();
   }
 
   storageQueue(funcName: string, option: StorageQueueTriggerOptions) {
-    return new NammathamFunction<any, unknown>();
+    return new NammathamFunction<unknown>();
   }
 }
 
