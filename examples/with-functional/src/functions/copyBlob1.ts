@@ -69,6 +69,20 @@ class NammathamContext<T> extends InvocationContext {
   // public log(...args: any[]) {
   //   this.invocationContext.log(...args);
   // }
+  outputs = {
+    blobOutput: {
+      set: (value: unknown) => {
+        throw new Error('Not implemented');
+      },
+    },
+  };
+  inputs = {
+    blobInput: {
+      get: () => {
+        throw new Error('Not implemented');
+      },
+    },
+  };
 }
 
 export type TriggerType =
@@ -83,11 +97,11 @@ export type TriggerType =
   | 'cosmosDB';
 
 class NammathamFunction<T> {
-  addExtraInput(name: string, option: any) {
+  addInput(name: string, option: any) {
     return this;
   }
 
-  addExtraOutput(name: string, option: any) {
+  addOutput(name: string, option: any) {
     return this;
   }
 
@@ -103,6 +117,10 @@ class NammathamTrigger {
     return new NammathamFunction();
   }
 
+  httpGet(funcName: string, option: any) {
+    return new NammathamFunction();
+  }
+
   httpDelete() {
     return new NammathamFunction();
   }
@@ -114,16 +132,16 @@ class NammathamTrigger {
 
 const copyBlobFunction = initNammatham
   .create()
-  .storageQueue('CopyBlob', {
+  .httpGet('CopyBlob', {
     queueName: 'copyblobqueue',
     connection: 'storage_APPSETTING',
   })
-  .addExtraInput('blobInput', {
+  .addInput('blobInput', {
     type: 'storageBlob',
     connection: 'storage_APPSETTING',
     path: 'helloworld/{queueTrigger}-copy',
   })
-  .addExtraOutput('storageBlob', {
+  .addOutput('blobOutput', {
     connection: 'storage_APPSETTING',
     path: 'helloworld/{queueTrigger}-copy',
   });
@@ -131,7 +149,7 @@ const copyBlobFunction = initNammatham
 copyBlobFunction.handler((queueItem: unknown, context: NammathamContext<typeof copyBlobFunction>) => {
   // const { invocationContext } = context;
   context.log('Storage queue function processed work item:', queueItem);
-  const blobInputValue = (context.extraInputs as unknown as { blobInput: unknown }).blobInput;
+  const blobInputValue = context.inputs.blobInput.get();
 
-  context.extraOutputs.set('storageBlob', blobInputValue);
+  context.outputs.blobOutput.set(blobInputValue);
 });
