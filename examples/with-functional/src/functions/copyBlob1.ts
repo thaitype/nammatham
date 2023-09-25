@@ -10,6 +10,10 @@ import {
   StorageBlobOutputOptions,
   GenericOutputOptions,
   GenericInputOptions,
+  HttpTriggerOptions,
+  GenericFunctionOptions,
+  FunctionInput,
+  FunctionOutput,
 } from '@azure/functions';
 
 // Ref: https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns
@@ -62,28 +66,29 @@ const initNammatham = {
   },
 };
 
-class NammathamContext<T> extends InvocationContext {
-  // constructor(public invocationContext: InvocationContext) {}
+export function getExtraInputSetterFunc<TReturn = unknown>(context: InvocationContext, name: string) {
+  return { get: () => context.extraOutputs.get(name) as TReturn };
+}
+
+export function getExtraOutputGetterFunc<TValue = unknown>(context: InvocationContext, name: string) {
+  return { set: (value: TValue) => context.extraInputs.set(name, value) };
+}
+
+class NammathamContext<T> {
+  constructor(public invocationContext: InvocationContext) {}
   /**
    * The recommended way to log information data (level 2) during invocation.
    * Similar to Node.js's `console.info`, but has integration with Azure features like application insights
    */
-  // public log(...args: any[]) {
-  //   this.invocationContext.log(...args);
-  // }
+  public log(...args: any[]) {
+    this.invocationContext.log(...args);
+  }
+
   outputs = {
-    blobOutput: {
-      set: (value: unknown) => {
-        throw new Error('Not implemented');
-      },
-    },
+    blobOutput: getExtraOutputGetterFunc(this.invocationContext, 'blobOutput'),
   };
   inputs = {
-    blobInput: {
-      get: () => {
-        throw new Error('Not implemented');
-      },
-    },
+    blobInput: getExtraInputSetterFunc(this.invocationContext, 'blobInput'),
   };
 }
 
@@ -131,11 +136,38 @@ class NammathamBinding<
   addOutput<TName extends string, TOption extends OutputOption>(name: TName, option: TOption) {
     return this;
   }
+
+  private toList(data: Record<string, unknown>): Record<string, unknown>[] {
+    return Object.entries(data).map(([name, option]) => {
+      return {
+        name,
+        ...(option as any),
+      };
+    });
+  }
+
+  protected toInputList() {
+    return this.toList(this.inputs) as FunctionInput[];
+  }
+
+  protected toOutputList() {
+    return this.toList(this.outputs) as FunctionOutput[];
+  }
 }
 
 class NammathamFunction<TTriggerType> extends NammathamBinding {
+  constructor(public funcName: string, public option: Omit<GenericFunctionOptions, 'handler'>) {
+    super();
+  }
   handler(func: HandlerFunction<TTriggerType, any>) {
-    throw new Error('Function not implemented.');
+    app.generic(this.funcName, {
+      ...this.option,
+      extraInputs: this.toInputList(),
+      extraOutputs: this.toOutputList(),
+      handler: (triggerInput: TTriggerType, context: InvocationContext) => {
+        func(triggerInput, new NammathamContext(context));
+      },
+    });
   }
 }
 
@@ -161,19 +193,25 @@ class NammthamBindingHelper {
 
 class NammathamTrigger extends NammthamBindingHelper {
   generic(funcName: string, option: any) {
-    return new NammathamFunction<unknown>();
+    return new NammathamFunction<unknown>(funcName, option);
   }
 
-  httpGet(funcName: string, option: any) {
-    return new NammathamFunction<HttpRequest>();
+  httpGet(funcName: string, option: HttpTriggerOptions) {
+    return new NammathamFunction<HttpRequest>(funcName, {
+      ...option,
+      trigger: {
+        name: funcName,
+        type: 'http',
+      },
+    });
   }
 
   httpDelete(funcName: string, option: any) {
-    return new NammathamFunction<HttpRequest>();
+    return new NammathamFunction<HttpRequest>(funcName, option);
   }
 
-  storageQueue(funcName: string, option: StorageQueueTriggerOptions) {
-    return new NammathamFunction<unknown>();
+  storageQueue(funcName: string, option: any) {
+    return new NammathamFunction<unknown>(funcName, option);
   }
 }
 
@@ -181,21 +219,20 @@ const nmt = initNammatham.create();
 
 nmt
   .httpGet('CopyBlob', {
-    queueName: 'copyblobqueue',
-    connection: 'storage_APPSETTING',
+    authLevel: 'anonymous',
   })
   .addInput(
     'blobInput',
     nmt.input.storageBlob({
-      connection: 'storage_APPSETTING',
-      path: 'helloworld/{queueTrigger}-copy',
+      connection: 'AzureWebJobsStorage',
+      path: 'demo-input/xxx.txt',
     })
   )
   .addOutput(
     'blobOutput',
     nmt.output.storageBlob({
-      connection: 'storage_APPSETTING',
-      path: 'helloworld/{queueTrigger}-copy',
+      connection: 'AzureWebJobsStorage',
+      path: 'demo-input/xxx-{rand-guid}.txt',
     })
   )
   .handler((request, context) => {
