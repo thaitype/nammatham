@@ -96,7 +96,12 @@ export type TriggerType =
   | 'eventGrid'
   | 'cosmosDB';
 
-class NammathamFunction<T> {
+export type HandlerFunction<TType, TTriggerType = unknown> = (
+  triggerInput: TTriggerType,
+  context: NammathamContext<TType>
+) => any;
+
+class NammathamFunction<TType, TTriggerType> {
   addInput(name: string, option: any) {
     return this;
   }
@@ -105,7 +110,7 @@ class NammathamFunction<T> {
     return this;
   }
 
-  handler(func: (queueItem: unknown, context: NammathamContext<T>) => void) {
+  handler(func: HandlerFunction<TType, TTriggerType>) {
     throw new Error('Function not implemented.');
   }
 }
@@ -118,19 +123,19 @@ class NammathamTrigger {
   }
 
   httpGet(funcName: string, option: any) {
-    return new NammathamFunction();
+    return new NammathamFunction<any, HttpRequest>();
   }
 
   httpDelete() {
-    return new NammathamFunction();
+    return new NammathamFunction<any, HttpRequest>();
   }
 
   storageQueue(funcName: string, option: StorageQueueTriggerOptions) {
-    return new NammathamFunction();
+    return new NammathamFunction<any, unknown>();
   }
 }
 
-const copyBlobFunction = initNammatham
+initNammatham
   .create()
   .httpGet('CopyBlob', {
     queueName: 'copyblobqueue',
@@ -144,12 +149,11 @@ const copyBlobFunction = initNammatham
   .addOutput('blobOutput', {
     connection: 'storage_APPSETTING',
     path: 'helloworld/{queueTrigger}-copy',
+  })
+  .handler((request, context) => {
+    // const { invocationContext } = context;
+    context.log('Storage queue function processed work item:', request);
+    const blobInputValue = context.inputs.blobInput.get();
+
+    context.outputs.blobOutput.set(blobInputValue);
   });
-
-copyBlobFunction.handler((queueItem: unknown, context: NammathamContext<typeof copyBlobFunction>) => {
-  // const { invocationContext } = context;
-  context.log('Storage queue function processed work item:', queueItem);
-  const blobInputValue = context.inputs.blobInput.get();
-
-  context.outputs.blobOutput.set(blobInputValue);
-});
