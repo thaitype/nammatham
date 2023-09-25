@@ -187,23 +187,8 @@ class NammathamFunction<TTriggerType, TReturnType> extends NammathamBinding {
 }
 
 class NammthamBindingHelper {
-  input = {
-    storageBlob(option: StorageBlobInputOptions) {
-      return input.storageBlob(option);
-    },
-    generic(option: GenericInputOptions) {
-      return input.generic(option);
-    },
-  };
-
-  output = {
-    storageBlob(option: StorageBlobOutputOptions) {
-      return output.storageBlob(option);
-    },
-    generic(option: GenericOutputOptions) {
-      return output.generic(option);
-    },
-  };
+  input = input;
+  output = output;
 }
 
 class NammathamTrigger extends NammthamBindingHelper {
