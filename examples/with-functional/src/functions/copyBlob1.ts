@@ -14,6 +14,9 @@ import {
   GenericFunctionOptions,
   FunctionInput,
   FunctionOutput,
+  HttpResponseInit,
+  HttpHandler,
+  HttpResponse,
 } from '@azure/functions';
 
 // Ref: https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns
@@ -66,12 +69,12 @@ const initNammatham = {
   },
 };
 
-export function getExtraInputSetterFunc<TReturn = unknown>(context: InvocationContext, name: string) {
-  return { get: () => context.extraOutputs.get(name) as TReturn };
+export function getExtraInputGetterFunc<TReturn = unknown>(context: InvocationContext, name: string) {
+  return { get: () => context.extraInputs.get(name) as TReturn };
 }
 
-export function getExtraOutputGetterFunc<TValue = unknown>(context: InvocationContext, name: string) {
-  return { set: (value: TValue) => context.extraInputs.set(name, value) };
+export function getExtraOutputSetterFunc<TValue = unknown>(context: InvocationContext, name: string) {
+  return { set: (value: TValue) => context.extraOutputs.set(name, value) };
 }
 
 class NammathamContext<T> {
@@ -85,10 +88,10 @@ class NammathamContext<T> {
   }
 
   outputs = {
-    blobOutput: getExtraOutputGetterFunc(this.invocationContext, 'blobOutput'),
+    blobOutput: getExtraOutputSetterFunc(this.invocationContext, 'blobOutput'),
   };
   inputs = {
-    blobInput: getExtraInputSetterFunc(this.invocationContext, 'blobInput'),
+    blobInput: getExtraInputGetterFunc(this.invocationContext, 'blobInput'),
   };
 }
 
@@ -103,10 +106,12 @@ export type TriggerType =
   | 'eventGrid'
   | 'cosmosDB';
 
-export type HandlerFunction<TTriggerType = unknown, TType = unknown> = (
+export type PromiseLike<T> = T | Promise<T>;
+
+export type HandlerFunction<TTriggerType = unknown, TReturnType = any, TType = unknown> = (
   triggerInput: TTriggerType,
   context: NammathamContext<TType>
-) => any;
+) => PromiseLike<TReturnType>;
 
 export type FunctionAppOption<TTriggerOption = unknown> = {
   trigger: TTriggerOption;
@@ -116,6 +121,13 @@ export type FunctionAppOption<TTriggerOption = unknown> = {
 
 export type InputOption = StorageBlobInputOptions | Record<string, unknown>;
 export type OutputOption = StorageBlobOutputOptions | Record<string, unknown>;
+
+export type GeneralHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
+export type InvokeFunctionOption = (option: {
+  handler: GeneralHandler;
+  extraInputs: FunctionInput[];
+  extraOutputs: FunctionOutput[];
+}) => void;
 
 class NammathamBinding<
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -130,18 +142,21 @@ class NammathamBinding<
   outputs = {} as TOutput;
 
   addInput<TName extends string, TOption extends InputOption>(name: TName, option: TOption) {
+    this.inputs[name] = option as any;
     return this;
   }
 
   addOutput<TName extends string, TOption extends OutputOption>(name: TName, option: TOption) {
+    this.outputs[name] = option as any;
     return this;
   }
 
   private toList(data: Record<string, unknown>): Record<string, unknown>[] {
     return Object.entries(data).map(([name, option]) => {
       return {
-        name,
         ...(option as any),
+        // override name with predefined name from `addBindingName` in `@azure/functions`
+        name,
       };
     });
   }
@@ -155,18 +170,18 @@ class NammathamBinding<
   }
 }
 
-class NammathamFunction<TTriggerType> extends NammathamBinding {
-  constructor(public funcName: string, public option: Omit<GenericFunctionOptions, 'handler'>) {
+class NammathamFunction<TTriggerType, TReturnType> extends NammathamBinding {
+  constructor(public funcName: string, public invokeFunc: InvokeFunctionOption) {
     super();
   }
-  handler(func: HandlerFunction<TTriggerType, any>) {
-    app.generic(this.funcName, {
-      ...this.option,
+  handler(func: HandlerFunction<TTriggerType, TReturnType, any>) {
+    this.invokeFunc({
+      handler: (triggerInput: TTriggerType, context: InvocationContext) => {
+        const nammathamContext = new NammathamContext(context);
+        return func(triggerInput, nammathamContext);
+      },
       extraInputs: this.toInputList(),
       extraOutputs: this.toOutputList(),
-      handler: (triggerInput: TTriggerType, context: InvocationContext) => {
-        func(triggerInput, new NammathamContext(context));
-      },
     });
   }
 }
@@ -174,44 +189,43 @@ class NammathamFunction<TTriggerType> extends NammathamBinding {
 class NammthamBindingHelper {
   input = {
     storageBlob(option: StorageBlobInputOptions) {
-      return option;
+      return input.storageBlob(option);
     },
-    cosmosDB(option: GenericInputOptions) {
-      return option;
+    generic(option: GenericInputOptions) {
+      return input.generic(option);
     },
   };
 
   output = {
     storageBlob(option: StorageBlobOutputOptions) {
-      return option;
+      return output.storageBlob(option);
     },
     generic(option: GenericOutputOptions) {
-      return option;
+      return output.generic(option);
     },
   };
 }
 
 class NammathamTrigger extends NammthamBindingHelper {
   generic(funcName: string, option: any) {
-    return new NammathamFunction<unknown>(funcName, option);
+    return new NammathamFunction<unknown, unknown | void>(funcName, option);
   }
 
   httpGet(funcName: string, option: HttpTriggerOptions) {
-    return new NammathamFunction<HttpRequest>(funcName, {
-      ...option,
-      trigger: {
-        name: funcName,
-        type: 'http',
-      },
+    return new NammathamFunction<HttpRequest, HttpResponseInit | HttpResponse>(funcName, funcOption => {
+      app.get(funcName, {
+        ...option,
+        ...funcOption,
+      });
     });
   }
 
   httpDelete(funcName: string, option: any) {
-    return new NammathamFunction<HttpRequest>(funcName, option);
+    return new NammathamFunction<HttpRequest, HttpResponseInit>(funcName, option);
   }
 
   storageQueue(funcName: string, option: any) {
-    return new NammathamFunction<unknown>(funcName, option);
+    return new NammathamFunction<unknown, unknown>(funcName, option);
   }
 }
 
@@ -232,13 +246,15 @@ nmt
     'blobOutput',
     nmt.output.storageBlob({
       connection: 'AzureWebJobsStorage',
-      path: 'demo-input/xxx-{rand-guid}.txt',
+      path: 'demo-output/xxx-{rand-guid}.txt',
     })
   )
   .handler((request, context) => {
-    // const { invocationContext } = context;
-    context.log('Storage queue function processed work item:', request);
+    context.log('function processed work item:', request);
     const blobInputValue = context.inputs.blobInput.get();
 
     context.outputs.blobOutput.set(blobInputValue);
+    return {
+      body: `Hello ${blobInputValue}`,
+    };
   });
