@@ -88,6 +88,16 @@ export type ConvertOutput<T extends OutputCollection> = {
     : never;
 };
 
+export type ConvertInput<T extends InputCollection> = {
+  [K in keyof T]: typeof getExtraInputGetterFunc<MapTypeToSetterParams<T[K]['type']>> extends (
+    context: InvocationContext,
+    name: string
+  ) => infer R
+    ? R
+    : never;
+};
+
+
 class NammathamContext<TInput extends InputCollection, TOutput extends OutputCollection> {
   constructor(public readonly context: InvocationContext, protected _inputs: TInput, protected _outputs: TOutput) {}
   /**
@@ -107,9 +117,14 @@ class NammathamContext<TInput extends InputCollection, TOutput extends OutputCol
   }
 
   protected getAllInputsFunc() {
-    return {
-      blobInput: getExtraInputGetterFunc(this.context, 'blobInput'),
-    };
+    const result = Object.entries(this._inputs).reduce((acc, [name, value]) => {
+      acc[name] = getExtraInputGetterFunc(this.context, name);
+      return acc;
+    }, {} as Record<string, unknown>);
+    return result as ConvertInput<TInput>;
+    // return {
+    //   blobInput: getExtraInputGetterFunc(this.context, 'blobInput'),
+    // };
   }
 
   outputs = this.getAllOutputsFunc();
@@ -142,8 +157,16 @@ export type FunctionAppOption<TTriggerOption = unknown> = {
   outputs: Record<string, unknown>;
 };
 
-export type InputOption = StorageBlobInputOptions | Record<string, unknown>;
-export type OutputOption = StorageBlobOutputOptions | Record<string, unknown>;
+/**
+ * Function Input & Output
+ */
+
+export type FunctionBinding<TType extends string = ''> = {
+  type: TType;
+} & Record<string, unknown>;
+
+// export type InputOption = StorageBlobInputOptions | FunctionInput;
+// export type OutputOption = StorageBlobOutputOptions | FunctionOutput;
 
 export type AnyHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
 export type InvokeFunctionOption = (option: {
@@ -152,16 +175,8 @@ export type InvokeFunctionOption = (option: {
   extraOutputs: FunctionOutput[];
 }) => void;
 
-export type BindingCollection<TType = unknown, TOption = unknown> = Record<
-  string,
-  {
-    type: TType;
-    option: TOption;
-  }
->;
-
-export type InputCollection<TType = unknown> = BindingCollection<TType, InputOption>;
-export type OutputCollection<TType = unknown> = BindingCollection<TType, OutputOption>;
+export type InputCollection = Record<string, FunctionInput>;
+export type OutputCollection = Record<string, FunctionOutput>;
 
 class NammathamFunction<
   TTriggerType,
@@ -187,46 +202,20 @@ class NammathamFunction<
     });
   }
 
-  addInput<TName extends string, TOption extends InputOption>(name: TName, option: TOption) {
-    const input = {
-      type: 'blob' as const,
-      option,
-    };
-    this.inputs[name] = input as any;
-    return this as NammathamFunction<
-      TTriggerType,
-      TReturnType,
-      TInput &
-        Record<
-          TName,
-          {
-            type: typeof input['type'];
-            option: TOption;
-          }
-        >,
-      TOutput
-    >;
+  addInput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
+    name: TName,
+    option: TOption
+  ) {
+    this.inputs[name] = option as any;
+    return this as unknown as NammathamFunction<TTriggerType, TReturnType, TInput & Record<TName, TOption>, TOutput>;
   }
 
-  addOutput<TName extends string, TOption extends OutputOption>(name: TName, option: TOption) {
-    const output = {
-      type: 'blob' as const,
-      option,
-    };
-    this.outputs[name] = output as any;
-    return this as NammathamFunction<
-      TTriggerType,
-      TReturnType,
-      TInput,
-      TOutput &
-        Record<
-          TName,
-          {
-            type: typeof output['type'];
-            option: TOption;
-          }
-        >
-    >;
+  addOutput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
+    name: TName,
+    option: TOption
+  ) {
+    this.outputs[name] = option as any;
+    return this as unknown as NammathamFunction<TTriggerType, TReturnType, TInput, TOutput & Record<TName, TOption>>;
   }
 
   private toList(data: Record<string, unknown>): Record<string, unknown>[] {
@@ -282,20 +271,16 @@ nmt
   .httpGet('CopyBlob', {
     authLevel: 'anonymous',
   })
-  .addInput(
-    'blobInput',
-    nmt.input.storageBlob({
-      connection: 'AzureWebJobsStorage',
-      path: 'demo-input/xxx.txt',
-    })
-  )
-  .addOutput(
-    'blobOutput',
-    nmt.output.storageBlob({
-      connection: 'AzureWebJobsStorage',
-      path: 'demo-output/xxx-{rand-guid}.txt',
-    })
-  )
+  .addInput('blobInput', {
+    type: 'blob',
+    connection: 'AzureWebJobsStorage',
+    path: 'demo-input/xxx.txt',
+  })
+  .addOutput('blobOutput', {
+    type: 'blob',
+    connection: 'AzureWebJobsStorage',
+    path: 'demo-output/xxx-{rand-guid}.txt',
+  })
   .handler((request, context) => {
     context.log('function processed work item:', request);
     const blobInputValue = context.inputs.blobInput.get();
