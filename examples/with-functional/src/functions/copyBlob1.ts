@@ -77,7 +77,7 @@ export function getExtraOutputSetterFunc<TValue = unknown>(context: InvocationCo
   return { set: (value: TValue) => context.extraOutputs.set(name, value) };
 }
 
-class NammathamContext<T> {
+class NammathamContext<TInput extends Record<string, unknown>, TOutput extends Record<string, unknown>> {
   constructor(public invocationContext: InvocationContext) {}
   /**
    * The recommended way to log information data (level 2) during invocation.
@@ -108,10 +108,12 @@ export type TriggerType =
 
 export type PromiseLike<T> = T | Promise<T>;
 
-export type HandlerFunction<TTriggerType = unknown, TReturnType = any, TType = unknown> = (
-  triggerInput: TTriggerType,
-  context: NammathamContext<TType>
-) => PromiseLike<TReturnType>;
+export type HandlerFunction<
+  TTriggerType,
+  TReturnType,
+  TInput extends Record<string, unknown>,
+  TOutput extends Record<string, unknown>
+> = (triggerInput: TTriggerType, context: NammathamContext<TInput, TOutput>) => PromiseLike<TReturnType>;
 
 export type FunctionAppOption<TTriggerOption = unknown> = {
   trigger: TTriggerOption;
@@ -122,33 +124,46 @@ export type FunctionAppOption<TTriggerOption = unknown> = {
 export type InputOption = StorageBlobInputOptions | Record<string, unknown>;
 export type OutputOption = StorageBlobOutputOptions | Record<string, unknown>;
 
-export type GeneralHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
+export type AnyHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
 export type InvokeFunctionOption = (option: {
-  handler: GeneralHandler;
+  handler: AnyHandler;
   extraInputs: FunctionInput[];
   extraOutputs: FunctionOutput[];
 }) => void;
 
-class NammathamBinding<
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  TTrigger extends Record<string, unknown> = {},
+
+class NammathamFunction<
+  TTriggerType,
+  TReturnType,
   // eslint-disable-next-line @typescript-eslint/ban-types
   TInput extends Record<string, unknown> = {},
   // eslint-disable-next-line @typescript-eslint/ban-types
   TOutput extends Record<string, unknown> = {}
 > {
-  funcTrigger = {} as TTrigger;
   inputs = {} as TInput;
   outputs = {} as TOutput;
 
+  constructor(public funcName: string, public invokeFunc: InvokeFunctionOption) {}
+
+  handler(func: HandlerFunction<TTriggerType, TReturnType, TInput, TOutput>) {
+    this.invokeFunc({
+      handler: (triggerInput: TTriggerType, context: InvocationContext) => {
+        const nammathamContext = new NammathamContext(context);
+        return func(triggerInput, nammathamContext);
+      },
+      extraInputs: this.toInputList(),
+      extraOutputs: this.toOutputList(),
+    });
+  }
+
   addInput<TName extends string, TOption extends InputOption>(name: TName, option: TOption) {
     this.inputs[name] = option as any;
-    return this;
+    return this as NammathamFunction<TTriggerType, TReturnType, TInput & Record<TName, TOption>, TOutput>;
   }
 
   addOutput<TName extends string, TOption extends OutputOption>(name: TName, option: TOption) {
     this.outputs[name] = option as any;
-    return this;
+    return this as NammathamFunction<TTriggerType, TReturnType, TInput, TOutput & Record<TName, TOption>>;
   }
 
   private toList(data: Record<string, unknown>): Record<string, unknown>[] {
@@ -167,22 +182,6 @@ class NammathamBinding<
 
   protected toOutputList() {
     return this.toList(this.outputs) as FunctionOutput[];
-  }
-}
-
-class NammathamFunction<TTriggerType, TReturnType> extends NammathamBinding {
-  constructor(public funcName: string, public invokeFunc: InvokeFunctionOption) {
-    super();
-  }
-  handler(func: HandlerFunction<TTriggerType, TReturnType, any>) {
-    this.invokeFunc({
-      handler: (triggerInput: TTriggerType, context: InvocationContext) => {
-        const nammathamContext = new NammathamContext(context);
-        return func(triggerInput, nammathamContext);
-      },
-      extraInputs: this.toInputList(),
-      extraOutputs: this.toOutputList(),
-    });
   }
 }
 
