@@ -76,7 +76,7 @@ export function getExtraOutputSetterFunc<TValue = unknown>(context: InvocationCo
   return { set: (value: TValue) => context.extraOutputs.set(name, value) };
 }
 
-export type MapTypeToSetterParams<TType> = TType extends 'blob' ? unknown : never;
+export type MapTypeToSetterParams<TType> = TType extends 'blob' ? unknown : unknown;
 
 export type ConvertOutput<T extends OutputCollection> = {
   [K in keyof T]: typeof getExtraOutputSetterFunc<MapTypeToSetterParams<T[K]['type']>> extends (
@@ -120,9 +120,6 @@ class NammathamContext<TInput extends InputCollection, TOutput extends OutputCol
       return acc;
     }, {} as Record<string, unknown>);
     return result as ConvertInput<TInput>;
-    // return {
-    //   blobInput: getExtraInputGetterFunc(this.context, 'blobInput'),
-    // };
   }
 
   outputs = this.getAllOutputsFunc();
@@ -184,8 +181,8 @@ class NammathamFunction<
   // eslint-disable-next-line @typescript-eslint/ban-types
   TOutput extends OutputCollection = {}
 > {
-  inputs = {} as TInput;
-  outputs = {} as TOutput;
+  protected inputs = {} as TInput;
+  protected outputs = {} as TOutput;
 
   constructor(public funcName: string, public invokeFunc: InvokeFunctionOption) {}
 
@@ -248,11 +245,11 @@ type StorageBlobOutputOptions = {
 } & Record<string, unknown>;
 
 class NammthamBindingHelper {
-  input = {
+  public readonly input = {
     storageBlob: (option: Omit<StorageBlobInputOptions, 'type'>) => ({ ...option, type: 'blob' as const }),
     generic: (option: GenericInputOptions) => option,
   };
-  output = {
+  public readonly output = {
     storageBlob: (option: Omit<StorageBlobOutputOptions, 'type'>) => ({ ...option, type: 'blob' as const }),
     generic: (option: GenericOutputOptions) => option,
   };
