@@ -4,10 +4,8 @@ import {
   InvocationContext,
   output,
   HttpRequest,
-  StorageBlobInputOptions,
   StorageBlobOptions,
   StorageQueueTriggerOptions,
-  StorageBlobOutputOptions,
   GenericOutputOptions,
   GenericInputOptions,
   HttpTriggerOptions,
@@ -18,6 +16,7 @@ import {
   HttpHandler,
   HttpResponse,
 } from '@azure/functions';
+import { type } from 'os';
 
 // Ref: https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns
 
@@ -96,7 +95,6 @@ export type ConvertInput<T extends InputCollection> = {
     ? R
     : never;
 };
-
 
 class NammathamContext<TInput extends InputCollection, TOutput extends OutputCollection> {
   constructor(public readonly context: InvocationContext, protected _inputs: TInput, protected _outputs: TOutput) {}
@@ -237,9 +235,27 @@ class NammathamFunction<
   }
 }
 
+type StorageBlobInputOptions = {
+  type: 'blob';
+  connection: string;
+  path: string;
+} & Record<string, unknown>;
+
+type StorageBlobOutputOptions = {
+  type: 'blob';
+  connection: string;
+  path: string;
+} & Record<string, unknown>;
+
 class NammthamBindingHelper {
-  input = input;
-  output = output;
+  input = {
+    storageBlob: (option: Omit<StorageBlobInputOptions, 'type'>) => ({ ...option, type: 'blob' as const }),
+    generic: (option: GenericInputOptions) => option,
+  };
+  output = {
+    storageBlob: (option: Omit<StorageBlobOutputOptions, 'type'>) => ({ ...option, type: 'blob' as const }),
+    generic: (option: GenericOutputOptions) => option,
+  };
 }
 
 class NammathamTrigger extends NammthamBindingHelper {
@@ -271,16 +287,20 @@ nmt
   .httpGet('CopyBlob', {
     authLevel: 'anonymous',
   })
-  .addInput('blobInput', {
-    type: 'blob',
-    connection: 'AzureWebJobsStorage',
-    path: 'demo-input/xxx.txt',
-  })
-  .addOutput('blobOutput', {
-    type: 'blob',
-    connection: 'AzureWebJobsStorage',
-    path: 'demo-output/xxx-{rand-guid}.txt',
-  })
+  .addInput(
+    'blobInput',
+    nmt.input.storageBlob({
+      connection: 'AzureWebJobsStorage',
+      path: 'demo-input/xxx.txt',
+    })
+  )
+  .addOutput(
+    'blobOutput',
+    nmt.output.storageBlob({
+      connection: 'AzureWebJobsStorage',
+      path: 'demo-output/xxx-{rand-guid}.txt',
+    })
+  )
   .handler((request, context) => {
     context.log('function processed work item:', request);
     const blobInputValue = context.inputs.blobInput.get();
