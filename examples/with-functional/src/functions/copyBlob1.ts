@@ -77,22 +77,43 @@ export function getExtraOutputSetterFunc<TValue = unknown>(context: InvocationCo
   return { set: (value: TValue) => context.extraOutputs.set(name, value) };
 }
 
-class NammathamContext<TInput extends Record<string, unknown>, TOutput extends Record<string, unknown>> {
-  constructor(public invocationContext: InvocationContext) {}
+export type MapTypeToSetterParams<TType> = TType extends 'blob' ? unknown : never;
+
+export type ConvertOutput<T extends OutputCollection> = {
+  [K in keyof T]: typeof getExtraOutputSetterFunc<MapTypeToSetterParams<T[K]['type']>> extends (
+    context: InvocationContext,
+    name: string
+  ) => infer R
+    ? R
+    : never;
+};
+
+class NammathamContext<TInput extends InputCollection, TOutput extends OutputCollection> {
+  constructor(public readonly context: InvocationContext, protected _inputs: TInput, protected _outputs: TOutput) {}
   /**
    * The recommended way to log information data (level 2) during invocation.
    * Similar to Node.js's `console.info`, but has integration with Azure features like application insights
    */
   public log(...args: any[]) {
-    this.invocationContext.log(...args);
+    this.context.log(...args);
   }
 
-  outputs = {
-    blobOutput: getExtraOutputSetterFunc(this.invocationContext, 'blobOutput'),
-  };
-  inputs = {
-    blobInput: getExtraInputGetterFunc(this.invocationContext, 'blobInput'),
-  };
+  protected getAllOutputsFunc() {
+    const result = Object.entries(this._outputs).reduce((acc, [name, value]) => {
+      acc[name] = getExtraOutputSetterFunc(this.context, name);
+      return acc;
+    }, {} as Record<string, unknown>);
+    return result as ConvertOutput<TOutput>;
+  }
+
+  protected getAllInputsFunc() {
+    return {
+      blobInput: getExtraInputGetterFunc(this.context, 'blobInput'),
+    };
+  }
+
+  outputs = this.getAllOutputsFunc();
+  inputs = this.getAllInputsFunc();
 }
 
 export type TriggerType =
@@ -111,8 +132,8 @@ export type PromiseLike<T> = T | Promise<T>;
 export type HandlerFunction<
   TTriggerType,
   TReturnType,
-  TInput extends Record<string, unknown>,
-  TOutput extends Record<string, unknown>
+  TInput extends InputCollection,
+  TOutput extends OutputCollection
 > = (triggerInput: TTriggerType, context: NammathamContext<TInput, TOutput>) => PromiseLike<TReturnType>;
 
 export type FunctionAppOption<TTriggerOption = unknown> = {
@@ -131,14 +152,24 @@ export type InvokeFunctionOption = (option: {
   extraOutputs: FunctionOutput[];
 }) => void;
 
+export type BindingCollection<TType = unknown, TOption = unknown> = Record<
+  string,
+  {
+    type: TType;
+    option: TOption;
+  }
+>;
+
+export type InputCollection<TType = unknown> = BindingCollection<TType, InputOption>;
+export type OutputCollection<TType = unknown> = BindingCollection<TType, OutputOption>;
 
 class NammathamFunction<
   TTriggerType,
   TReturnType,
   // eslint-disable-next-line @typescript-eslint/ban-types
-  TInput extends Record<string, unknown> = {},
+  TInput extends InputCollection = {},
   // eslint-disable-next-line @typescript-eslint/ban-types
-  TOutput extends Record<string, unknown> = {}
+  TOutput extends OutputCollection = {}
 > {
   inputs = {} as TInput;
   outputs = {} as TOutput;
@@ -148,7 +179,7 @@ class NammathamFunction<
   handler(func: HandlerFunction<TTriggerType, TReturnType, TInput, TOutput>) {
     this.invokeFunc({
       handler: (triggerInput: TTriggerType, context: InvocationContext) => {
-        const nammathamContext = new NammathamContext(context);
+        const nammathamContext = new NammathamContext(context, this.inputs, this.outputs);
         return func(triggerInput, nammathamContext);
       },
       extraInputs: this.toInputList(),
@@ -157,13 +188,45 @@ class NammathamFunction<
   }
 
   addInput<TName extends string, TOption extends InputOption>(name: TName, option: TOption) {
-    this.inputs[name] = option as any;
-    return this as NammathamFunction<TTriggerType, TReturnType, TInput & Record<TName, TOption>, TOutput>;
+    const input = {
+      type: 'blob' as const,
+      option,
+    };
+    this.inputs[name] = input as any;
+    return this as NammathamFunction<
+      TTriggerType,
+      TReturnType,
+      TInput &
+        Record<
+          TName,
+          {
+            type: typeof input['type'];
+            option: TOption;
+          }
+        >,
+      TOutput
+    >;
   }
 
   addOutput<TName extends string, TOption extends OutputOption>(name: TName, option: TOption) {
-    this.outputs[name] = option as any;
-    return this as NammathamFunction<TTriggerType, TReturnType, TInput, TOutput & Record<TName, TOption>>;
+    const output = {
+      type: 'blob' as const,
+      option,
+    };
+    this.outputs[name] = output as any;
+    return this as NammathamFunction<
+      TTriggerType,
+      TReturnType,
+      TInput,
+      TOutput &
+        Record<
+          TName,
+          {
+            type: typeof output['type'];
+            option: TOption;
+          }
+        >
+    >;
   }
 
   private toList(data: Record<string, unknown>): Record<string, unknown>[] {
