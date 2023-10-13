@@ -7,12 +7,15 @@
 Azure Function Lightweight frameworks with DI, providing type safe function triggers and bindings
 </p>
 
-<p align="center"><a href="https://github.com/mildronize/nammatham/actions/workflows/test.yml"><img src="https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg" alt="Build &amp; Test"></a> <a href="https://codecov.io/gh/mildronize/nammatham"><img src="https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN" alt="codecov"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/v/nammatham" alt="npm version"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
+<!-- [![Build & Test](https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/mildronize/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) [![npm version](https://img.shields.io/npm/v/nammatham)](https://www.npmjs.com/package/nammatham) [![npm download](https://img.shields.io/npm/dt/nammatham)](https://www.npmjs.com/package/nammatham) -->
 
-| Version | Status      | Azure Functions Node.js | branch |
-|---------|-------------|-------------------------|--------|
-| v1.x    | Maintenance | v3.x                    | v1.x   |
-| v2.x    | In Progress | v4.x                    | next   |
+| Version | Status      | Azure Functions Node.js | Branch       | Build Status                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------- | ----------- | ----------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v1.x    | Maintenance | v3.x                    | [v1.x][v1.x] | [![Build & Test](https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/mildronize/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) [![npm version](https://img.shields.io/npm/v/nammatham)](https://www.npmjs.com/package/nammatham) [![npm download](https://img.shields.io/npm/dt/nammatham)](https://www.npmjs.com/package/nammatham) |
+| v2.x    | In Progress | v4.x                    | [next][next] |
+
+[v1.x]: https://github.com/thaitype/nammatham/tree/v1.x
+[next]: https://github.com/thaitype/nammatham/tree/next
 
 > **Nammatham** v1 is stable now (I've currently used in production), due to Nammatham v1 is based on Azure Functions Node.js v3.5.x. Azure will release Azure Functions Node.js v4 in GA (General availability) soon, [See in Roadmap 2023](https://github.com/Azure/azure-functions-nodejs-library/wiki/Roadmap)
 > 
