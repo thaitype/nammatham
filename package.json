@@ -4,7 +4,8 @@
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write '**/*.ts'"
+    "format": "prettier --write '**/*.ts'",
+    "azurite": "pnpx azurite --silent --location ./.azurite --debug ./.azurite/debug.log"
   },
   "keywords": [
     "azure-functions",
@@ -22,15 +23,19 @@
   "devDependencies": {
     "@type-challenges/utils": "^0.1.1",
     "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
     "ava": "^5.1.1",
     "c8": "^7.12.0",
+    "eslint": "^8.36.0",
     "execa": "^5.1.1",
+    "nodemon": "^2.0.20",
     "nx": "^15.6.1",
     "prettier": "^2.8.3",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^10.9.1",
     "tsup": "^6.6.3",
-    "typescript": "rc"
+    "typescript": "^5.0.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
