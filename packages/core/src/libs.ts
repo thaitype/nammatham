@@ -1,68 +1,17 @@
 import {
   app,
-  input,
   InvocationContext,
-  output,
   HttpRequest,
-  StorageBlobOptions,
-  StorageQueueTriggerOptions,
   GenericOutputOptions,
   GenericInputOptions,
   HttpTriggerOptions,
-  GenericFunctionOptions,
   FunctionInput,
   FunctionOutput,
   HttpResponseInit,
-  HttpHandler,
   HttpResponse,
 } from '@azure/functions';
-import { type } from 'os';
 
-// Ref: https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns
-
-// const blobInput = input.storageBlob({
-//   name: 'MyBlobInput',
-//   // Error: name does not exist in type `StorageBlobInputOptions`.
-//   // But we still can use name and call it later in the handler.
-//   connection: 'AzureWebJobsStorage',
-//   path: 'demo-input/xxx.txt',
-// } as StorageBlobInputOptions & { name: string });
-
-// const blobOutput = output.storageBlob({
-//   name: 'MyBlobOutput',
-//   // Error: name does not exist in type `StorageBlobInputOptions`.
-//   // But we still can use name and call it later in the handler.
-//   connection: 'AzureWebJobsStorage',
-//   path: 'demo-output/xxx-{rand-guid}.txt',
-// } as StorageBlobOptions & { name: string });
-
-// app.get('copyBlob', {
-//   authLevel: 'anonymous',
-//   extraInputs: [blobInput],
-//   extraOutputs: [blobOutput],
-//   handler: (queueItem: HttpRequest, context: InvocationContext) => {
-//     context.log('Storage queue function processed work item:', queueItem);
-
-//     const blobInputValue = context.extraInputs.get('MyBlobInput');
-//     context.extraOutputs.set('MyBlobOutput', blobInputValue);
-//     return {
-//       body: `Hello, ${blobInputValue}!`,
-//     };
-//   },
-// });
-
-// class NammathamFactory {
-//   // static create(adapter: Adapter) {
-//   //   return new NammathamApp(adapter);
-//   // }
-//   static createFunc() {
-//     return new NammathamFunction();
-//   }
-// }
-
-// Ref: https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns
-
-const initNammatham = {
+export const initNammatham = {
   create() {
     return new NammathamTrigger();
   },
@@ -160,9 +109,6 @@ export type FunctionBinding<TType extends string = ''> = {
   type: TType;
 } & Record<string, unknown>;
 
-// export type InputOption = StorageBlobInputOptions | FunctionInput;
-// export type OutputOption = StorageBlobOutputOptions | FunctionOutput;
-
 export type AnyHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
 export type InvokeFunctionOption = (option: {
   handler: AnyHandler;
@@ -173,7 +119,7 @@ export type InvokeFunctionOption = (option: {
 export type InputCollection = Record<string, FunctionInput>;
 export type OutputCollection = Record<string, FunctionOutput>;
 
-class NammathamFunction<
+export class NammathamFunction<
   TTriggerType,
   TReturnType,
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -232,19 +178,19 @@ class NammathamFunction<
   }
 }
 
-type StorageBlobInputOptions = {
+export type StorageBlobInputOptions = {
   type: 'blob';
   connection: string;
   path: string;
 } & Record<string, unknown>;
 
-type StorageBlobOutputOptions = {
+export type StorageBlobOutputOptions = {
   type: 'blob';
   connection: string;
   path: string;
 } & Record<string, unknown>;
 
-class NammthamBindingHelper {
+export class NammthamBindingHelper {
   public readonly input = {
     storageBlob: (option: Omit<StorageBlobInputOptions, 'type'>) => ({ ...option, type: 'blob' as const }),
     generic: (option: GenericInputOptions) => option,
@@ -255,7 +201,7 @@ class NammthamBindingHelper {
   };
 }
 
-class NammathamTrigger extends NammthamBindingHelper {
+export class NammathamTrigger extends NammthamBindingHelper {
   generic(funcName: string, option: any) {
     return new NammathamFunction<unknown, unknown | void>(funcName, option);
   }
@@ -277,33 +223,3 @@ class NammathamTrigger extends NammthamBindingHelper {
     return new NammathamFunction<unknown, unknown>(funcName, option);
   }
 }
-
-const nmt = initNammatham.create();
-
-nmt
-  .httpGet('CopyBlob', {
-    authLevel: 'anonymous',
-  })
-  .addInput(
-    'blobInput',
-    nmt.input.storageBlob({
-      connection: 'AzureWebJobsStorage',
-      path: 'demo-input/xxx.txt',
-    })
-  )
-  .addOutput(
-    'blobOutput',
-    nmt.output.storageBlob({
-      connection: 'AzureWebJobsStorage',
-      path: 'demo-output/xxx-{rand-guid}.txt',
-    })
-  )
-  .handler((request, context) => {
-    context.log('function processed work item:', request);
-    const blobInputValue = context.inputs.blobInput.get();
-
-    context.outputs.blobOutput.set(blobInputValue);
-    return {
-      body: `Hello ${blobInputValue}`,
-    };
-  });
