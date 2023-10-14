@@ -1,16 +1,12 @@
-import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
+import { initNammatham } from '@nammatham/core';
 
-export async function hello(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    context.log(`Http function processed request for url "${request.url}"`);
+const nmt = initNammatham.create();
 
-    const name = request.query.get('name') || await request.text() || 'world';
-
-    return { body: `Hello, ${name}!` };
-}
-
-app.http('hello', {
-    methods: ['GET', 'POST'],
-    authLevel: 'anonymous',
-    handler: hello
-});
- 
+nmt
+  .httpGet('CopyBlob')
+  .handler((request, context) => {
+    context.log('HTTP trigger function processed a request.');
+    return {
+      body: `Hello world!`,
+    };
+  });

@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -73,75 +69,6 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
 
-  examples/with-inversify-http-trigger:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.0.0-alpha.8
-        version: 4.0.0-alpha.8
-      '@nammatham/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@nammatham/inversify':
-        specifier: workspace:*
-        version: link:../../packages/inversify
-      inversify:
-        specifier: ^6.0.1
-        version: 6.0.1
-      reflect-metadata:
-        specifier: ^0.1.13
-        version: 0.1.13
-    devDependencies:
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
-  examples/with-tsyringe-http-trigger:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.0.0-alpha.8
-        version: 4.0.0-alpha.8
-      '@nammatham/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@nammatham/tsyringe':
-        specifier: workspace:*
-        version: link:../../packages/tsyringe
-      reflect-metadata:
-        specifier: ^0.1.13
-        version: 0.1.13
-      tsyringe:
-        specifier: ^4.7.0
-        version: 4.7.0
-    devDependencies:
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
-  examples/without-di:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.0.0-alpha.8
-        version: 4.0.0-alpha.8
-      '@nammatham/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      reflect-metadata:
-        specifier: ^0.1.13
-        version: 0.1.13
-    devDependencies:
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
   packages/core:
     dependencies:
       '@azure/functions':
@@ -154,42 +81,10 @@ importers:
         specifier: 5.20.0
         version: 5.20.0
 
-  packages/inversify:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.0.0-alpha.8
-        version: 4.0.0-alpha.8
-      '@nammatham/core':
-        specifier: workspace:*
-        version: link:../core
-      inversify:
-        specifier: ^6.0.1
-        version: 6.0.1
-
-  packages/tsyringe:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.0.0-alpha.8
-        version: 4.0.0-alpha.8
-      '@nammatham/core':
-        specifier: workspace:*
-        version: link:../core
-      tsyringe:
-        specifier: ^4.7.0
-        version: 4.7.0
-
 packages:
 
   /@azure/functions@4.0.0-alpha.12.20230912.4:
     resolution: {integrity: sha512-ACCj7+4f0PfkZyg3tKwaRs944z2k8ucBk6QjjDn46hCqxFPbX4xIRCSlCK57P6ISkWk/Ql37W/J5MAdw1mOvEA==}
-    engines: {node: '>=18.0'}
-    dependencies:
-      long: 4.0.0
-      undici: 5.20.0
-    dev: false
-
-  /@azure/functions@4.0.0-alpha.8:
-    resolution: {integrity: sha512-cmg5lf6Y0C8u6a6PNIwEDB+nPv1XAftFkVQZmRklkiFwpWJTg6Tw0zd9chkIApoyZg9x5WGc+s2SnKLueDRb4w==}
     engines: {node: '>=18.0'}
     dependencies:
       long: 4.0.0
@@ -2020,10 +1915,6 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /inversify@6.0.1:
-    resolution: {integrity: sha512-B3ex30927698TJENHR++8FfEaJGqoWOgI6ZY5Ht/nLUsFCwHn6akbwtnUAPCgUepAnTpe2qHxhDNjoKLyz6rgQ==}
-    dev: false
-
   /irregular-plurals@3.4.0:
     resolution: {integrity: sha512-YXxECO/W6N9aMBVKMKKZ8TXESgq7EFrp3emCGGUcrYY1cgJIeZjoB75MTu8qi+NAKntS9NwPU8VdcQ3r6E6aWQ==}
     engines: {node: '>=8'}
@@ -3414,6 +3305,7 @@ packages:
 
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: true
 
   /tslib@2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
@@ -3464,13 +3356,6 @@ packages:
       tslib: 1.14.1
       typescript: 5.0.2
     dev: true
-
-  /tsyringe@4.7.0:
-    resolution: {integrity: sha512-ncFDM1jTLsok4ejMvSW5jN1VGPQD48y2tfAR0pdptWRKYX4bkbqPt92k7KJ5RFJ1KV36JEs/+TMh7I6OUgj74g==}
-    engines: {node: '>= 6.0.0'}
-    dependencies:
-      tslib: 1.14.1
-    dev: false
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -3706,3 +3591,7 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

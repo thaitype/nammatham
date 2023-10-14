@@ -8,7 +8,7 @@ export class NammathamTrigger extends NammthamBindingHelper {
     return new NammathamFunction<unknown, unknown | void>(funcName, option);
   }
 
-  httpGet(funcName: string, option: HttpTriggerOptions) {
+  httpGet(funcName: string, option?: HttpTriggerOptions) {
     return new NammathamFunction<HttpRequest, HttpResponseInit | HttpResponse>(funcName, funcOption => {
       app.get(funcName, {
         ...option,

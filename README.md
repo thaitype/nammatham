@@ -29,6 +29,25 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 [![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=n6B4-5Lt2h0) (Thai speech, subtitle will added later)
 - Slides: https://docs.google.com/presentation/d/1WUIXaUxXaiixZ2bgGCfx-f4Gdrmjl4RfbwKaEfAC6t4/edit?usp=sharing
 
+## Get Started
+
+```typescript
+import { initNammatham } from '@nammatham/core';
+
+const nmt = initNammatham.create();
+
+nmt
+  .httpGet('CopyBlob', {
+    authLevel: 'anonymous',
+  })
+  .handler((request, context) => {
+    context.log('HTTP trigger function processed a request.');
+    return {
+      body: `Hello world!`,
+    };
+  });
+```
+
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
 - [inversify-express-utils](https://github.com/inversify/inversify-express-utils) - We use inversify as a Dependency Injection Tool.
