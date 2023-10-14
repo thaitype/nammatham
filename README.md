@@ -29,7 +29,7 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 [![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=n6B4-5Lt2h0) (Thai speech, subtitle will added later)
 - Slides: https://docs.google.com/presentation/d/1WUIXaUxXaiixZ2bgGCfx-f4Gdrmjl4RfbwKaEfAC6t4/edit?usp=sharing
 
-## Get Started
+## Getting Started
 
 ```typescript
 import { initNammatham } from '@nammatham/core';

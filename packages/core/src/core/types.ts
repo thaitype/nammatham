@@ -4,7 +4,7 @@ import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/fu
 
 export type MapTypeToSetterParams<TType> = TType extends 'blob' ? unknown : unknown;
 
-export type ConvertOutput<T extends OutputCollection> = {
+export type InferOutput<T extends OutputCollection> = {
   [K in keyof T]: typeof getExtraOutputSetterFunc<MapTypeToSetterParams<T[K]['type']>> extends (
     context: InvocationContext,
     name: string
@@ -13,7 +13,7 @@ export type ConvertOutput<T extends OutputCollection> = {
     : never;
 };
 
-export type ConvertInput<T extends InputCollection> = {
+export type InferInput<T extends InputCollection> = {
   [K in keyof T]: typeof getExtraInputGetterFunc<MapTypeToSetterParams<T[K]['type']>> extends (
     context: InvocationContext,
     name: string

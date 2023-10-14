@@ -1,9 +1,9 @@
 import { initNammatham } from '@nammatham/core';
 
-const nmt = initNammatham.create();
+const app = initNammatham.create();
 
-nmt
-  .httpGet('CopyBlob')
+app
+  .get('CopyBlob')
   .handler((request, context) => {
     context.log('HTTP trigger function processed a request.');
     return {

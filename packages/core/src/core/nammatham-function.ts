@@ -10,15 +10,15 @@ export class NammathamFunction<
   // eslint-disable-next-line @typescript-eslint/ban-types
   TOutput extends OutputCollection = {}
 > {
-  protected inputs = {} as TInput;
-  protected outputs = {} as TOutput;
+  protected extraInputs = {} as TInput;
+  protected extraOutputs = {} as TOutput;
 
   constructor(public funcName: string, public invokeFunc: InvokeFunctionOption) {}
 
   handler(func: HandlerFunction<TTriggerType, TReturnType, TInput, TOutput>) {
     this.invokeFunc({
       handler: (triggerInput: TTriggerType, context: InvocationContext) => {
-        const nammathamContext = new NammathamContext(context, this.inputs, this.outputs);
+        const nammathamContext = new NammathamContext(context, this.extraInputs, this.extraOutputs);
         return func(triggerInput, nammathamContext);
       },
       extraInputs: this.toInputList(),
@@ -26,19 +26,19 @@ export class NammathamFunction<
     });
   }
 
-  addInput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
+  addExtraInput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
     name: TName,
     option: TOption
   ) {
-    this.inputs[name] = option as any;
+    this.extraInputs[name] = option as any;
     return this as unknown as NammathamFunction<TTriggerType, TReturnType, TInput & Record<TName, TOption>, TOutput>;
   }
 
-  addOutput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
+  addExtraOutput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
     name: TName,
     option: TOption
   ) {
-    this.outputs[name] = option as any;
+    this.extraOutputs[name] = option as any;
     return this as unknown as NammathamFunction<TTriggerType, TReturnType, TInput, TOutput & Record<TName, TOption>>;
   }
 
@@ -53,10 +53,10 @@ export class NammathamFunction<
   }
 
   protected toInputList() {
-    return this.toList(this.inputs) as FunctionInput[];
+    return this.toList(this.extraInputs) as FunctionInput[];
   }
 
   protected toOutputList() {
-    return this.toList(this.outputs) as FunctionOutput[];
+    return this.toList(this.extraOutputs) as FunctionOutput[];
   }
 }

@@ -1,5 +1,5 @@
 import { getExtraInputGetterFunc, getExtraOutputSetterFunc } from './helpers';
-import type { ConvertInput, ConvertOutput, InputCollection, OutputCollection } from './types';
+import type { InferInput, InferOutput, InputCollection, OutputCollection } from './types';
 import type { InvocationContext } from '@azure/functions';
 
 export class NammathamContext<TInput extends InputCollection, TOutput extends OutputCollection> {
@@ -17,7 +17,7 @@ export class NammathamContext<TInput extends InputCollection, TOutput extends Ou
       acc[name] = getExtraOutputSetterFunc(this.context, name);
       return acc;
     }, {} as Record<string, unknown>);
-    return result as ConvertOutput<TOutput>;
+    return result as InferOutput<TOutput>;
   }
 
   protected getAllInputsFunc() {
@@ -25,9 +25,9 @@ export class NammathamContext<TInput extends InputCollection, TOutput extends Ou
       acc[name] = getExtraInputGetterFunc(this.context, name);
       return acc;
     }, {} as Record<string, unknown>);
-    return result as ConvertInput<TInput>;
+    return result as InferInput<TInput>;
   }
 
-  outputs = this.getAllOutputsFunc();
-  inputs = this.getAllInputsFunc();
+  extraOutputs = this.getAllOutputsFunc();
+  extraInputs = this.getAllInputsFunc();
 }

@@ -1,30 +1,30 @@
 import { initNammatham } from '@nammatham/core';
 
-const nmt = initNammatham.create();
+const app = initNammatham.create();
 
-nmt
-  .httpGet('CopyBlob', {
+app
+  .get('CopyBlob', {
     authLevel: 'anonymous',
   })
-  .addInput(
+  .addExtraInput(
     'blobInput',
-    nmt.input.storageBlob({
+    app.input.storageBlob({
       connection: 'AzureWebJobsStorage',
       path: 'demo-input/xxx.txt',
     })
   )
-  .addOutput(
+  .addExtraOutput(
     'blobOutput',
-    nmt.output.storageBlob({
+    app.output.storageBlob({
       connection: 'AzureWebJobsStorage',
       path: 'demo-output/xxx-{rand-guid}.txt',
     })
   )
   .handler((request, context) => {
     context.log('function processed work item:', request);
-    const blobInputValue = context.inputs.blobInput.get();
+    const blobInputValue = context.extraInputs.blobInput.get();
 
-    context.outputs.blobOutput.set(blobInputValue);
+    context.extraOutputs.blobOutput.set(blobInputValue);
     return {
       body: `Hello ${blobInputValue}`,
     };
