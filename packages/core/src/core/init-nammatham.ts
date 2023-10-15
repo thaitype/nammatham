@@ -1,7 +1,7 @@
 import { NammathamTrigger } from "./nammatham-trigger";
 
 export const initNammatham = {
-    create() {
+    createRoute() {
       return new NammathamTrigger();
     },
   };

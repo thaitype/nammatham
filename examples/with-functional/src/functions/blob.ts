@@ -1,21 +1,22 @@
 import { initNammatham } from '@nammatham/core';
 
-const app = initNammatham.create();
+const route = initNammatham.createRoute();
 
-app
+route
   .get('CopyBlob', {
+    route: 'copyblb/koko',
     authLevel: 'anonymous',
   })
   .addExtraInput(
     'blobInput',
-    app.input.storageBlob({
+    route.input.storageBlob({
       connection: 'AzureWebJobsStorage',
       path: 'demo-input/xxx.txt',
     })
   )
   .addExtraOutput(
     'blobOutput',
-    app.output.storageBlob({
+    route.output.storageBlob({
       connection: 'AzureWebJobsStorage',
       path: 'demo-output/xxx-{rand-guid}.txt',
     })
@@ -29,3 +30,5 @@ app
       body: `Hello ${blobInputValue}`,
     };
   });
+
+export default route;
