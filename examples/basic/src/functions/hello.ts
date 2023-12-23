@@ -1,4 +1,5 @@
-import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { createFunction } from 'nammatham';
 
 export async function hello(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
   context.log(`Http function processed request for url "${request.url}"`);
@@ -8,7 +9,9 @@ export async function hello(request: HttpRequest, context: InvocationContext): P
   return { body: `Hello, ${name}!` };
 }
 
-app.http('hello', {
+export default createFunction({
+  name: 'hello',
+  type: 'http',
   methods: ['GET', 'POST'],
   authLevel: 'anonymous',
   handler: hello,

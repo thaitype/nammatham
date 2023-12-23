@@ -15,7 +15,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.0.0-alpha.8",
+    "@azure/functions": "^4.1.0",
     "nammatham": "workspace:*",
     "reflect-metadata": "^0.1.13"
   },
