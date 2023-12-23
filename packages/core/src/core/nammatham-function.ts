@@ -1,5 +1,13 @@
 import { NammathamContext } from './nammatham-context';
-import { FunctionBinding, HandlerFunction, InputCollection, InvokeFunctionOption, OutputCollection } from './types';
+import {
+  FunctionBinding,
+  HandlerFunction,
+  InputCollection,
+  InvokeFunctionOption,
+  NammathamFunctionEndpoint,
+  OutputCollection,
+  PromiseLike
+} from './types';
 import { FunctionInput, InvocationContext, FunctionOutput } from '@azure/functions';
 
 export class NammathamFunction<
@@ -12,18 +20,28 @@ export class NammathamFunction<
 > {
   protected inputs = {} as TInput;
   protected outputs = {} as TOutput;
+  protected invokeHandler!: (
+    triggerInput: TTriggerType,
+    context: InvocationContext
+  ) => PromiseLike<TReturnType>;
 
   constructor(public funcName: string, public invokeFunc: InvokeFunctionOption) {}
 
   handler(func: HandlerFunction<TTriggerType, TReturnType, TInput, TOutput>) {
-    this.invokeFunc({
-      handler: (triggerInput: TTriggerType, context: InvocationContext) => {
-        const nammathamContext = new NammathamContext(context, this.inputs, this.outputs);
-        return func(triggerInput, nammathamContext);
-      },
-      extraInputs: this.toInputList(),
-      extraOutputs: this.toOutputList(),
-    });
+    this.invokeHandler = (triggerInput: TTriggerType, context: InvocationContext) => {
+      const nammathamContext = new NammathamContext(context, this.inputs, this.outputs);
+      return func(triggerInput, nammathamContext);
+    };
+    return this;
+  }
+
+  build(): NammathamFunctionEndpoint<TTriggerType, TReturnType> {
+    return {
+      funcName: this.funcName,
+      invokeHandler: this.invokeHandler,
+      inputs: this.toInputList(),
+      outputs: this.toOutputList(),
+    };
   }
 
   addInput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(

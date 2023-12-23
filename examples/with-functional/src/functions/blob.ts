@@ -28,4 +28,5 @@ nmt
     return {
       body: `Hello ${blobInputValue}`,
     };
-  });
+  })
+  .build();
