@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-Type-safe Azure Function Library 
+Azure Function Wrapper 
 </p>
 
 <p align="center"><a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/v/nammatham" alt="npm version"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
