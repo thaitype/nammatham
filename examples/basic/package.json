@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.0.0-alpha.8",
-    "@nammatham/core": "workspace:*",
+    "nammatham": "workspace:*",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

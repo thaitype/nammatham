@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -50,12 +54,12 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
 
-  examples/with-functional:
+  examples/basic:
     dependencies:
       '@azure/functions':
         specifier: ^4.0.0-alpha.8
         version: 4.0.0-alpha.12.20230912.4
-      '@nammatham/core':
+      nammatham:
         specifier: workspace:*
         version: link:../../packages/core
       reflect-metadata:
@@ -3591,7 +3595,3 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
