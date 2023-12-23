@@ -1,5 +1,5 @@
 {
-  "name": "@nammatham/core",
+  "name": "nammatham",
   "version": "2.0.0-alpha.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
   "main": "dist/main.js",
