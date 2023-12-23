@@ -15,7 +15,7 @@ Type-safe Azure Function Library
 | Version | Status         | Azure Functions Node.js | Branch       | Build Status                                                                                                                                                                                                                                                                                                          |
 | ------- | -------------- | ----------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | v1.x    | Maintenance    | v3.x                    | [v1.x][v1.x] | [![Build & Test](https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/mildronize/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) |
-| v2.x    | In Development | v4.x                    | [next][next] | [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Afunc-v4)                                                                                                                                                                                                            |
+| v2.x    | In Development | v4.x                    | [next][next] | [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Av2)                                                                                                                                                                                                            |
 
 [v1.x]: https://github.com/thaitype/nammatham/tree/v1.x
 [next]: https://github.com/thaitype/nammatham/tree/next
@@ -31,22 +31,7 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 
 ## Get Started
 
-```typescript
-import { initNammatham } from '@nammatham/core';
-
-const nmt = initNammatham.create();
-
-nmt
-  .httpGet('CopyBlob', {
-    authLevel: 'anonymous',
-  })
-  .handler((request, context) => {
-    context.log('HTTP trigger function processed a request.');
-    return {
-      body: `Hello world!`,
-    };
-  });
-```
+TBA
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
