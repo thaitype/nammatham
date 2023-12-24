@@ -15,7 +15,7 @@ export class NammathamApp {
     console.log('Adding function', func);
   }
 
-  use(middleware: any) {
+  use(middleware: (app: NammathamApp) => void) {
     console.log('Using middleware', middleware);
   }
 }
