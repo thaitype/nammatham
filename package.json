@@ -22,21 +22,17 @@
     "url": "https://github.com/mildronize/nammatham.git"
   },
   "devDependencies": {
-    "@type-challenges/utils": "^0.1.1",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
     "ava": "^5.1.1",
     "c8": "^7.12.0",
     "eslint": "^8.36.0",
-    "execa": "^5.1.1",
     "nodemon": "^2.0.20",
     "nx": "^15.6.1",
     "prettier": "^2.8.3",
-    "reflect-metadata": "^0.1.13",
-    "ts-node": "^10.9.1",
-    "tsup": "^6.6.3",
-    "typescript": "^5.0.2"
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

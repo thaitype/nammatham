@@ -1,5 +1,5 @@
 {
-  "name": "@nammatham/core",
+  "name": "nammatham",
   "version": "2.0.0-alpha.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection (inversify Extension)",
   "main": "dist/main.js",
@@ -21,7 +21,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.0.0-alpha.12",
+    "@azure/functions": "^4.1.0",
     "http-status-codes": "^2.2.0",
     "undici": "5.20.0"
   },

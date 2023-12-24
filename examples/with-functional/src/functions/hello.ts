@@ -1,4 +1,4 @@
-import { initNammatham } from '@nammatham/core';
+import { initNammatham } from 'nammatham';
 
 const nmt = initNammatham.create();
 

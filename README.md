@@ -32,7 +32,7 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 ## Get Started
 
 ```typescript
-import { initNammatham } from '@nammatham/core';
+import { initNammatham } from 'nammatham';
 
 const nmt = initNammatham.create();
 
