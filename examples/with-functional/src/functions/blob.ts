@@ -1,32 +1,30 @@
+import { input } from '@azure/functions';
 import { initNammatham } from 'nammatham';
 
-const nmt = initNammatham.create();
+const blobInput = input.storageBlob({
+  connection: 'AzureWebJobsStorage',
+  path: 'demo-input/xxx.txt',
+});
 
-nmt
+const blobOutput = input.storageBlob({
+  connection: 'AzureWebJobsStorage',
+  path: 'demo-output/xxx-{rand-guid}.txt',
+});
+
+const nammatham = initNammatham.create();
+
+export default nammatham
   .httpGet('CopyBlob', {
     authLevel: 'anonymous',
+    extraInputs: [blobInput],
+    extraOutputs: [blobOutput],
   })
-  .addInput(
-    'blobInput',
-    nmt.input.storageBlob({
-      connection: 'AzureWebJobsStorage',
-      path: 'demo-input/xxx.txt',
-    })
-  )
-  .addOutput(
-    'blobOutput',
-    nmt.output.storageBlob({
-      connection: 'AzureWebJobsStorage',
-      path: 'demo-output/xxx-{rand-guid}.txt',
-    })
-  )
-  .handler((request, context) => {
-    context.log('function processed work item:', request);
-    const blobInputValue = context.inputs.blobInput.get();
+  .handler((request, ctx) => {
+    ctx.log('function processed work item:', request);
+    const blobInputValue = ctx.context.extraInputs.get(blobOutput);
 
-    context.outputs.blobOutput.set(blobInputValue);
+    ctx.context.extraOutputs.set(blobOutput, blobInputValue);
     return {
       body: `Hello ${blobInputValue}`,
     };
-  })
-  .build();
+  });

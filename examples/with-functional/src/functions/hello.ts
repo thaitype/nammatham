@@ -1,8 +1,8 @@
 import { initNammatham } from 'nammatham';
 
-const nmt = initNammatham.create();
+const nammatham = initNammatham.create();
 
-nmt
+export default nammatham
   .httpGet('CopyBlob')
   .handler((request, context) => {
     context.log('HTTP trigger function processed a request.');

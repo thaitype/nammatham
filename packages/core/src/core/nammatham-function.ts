@@ -2,62 +2,32 @@ import { NammathamContext } from './nammatham-context';
 import {
   FunctionBinding,
   HandlerFunction,
-  InputCollection,
   InvokeFunctionOption,
   NammathamFunctionEndpoint,
-  OutputCollection,
-  PromiseLike
+  FunctionOption,
+  PromiseLike,
 } from './types';
-import { FunctionInput, InvocationContext, FunctionOutput } from '@azure/functions';
+import { InvocationContext } from '@azure/functions';
 
-export class NammathamFunction<
-  TTriggerType,
-  TReturnType,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  TInput extends InputCollection = {},
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  TOutput extends OutputCollection = {}
-> {
-  protected inputs = {} as TInput;
-  protected outputs = {} as TOutput;
-  protected invokeHandler!: (
-    triggerInput: TTriggerType,
-    context: InvocationContext
-  ) => PromiseLike<TReturnType>;
+export class NammathamFunction<TTriggerType, TReturnType> {
+  protected invokeHandler!: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
 
-  constructor(public funcName: string, public invokeFunc: InvokeFunctionOption) {}
+  constructor(
+    public funcName: string,
+    public functionOption: FunctionOption,
+    public invokeFunc: InvokeFunctionOption
+  ) {}
 
-  handler(func: HandlerFunction<TTriggerType, TReturnType, TInput, TOutput>) {
+  handler(func: HandlerFunction<TTriggerType, TReturnType>): NammathamFunctionEndpoint<TTriggerType, TReturnType> {
     this.invokeHandler = (triggerInput: TTriggerType, context: InvocationContext) => {
-      const nammathamContext = new NammathamContext(context, this.inputs, this.outputs);
+      const nammathamContext = new NammathamContext(context);
       return func(triggerInput, nammathamContext);
     };
-    return this;
-  }
-
-  build(): NammathamFunctionEndpoint<TTriggerType, TReturnType> {
     return {
       funcName: this.funcName,
       invokeHandler: this.invokeHandler,
-      inputs: this.toInputList(),
-      outputs: this.toOutputList(),
+      ...this.functionOption,
     };
-  }
-
-  addInput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
-    name: TName,
-    option: TOption
-  ) {
-    this.inputs[name] = option as any;
-    return this as unknown as NammathamFunction<TTriggerType, TReturnType, TInput & Record<TName, TOption>, TOutput>;
-  }
-
-  addOutput<TName extends string, TType extends string, TOption extends FunctionBinding<TType>>(
-    name: TName,
-    option: TOption
-  ) {
-    this.outputs[name] = option as any;
-    return this as unknown as NammathamFunction<TTriggerType, TReturnType, TInput, TOutput & Record<TName, TOption>>;
   }
 
   private toList(data: Record<string, unknown>): Record<string, unknown>[] {
@@ -68,13 +38,5 @@ export class NammathamFunction<
         name,
       };
     });
-  }
-
-  protected toInputList() {
-    return this.toList(this.inputs) as FunctionInput[];
-  }
-
-  protected toOutputList() {
-    return this.toList(this.outputs) as FunctionOutput[];
   }
 }

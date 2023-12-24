@@ -1,26 +1,5 @@
-import { getExtraInputGetterFunc, getExtraOutputSetterFunc } from './helpers';
 import type { NammathamContext } from './nammatham-context';
 import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/functions';
-
-export type MapTypeToSetterParams<TType> = TType extends 'blob' ? unknown : unknown;
-
-export type ConvertOutput<T extends OutputCollection> = {
-  [K in keyof T]: typeof getExtraOutputSetterFunc<MapTypeToSetterParams<T[K]['type']>> extends (
-    context: InvocationContext,
-    name: string
-  ) => infer R
-    ? R
-    : never;
-};
-
-export type ConvertInput<T extends InputCollection> = {
-  [K in keyof T]: typeof getExtraInputGetterFunc<MapTypeToSetterParams<T[K]['type']>> extends (
-    context: InvocationContext,
-    name: string
-  ) => infer R
-    ? R
-    : never;
-};
 
 export type TriggerType =
   | 'http'
@@ -35,12 +14,10 @@ export type TriggerType =
 
 export type PromiseLike<T> = T | Promise<T>;
 
-export type HandlerFunction<
-  TTriggerType,
-  TReturnType,
-  TInput extends InputCollection,
-  TOutput extends OutputCollection
-> = (triggerInput: TTriggerType, context: NammathamContext<TInput, TOutput>) => PromiseLike<TReturnType>;
+export type HandlerFunction<TTriggerType, TReturnType> = (
+  triggerInput: TTriggerType,
+  context: NammathamContext
+) => PromiseLike<TReturnType>;
 
 export type FunctionAppOption<TTriggerOption = unknown> = {
   trigger: TTriggerOption;
@@ -63,9 +40,6 @@ export type InvokeFunctionOption = (option: {
   extraOutputs: FunctionOutput[];
 }) => void;
 
-export type InputCollection = Record<string, FunctionInput>;
-export type OutputCollection = Record<string, FunctionOutput>;
-
 export type StorageBlobInputOptions = {
   type: 'blob';
   connection: string;
@@ -78,9 +52,12 @@ export type StorageBlobOutputOptions = {
   path: string;
 } & Record<string, unknown>;
 
-export interface NammathamFunctionEndpoint<TTriggerType, TReturnType> {
+export interface NammathamFunctionEndpoint<TTriggerType, TReturnType> extends FunctionOption {
   funcName: string;
   invokeHandler: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
-  inputs: FunctionInput[];
-  outputs: FunctionOutput[];
+}
+
+export interface FunctionOption {
+  extraInputs: FunctionInput[];
+  extraOutputs: FunctionOutput[];
 }

@@ -1,9 +1,7 @@
-import { getExtraInputGetterFunc, getExtraOutputSetterFunc } from './helpers';
-import type { ConvertInput, ConvertOutput, InputCollection, OutputCollection } from './types';
 import type { InvocationContext } from '@azure/functions';
 
-export class NammathamContext<TInput extends InputCollection, TOutput extends OutputCollection> {
-  constructor(public readonly context: InvocationContext, protected _inputs: TInput, protected _outputs: TOutput) {}
+export class NammathamContext {
+  constructor(public readonly context: InvocationContext) {}
   /**
    * The recommended way to log information data (level 2) during invocation.
    * Similar to Node.js's `console.info`, but has integration with Azure features like application insights
@@ -12,22 +10,4 @@ export class NammathamContext<TInput extends InputCollection, TOutput extends Ou
     this.context.log(...args);
   }
 
-  protected getAllOutputsFunc() {
-    const result = Object.entries(this._outputs).reduce((acc, [name, value]) => {
-      acc[name] = getExtraOutputSetterFunc(this.context, name);
-      return acc;
-    }, {} as Record<string, unknown>);
-    return result as ConvertOutput<TOutput>;
-  }
-
-  protected getAllInputsFunc() {
-    const result = Object.entries(this._inputs).reduce((acc, [name, value]) => {
-      acc[name] = getExtraInputGetterFunc(this.context, name);
-      return acc;
-    }, {} as Record<string, unknown>);
-    return result as ConvertInput<TInput>;
-  }
-
-  outputs = this.getAllOutputsFunc();
-  inputs = this.getAllInputsFunc();
 }
