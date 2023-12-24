@@ -1,4 +1,4 @@
-import type { NammathamFunctionEndpoint } from "./types";
+import { NammathamFunctionEndpoint } from "./adapters/azure-functions/types";
 
 export class NammathamApp {
   start() {

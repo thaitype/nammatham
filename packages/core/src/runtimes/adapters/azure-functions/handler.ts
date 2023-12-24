@@ -1,12 +1,7 @@
-import { NammathamContext } from '../../nammatham-context';
-import {
-  HandlerFunction,
-  InvokeFunctionOption,
-  NammathamFunctionEndpoint,
-  FunctionOption,
-  PromiseLike,
-} from '../../types';
-import { InvocationContext } from '@azure/functions';
+import { NammathamContext } from './nammatham-context';
+import type { PromiseLike } from '../../types';
+import type { InvocationContext } from '@azure/functions';
+import type { HandlerFunction, InvokeFunctionOption, NammathamFunctionEndpoint, FunctionOption } from './types';
 
 export class AzureFunctionsHandler<TTriggerType, TReturnType> {
   protected invokeHandler!: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
