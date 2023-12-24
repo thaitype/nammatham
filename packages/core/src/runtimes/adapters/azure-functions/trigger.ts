@@ -6,7 +6,7 @@ import type {
 } from '@azure/functions';
 import { app } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
-import { FunctionOption } from '../../../core/types';
+import { FunctionOption } from '../../types';
 
 export class AzureFunctionsTrigger {
   generic(funcName: string, option: any) {
