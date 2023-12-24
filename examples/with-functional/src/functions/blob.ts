@@ -1,5 +1,5 @@
 import { input } from '@azure/functions';
-import { initNammatham } from 'nammatham';
+import { func } from '../nammatham';
 
 const blobInput = input.storageBlob({
   connection: 'AzureWebJobsStorage',
@@ -11,9 +11,8 @@ const blobOutput = input.storageBlob({
   path: 'demo-output/xxx-{rand-guid}.txt',
 });
 
-const nammatham = initNammatham.create();
 
-export default nammatham
+export default func
   .httpGet('CopyBlob', {
     authLevel: 'anonymous',
     extraInputs: [blobInput],

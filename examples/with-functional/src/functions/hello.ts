@@ -1,12 +1,10 @@
-import { initNammatham } from 'nammatham';
+import { func } from '../nammatham';
 
-const nammatham = initNammatham.create();
-
-export default nammatham
+export default func
   .httpGet('CopyBlob')
   .handler((request, context) => {
     context.log('HTTP trigger function processed a request.');
     return {
       body: `Hello world!`,
     };
-  });
+});

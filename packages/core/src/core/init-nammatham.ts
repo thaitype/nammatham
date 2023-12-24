@@ -1,7 +1,13 @@
-import { NammathamTrigger } from "./nammatham-trigger";
+import { NammathamApp } from './nammatham-app';
+import { NammathamTrigger } from './nammatham-trigger';
+
+
 
 export const initNammatham = {
-    create() {
-      return new NammathamTrigger();
-    },
-  };
+  create() {
+    return {
+      func: new NammathamTrigger(),
+      app: new NammathamApp(),
+    };
+  },
+};
