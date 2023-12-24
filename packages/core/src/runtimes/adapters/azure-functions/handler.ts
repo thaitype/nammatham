@@ -1,12 +1,11 @@
-import { NammathamContext } from '../../core/nammatham-context';
+import { NammathamContext } from '../../../core/nammatham-context';
 import {
-  FunctionBinding,
   HandlerFunction,
   InvokeFunctionOption,
   NammathamFunctionEndpoint,
   FunctionOption,
   PromiseLike,
-} from '../../core/types';
+} from '../../../core/types';
 import { InvocationContext } from '@azure/functions';
 
 export class AzureFunctionsHandler<TTriggerType, TReturnType> {
