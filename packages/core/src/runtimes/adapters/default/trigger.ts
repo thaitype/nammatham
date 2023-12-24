@@ -1,3 +1,3 @@
-import { BaseFunctionTrigger } from "../../base-function-trigger";
+import { BaseFunctionTrigger } from "../../bases";
 
 export class DefaultTrigger extends BaseFunctionTrigger {}

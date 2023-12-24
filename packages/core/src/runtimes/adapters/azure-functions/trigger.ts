@@ -1,16 +1,10 @@
-import type {
-  HttpFunctionOptions,
-  HttpRequest,
-  HttpResponse,
-  HttpResponseInit,
-} from '@azure/functions';
+import type { HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit } from '@azure/functions';
 import { app } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
 import { FunctionOption } from './types';
-import { BaseFunctionTrigger } from '../../base-function-trigger';
+import { BaseFunctionTrigger } from '../../bases';
 
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
-
   generic(funcName: string, option: any) {
     // TODO: Implement later
     return new AzureFunctionsHandler<unknown, unknown | void>(funcName, this.parseFunctionOption(option), option);

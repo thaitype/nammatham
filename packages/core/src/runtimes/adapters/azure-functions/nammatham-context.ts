@@ -1,5 +1,5 @@
 import type { InvocationContext } from '@azure/functions';
-import { NammathamContextBase } from '../../nammatham-context-base';
+import { NammathamContextBase } from '../../bases';
 
 export class NammathamContext extends NammathamContextBase {
   constructor(public readonly context: InvocationContext) {

@@ -1,4 +1,4 @@
-import { NammathamApp } from './nammatham-app';
+import { NammathamApp } from '../nammatham-app';
 
 export abstract class BaseRuntimeAdapter<FunctionTrigger> {
   abstract createTrigger(): FunctionTrigger;

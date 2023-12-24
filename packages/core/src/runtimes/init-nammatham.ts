@@ -1,4 +1,4 @@
-import { BaseRuntimeAdapter } from './base-runtime-adapter';
+import { BaseRuntimeAdapter } from './bases/base-runtime-adapter';
 import { DefaultAdapter } from './adapters/default';
 import { NammathamApp } from 'packages/core/dist/main';
 

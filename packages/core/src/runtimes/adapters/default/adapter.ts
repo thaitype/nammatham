@@ -1,5 +1,5 @@
-import { NammathamApp } from 'packages/core/dist/main';
-import { BaseRuntimeAdapter } from '../../base-runtime-adapter';
+import { NammathamApp } from '../../nammatham-app';
+import { BaseRuntimeAdapter } from '../../bases';
 import { DefaultTrigger } from './trigger';
 
 export class DefaultAdapter extends BaseRuntimeAdapter<DefaultTrigger> {
