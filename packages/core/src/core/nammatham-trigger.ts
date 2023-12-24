@@ -5,11 +5,10 @@ import type {
   HttpResponseInit,
 } from '@azure/functions';
 import { app } from '@azure/functions';
-import { NammthamBindingHelper } from './nammatham-binding-helper';
 import { NammathamFunction } from './nammatham-function';
 import { FunctionOption } from './types';
 
-export class NammathamTrigger extends NammthamBindingHelper {
+export class NammathamTrigger {
   generic(funcName: string, option: any) {
     // TODO: Implement later
     return new NammathamFunction<unknown, unknown | void>(funcName, this.parseFunctionOption(option), option);
