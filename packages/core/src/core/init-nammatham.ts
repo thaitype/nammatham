@@ -1,10 +1,10 @@
 import { NammathamApp } from './nammatham-app';
-import { NammathamTrigger } from './nammatham-trigger';
+import { AzureFunctionsTrigger } from '../runtimes/azure-functions/trigger';
 
 export const initNammatham = {
   create(adatper?: any) {
     return {
-      func: new NammathamTrigger(),
+      func: new AzureFunctionsTrigger(),
       app: new NammathamApp(),
     };
   },

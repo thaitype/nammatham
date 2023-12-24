@@ -1,4 +1,4 @@
-import { NammathamContext } from './nammatham-context';
+import { NammathamContext } from '../../core/nammatham-context';
 import {
   FunctionBinding,
   HandlerFunction,
@@ -6,10 +6,10 @@ import {
   NammathamFunctionEndpoint,
   FunctionOption,
   PromiseLike,
-} from './types';
+} from '../../core/types';
 import { InvocationContext } from '@azure/functions';
 
-export class NammathamFunction<TTriggerType, TReturnType> {
+export class AzureFunctionsHandler<TTriggerType, TReturnType> {
   protected invokeHandler!: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
 
   constructor(
@@ -28,15 +28,5 @@ export class NammathamFunction<TTriggerType, TReturnType> {
       invokeHandler: this.invokeHandler,
       ...this.functionOption,
     };
-  }
-
-  private toList(data: Record<string, unknown>): Record<string, unknown>[] {
-    return Object.entries(data).map(([name, option]) => {
-      return {
-        ...(option as any),
-        // override name with predefined name from `addBindingName` in `@azure/functions`
-        name,
-      };
-    });
   }
 }

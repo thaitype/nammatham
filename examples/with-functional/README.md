@@ -2,7 +2,7 @@
   
 Path: `src/nammatham.ts`
 ```typescript
-import { initNammatham } from '@nammatham/server';
+import { initNammatham } from '@nammatham/runtime';
 import { AzureFunctionsAdatper } from '@nammatham/runtime/adapters/azure-functions';
 // import { AwsLamdaAdapter }from '@nammatham/runtime/adapters/aws-lambda';
 const n = initNammatham.create(new AzureFunctions());

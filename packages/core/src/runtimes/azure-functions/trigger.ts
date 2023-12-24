@@ -5,17 +5,17 @@ import type {
   HttpResponseInit,
 } from '@azure/functions';
 import { app } from '@azure/functions';
-import { NammathamFunction } from './nammatham-function';
-import { FunctionOption } from './types';
+import { AzureFunctionsHandler } from './handler';
+import { FunctionOption } from '../../core/types';
 
-export class NammathamTrigger {
+export class AzureFunctionsTrigger {
   generic(funcName: string, option: any) {
     // TODO: Implement later
-    return new NammathamFunction<unknown, unknown | void>(funcName, this.parseFunctionOption(option), option);
+    return new AzureFunctionsHandler<unknown, unknown | void>(funcName, this.parseFunctionOption(option), option);
   }
 
   httpGet(funcName: string, option?: Omit<HttpFunctionOptions, 'handler'>) {
-    return new NammathamFunction<HttpRequest, HttpResponseInit | HttpResponse>(
+    return new AzureFunctionsHandler<HttpRequest, HttpResponseInit | HttpResponse>(
       funcName,
       this.parseFunctionOption(option),
       funcOption => {
@@ -29,12 +29,12 @@ export class NammathamTrigger {
 
   httpDelete(funcName: string, option: any) {
     // TODO: Implement later
-    return new NammathamFunction<HttpRequest, HttpResponseInit>(funcName, this.parseFunctionOption(option), option);
+    return new AzureFunctionsHandler<HttpRequest, HttpResponseInit>(funcName, this.parseFunctionOption(option), option);
   }
 
   storageQueue(funcName: string, option: any) {
     // TODO: Implement later
-    return new NammathamFunction<unknown, unknown>(funcName, this.parseFunctionOption(option), option);
+    return new AzureFunctionsHandler<unknown, unknown>(funcName, this.parseFunctionOption(option), option);
   }
 
   private parseFunctionOption(option?: Partial<FunctionOption>): FunctionOption {

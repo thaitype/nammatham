@@ -1,1 +1,1 @@
-export * from './azure-functions'
+export * from './azure-functions';
