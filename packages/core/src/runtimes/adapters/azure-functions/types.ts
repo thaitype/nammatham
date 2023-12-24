@@ -19,7 +19,8 @@ export interface FunctionOption {
   extraOutputs: FunctionOutput[];
 }
 
-export interface NammathamFunctionEndpoint<TTriggerType, TReturnType> extends FunctionOption {
+export interface AzureFunctionsEndpoint<TTriggerType, TReturnType> extends FunctionOption {
+  type: 'azureFunctions';
   funcName: string;
   invokeHandler: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
 }

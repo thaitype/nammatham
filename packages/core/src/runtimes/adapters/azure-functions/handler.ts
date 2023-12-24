@@ -1,7 +1,7 @@
 import { NammathamContext } from './nammatham-context';
 import type { PromiseLike } from '../../types';
 import type { InvocationContext } from '@azure/functions';
-import type { HandlerFunction, InvokeFunctionOption, NammathamFunctionEndpoint, FunctionOption } from './types';
+import type { HandlerFunction, InvokeFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
 
 export class AzureFunctionsHandler<TTriggerType, TReturnType> {
   protected invokeHandler!: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
@@ -12,12 +12,13 @@ export class AzureFunctionsHandler<TTriggerType, TReturnType> {
     public invokeFunc: InvokeFunctionOption
   ) {}
 
-  handler(func: HandlerFunction<TTriggerType, TReturnType>): NammathamFunctionEndpoint<TTriggerType, TReturnType> {
+  handler(func: HandlerFunction<TTriggerType, TReturnType>): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
     this.invokeHandler = (triggerInput: TTriggerType, context: InvocationContext) => {
       const nammathamContext = new NammathamContext(context);
       return func(triggerInput, nammathamContext);
     };
     return {
+      type: 'azureFunctions',
       funcName: this.funcName,
       invokeHandler: this.invokeHandler,
       ...this.functionOption,
