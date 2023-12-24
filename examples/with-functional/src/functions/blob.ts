@@ -11,7 +11,6 @@ const blobOutput = input.storageBlob({
   path: 'demo-output/xxx-{rand-guid}.txt',
 });
 
-
 export default func
   .httpGet('CopyBlob', {
     authLevel: 'anonymous',

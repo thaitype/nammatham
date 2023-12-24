@@ -14,4 +14,8 @@ export class NammathamApp {
   addFunction<TTriggerType, TReturnType>(func: NammathamFunctionEndpoint<TTriggerType, TReturnType>) {
     console.log('Adding function', func);
   }
+
+  use(middleware: any) {
+    console.log('Using middleware', middleware);
+  }
 }
