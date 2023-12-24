@@ -1,8 +1,8 @@
 import { FunctionTrigger } from './types';
 
-export function createFunction(func: FunctionTrigger) {
+export function createFunction(name: string, func: FunctionTrigger) {
   return () => {
     // TODO: Implement
-    console.log(`createFunction: ${func.name}`);
+    console.log(`createFunction: ${name}`);
   };
 }

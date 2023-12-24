@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { createFunction } from 'nammatham';
 
 export async function hello(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
@@ -10,8 +10,9 @@ export async function hello(request: HttpRequest, context: InvocationContext): P
 }
 
 export default createFunction('hello', {
-  type: 'http',
+  type: 'custom',
+  handler: hello,
   methods: ['GET', 'POST'],
   authLevel: 'anonymous',
-  handler: hello,
+  customRegisterFunction: app.http,
 });
