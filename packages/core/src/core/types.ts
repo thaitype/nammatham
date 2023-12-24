@@ -77,3 +77,10 @@ export type StorageBlobOutputOptions = {
   connection: string;
   path: string;
 } & Record<string, unknown>;
+
+export interface NammathamFunctionEndpoint<TTriggerType, TReturnType> {
+  funcName: string;
+  invokeHandler: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
+  inputs: FunctionInput[];
+  outputs: FunctionOutput[];
+}
