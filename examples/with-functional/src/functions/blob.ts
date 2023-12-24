@@ -18,7 +18,7 @@ export default func
     extraOutputs: [blobOutput],
   })
   .handler((request, ctx) => {
-    ctx.log('function processed work item:', request);
+    ctx.context.log('function processed work item:', request);
     const blobInputValue = ctx.context.extraInputs.get(blobOutput);
 
     ctx.context.extraOutputs.set(blobOutput, blobInputValue);

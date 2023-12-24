@@ -7,8 +7,10 @@ import type {
 import { app } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
 import { FunctionOption } from './types';
+import { BaseFunctionTrigger } from '../../base-function-trigger';
 
-export class AzureFunctionsTrigger {
+export class AzureFunctionsTrigger extends BaseFunctionTrigger {
+
   generic(funcName: string, option: any) {
     // TODO: Implement later
     return new AzureFunctionsHandler<unknown, unknown | void>(funcName, this.parseFunctionOption(option), option);
