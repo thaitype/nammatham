@@ -24,7 +24,7 @@ export function startExpress(app: NammathamApp, option?: DevServerOption) {
   expressApp.use(
     '/api',
     nammathamExpress.createExpressMiddleware({
-      functionApp: app,
+      app,
       // createContext,
     })
   );

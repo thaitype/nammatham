@@ -17,7 +17,7 @@ export class NammathamApp {
   }
 
   addFunction(func: NammamthamEndpoint) {
-    console.debug(`Adding function "${func.name}" on route: ${func.route}`);
+    console.debug(`Adding function "${func.name}" on route: ${func.route}`, func);
     this._functions.push(func);
   }
 

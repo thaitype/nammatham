@@ -1,6 +1,6 @@
 import { BaseRuntimeAdapter } from './bases/base-runtime-adapter';
 import { DefaultAdapter } from './adapters/default';
-import { NammathamApp } from 'packages/core/dist/main';
+import { NammathamApp } from './nammatham-app';
 
 export interface NammathamRuntime<Adapter extends BaseRuntimeAdapter<unknown>> {
   func: ReturnType<Adapter['createTrigger']>;

@@ -7,13 +7,20 @@ import { BaseFunctionTrigger } from '../../bases';
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   generic(funcName: string, option: any) {
     // TODO: Implement later
-    return new AzureFunctionsHandler<unknown, unknown | void>(funcName, this.parseFunctionOption(funcName, option), option);
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      option
+    );
   }
 
   httpGet(funcName: string, option?: Omit<HttpFunctionOptions, 'handler'>) {
     return new AzureFunctionsHandler<HttpRequest, HttpResponseInit | HttpResponse>(
       funcName,
-      this.parseFunctionOption(funcName, option),
+      this.parseFunctionOption(funcName, {
+        ...option,
+        functionType: 'http',
+      }),
       funcOption => {
         app.get(funcName, {
           ...option,
@@ -25,7 +32,14 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
 
   httpDelete(funcName: string, option: any) {
     // TODO: Implement later
-    return new AzureFunctionsHandler<HttpRequest, HttpResponseInit>(funcName, this.parseFunctionOption(funcName, option), option);
+    return new AzureFunctionsHandler<HttpRequest, HttpResponseInit>(
+      funcName,
+      this.parseFunctionOption(funcName, {
+        ...option,
+        functionType: 'http',
+      }),
+      option
+    );
   }
 
   storageQueue(funcName: string, option: any) {
@@ -35,6 +49,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
 
   private parseFunctionOption(funcName: string, option?: Partial<FunctionOption>): FunctionOption {
     return {
+      functionType: option?.functionType ?? 'generic',
       route: option?.route ?? funcName,
       extraInputs: option?.extraInputs ?? [],
       extraOutputs: option?.extraOutputs ?? [],
