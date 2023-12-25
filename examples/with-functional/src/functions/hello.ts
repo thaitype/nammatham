@@ -4,7 +4,7 @@ export default func
   .httpGet('hello', {
     route: 'hello-world',
   })
-  .handler((request, ctx) => {
+  .handler(async (request, ctx) => {
     ctx.context.log('HTTP trigger function processed a request.');
     // ctx.context.log(`Http function processed request for url "${request.url}"`);
 

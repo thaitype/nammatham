@@ -15,13 +15,13 @@ function isMatchPath(path1: string, path2: string) {
   return trimSlash(path1).toLowerCase() === trimSlash(path2).toLowerCase();
 }
 
-export function registerNammathamApp({ app, req, res, handlerResolver }: NammathamAppRequestOption) {
+export async function registerNammathamApp({ app, req, res, handlerResolver }: NammathamAppRequestOption) {
   // FIXME: Match path using array loop is lack of performance
   for (const func of app.functions) {
     if (func.endpointOption?.type !== 'http') continue;
     console.log(`Allow all HTTP methods`);
     if (isMatchPath(func.endpointOption.route, req.path)) {
-      return res.send(handlerResolver.resolveHandler(func));
+      return res.send(await handlerResolver.resolveHandler(func));
     }
   }
   res.send(`Path not found: ${req.path}`);
@@ -31,7 +31,7 @@ export function createExpressMiddleware(opts: NammathamHttpHandlerOption): expre
   return async (req, res) => {
     console.debug(`Handling request for ${req.path}`);
 
-    registerNammathamApp({
+    await registerNammathamApp({
       ...opts,
       req,
       res,
