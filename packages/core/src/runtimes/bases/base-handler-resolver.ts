@@ -1,3 +1,3 @@
 export abstract class BaseHandlerResolver {
-  abstract resolveHandler(): void;
+  abstract resolveHandler(...args: any[]): any;
 }
