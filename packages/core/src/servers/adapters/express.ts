@@ -18,8 +18,9 @@ function isMatchPath(path1: string, path2: string) {
 export function registerNammathamApp({ app, req, res, handlerResolver }: NammathamAppRequestOption) {
   // FIXME: Match path using array loop is lack of performance
   for (const func of app.functions) {
-    if (func.functionType !== 'http') continue;
-    if (isMatchPath(func.route, req.path)) {
+    if (func.endpointOption?.type !== 'http') continue;
+    console.log(`Allow all HTTP methods`);
+    if (isMatchPath(func.endpointOption.route, req.path)) {
       return res.send(handlerResolver.resolveHandler(func));
     }
   }

@@ -3,13 +3,14 @@ import { app } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
 import { FunctionOption } from './types';
 import { BaseFunctionTrigger } from '../../bases';
+import { HttpEndpointOption, WithEndpointOption } from '../../types';
 
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   generic(funcName: string, option: any) {
     // TODO: Implement later
     return new AzureFunctionsHandler<unknown, unknown | void>(
       funcName,
-      this.parseFunctionOption(funcName, option),
+    this.parseFunctionOption(funcName, option),
       option
     );
   }
@@ -19,7 +20,12 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       funcName,
       this.parseFunctionOption(funcName, {
         ...option,
-        functionType: 'http',
+        endpointOption: {
+          type: 'http',
+          route: option?.route,
+          methods: option?.methods,
+        },
+        // functionType: 'http',
       }),
       funcOption => {
         app.get(funcName, {
@@ -36,7 +42,11 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       funcName,
       this.parseFunctionOption(funcName, {
         ...option,
-        functionType: 'http',
+        option: {
+          type: 'http',
+          route: option?.route,
+          methods: option?.methods,
+        },
       }),
       option
     );
@@ -47,12 +57,17 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
     return new AzureFunctionsHandler<unknown, unknown>(funcName, this.parseFunctionOption(funcName, option), option);
   }
 
-  private parseFunctionOption(funcName: string, option?: Partial<FunctionOption>): FunctionOption {
+  private parseFunctionOption(
+    funcName: string,
+    opt?: Partial<WithEndpointOption & FunctionOption>
+  ): WithEndpointOption & FunctionOption {
     return {
-      functionType: option?.functionType ?? 'generic',
-      route: option?.route ?? funcName,
-      extraInputs: option?.extraInputs ?? [],
-      extraOutputs: option?.extraOutputs ?? [],
+      endpointOption: {
+        ...opt?.endpointOption,
+        route: (opt?.endpointOption as HttpEndpointOption)?.route ?? funcName,
+      },
+      extraInputs: opt?.extraInputs ?? [],
+      extraOutputs: opt?.extraOutputs ?? [],
     };
   }
 }

@@ -1,6 +1,6 @@
 import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/functions';
 import { NammathamContext } from './nammatham-context';
-import type { AllowFunctionType, NammamthamEndpointBase, PromiseLike } from '../../types';
+import type { NammamthamEndpointBase, PromiseLike } from '../../types';
 
 export type HandlerFunction<TTriggerType, TReturnType> = (
   triggerInput: TTriggerType,
@@ -14,9 +14,7 @@ export type InvokeFunctionOption = (option: {
   extraOutputs: FunctionOutput[];
 }) => void;
 
-export interface FunctionOption {
-  functionType: AllowFunctionType;
-  route: string;
+export interface FunctionOption  {
   extraInputs: FunctionInput[];
   extraOutputs: FunctionOutput[];
 }
