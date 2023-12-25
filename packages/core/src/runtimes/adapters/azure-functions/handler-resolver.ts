@@ -1,11 +1,12 @@
 import { BaseHandlerResolver } from '../../bases';
-import { AzureFunctionsEndpoint } from './types';
 import { HttpRequest, InvocationContext } from '@azure/functions';
+import { AzureFunctionsEndpoint } from './types';
 
 export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
-  override resolveHandler(invokeHandler: AzureFunctionsEndpoint<HttpRequest, any>['invokeHandler']) {
+  override resolveHandler(endpoint: AzureFunctionsEndpoint<HttpRequest, any>) {
     console.log(`Starting using Azure Functions handler resolver`);
-    // TODO: Mock Azure Functions's Http Request and InvocationContext
-    return invokeHandler({} as HttpRequest, new InvocationContext());
+    console.log(`Running handler from `, endpoint);
+        // TODO: Mock Azure Functions's Http Request and InvocationContext
+    return endpoint.invokeHandler({} as HttpRequest, new InvocationContext());
   }
 }

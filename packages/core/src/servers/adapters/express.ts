@@ -20,7 +20,7 @@ export function registerNammathamApp({ app, req, res, handlerResolver }: Nammath
   for (const func of app.functions) {
     if (func.functionType !== 'http') continue;
     if (isMatchPath(func.route, req.path)) {
-      return res.send(handlerResolver.resolveHandler(func.invokeHandler));
+      return res.send(handlerResolver.resolveHandler(func));
     }
   }
   res.send(`Path not found: ${req.path}`);

@@ -1,3 +1,5 @@
+import { NammamthamEndpoint } from '../types';
+
 export abstract class BaseHandlerResolver {
-  abstract resolveHandler(...args: any[]): any;
+  abstract resolveHandler(endpoint: NammamthamEndpoint): any;
 }
