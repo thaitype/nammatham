@@ -21,7 +21,7 @@ export async function registerNammathamApp({ app, req, res, handlerResolver }: N
     if (func.endpointOption?.type !== 'http') continue;
     console.log(`Allow all HTTP methods`);
     if (isMatchPath(func.endpointOption.route, req.path)) {
-      return res.send(await handlerResolver.resolveHandler(func));
+      return res.send(await handlerResolver.resolveHandler(func, req, res));
     }
   }
   res.send(`Path not found: ${req.path}`);
