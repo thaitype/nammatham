@@ -5,10 +5,6 @@ import { app } from './nammatham';
 
 // app.addFunctionsFromPath('functions/*.ts'); // TODO: Implement in next release
 app.addFunctions(blob, hello);
-app.use(
-  app => devServer({
-    app,
-    port: 3000,
-  })
-);
+
+app.use(devServer());
 app.start();

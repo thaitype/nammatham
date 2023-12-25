@@ -10,9 +10,9 @@ export interface NammathamRuntime<Adapter extends BaseRuntimeAdapter<unknown>> {
 function createRuntime<Adapter extends BaseRuntimeAdapter<unknown>>(adapter?: Adapter): NammathamRuntime<Adapter> {
   if (adapter === undefined) throw new Error(`Cannot create NammathamRuntime without adapter`);
   return {
-    func: adapter.createTrigger() as NammathamRuntime<Adapter>['func'],
+    func: adapter.createTrigger(),
     app: adapter.createApp(),
-  };
+  } as NammathamRuntime<Adapter>
 }
 
 export const initNammatham = {
