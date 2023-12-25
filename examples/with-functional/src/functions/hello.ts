@@ -1,7 +1,9 @@
 import { func } from '../nammatham';
 
 export default func
-  .httpGet('CopyBlob')
+  .httpGet('hello', {
+    route: 'hello-world',
+  })
   .handler((request, ctx) => {
     ctx.context.log('HTTP trigger function processed a request.');
     return {

@@ -19,7 +19,7 @@ export class AzureFunctionsHandler<TTriggerType, TReturnType> {
     };
     return {
       type: 'azureFunctions',
-      funcName: this.funcName,
+      name: this.funcName,
       invokeHandler: this.invokeHandler,
       ...this.functionOption,
     };

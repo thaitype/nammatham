@@ -1,7 +1,12 @@
 import { NammamthamEndpoint } from './types';
 
 export class NammathamApp {
+
+  protected readonly _functions: NammamthamEndpoint[] = [];
+
   start() {
+    // TODO: Implement later
+    // Start register functions on the runtime e.g. Azure Functions
     console.log('Starting app');
   }
 
@@ -12,11 +17,16 @@ export class NammathamApp {
   }
 
   addFunction(func: NammamthamEndpoint) {
-    console.log('Adding function', func);
+    console.debug(`Adding function "${func.name}" on route: ${func.route}`);
+    this._functions.push(func);
   }
 
   use<TReturn>(middleware: (app: NammathamApp) => TReturn) {
     console.log('Using middleware');
     middleware(this);
+  }
+
+  get functions() {
+    return this._functions;
   }
 }

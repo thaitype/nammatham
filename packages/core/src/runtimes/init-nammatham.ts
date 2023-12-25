@@ -12,7 +12,7 @@ function createRuntime<Adapter extends BaseRuntimeAdapter<unknown>>(adapter?: Ad
   return {
     func: adapter.createTrigger(),
     app: adapter.createApp(),
-  } as NammathamRuntime<Adapter>
+  } as unknown as NammathamRuntime<Adapter>
 }
 
 export const initNammatham = {
