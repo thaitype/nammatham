@@ -1,8 +1,10 @@
+import { BaseHandlerResolver } from './bases';
 import { NammamthamEndpoint } from './types';
 
 export class NammathamApp {
-
   protected readonly _functions: NammamthamEndpoint[] = [];
+
+  constructor(protected handlerResolver: BaseHandlerResolver) {}
 
   start() {
     // TODO: Implement later
@@ -21,9 +23,9 @@ export class NammathamApp {
     this._functions.push(func);
   }
 
-  use<TReturn>(middleware: (app: NammathamApp) => TReturn) {
+  use<TReturn>(middleware: (app: NammathamApp, handlerResolver: BaseHandlerResolver) => TReturn) {
     console.log('Using middleware');
-    middleware(this);
+    middleware(this, this.handlerResolver);
   }
 
   get functions() {

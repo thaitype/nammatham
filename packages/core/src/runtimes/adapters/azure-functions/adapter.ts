@@ -1,5 +1,6 @@
 import { BaseRuntimeAdapter } from '../../bases';
 import { NammathamApp } from '../../nammatham-app';
+import { AzureFunctionsHandlerResolver } from './handler-resolver';
 import { AzureFunctionsTrigger } from './trigger';
 
 export class AzureFunctionsAdapter extends BaseRuntimeAdapter<AzureFunctionsTrigger> {
@@ -9,6 +10,6 @@ export class AzureFunctionsAdapter extends BaseRuntimeAdapter<AzureFunctionsTrig
   }
 
   createApp() {
-    return new NammathamApp();
+    return new NammathamApp(new AzureFunctionsHandlerResolver());
   }
 }

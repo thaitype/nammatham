@@ -1,6 +1,7 @@
 import { NammathamApp } from '../../nammatham-app';
 import { BaseRuntimeAdapter } from '../../bases';
 import { DefaultTrigger } from './trigger';
+import { DefaultHandlerResolver } from './handler-resolver';
 
 export class DefaultAdapter extends BaseRuntimeAdapter<DefaultTrigger> {
   createTrigger() {
@@ -8,6 +9,6 @@ export class DefaultAdapter extends BaseRuntimeAdapter<DefaultTrigger> {
   }
 
   createApp() {
-    return new NammathamApp();
+    return new NammathamApp(new DefaultHandlerResolver());
   }
 }
