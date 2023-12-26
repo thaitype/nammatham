@@ -1,12 +1,12 @@
 import { NammathamContext } from './nammatham-context';
 import type { InvocationContext } from '@azure/functions';
-import type { HandlerFunction, InvokeFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
+import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
 
 export class AzureFunctionsHandler<TTriggerType, TReturnType> {
   constructor(
     public funcName: string,
     public functionOption: FunctionOption,
-    public invokeFunc: InvokeFunctionOption
+    public registerFunc: RegisterFunctionOption
   ) {}
 
   handler(func: HandlerFunction<TTriggerType, TReturnType>): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
@@ -19,6 +19,7 @@ export class AzureFunctionsHandler<TTriggerType, TReturnType> {
       type: 'azureFunctions',
       name: this.funcName,
       invokeHandler,
+      registerFunc: this.registerFunc,
     };
   }
 }

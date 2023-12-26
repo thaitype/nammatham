@@ -8,7 +8,7 @@ export type HandlerFunction<TTriggerType, TReturnType> = (
 ) => PromiseLike<TReturnType>;
 
 export type AnyHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
-export type InvokeFunctionOption = (option: {
+export type RegisterFunctionOption = (option: {
   handler: AnyHandler;
   extraInputs: FunctionInput[];
   extraOutputs: FunctionOutput[];
@@ -22,4 +22,5 @@ export interface FunctionOption {
 export interface AzureFunctionsEndpoint<TTriggerType, TReturnType> extends NammamthamEndpointBase, FunctionOption {
   type: 'azureFunctions';
   invokeHandler: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
+  registerFunc: RegisterFunctionOption;
 }

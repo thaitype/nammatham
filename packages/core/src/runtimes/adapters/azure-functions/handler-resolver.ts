@@ -23,7 +23,13 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
 
     for(const func of app.functions) {
       console.log(`Registering function "${func.name}"`);
-      
+      if(func.type !== 'azureFunctions') continue;
+      func.registerFunc(
+        {
+          ...func,
+          handler: func.invokeHandler,
+        }
+      )
     }
   }
 

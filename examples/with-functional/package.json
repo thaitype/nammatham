@@ -2,21 +2,18 @@
   "name": "@examples/without-di",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/src/functions/*.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit",
-    "build:watch": "tsc -w",
-    "start": "func start",
-    "start:watch": "func start -w",
+    "start": "tsc && func start",
     "dev": "cross-env NODE_ENV=development tsx watch src/main.ts"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.1.0",
-    "nammatham": "workspace:*",
-    "reflect-metadata": "^0.1.13"
+    "nammatham": "workspace:*"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
