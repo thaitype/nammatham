@@ -45,7 +45,6 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   }
 
   http(funcName: string, option?: Omit<HttpFunctionOptions, 'handler'>) {
-    logger.debug(`option?.methods`, option?.methods);
     return new AzureFunctionsHandler<HttpRequest, HttpResponseInit | HttpResponse>(
       funcName,
       this.parseFunctionOption(funcName, {

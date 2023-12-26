@@ -6,8 +6,8 @@ import { HttpRequest } from './http/HttpRequest';
 import { NammathamApp } from '../../nammatham-app';
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '../../../core';
-import { stat } from 'fs';
-import { log } from 'console';
+import { printRegisteredFunctions } from './utils';
+import { AfterServerStartedMetadata } from '../../types';
 
 function logExecutedFunction(
   startTime: number,
@@ -46,7 +46,7 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
     const context = new InvocationContext({
       invocationId: uuidv4(),
       functionName: endpoint.name,
-      logHandler: logHandler
+      logHandler: logHandler,
     });
     const startTime = performance.now();
     logger.info(
@@ -62,20 +62,28 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
       logger.error(error);
       return res.status(500).send();
     }
-    
   }
 
   override async resolveRegisterHandler(app: NammathamApp) {
     logger.debug(`Starting using Azure Functions register handler`);
+    if (process.env.NODE_ENV === 'development') {
+      logger.debug(`Skipping Register Azure Function handler in development mode`);
+      return;
+    }
 
     for (const func of app.functions) {
       logger.debug(`Registering function "${func.name}"`);
       if (func.type !== 'azureFunctions') continue;
+
       func.registerFunc({
         ...func,
         handler: func.invokeHandler,
       });
     }
+  }
+
+  override async afterServerStarted(app: NammathamApp, metadata: AfterServerStartedMetadata) {
+    return printRegisteredFunctions(app, metadata.port);
   }
 
   protected mockInvocationContext(): InvocationContext {

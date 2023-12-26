@@ -36,3 +36,7 @@ export interface NammamthamEndpointBase {
   endpointOption?: EndpointOption;
   invokeHandler: (...args: any[]) => PromiseLike<any>;
 }
+
+export interface AfterServerStartedMetadata {
+  port?: number;
+}

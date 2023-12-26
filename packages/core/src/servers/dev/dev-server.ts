@@ -25,7 +25,7 @@ export function devServer(option?: DevServerOption) {
 }
 
 export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOption, devOption?: DevServerOption) {
-  logger.info('Starting express server');
+  logger.debug('Starting express server');
   const expressApp = devOption?.expressApp ?? express();
   const port = devOption?.port ?? 3000;
 
@@ -38,7 +38,8 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
     })
   );
 
-  expressApp.listen(port, () => {
+  expressApp.listen(port, async () => {
     logger.info(`Dev server started on port ${port}`);
+    await handlerResolver.afterServerStarted(app, { port });
   });
 }

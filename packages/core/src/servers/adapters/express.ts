@@ -9,7 +9,7 @@ interface NammathamAppRequestOption extends NammathamHttpHandlerOption {
   res: express.Response;
 }
 
-function trimSlash(str: string) {
+export function trimSlash(str: string) {
   return str.replace(/^\/|\/$/g, '');
 }
 
@@ -21,11 +21,11 @@ export async function registerNammathamApp({ app, req, res, handlerResolver }: N
   // FIXME: Match path using array loop is lack of performance
   for (const func of app.functions) {
     if (func.endpointOption?.type !== 'http') continue;
-    if(!func.endpointOption.methods?.includes(req.method as HttpMethod)) {
+    if (!func.endpointOption.methods?.includes(req.method as HttpMethod)) {
       /**
        * Azure Functions will return 404 if the method is not matched.
        */
-      return res.status(404); 
+      return res.status(404);
     }
     if (isMatchPath(func.endpointOption.route, req.path)) {
       return await handlerResolver.resolveHandler(func, req, res);

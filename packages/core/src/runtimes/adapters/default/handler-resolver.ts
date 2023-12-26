@@ -9,4 +9,8 @@ export class DefaultHandlerResolver extends BaseHandlerResolver {
   override resolveRegisterHandler() {
     logger.info(`Starting using default register handler`);
   }
+
+  override afterServerStarted() {
+    logger.info(`Starting using default unregister handler`);
+  }
 }

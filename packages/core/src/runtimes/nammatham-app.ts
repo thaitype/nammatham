@@ -5,16 +5,19 @@ import { NammamthamEndpoint } from './types';
 export class NammathamApp {
   protected readonly _functions: NammamthamEndpoint[] = [];
 
-  constructor(protected handlerResolver: BaseHandlerResolver) {}
+  constructor(protected handlerResolver: BaseHandlerResolver) {
+    
+  }
 
   /**
    * Start register functions on the runtime e.g. Azure Functions
    */
 
   start() {
+    logger.info(`Start Nammatham, Type-safe Serverless Framework`);
     logger.debug('Registering functions...');
     this.handlerResolver.resolveRegisterHandler(this);
-    logger.info('Functions registered');
+    logger.info('All functions registered');
   }
 
   addFunctions(...functions: NammamthamEndpoint[]) {
