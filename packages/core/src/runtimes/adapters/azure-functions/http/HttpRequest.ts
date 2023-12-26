@@ -4,6 +4,7 @@ import { HttpRequestParams, HttpRequestUser } from '@azure/functions';
 import { Blob } from 'buffer';
 import express from 'express';
 import { IncomingHttpHeaders } from 'node:http';
+import { logger } from '../../../../core';
 import { ReadableStream } from 'stream/web';
 import { FormData, Headers, Request as uRequest } from 'undici';
 import { URLSearchParams } from 'url';
@@ -84,7 +85,7 @@ export class HttpRequest implements types.HttpRequest {
    * In development, we may don't care this.
    */
   get user(): HttpRequestUser | null {
-    console.warn(`HttpRequest.user is not supported in development`);
+    logger.warn(`HttpRequest.user is not supported in development`);
     return null;
   }
 

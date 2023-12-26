@@ -2,6 +2,7 @@ import express from 'express';
 import * as nammathamExpress from '../adapters/express';
 import { BaseHandlerResolver, NammathamApp } from '../../runtimes';
 import { NammathamHttpHandlerOption } from '../types';
+import { logger } from '../../core';
 
 export interface DevServerOption {
   port?: number;
@@ -10,7 +11,7 @@ export interface DevServerOption {
 export function devServer(option?: DevServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
     if (process.env.NODE_ENV !== 'development') {
-      console.debug('Not in development mode, skip starting dev server');
+      logger.debug('Not in development mode, skip starting dev server');
       return;
     }
     startExpress(
@@ -24,7 +25,7 @@ export function devServer(option?: DevServerOption) {
 }
 
 export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOption, devOption?: DevServerOption) {
-  console.log('Starting express server');
+  logger.info('Starting express server');
   const expressApp = devOption?.expressApp ?? express();
   const port = devOption?.port ?? 3000;
 
@@ -38,6 +39,6 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
   );
 
   expressApp.listen(port, () => {
-    console.log(`Dev server started on port ${port}`);
+    logger.info(`Dev server started on port ${port}`);
   });
 }

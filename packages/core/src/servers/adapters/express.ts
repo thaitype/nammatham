@@ -1,6 +1,7 @@
 // Adapted from: https://github.com/trpc/trpc/packages/server/src/adapters/express.ts
 import express from 'express';
 import { NammathamHttpHandlerOption } from '../types';
+import { logger } from '../../core';
 
 interface NammathamAppRequestOption extends NammathamHttpHandlerOption {
   req: express.Request;
@@ -19,7 +20,7 @@ export async function registerNammathamApp({ app, req, res, handlerResolver }: N
   // FIXME: Match path using array loop is lack of performance
   for (const func of app.functions) {
     if (func.endpointOption?.type !== 'http') continue;
-    console.log(`Allow all HTTP methods`);
+    logger.info(`Allow all HTTP methods`);
     if (isMatchPath(func.endpointOption.route, req.path)) {
       return res.send(await handlerResolver.resolveHandler(func, req, res));
     }
@@ -29,7 +30,7 @@ export async function registerNammathamApp({ app, req, res, handlerResolver }: N
 
 export function createExpressMiddleware(opts: NammathamHttpHandlerOption): express.Handler {
   return async (req, res) => {
-    console.debug(`Handling request for ${req.path}`);
+    logger.debug(`Handling request for ${req.path}`);
 
     await registerNammathamApp({
       ...opts,

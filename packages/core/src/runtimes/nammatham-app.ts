@@ -1,3 +1,4 @@
+import { logger } from '../core';
 import { BaseHandlerResolver } from './bases';
 import { NammamthamEndpoint } from './types';
 
@@ -6,10 +7,14 @@ export class NammathamApp {
 
   constructor(protected handlerResolver: BaseHandlerResolver) {}
 
+  /**
+   * Start register functions on the runtime e.g. Azure Functions
+   */
+
   start() {
-    // Start register functions on the runtime e.g. Azure Functions
-    console.log('Starting app');
+    logger.debug('Registering functions...');
     this.handlerResolver.resolveRegisterHandler(this);
+    logger.info('Functions registered');
   }
 
   addFunctions(...functions: NammamthamEndpoint[]) {
@@ -19,12 +24,12 @@ export class NammathamApp {
   }
 
   addFunction(func: NammamthamEndpoint) {
-    console.debug(`Adding function "${func.name}" on route: ${func.endpointOption?.route}`);
+    logger.debug(`Adding function "${func.name}" on route: ${func.endpointOption?.route}`);
     this._functions.push(func);
   }
 
   use<TReturn>(middleware: (app: NammathamApp, handlerResolver: BaseHandlerResolver) => TReturn) {
-    console.log('Using middleware');
+    logger.debug('Using middleware on the app...');
     middleware(this, this.handlerResolver);
   }
 
