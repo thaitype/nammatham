@@ -2,6 +2,7 @@
 import express from 'express';
 import { NammathamHttpHandlerOption } from '../types';
 import { logger } from '../../core';
+import { HttpMethod } from '../../runtimes/types';
 
 interface NammathamAppRequestOption extends NammathamHttpHandlerOption {
   req: express.Request;
@@ -20,7 +21,12 @@ export async function registerNammathamApp({ app, req, res, handlerResolver }: N
   // FIXME: Match path using array loop is lack of performance
   for (const func of app.functions) {
     if (func.endpointOption?.type !== 'http') continue;
-    logger.info(`Allow all HTTP methods`);
+    if(!func.endpointOption.methods?.includes(req.method as HttpMethod)) {
+      /**
+       * Azure Functions will return 404 if the method is not matched.
+       */
+      return res.status(404); 
+    }
     if (isMatchPath(func.endpointOption.route, req.path)) {
       return await handlerResolver.resolveHandler(func, req, res);
     }

@@ -4,6 +4,7 @@ import { AzureFunctionsHandler } from './handler';
 import { FunctionOption } from './types';
 import { BaseFunctionTrigger } from '../../bases';
 import { HttpEndpointOption, WithEndpointOption } from '../../types';
+import { logger } from '../../../core/logger';
 
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   generic(funcName: string, option: any) {
@@ -44,6 +45,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   }
 
   http(funcName: string, option?: Omit<HttpFunctionOptions, 'handler'>) {
+    logger.debug(`option?.methods`, option?.methods);
     return new AzureFunctionsHandler<HttpRequest, HttpResponseInit | HttpResponse>(
       funcName,
       this.parseFunctionOption(funcName, {
@@ -55,7 +57,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
         },
       }),
       funcOption => {
-        app.get(funcName, {
+        app.http(funcName, {
           ...option,
           ...funcOption,
         });

@@ -1,6 +1,6 @@
 import pino from 'pino';
 const isDevelopment = process.env.NODE_ENV === 'development';
-// const _logger = {} as any;
+
 export const _logger = pino({
   level: process.env.LOG_LEVEL || 'debug',
   transport: {
@@ -10,9 +10,6 @@ export const _logger = pino({
     },
   },
 });
-
-// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-console.log(`isDevelopment: ${isDevelopment}`);
 
 class Logger {
   debug(...args: any[]) {

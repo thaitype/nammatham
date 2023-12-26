@@ -1,7 +1,8 @@
 import { func } from '../nammatham';
 
 export default func
-  .httpGet('hello', {
+  .http('hello', {
+    methods: ['GET', 'POST'],
     route: 'hello-world',
   })
   .handler(async (request, ctx) => {
