@@ -1,5 +1,5 @@
 import type { HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit } from '@azure/functions';
-import { app } from '@azure/functions';
+import { app, HttpMethodFunctionOptions } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
 import { FunctionOption } from './types';
 import { BaseFunctionTrigger } from '../../bases';
@@ -10,12 +10,40 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
     // TODO: Implement later
     return new AzureFunctionsHandler<unknown, unknown | void>(
       funcName,
-    this.parseFunctionOption(funcName, option),
+      this.parseFunctionOption(funcName, option),
       option
     );
   }
 
-  httpGet(funcName: string, option?: Omit<HttpFunctionOptions, 'handler'>) {
+  httpGet(funcName: string, option?: Omit<HttpMethodFunctionOptions, 'handler'>) {
+    return this.http(funcName, {
+      ...option,
+      methods: ['GET'],
+    });
+  }
+
+  httpPost(funcName: string, option?: Omit<HttpMethodFunctionOptions, 'handler'>) {
+    return this.http(funcName, {
+      ...option,
+      methods: ['POST'],
+    });
+  }
+
+  httpPut(funcName: string, option?: Omit<HttpMethodFunctionOptions, 'handler'>) {
+    return this.http(funcName, {
+      ...option,
+      methods: ['PUT'],
+    });
+  }
+
+  httpDelete(funcName: string, option?: Omit<HttpMethodFunctionOptions, 'handler'>) {
+    return this.http(funcName, {
+      ...option,
+      methods: ['DELETE'],
+    });
+  }
+
+  http(funcName: string, option?: Omit<HttpFunctionOptions, 'handler'>) {
     return new AzureFunctionsHandler<HttpRequest, HttpResponseInit | HttpResponse>(
       funcName,
       this.parseFunctionOption(funcName, {
@@ -25,7 +53,6 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
           route: option?.route,
           methods: option?.methods,
         },
-        // functionType: 'http',
       }),
       funcOption => {
         app.get(funcName, {
@@ -33,22 +60,6 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
           ...funcOption,
         });
       }
-    );
-  }
-
-  httpDelete(funcName: string, option: any) {
-    // TODO: Implement later
-    return new AzureFunctionsHandler<HttpRequest, HttpResponseInit>(
-      funcName,
-      this.parseFunctionOption(funcName, {
-        ...option,
-        option: {
-          type: 'http',
-          route: option?.route,
-          methods: option?.methods,
-        },
-      }),
-      option
     );
   }
 
