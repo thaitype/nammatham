@@ -3,7 +3,7 @@ import * as type from '@azure/functions';
 /**
  * Logger Type from InvocationContext
  * @remark This cannot be used because InvocationContext.#userLogHandler is a private method, consider to remove later
- * 
+ *
  * Always get the error "Cannot read private member from an object whose class did not declare it"
  */
 
@@ -40,4 +40,3 @@ export type Logger = {
    */
   error: type.InvocationContext['error'];
 };
-

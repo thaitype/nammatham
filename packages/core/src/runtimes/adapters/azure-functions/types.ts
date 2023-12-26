@@ -14,7 +14,7 @@ export type InvokeFunctionOption = (option: {
   extraOutputs: FunctionOutput[];
 }) => void;
 
-export interface FunctionOption  {
+export interface FunctionOption {
   extraInputs: FunctionInput[];
   extraOutputs: FunctionOutput[];
 }
