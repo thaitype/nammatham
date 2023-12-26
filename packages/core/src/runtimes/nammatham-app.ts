@@ -7,9 +7,9 @@ export class NammathamApp {
   constructor(protected handlerResolver: BaseHandlerResolver) {}
 
   start() {
-    // TODO: Implement later
     // Start register functions on the runtime e.g. Azure Functions
     console.log('Starting app');
+    this.handlerResolver.resolveRegisterHandler(this);
   }
 
   addFunctions(...functions: NammamthamEndpoint[]) {
