@@ -6,7 +6,10 @@ export default func
   })
   .handler(async (request, ctx) => {
     ctx.context.log('HTTP trigger function processed a request.');
-    ctx.context.log(`Http function processed request for url "${request.url}"`);
+    ctx.context.debug(`Http function processed request for url "${request.url}"`);
     const name = request.query.get('name') || (await request.text()) || 'world';
+    if(name === 'error'){
+      throw new Error('this is an error');
+    }
     return { body: `Hello, ${name}!` };
   });

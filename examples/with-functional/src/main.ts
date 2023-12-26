@@ -8,3 +8,5 @@ app.addFunctions(blob, hello);
 
 app.use(devServer());
 app.start();
+
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);

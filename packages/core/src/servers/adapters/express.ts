@@ -22,10 +22,10 @@ export async function registerNammathamApp({ app, req, res, handlerResolver }: N
     if (func.endpointOption?.type !== 'http') continue;
     logger.info(`Allow all HTTP methods`);
     if (isMatchPath(func.endpointOption.route, req.path)) {
-      return res.send(await handlerResolver.resolveHandler(func, req, res));
+      return await handlerResolver.resolveHandler(func, req, res);
     }
   }
-  res.send(`Path not found: ${req.path}`);
+  res.status(404).send(`Path not found: ${req.path}`);
 }
 
 export function createExpressMiddleware(opts: NammathamHttpHandlerOption): express.Handler {
