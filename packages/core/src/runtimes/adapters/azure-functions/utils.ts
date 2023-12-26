@@ -19,11 +19,13 @@ function getFullUrl(func: AzureFunctionsEndpoint<any, any>, port?: number): stri
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function printRegisteredFunctions(app: NammathamApp, port?: number) {
+  const azureFunctions = app.functions.filter(func => func.type === 'azureFunctions') as AzureFunctionsEndpoint<any, any>[];
+  if(azureFunctions.length === 0) return;
   await delay(200);
   console.log(`\n${yellow('Functions:')}\n`);
-  for (const func of app.functions) {
-    if (func.type !== 'azureFunctions') continue;
+  for (const func of azureFunctions) {
     const methods = `[${getMethods(func).join(',')}]`;
     console.log(`\t${yellow(func.name)}: ${blue(methods)} ${green(getFullUrl(func, port))}\n`);
   }
+  console.log('');
 }
