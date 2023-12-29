@@ -34,6 +34,8 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
   const expressApp = devOption?.expressApp ?? express();
   const port = devOption?.port ?? 3000;
 
+  // https://stackoverflow.com/questions/18811286/nodejs-express-cache-and-304-status-code
+  expressApp.disable('etag');
   expressApp.use(
     '/api',
     nammathamExpress.createExpressMiddleware({
@@ -45,7 +47,7 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
 
   expressApp.listen(port, async () => {
     logger.info(`Dev Server started at http://localhost:${port}`);
-    
+
     await handlerResolver.afterServerStarted(app, { port });
   });
 }

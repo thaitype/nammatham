@@ -11,5 +11,13 @@ export default func
     if (name === 'error') {
       throw new Error('this is an error');
     }
-    return { body: `Hello, ${name}!` };
+    const result = {
+      data: {
+        name: name,
+        message: `Hello, ${name}!`
+      }
+    }
+    return {
+      jsonBody: result,
+    }
   });

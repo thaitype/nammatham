@@ -1,4 +1,4 @@
-// Adapted from: https://github.com/trpc/trpc/packages/server/src/adapters/express.ts
+// Adapted from: https://github.com/trpc/trpc/tree/main/packages/server/src/adapters/express.ts
 import express from 'express';
 import { NammathamHttpHandlerOption } from '../types';
 import { logger } from '../../core';
@@ -31,7 +31,7 @@ export async function registerNammathamApp({ app, req, res, handlerResolver }: N
       return await handlerResolver.resolveHandler(func, req, res);
     }
   }
-  res.status(404).send(`Path not found: ${req.path}`);
+  return res.status(404).send(`Path not found: ${req.path}`);
 }
 
 export function createExpressMiddleware(opts: NammathamHttpHandlerOption): express.Handler {

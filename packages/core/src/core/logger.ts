@@ -11,31 +11,60 @@ export const _logger = pino({
   },
 });
 
-class Logger {
+abstract class BaseLogger {
+  abstract debug(...args: any[]): void;
+  abstract info(...args: any[]): void;
+  abstract warn(...args: any[]): void;
+  abstract error(...args: any[]): void;
+  abstract fatal(...args: any[]): void;
+}
+
+class PinoLogger extends BaseLogger {
+  constructor(private readonly logger: pino.Logger) {
+    super();
+  }
+
   debug(...args: any[]) {
-    if (isDevelopment) _logger.debug(args[0], ...args.slice(1));
-    else console.debug(...args);
+    this.logger.debug(args[0], ...args.slice(1));
   }
 
   info(...args: any[]) {
-    if (isDevelopment) _logger.info(args[0], ...args.slice(1));
-    else console.info(...args);
+    this.logger.info(args[0], ...args.slice(1));
   }
 
   warn(...args: any[]) {
-    if (isDevelopment) _logger.warn(args[0], ...args.slice(1));
-    else console.warn(...args);
+    this.logger.warn(args[0], ...args.slice(1));
   }
 
   error(...args: any[]) {
-    if (isDevelopment) _logger.error(args[0], ...args.slice(1));
-    else console.error(...args);
+    this.logger.error(args[0], ...args.slice(1));
   }
 
   fatal(...args: any[]) {
-    if (isDevelopment) _logger.fatal(args[0], ...args.slice(1));
-    else console.error(args);
+    this.logger.fatal(args[0], ...args.slice(1));
   }
 }
 
-export const logger = new Logger();
+class ConsoleLogger extends BaseLogger {
+  debug(...args: any[]) {
+    console.debug(...args);
+  }
+
+  info(...args: any[]) {
+    console.info(...args);
+  }
+
+  warn(...args: any[]) {
+    console.warn(...args);
+  }
+
+  error(...args: any[]) {
+    console.error(...args);
+  }
+
+  fatal(...args: any[]) {
+    console.error(...args);
+  }
+}
+
+export const logger: BaseLogger = isDevelopment ? new PinoLogger(_logger): new ConsoleLogger();

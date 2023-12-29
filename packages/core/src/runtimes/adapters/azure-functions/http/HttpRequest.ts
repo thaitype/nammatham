@@ -1,4 +1,4 @@
-// Adapted from https://github.com/Azure/azure-functions-nodejs-library/src/http/HttpRequest.ts
+// Adapted from https://github.com/Azure/azure-functions-nodejs-library/blob/v4.x/src/http/HttpRequest.ts
 import * as types from '@azure/functions';
 import { HttpRequestParams, HttpRequestUser } from '@azure/functions';
 import { Blob } from 'buffer';
