@@ -1,11 +1,14 @@
 {
-  "name": "nammatham-mono",
-  "version": "1.3.0",
+  "name": "@nammatham/monorepo",
+  "version": "2.0.0-alpha.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.ts'",
-    "dev": "nx run @nammatham/core:build && pnpx nx run-many -t dev",
+    "dev": "nx run @nammatham/core:build && nx run-many -t dev",
+    "release": "run-s build releaseOnly",
+    "releaseOnly": "tsx ./scripts/release.ts",
+    "build": "nx run-many -t build",
     "azurite": "pnpx azurite --silent --location ./.azurite --debug ./.azurite/debug.log"
   },
   "keywords": [
@@ -28,10 +31,13 @@
     "ava": "^5.1.1",
     "c8": "^7.12.0",
     "eslint": "^8.36.0",
+    "execa": "^8.0.1",
     "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5",
     "nx": "^15.6.1",
     "prettier": "^2.8.3",
     "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   },
   "publishConfig": {
