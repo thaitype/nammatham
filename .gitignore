@@ -132,3 +132,6 @@ inversify-express-utils
 
 .idea
 .DS_Store
+
+.azurite
+tmp

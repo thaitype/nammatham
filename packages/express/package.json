@@ -1,5 +1,5 @@
 {
-  "name": "@nammatham/core",
+  "name": "@nammatham/express",
   "version": "2.0.0-alpha.3",
   "description": "Type-safe Serverless Library for Azure Functions and friends",
   "main": "dist/main.js",
@@ -18,10 +18,8 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "colorette": "^2.0.20",
-    "pino": "^8.17.1",
-    "pino-pretty": "^10.3.0",
-    "undici": "5.20.0"
+    "@nammatham/core": "2.0.0-alpha.3",
+    "express": "^4.18.2"
   },
   "repository": {
     "type": "git",
