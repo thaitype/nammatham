@@ -26,6 +26,7 @@ async function main() {
   const newVersion = bumpVersion(version, { dryRun, releaseType });
   await modifyAllDependencies(newVersion, { directories: ['examples', 'packages'] });
   await modifyVersion(process.cwd(), newVersion);
+  await modifyPublishPackagesVersion({ version: newVersion, directory: path.resolve('packages') });
   await execute('git', ['add', '.'], { dryRun });
   await execute('git', ['commit', '-m', `Bump version v${newVersion}`], { dryRun });
   await publishPackages({
@@ -36,6 +37,15 @@ async function main() {
   await execute('git', ['tag', '-a', `v${newVersion}`, '-m', `v${newVersion}`], { dryRun });
   await execute('git', ['push', 'origin', '--all'], { dryRun });
   await execute('git', ['push', 'origin', '--tags'], { dryRun });
+}
+
+async function modifyPublishPackagesVersion(option: { version: string; directory: string }) {
+  const { version, directory } = option;
+  const packages = await fs.readdir(directory);
+  for (const packageName of packages) {
+    const packagePath = path.resolve(directory, packageName);
+    await modifyVersion(packagePath, version);
+  }
 }
 
 async function modifyAllDependencies(newVersion: string, option: { directories: string[] }) {
@@ -54,7 +64,7 @@ async function modifyAllDependencies(newVersion: string, option: { directories: 
 async function modifyDependency(packagePath: string, dependencyName: string, newVersion: string) {
   const packageJsonPath = path.resolve(packagePath, 'package.json');
   const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-  const { dependencies, } = packageJson;
+  const { dependencies } = packageJson;
 
   // Replaces all @nammatham/* dependencies
   for (const [name, version] of Object.entries(dependencies ?? {})) {
@@ -76,7 +86,6 @@ async function publishPackages({ directory, dryRun, version }: PublishPackagesOp
   for (const packageName of packages) {
     const packagePath = path.resolve(directory, packageName);
     const { name } = await readPackageJson(packagePath);
-    await modifyVersion(packagePath, version);
     console.log(`Publishing ${name}@${version}`);
     await execute('npm', ['publish', '--access', 'public'], {
       cwd: packagePath,
