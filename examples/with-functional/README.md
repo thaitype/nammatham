@@ -14,7 +14,7 @@ Path: `src/main.ts`
 
 ```typescript
 import * as nExpress from '@nammatham/server/adapters/express';
-import devServer from '@nammatham/server/dev';
+import expressServer from '@nammatham/server/dev';
 import express from 'express';
 import { functionApp } from './nammatham';
 import blob from './functions/blob';

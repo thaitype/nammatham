@@ -134,3 +134,4 @@ inversify-express-utils
 .DS_Store
 
 .azurite
+tmp

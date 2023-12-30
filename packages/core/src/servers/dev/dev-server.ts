@@ -12,13 +12,13 @@ export interface DevServerOption {
 /**
  * Dev Server Middleware
  */
-export function devServer(option?: DevServerOption) {
+export function expressServer(option?: DevServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
     if (process.env.NODE_ENV !== 'development') {
       logger.debug('Not in development mode, skip starting dev server');
       return;
     }
-    logger.info(`Using middleware: devServer`);
+    logger.info(`Using middleware: expressServer`);
     startExpress(
       {
         handlerResolver,
