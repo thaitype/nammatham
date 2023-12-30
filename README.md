@@ -29,23 +29,46 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 [![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=n6B4-5Lt2h0) (Thai speech, subtitle will added later)
 - Slides: https://docs.google.com/presentation/d/1WUIXaUxXaiixZ2bgGCfx-f4Gdrmjl4RfbwKaEfAC6t4/edit?usp=sharing
 
-## Get Started
+## Minimal Get Started
 
 ```typescript
-import { initNammatham } from 'nammatham';
+import { expressServer, initNammatham, AzureFunctionsAdapter } from 'nammatham';
 
-const nmt = initNammatham.create();
+const n = initNammatham.create(new AzureFunctionsAdapter());
+const func = n.func;
+const app = n.app;
 
-nmt
-  .httpGet('CopyBlob', {
-    authLevel: 'anonymous',
+const helloFunction = func
+  .httpGet('hello', {
+    route: 'hello-world',
   })
-  .handler((request, context) => {
-    context.log('HTTP trigger function processed a request.');
-    return {
-      body: `Hello world!`,
-    };
+  .handler(async (request, ctx) => {
+    ctx.context.log('HTTP trigger function processed a request.');
+    ctx.context.debug(`Http function processed request for url "${request.url}"`);
+    const name = request.query.get('name') || (await request.text()) || 'world';
+    return { body: `Hello, ${name}!` };
   });
+
+app.addFunctions(helloFunction);
+app.use(expressServer());
+app.start();
+```
+
+The result commandline will show:
+
+```
+
+Start Nammatham, Type-safe Serverless Framework
+
+[12:44:14.784] INFO (44575): Using adapter: AzureFunctionsAdapter
+[12:44:14.786] INFO (44575): Function "hello" added
+[12:44:14.786] INFO (44575): Using middleware: expressServer
+[12:44:14.793] INFO (44575): All functions registered
+[12:44:14.794] INFO (44575): Dev Server started at http://localhost:3000
+
+Functions:
+
+        hello: [GET] http://localhost:3000/api/hello-world
 ```
 
 ## Inspiration 
