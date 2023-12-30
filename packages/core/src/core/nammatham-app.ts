@@ -1,5 +1,5 @@
 import { magenta } from 'colorette';
-import { logger } from '../core';
+import { logger } from '.';
 import { BaseHandlerResolver } from './bases';
 import { NammamthamEndpoint } from './types';
 

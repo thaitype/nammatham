@@ -1,7 +1,7 @@
 import { BaseRuntimeAdapter } from './bases/base-runtime-adapter';
-import { DefaultAdapter } from './adapters/default';
+import { DefaultAdapter } from './default-adapter';
 import { NammathamApp } from './nammatham-app';
-import { logger } from '../core';
+import { logger } from '.';
 import { yellow } from 'colorette';
 
 export interface NammathamRuntime<Adapter extends BaseRuntimeAdapter<unknown>> {

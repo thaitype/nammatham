@@ -1,4 +1,4 @@
-import { BaseHandlerResolver } from '../../bases';
+import { BaseHandlerResolver } from '../core/bases';
 import { Cookie, HttpResponse, InvocationContext, LogLevel } from '@azure/functions';
 import { AzureFunctionsEndpoint } from './types';
 import type {
@@ -7,11 +7,11 @@ import type {
   CookieOptions as ExpressCookieOptions,
 } from 'express';
 import { HttpRequest } from './http/HttpRequest';
-import { NammathamApp } from '../../nammatham-app';
+import { NammathamApp } from '../core/nammatham-app';
 import { v4 as uuidv4 } from 'uuid';
-import { logger } from '../../../core';
+import { logger } from '../core';
 import { printRegisteredFunctions } from './utils';
-import { AfterServerStartedMetadata } from '../../types';
+import { AfterServerStartedMetadata } from '../core/types';
 import { yellow } from 'colorette';
 import { log } from 'console';
 

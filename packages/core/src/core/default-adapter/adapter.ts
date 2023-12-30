@@ -1,5 +1,5 @@
-import { NammathamApp } from '../../nammatham-app';
-import { BaseRuntimeAdapter } from '../../bases';
+import { NammathamApp } from '../nammatham-app';
+import { BaseRuntimeAdapter } from '../bases';
 import { DefaultTrigger } from './trigger';
 import { DefaultHandlerResolver } from './handler-resolver';
 

@@ -1,4 +1,4 @@
-import { AzureFunctionsEndpoint } from './adapters';
+import { AzureFunctionsEndpoint } from '../azure-functions';
 
 export type PromiseLike<T> = T | Promise<T>;
 

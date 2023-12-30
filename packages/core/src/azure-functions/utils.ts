@@ -1,7 +1,7 @@
-import { blue, green, underline, yellow } from 'colorette';
-import { NammathamApp } from '../../nammatham-app';
+import { blue, green, yellow } from 'colorette';
+import { NammathamApp } from '../core/nammatham-app';
 import { AzureFunctionsEndpoint } from './types';
-import { trimSlash } from '../../../servers/adapters/express';
+import { trimSlash } from '../express/middleware';
 
 function getMethods(func: AzureFunctionsEndpoint<any, any>): string[] {
   if (!Array.isArray(func.endpointOption?.methods)) {
