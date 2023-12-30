@@ -1,6 +1,6 @@
 import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/functions';
 import { NammathamContext } from './nammatham-context';
-import type { NammamthamEndpointBase, PromiseLike } from '../core/types';
+import type { NammamthamEndpoint, PromiseLike } from '../core';
 
 export type HandlerFunction<TTriggerType, TReturnType> = (
   triggerInput: TTriggerType,
@@ -19,7 +19,7 @@ export interface FunctionOption {
   extraOutputs: FunctionOutput[];
 }
 
-export interface AzureFunctionsEndpoint<TTriggerType, TReturnType> extends NammamthamEndpointBase, FunctionOption {
+export interface AzureFunctionsEndpoint<TTriggerType, TReturnType> extends NammamthamEndpoint, FunctionOption {
   type: 'azureFunctions';
   invokeHandler: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
   registerFunc: RegisterFunctionOption;

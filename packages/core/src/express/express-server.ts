@@ -7,19 +7,14 @@ import { logger } from '../core';
 export interface DevServerOption {
   port?: number;
   expressApp?: express.Express;
-  
 }
 
 /**
- * Dev Server Middleware
+ * Express Server Plugin
  */
 export function expressServer(option?: DevServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
-    // if (process.env.NODE_ENV !== 'development') {
-    //   logger.debug('Not in development mode, skip starting dev server');
-    //   return;
-    // }
-    logger.info(`Using middleware: expressServer`);
+    logger.info(`Using plugin: expressServer`);
     startExpress(
       {
         handlerResolver,
@@ -48,7 +43,6 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
 
   expressApp.listen(port, async () => {
     logger.info(`Dev Server started at http://localhost:${port}`);
-
     await handlerResolver.afterServerStarted(app, { port });
   });
 }

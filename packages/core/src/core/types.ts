@@ -1,5 +1,3 @@
-import { AzureFunctionsEndpoint } from '../azure-functions';
-
 export type PromiseLike<T> = T | Promise<T>;
 
 export type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'HEAD' | 'PATCH' | 'PUT' | 'OPTIONS' | 'TRACE' | 'CONNECT';
@@ -22,16 +20,12 @@ export interface GenericEndpointOption extends EndpointOptionBase, Record<string
   type: 'generic';
 }
 
-export interface NammathamGenericEndpoint extends NammamthamEndpointBase, Record<string, unknown> {
-  type: 'generic';
-}
-
-export type NammamthamEndpoint = AzureFunctionsEndpoint<any, any> | NammathamGenericEndpoint;
 export type EndpointOption = HttpEndpointOption | GenericEndpointOption;
 
 export type WithEndpointOption = { endpointOption?: Partial<EndpointOption> };
 
-export interface NammamthamEndpointBase {
+export interface NammamthamEndpoint {
+  type: string;
   name: string;
   endpointOption?: EndpointOption;
   invokeHandler: (...args: any[]) => PromiseLike<any>;
