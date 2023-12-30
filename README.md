@@ -31,6 +31,8 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 
 ## Minimal Get Started
 
+For dev server, using express.js
+
 ```typescript
 import { expressServer, initNammatham, AzureFunctionsAdapter } from 'nammatham';
 
@@ -54,6 +56,23 @@ app.use(expressServer());
 app.start();
 ```
 
+Then edit `package.json` like this;
+
+```json
+{
+  "main": "dist/src/main.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development tsx watch src/main.ts"
+  }
+}
+```
+
+Run 
+
+```
+npm run dev
+```
+
 The result commandline will show (Dev Server): 
 
 ```
@@ -70,6 +89,8 @@ Functions:
 
         hello: [GET] http://localhost:3000/api/hello-world
 ```
+
+<!-- ## What's different with Azure Functions v4 (Official Library) -->
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
