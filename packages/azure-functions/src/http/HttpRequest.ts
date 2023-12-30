@@ -4,7 +4,7 @@ import { HttpRequestParams, HttpRequestUser } from '@azure/functions';
 import { Blob } from 'buffer';
 import express from 'express';
 import { IncomingHttpHeaders } from 'node:http';
-import { logger } from '../../core';
+import { logger } from '@nammatham/core';
 import { ReadableStream } from 'stream/web';
 import { FormData, Headers, Request as uRequest } from 'undici';
 import { URLSearchParams } from 'url';

@@ -1,8 +1,7 @@
 import express from 'express';
-import * as nammathamExpress from './middleware';
-import { BaseHandlerResolver, NammathamApp } from '../core';
+import { createExpressMiddleware } from './middleware';
+import { BaseHandlerResolver, NammathamApp, logger } from '@nammatham/core';
 import { NammathamHttpHandlerOption } from './types';
-import { logger } from '../core';
 
 export interface DevServerOption {
   port?: number;
@@ -34,7 +33,7 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
   expressApp.disable('etag');
   expressApp.use(
     '/api',
-    nammathamExpress.createExpressMiddleware({
+    createExpressMiddleware({
       app,
       handlerResolver,
       // createContext,

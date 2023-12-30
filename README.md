@@ -34,7 +34,9 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 For dev server, using express.js
 
 ```typescript
-import { expressServer, initNammatham, AzureFunctionsAdapter } from 'nammatham';
+import { AzureFunctionsAdapter } from "@nammatham/azure-functions";
+import { initNammatham } from "@nammatham/core";
+import { expressServer } from "@nammatham/express";
 
 const n = initNammatham.create(new AzureFunctionsAdapter());
 const func = n.func;

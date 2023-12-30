@@ -1,5 +1,5 @@
 {
-  "name": "@nammatham/core",
+  "name": "@nammatham/azure-functions",
   "version": "2.0.0-alpha.0",
   "description": "Type-safe Serverless Library for Azure Functions and friends",
   "main": "dist/main.js",
@@ -18,6 +18,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
+    "@nammatham/core": "workspace:*",
     "@azure/functions": "^4.1.0",
     "colorette": "^2.0.20",
     "express": "^4.18.2",

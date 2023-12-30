@@ -1,8 +1,7 @@
 // Adapted from: https://github.com/trpc/trpc/tree/main/packages/server/src/adapters/express.ts
 import express from 'express';
 import { NammathamHttpHandlerOption } from './types';
-import { logger } from '../core';
-import { HttpMethod } from '../core/types';
+import { logger, HttpMethod} from '@nammatham/core';
 
 interface NammathamAppRequestOption extends NammathamHttpHandlerOption {
   req: express.Request;

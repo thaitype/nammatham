@@ -1,5 +1,4 @@
-import { BaseRuntimeAdapter } from '../core/bases';
-import { NammathamApp } from '../core/nammatham-app';
+import { BaseRuntimeAdapter, NammathamApp } from '@nammatham/core';
 import { AzureFunctionsHandlerResolver } from './handler-resolver';
 import { AzureFunctionsTrigger } from './trigger';
 

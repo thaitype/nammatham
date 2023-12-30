@@ -1,5 +1,5 @@
 {
-  "name": "@examples/without-di",
+  "name": "@examples/azure-functions-minimal",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",
@@ -12,8 +12,10 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.1.0",
-    "nammatham": "workspace:*"
+    "@nammatham/core": "workspace:*",
+    "@nammatham/express": "workspace:*",
+    "@nammatham/azure-functions": "workspace:*",
+    "@azure/functions": "^4.1.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

@@ -2,9 +2,7 @@ import type { HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit }
 import { app, HttpMethodFunctionOptions } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
 import { FunctionOption } from './types';
-import { BaseFunctionTrigger } from '../core/bases';
-import { HttpEndpointOption, WithEndpointOption } from '../core/types';
-import { logger } from '../core/logger';
+import { HttpEndpointOption, WithEndpointOption, BaseFunctionTrigger } from '@nammatham/core';
 
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   generic(funcName: string, option: any) {

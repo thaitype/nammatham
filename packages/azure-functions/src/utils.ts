@@ -1,7 +1,15 @@
 import { blue, green, yellow } from 'colorette';
-import { NammathamApp } from '../core/nammatham-app';
+import { NammathamApp } from '@nammatham/core';
 import { AzureFunctionsEndpoint } from './types';
-import { trimSlash } from '../express/middleware';
+
+/**
+ * duplicate with packages/azure-functions/src/express/middleware.ts
+ * @param str 
+ * @returns 
+ */
+export function trimSlash(str: string) {
+  return str.replace(/^\/|\/$/g, '');
+}
 
 function getMethods(func: AzureFunctionsEndpoint<any, any>): string[] {
   if (!Array.isArray(func.endpointOption?.methods)) {

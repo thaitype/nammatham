@@ -1,4 +1,4 @@
-import { expressServer } from 'nammatham';
+import { expressServer } from '@nammatham/express';
 import blob from './functions/blob';
 import hello from './functions/hello';
 import { app } from './nammatham';
