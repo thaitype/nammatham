@@ -29,10 +29,40 @@ async function main() {
     releaseType,
     version,
   });
+  await modifyAllDependencies(newVersion, { directories: ['examples', 'packages'] });
   await modifyVersion(process.cwd(), newVersion);
+  await execute('git', ['add', '.'], { dryRun });
+  await execute('git', ['commit', '-m', `Bump version v${newVersion}`], { dryRun });
   await execute('git', ['tag', '-a', `v${newVersion}`, '-m', `v${newVersion}`], { dryRun });
   await execute('git', ['push', 'origin', '--all'], { dryRun });
   await execute('git', ['push', 'origin', '--tags'], { dryRun });
+}
+
+async function modifyAllDependencies(newVersion: string, option: { directories: string[] }) {
+  const { directories } = option;
+  for (const directory of directories) {
+    // In directory, there sub directories which have package.json
+    const packages = await fs.readdir(directory);
+    for (const packageName of packages) {
+      const packagePath = path.resolve(directory, packageName);
+      const { name } = await readPackageJson(packagePath);
+      await modifyDependency(packagePath, name, newVersion);
+    }
+  }
+}
+
+async function modifyDependency(packagePath: string, dependencyName: string, newVersion: string) {
+  const packageJsonPath = path.resolve(packagePath, 'package.json');
+  const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+  const { dependencies, } = packageJson;
+
+  // Replaces all @nammatham/* dependencies
+  for (const [name, version] of Object.entries(dependencies ?? {})) {
+    if (name.startsWith('@nammatham/')) {
+      dependencies[name] = newVersion;
+    }
+  }
+  await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }
 
 export interface PublishPackagesOptions {
