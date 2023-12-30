@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mildronize/nammatham.git"
+    "url": "https://github.com/thaitype/nammatham.git"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
