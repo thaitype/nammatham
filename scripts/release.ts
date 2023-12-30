@@ -23,16 +23,16 @@ async function main() {
   const { version } = await readPackageJson(process.cwd());
   console.log(`Current version: ${version}`);
 
-  const newVersion = await publishPackages({
-    directory: path.resolve('packages'),
-    dryRun,
-    releaseType,
-    version,
-  });
+  const newVersion = bumpVersion(version, { dryRun, releaseType });
   await modifyAllDependencies(newVersion, { directories: ['examples', 'packages'] });
   await modifyVersion(process.cwd(), newVersion);
   await execute('git', ['add', '.'], { dryRun });
   await execute('git', ['commit', '-m', `Bump version v${newVersion}`], { dryRun });
+  await publishPackages({
+    directory: path.resolve('packages'),
+    dryRun,
+    version: newVersion,
+  });
   await execute('git', ['tag', '-a', `v${newVersion}`, '-m', `v${newVersion}`], { dryRun });
   await execute('git', ['push', 'origin', '--all'], { dryRun });
   await execute('git', ['push', 'origin', '--tags'], { dryRun });
@@ -67,25 +67,22 @@ async function modifyDependency(packagePath: string, dependencyName: string, new
 
 export interface PublishPackagesOptions {
   version: string;
-  releaseType: ReleaseType;
   directory: string;
   dryRun?: boolean;
 }
 
-async function publishPackages({ directory, dryRun, releaseType, version }: PublishPackagesOptions) {
-  const newVersion = bumpVersion(version, { dryRun, releaseType });
+async function publishPackages({ directory, dryRun, version }: PublishPackagesOptions) {
   const packages = await fs.readdir(directory);
   for (const packageName of packages) {
     const packagePath = path.resolve(directory, packageName);
     const { name } = await readPackageJson(packagePath);
-    await modifyVersion(packagePath, newVersion);
-    console.log(`Publishing ${name}@${newVersion}`);
+    await modifyVersion(packagePath, version);
+    console.log(`Publishing ${name}@${version}`);
     await execute('npm', ['publish', '--access', 'public'], {
       cwd: packagePath,
       dryRun,
     });
   }
-  return newVersion;
 }
 
 function bumpVersion(version: string, option: { dryRun?: boolean; releaseType: ReleaseType }) {
