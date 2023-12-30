@@ -7,6 +7,7 @@ import { logger } from '../../core';
 export interface DevServerOption {
   port?: number;
   expressApp?: express.Express;
+  
 }
 
 /**
@@ -14,10 +15,10 @@ export interface DevServerOption {
  */
 export function expressServer(option?: DevServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
-    if (process.env.NODE_ENV !== 'development') {
-      logger.debug('Not in development mode, skip starting dev server');
-      return;
-    }
+    // if (process.env.NODE_ENV !== 'development') {
+    //   logger.debug('Not in development mode, skip starting dev server');
+    //   return;
+    // }
     logger.info(`Using middleware: expressServer`);
     startExpress(
       {

@@ -54,7 +54,7 @@ app.use(expressServer());
 app.start();
 ```
 
-The result commandline will show:
+The result commandline will show (Dev Server): 
 
 ```
 

@@ -16,5 +16,7 @@ const helloFunction = func
   });
 
 app.addFunctions(helloFunction);
-app.use(expressServer());
+if (process.env.NODE_ENV === 'development') {
+  app.use(expressServer());
+}
 app.start();

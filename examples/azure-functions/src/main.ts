@@ -6,5 +6,7 @@ import { app } from './nammatham';
 // app.addFunctionsFromPath('functions/*.ts'); // TODO: Implement in next release
 app.addFunctions(blob, hello);
 
-app.use(expressServer());
+if (process.env.NODE_ENV === 'development') {
+  app.use(expressServer());
+}
 app.start();
