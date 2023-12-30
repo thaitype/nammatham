@@ -1,18 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { execa, Options as ExecaOptions } from 'execa';
-
-async function execute(process: string, args: string[], option: ExecaOptions & { dryRun?: boolean }) {
-  const dryRun = option.dryRun ?? false;
-  if (dryRun) {
-    console.log(`[dry-run] ${process} ${args.join(' ')}`);
-    return;
-  }
-  return execa(process, args, option).then(result => {
-    console.log(result.stdout);
-    return result;
-  });
-}
+import { execute, modifyAllDependencies, modifyPackagesVersion, modifyVersion } from './libs';
 
 export type ReleaseType = 'major' | 'minor' | 'patch' | 'alpha';
 
@@ -26,7 +14,7 @@ async function main() {
   const newVersion = bumpVersion(version, { dryRun, releaseType });
   await modifyAllDependencies(newVersion, { directories: ['examples', 'packages'] });
   await modifyVersion(process.cwd(), newVersion);
-  await modifyPublishPackagesVersion({ version: newVersion, directory: path.resolve('packages') });
+  await modifyPackagesVersion({ version: newVersion, directories: [path.resolve('packages')] });
   await execute('git', ['add', '.'], { dryRun });
   await execute('git', ['commit', '-m', `Bump version v${newVersion}`], { dryRun });
   await publishPackages({
@@ -39,41 +27,7 @@ async function main() {
   await execute('git', ['push', 'origin', '--tags'], { dryRun });
 }
 
-async function modifyPublishPackagesVersion(option: { version: string; directory: string }) {
-  const { version, directory } = option;
-  const packages = await fs.readdir(directory);
-  for (const packageName of packages) {
-    const packagePath = path.resolve(directory, packageName);
-    await modifyVersion(packagePath, version);
-  }
-}
 
-async function modifyAllDependencies(newVersion: string, option: { directories: string[] }) {
-  const { directories } = option;
-  for (const directory of directories) {
-    // In directory, there sub directories which have package.json
-    const packages = await fs.readdir(directory);
-    for (const packageName of packages) {
-      const packagePath = path.resolve(directory, packageName);
-      const { name } = await readPackageJson(packagePath);
-      await modifyDependency(packagePath, name, newVersion);
-    }
-  }
-}
-
-async function modifyDependency(packagePath: string, dependencyName: string, newVersion: string) {
-  const packageJsonPath = path.resolve(packagePath, 'package.json');
-  const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-  const { dependencies } = packageJson;
-
-  // Replaces all @nammatham/* dependencies
-  for (const [name, version] of Object.entries(dependencies ?? {})) {
-    if (name.startsWith('@nammatham/')) {
-      dependencies[name] = newVersion;
-    }
-  }
-  await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
-}
 
 export interface PublishPackagesOptions {
   version: string;
@@ -108,13 +62,6 @@ function bumpVersion(version: string, option: { dryRun?: boolean; releaseType: R
     case 'alpha':
       return `${major}.${minor}.${patch}-alpha.${alpha + 1}`;
   }
-}
-
-async function modifyVersion(packagePath: string, newVersion: string) {
-  const packageJsonPath = path.resolve(packagePath, 'package.json');
-  const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-  packageJson.version = newVersion;
-  await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }
 
 async function readPackageJson(packagePath: string) {
