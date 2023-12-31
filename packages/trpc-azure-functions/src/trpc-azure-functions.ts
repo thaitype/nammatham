@@ -33,7 +33,7 @@ export function tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: Trpc
       });
     app.addFunction(trpcFunction);
 
-    const isDevelopment = option?.expressPluginOption?.isDevelopment ?? process.env.NODE_ENV === 'development';
+    const isDevelopment = option?.expressPluginOption?.isDevelopment ?? process.env.NAMMATHAM_ENV === 'development';
     if (!isDevelopment) {
       logger.debug('Skipping express server in development mode (trpc)');
       return;

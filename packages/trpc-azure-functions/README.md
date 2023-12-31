@@ -55,7 +55,7 @@ const helloFunction = func
   });
 
 app.addFunctions(helloFunction);
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NAMMATHAM_ENV === 'development') {
   app.register(expressPlugin());
 }
 app.start();
@@ -67,7 +67,7 @@ Then edit `package.json` like this;
 {
   "main": "dist/src/main.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsx watch src/main.ts"
+    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts"
   }
 }
 ```
