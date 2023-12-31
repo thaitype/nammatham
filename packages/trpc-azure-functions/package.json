@@ -1,6 +1,6 @@
 {
   "name": "@nammatham/trpc-azure-functions",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.4",
   "description": "Type-safe Serverless Library for Azure Functions and friends",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -19,9 +19,9 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.1.0",
-    "@nammatham/core": "workspace:*",
-    "@nammatham/azure-functions": "workspace:*",
-    "@nammatham/express": "workspace:*",
+    "@nammatham/core": "2.0.0-alpha.4",
+    "@nammatham/azure-functions": "2.0.0-alpha.4",
+    "@nammatham/express": "2.0.0-alpha.4",
     "@trpc/server": "^10.45.0",
     "express": "^4.18.2",
     "trpc-azure-functions-adapter": "0.0.5"
