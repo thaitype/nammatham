@@ -7,14 +7,14 @@
     "build": "tsc",
     "lint": "tsc --noEmit",
     "start": "tsc && func start",
-    "dev": "cross-env NODE_ENV=development tsx watch src/main.ts"
+    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.3",
-    "@nammatham/express": "2.0.0-alpha.3",
-    "@nammatham/azure-functions": "2.0.0-alpha.3",
+    "@nammatham/core": "workspace:*",
+    "@nammatham/express": "workspace:*",
+    "@nammatham/azure-functions": "workspace:*",
     "@azure/functions": "^4.1.0"
   },
   "devDependencies": {

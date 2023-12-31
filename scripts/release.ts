@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { execute, modifyAllDependencies, modifyPackagesVersion, modifyVersion } from './libs';
+import { copyReadmeFromRoot, execute, modifyAllDependencies, modifyPackagesVersion, modifyVersion } from './libs';
 
 export type ReleaseType = 'major' | 'minor' | 'patch' | 'alpha';
 
@@ -15,6 +15,7 @@ async function main() {
   await modifyAllDependencies(newVersion, { directories: ['examples', 'packages'] });
   await modifyVersion(process.cwd(), newVersion);
   await modifyPackagesVersion({ version: newVersion, directories: [path.resolve('packages')] });
+  await copyReadmeFromRoot({ directories: ['packages'] });
   await execute('git', ['add', '.'], { dryRun });
   await execute('git', ['commit', '-m', `Bump version v${newVersion}`], { dryRun });
   await publishPackages({
@@ -26,8 +27,6 @@ async function main() {
   await execute('git', ['push', 'origin', '--all'], { dryRun });
   await execute('git', ['push', 'origin', '--tags'], { dryRun });
 }
-
-
 
 export interface PublishPackagesOptions {
   version: string;

@@ -141,7 +141,7 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
       logger.warn(`\n\n${yellow('No functions registered, did you forget to add functions?')}\n`);
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NAMMATHAM_ENV === 'development') {
       logger.debug(`Skipping Register Azure Function handler in development mode`);
       return;
     }

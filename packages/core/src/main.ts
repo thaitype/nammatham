@@ -4,3 +4,4 @@ export * from './nammatham-app';
 export * from './types';
 export * from './default-adapter';
 export * from './bases';
+export * from './utils';

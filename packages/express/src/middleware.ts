@@ -17,7 +17,7 @@ function isMatchPath(path1: string, path2: string) {
 }
 
 export async function registerNammathamApp({ app, req, res, handlerResolver }: NammathamAppRequestOption) {
-  // FIXME: Match path using array loop is lack of performance
+  // FIXME: Consider to use express plugin in development mode only, match incoming path is lack of performance
   for (const func of app.functions) {
     if (func.endpointOption?.type !== 'http') continue;
     if (!func.endpointOption.methods?.includes(req.method as HttpMethod)) {

@@ -1,6 +1,6 @@
 import { AzureFunctionsAdapter } from "@nammatham/azure-functions";
 import { initNammatham } from "@nammatham/core";
-import { expressServer } from "@nammatham/express";
+import { expressPlugin } from "@nammatham/express";
 
 const n = initNammatham.create(new AzureFunctionsAdapter());
 const func = n.func;
@@ -18,7 +18,5 @@ const helloFunction = func
   });
 
 app.addFunctions(helloFunction);
-if (process.env.NODE_ENV === 'development') {
-  app.use(expressServer());
-}
+app.register(expressPlugin());
 app.start();

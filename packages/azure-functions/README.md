@@ -38,7 +38,7 @@ For dev server, using express.js
 ```typescript
 import { AzureFunctionsAdapter } from "@nammatham/azure-functions";
 import { initNammatham } from "@nammatham/core";
-import { expressServer } from "@nammatham/express";
+import { expressPlugin } from "@nammatham/express";
 
 const n = initNammatham.create(new AzureFunctionsAdapter());
 const func = n.func;
@@ -56,8 +56,8 @@ const helloFunction = func
   });
 
 app.addFunctions(helloFunction);
-if (process.env.NODE_ENV === 'development') {
-  app.use(expressServer());
+if (process.env.NAMMATHAM_ENV === 'development') {
+  app.register(expressPlugin());
 }
 app.start();
 ```
@@ -68,7 +68,7 @@ Then edit `package.json` like this;
 {
   "main": "dist/src/main.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsx watch src/main.ts"
+    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts"
   }
 }
 ```
@@ -87,7 +87,7 @@ Start Nammatham, Type-safe Serverless Framework
 
 [12:44:14.784] INFO (44575): Using adapter: AzureFunctionsAdapter
 [12:44:14.786] INFO (44575): Function "hello" added
-[12:44:14.786] INFO (44575): Using middleware: expressServer
+[12:44:14.786] INFO (44575): Using middleware: expressPlugin
 [12:44:14.793] INFO (44575): All functions registered
 [12:44:14.794] INFO (44575): Dev Server started at http://localhost:3000
 

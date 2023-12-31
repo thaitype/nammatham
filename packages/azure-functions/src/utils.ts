@@ -1,15 +1,6 @@
 import { blue, green, yellow } from 'colorette';
-import { NammathamApp } from '@nammatham/core';
+import { NammathamApp, trimSlash } from '@nammatham/core';
 import { AzureFunctionsEndpoint } from './types';
-
-/**
- * duplicate with packages/azure-functions/src/express/middleware.ts
- * @param str 
- * @returns 
- */
-export function trimSlash(str: string) {
-  return str.replace(/^\/|\/$/g, '');
-}
 
 function getMethods(func: AzureFunctionsEndpoint<any, any>): string[] {
   if (!Array.isArray(func.endpointOption?.methods)) {
@@ -27,8 +18,11 @@ function getFullUrl(func: AzureFunctionsEndpoint<any, any>, port?: number): stri
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function printRegisteredFunctions(app: NammathamApp, port?: number) {
-  const azureFunctions = app.functions.filter(func => func.type === 'azureFunctions') as AzureFunctionsEndpoint<any, any>[];
-  if(azureFunctions.length === 0) return;
+  const azureFunctions = app.functions.filter(func => func.type === 'azureFunctions') as AzureFunctionsEndpoint<
+    any,
+    any
+  >[];
+  if (azureFunctions.length === 0) return;
   await delay(200);
   console.log(`\n${yellow('Functions:')}\n`);
   for (const func of azureFunctions) {

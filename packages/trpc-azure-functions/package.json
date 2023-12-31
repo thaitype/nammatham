@@ -1,5 +1,5 @@
 {
-  "name": "@nammatham/azure-functions",
+  "name": "@nammatham/trpc-azure-functions",
   "version": "2.0.0-alpha.3",
   "description": "Type-safe Serverless Library for Azure Functions and friends",
   "main": "dist/main.js",
@@ -18,12 +18,13 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "workspace:*",
     "@azure/functions": "^4.1.0",
-    "colorette": "^2.0.20",
+    "@nammatham/core": "workspace:*",
+    "@nammatham/azure-functions": "workspace:*",
+    "@nammatham/express": "workspace:*",
+    "@trpc/server": "^10.45.0",
     "express": "^4.18.2",
-    "undici": "5.20.0",
-    "uuid": "^9.0.1"
+    "trpc-azure-functions-adapter": "0.0.5"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/uuid": "^9.0.7"
+    "@types/express": "^4.17.21"
   }
 }
