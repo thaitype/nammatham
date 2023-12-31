@@ -121,6 +121,9 @@ importers:
       '@nammatham/express':
         specifier: workspace:*
         version: link:../../packages/express
+      '@nammatham/trpc-azure-functions':
+        specifier: workspace:*
+        version: link:../../packages/trpc-azure-functions
       '@trpc/server':
         specifier: ^10.45.0
         version: 10.45.0
@@ -201,14 +204,29 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
 
-  packages/trpc:
+  packages/trpc-azure-functions:
     dependencies:
+      '@azure/functions':
+        specifier: ^4.1.0
+        version: 4.1.0
+      '@nammatham/azure-functions':
+        specifier: workspace:*
+        version: link:../azure-functions
       '@nammatham/core':
         specifier: workspace:*
         version: link:../core
+      '@nammatham/express':
+        specifier: workspace:*
+        version: link:../express
+      '@trpc/server':
+        specifier: ^10.45.0
+        version: 10.45.0
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      trpc-azure-functions-adapter:
+        specifier: 0.0.5
+        version: 0.0.5
     devDependencies:
       '@types/express':
         specifier: ^4.17.21

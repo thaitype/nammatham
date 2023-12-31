@@ -3,16 +3,22 @@ import { createExpressMiddleware } from './middleware';
 import { BaseHandlerResolver, NammathamApp, logger } from '@nammatham/core';
 import { NammathamHttpHandlerOption } from './types';
 
-export interface DevServerOption {
+export interface ExpressServerOption {
   port?: number;
   expressApp?: express.Express;
+  isDevelopment?: boolean;
 }
 
 /**
  * Express Server Plugin
  */
-export function expressServer(option?: DevServerOption) {
+export function expressServer(option?: ExpressServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
+    const isDevelopment = option?.isDevelopment ?? process.env.NODE_ENV === 'development';
+    if (!isDevelopment) {
+      logger.debug('Skipping express server in development mode');
+      return;
+    }
     logger.info(`Using plugin: expressServer`);
     startExpress(
       {
@@ -24,7 +30,7 @@ export function expressServer(option?: DevServerOption) {
   };
 }
 
-export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOption, devOption?: DevServerOption) {
+export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOption, devOption?: ExpressServerOption) {
   logger.debug('Starting express server');
   const expressApp = devOption?.expressApp ?? express();
   const port = devOption?.port ?? 3000;

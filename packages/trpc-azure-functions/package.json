@@ -1,5 +1,5 @@
 {
-  "name": "@nammatham/trpc",
+  "name": "@nammatham/trpc-azure-functions",
   "version": "2.0.0-alpha.3",
   "description": "Type-safe Serverless Library for Azure Functions and friends",
   "main": "dist/main.js",
@@ -18,8 +18,13 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
+    "@azure/functions": "^4.1.0",
     "@nammatham/core": "workspace:*",
-    "express": "^4.18.2"
+    "@nammatham/azure-functions": "workspace:*",
+    "@nammatham/express": "workspace:*",
+    "@trpc/server": "^10.45.0",
+    "express": "^4.18.2",
+    "trpc-azure-functions-adapter": "0.0.5"
   },
   "repository": {
     "type": "git",

@@ -2,7 +2,7 @@
   "name": "@examples/azure-functions-with-trpc",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/src/functions/*.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit",
@@ -17,6 +17,7 @@
     "@nammatham/azure-functions": "workspace:*",
     "@nammatham/core": "workspace:*",
     "@nammatham/express": "workspace:*",
+    "@nammatham/trpc-azure-functions": "workspace:*",
     "@trpc/server": "^10.45.0",
     "trpc-azure-functions-adapter": "0.0.5"
   },

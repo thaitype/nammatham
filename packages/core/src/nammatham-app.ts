@@ -24,14 +24,17 @@ export class NammathamApp {
     for (const func of functions) {
       this.addFunction(func);
     }
+    return this;
   }
 
   addFunction(func: NammamthamEndpoint) {
     logger.debug(`Adding function "${func.name}" on route: ${func.endpointOption?.route}`);
     this._functions.push(func);
     logger.info(`Function "${func.name}" added`);
+    return this;
   }
 
+  // TODO: rename to register instead of use, for preventing confusion with express middleware
   use<TReturn>(middleware: (app: NammathamApp, handlerResolver: BaseHandlerResolver) => TReturn) {
     middleware(this, this.handlerResolver);
   }
