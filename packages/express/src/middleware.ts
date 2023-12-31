@@ -17,6 +17,7 @@ function isMatchPath(path1: string, path2: string) {
 }
 
 export async function registerNammathamApp({ app, req, res, handlerResolver }: NammathamAppRequestOption) {
+  console.log('func', app.functions.map(f => f.endpointOption?.route).join('\n'));
   // FIXME: Match path using array loop is lack of performance
   for (const func of app.functions) {
     if (func.endpointOption?.type !== 'http') continue;

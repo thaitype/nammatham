@@ -4,6 +4,7 @@ import { BaseHandlerResolver, NammathamApp, logger } from '@nammatham/core';
 import { NammathamHttpHandlerOption } from './types';
 
 export interface ExpressServerOption {
+  prefix?: string;
   port?: number;
   expressApp?: express.Express;
   isDevelopment?: boolean;
@@ -30,15 +31,16 @@ export function expressServer(option?: ExpressServerOption) {
   };
 }
 
-export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOption, devOption?: ExpressServerOption) {
+export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOption, expressOption?: ExpressServerOption) {
   logger.debug('Starting express server');
-  const expressApp = devOption?.expressApp ?? express();
-  const port = devOption?.port ?? 3000;
+  const expressApp = expressOption?.expressApp ?? express();
+  const port = expressOption?.port ?? 3000;
+  const prefix = expressOption?.prefix ?? '/api';
 
   // https://stackoverflow.com/questions/18811286/nodejs-express-cache-and-304-status-code
   expressApp.disable('etag');
   expressApp.use(
-    '/api',
+    prefix,
     createExpressMiddleware({
       app,
       handlerResolver,

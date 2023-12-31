@@ -6,9 +6,7 @@ import { NammamthamEndpoint } from './types';
 export class NammathamApp {
   protected readonly _functions: NammamthamEndpoint[] = [];
 
-  constructor(protected handlerResolver: BaseHandlerResolver) {
-    console.log(magenta(`\nStart Nammatham, Type-safe Serverless Framework\n`));
-  }
+  constructor(protected handlerResolver: BaseHandlerResolver) {}
 
   /**
    * Start register functions on the runtime e.g. Azure Functions
@@ -18,6 +16,7 @@ export class NammathamApp {
     logger.debug('Registering functions...');
     await this.handlerResolver.resolveRegisterHandler(this);
     logger.info('All functions registered');
+    console.log(magenta(`\nStart Nammatham, Type-safe Serverless Library\n`));
   }
 
   addFunctions(...functions: NammamthamEndpoint[]) {

@@ -3,7 +3,7 @@ import { HttpRequest as AzureHttpRequest } from '@azure/functions';
 import { AzureFunctionsOptions, wrapAzureFunctionsRequestHandler } from 'trpc-azure-functions-adapter';
 import { AnyRouter } from '@trpc/server';
 import { AzureFunctionsTrigger } from '@nammatham/azure-functions';
-import { ExpressServerOption, expressServer, startExpress } from '@nammatham/express';
+import { ExpressServerOption, startExpress } from '@nammatham/express';
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { createContext } from './trpc';
@@ -40,16 +40,19 @@ export function tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: Trpc
     }
 
     const expressApp = option.expressServerOption?.expressApp ?? express();
+    const expressPrefix = option.expressServerOption?.prefix ?? '/api';
 
     expressApp.use(
-      '/trpc',
+      `${expressPrefix}/${prefix}`,
       trpcExpress.createExpressMiddleware({
         router: option.trpcOptions.router,
         createContext,
       })
     );
 
-    // TODO: Fix later, it might be bug 
+    // TODO: Fix later, this is a workaround to remove trpc function from NammatamApp,
+    // Thie will be empty NammatamApp with functions, e.g. only functions will register.
+    // However, the `startExpress` only needs `functions` from NammatamApp.
     const nammathamAppWithoutTrpc = new NammathamApp(handlerResolver).addFunctions(
       ...app.functions.filter(func => func.name !== 'trpc')
     );

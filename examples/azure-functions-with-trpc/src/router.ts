@@ -15,9 +15,9 @@ const publicProcedure = t.procedure;
 
 export const appRouter = t.router({
   greet: publicProcedure.query(({ input, ctx }) => {
-    console.log(ctx.request.params);
+    // console.log(ctx.request.params);
 
-    return `Greetings, `;
+    return `Greetings, hello`;
   }),
 });
 
