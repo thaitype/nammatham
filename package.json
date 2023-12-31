@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.ts'",
-    "dev": "nx run @nammatham/core:build && nx run-many -t dev",
+    "dev": "nx run @nammatham/core:build && nx run-many -t dev --projects=@nammatham/* --parallel=5",
     "preinstall": "tsx ./scripts/preinstall.ts",
     "release": "run-s build releaseOnly",
     "releaseOnly": "tsx ./scripts/release.ts",
