@@ -18,7 +18,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.3",
+    "@nammatham/core": "workspace:*",
     "@azure/functions": "^4.1.0",
     "colorette": "^2.0.20",
     "express": "^4.18.2",

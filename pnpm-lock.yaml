@@ -107,6 +107,37 @@ importers:
         specifier: ^5.0.2
         version: 5.3.3
 
+  examples/azure-functions-with-trpc:
+    dependencies:
+      '@azure/functions':
+        specifier: ^4.1.0
+        version: 4.1.0
+      '@nammatham/azure-functions':
+        specifier: 2.0.0-alpha.3
+        version: link:../../packages/azure-functions
+      '@nammatham/core':
+        specifier: 2.0.0-alpha.3
+        version: link:../../packages/core
+      '@nammatham/express':
+        specifier: 2.0.0-alpha.3
+        version: link:../../packages/express
+      trpc-azure-functions-adapter:
+        specifier: ^0.0.4
+        version: 0.0.4
+    devDependencies:
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      tsx:
+        specifier: ^4.7.0
+        version: 4.7.0
+      typescript:
+        specifier: ^5.0.2
+        version: 5.3.3
+
   packages/azure-functions:
     dependencies:
       '@azure/functions':
@@ -739,6 +770,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@trpc/server@10.45.0:
+    resolution: {integrity: sha512-2Fwzv6nqpE0Ie/G7PeS0EVR89zLm+c1Mw7T+RAGtU807j4oaUx0zGkBXTu5u9AI+j+BYNN2GZxJcuDTAecbr1A==}
+    dev: false
 
   /@types/body-parser@1.19.5:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -4251,6 +4286,13 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
     dev: true
+
+  /trpc-azure-functions-adapter@0.0.4:
+    resolution: {integrity: sha512-AIt3p6d74u5365kHjqTz8fxCV2JFHYtBHAKnCIC4d/iMlqo9CGZLBEDZieaatlDw7ZoL4lhV0BrOai+uxJDZFQ==}
+    dependencies:
+      '@azure/functions': 4.1.0
+      '@trpc/server': 10.45.0
+    dev: false
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
