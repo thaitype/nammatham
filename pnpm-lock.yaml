@@ -113,17 +113,20 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.3
+        specifier: workspace:*
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.3
+        specifier: workspace:*
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.3
+        specifier: workspace:*
         version: link:../../packages/express
+      '@trpc/server':
+        specifier: ^10.45.0
+        version: 10.45.0
       trpc-azure-functions-adapter:
-        specifier: ^0.0.4
-        version: 0.0.4
+        specifier: 0.0.5
+        version: 0.0.5
     devDependencies:
       cross-env:
         specifier: ^7.0.3
@@ -4287,8 +4290,8 @@ packages:
     hasBin: true
     dev: true
 
-  /trpc-azure-functions-adapter@0.0.4:
-    resolution: {integrity: sha512-AIt3p6d74u5365kHjqTz8fxCV2JFHYtBHAKnCIC4d/iMlqo9CGZLBEDZieaatlDw7ZoL4lhV0BrOai+uxJDZFQ==}
+  /trpc-azure-functions-adapter@0.0.5:
+    resolution: {integrity: sha512-/l5ev8RILqT8LG0EK2ACLwPphr3VAILnxSXmDnSVYtSCWKtCbk4KLan9IXRVBKdA/1t0wBIwJw7ZFLxO/H9CNg==}
     dependencies:
       '@azure/functions': 4.1.0
       '@trpc/server': 10.45.0
