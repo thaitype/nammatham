@@ -57,7 +57,7 @@ const helloFunction = func
 
 app.addFunctions(helloFunction);
 if (process.env.NODE_ENV === 'development') {
-  app.use(expressServer());
+  app.register(expressServer());
 }
 app.start();
 ```

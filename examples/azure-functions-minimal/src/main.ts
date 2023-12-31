@@ -18,5 +18,5 @@ const helloFunction = func
   });
 
 app.addFunctions(helloFunction);
-app.use(expressServer());
+app.register(expressServer());
 app.start();

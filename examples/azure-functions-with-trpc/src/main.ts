@@ -3,8 +3,8 @@ import { app } from './nammatham';
 import { appRouter, createContext } from './router';
 
 // No need to call expressServer() in dev mode, as it is already called by nammathamTrpcPlugin()
-// app.use(expressServer());
-app.use(
+// app.register(expressServer());
+app.register(
   tRpcAzureFunctionsPlugin({
     prefix: '/trpc',
     trpcOptions: {

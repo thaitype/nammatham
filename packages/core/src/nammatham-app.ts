@@ -33,8 +33,7 @@ export class NammathamApp {
     return this;
   }
 
-  // TODO: rename to register instead of use, for preventing confusion with express middleware
-  use<TReturn>(middleware: (app: NammathamApp, handlerResolver: BaseHandlerResolver) => TReturn) {
+  register<TReturn>(middleware: (app: NammathamApp, handlerResolver: BaseHandlerResolver) => TReturn) {
     middleware(this, this.handlerResolver);
   }
 
