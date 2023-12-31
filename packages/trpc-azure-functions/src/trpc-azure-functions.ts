@@ -11,7 +11,7 @@ import { createContext } from './trpc';
 export interface TrpcAzureFunctionsPluginOption<TRouter extends AnyRouter> {
   prefix?: string;
   trpcOptions: AzureFunctionsOptions<TRouter, AzureHttpRequest>;
-  expressServerOption?: ExpressServerOption;
+  expressPluginOption?: ExpressServerOption;
 }
 
 export function tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: TrpcAzureFunctionsPluginOption<TRouter>) {
@@ -33,14 +33,14 @@ export function tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: Trpc
       });
     app.addFunction(trpcFunction);
 
-    const isDevelopment = option?.expressServerOption?.isDevelopment ?? process.env.NODE_ENV === 'development';
+    const isDevelopment = option?.expressPluginOption?.isDevelopment ?? process.env.NODE_ENV === 'development';
     if (!isDevelopment) {
       logger.debug('Skipping express server in development mode (trpc)');
       return;
     }
 
-    const expressApp = option.expressServerOption?.expressApp ?? express();
-    const expressPrefix = option.expressServerOption?.prefix ?? '/api';
+    const expressApp = option.expressPluginOption?.expressApp ?? express();
+    const expressPrefix = option.expressPluginOption?.prefix ?? '/api';
 
     expressApp.use(
       `${expressPrefix}/${prefix}`,
@@ -63,7 +63,7 @@ export function tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: Trpc
         app: nammathamAppWithoutTrpc,
       },
       {
-        ...option.expressServerOption,
+        ...option.expressPluginOption,
         expressApp,
       }
     );
