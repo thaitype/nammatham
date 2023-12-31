@@ -6,15 +6,19 @@
 Type-safe Serverless Library for Azure Functions and friends 
 </p>
 
-<p align="center"><a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/v/nammatham" alt="npm version"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
+<p align="center"><a href="https://www.npmjs.com/package/@nammatham/core"><img src="https://img.shields.io/npm/v/@nammatham/core" alt="npm version"></a> <a href="https://www.npmjs.com/package/@nammatham/core"><img src="https://img.shields.io/npm/dt/@nammatham/core" alt="npm download"></a></p>
 
 
-> Due to Azure Functions Node.js v4 Release GA General availability, **Nammatham** v1 is now maintainance mode.
+> 🚧 Alpha Stage: Internal Use Only 🚧
+> 
+> Please note that Nammatham v2 is currently in its Alpha stage and is intended for internal use only. As we actively develop and refine the platform, be aware that the API may undergo frequent changes.
+> 
+> Note: [Nammatham v1](https://www.npmjs.com/package/nammatham) is currently in maintenance mode. no new features are actively being developed
 
-| Version | Status         | Azure Functions Node.js | Branch       | Build Status                                                                                                                                                                                                                                                                                                          |
-| ------- | -------------- | ----------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| v1.x    | Maintenance    | v3.x                    | [v1.x][v1.x] | [![Build & Test](https://github.com/thaitype/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/thaitype/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) |
-| v2.x    | Alpha | v4.x                    | [main][main] | [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Afunc-v4)                                                                                                                                                                                                            |
+| Version | Status      | Azure Functions Node.js | Branch       | Build Status                                                                                                                                                                                                                                                                                                      |
+| ------- | ----------- | ----------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v1.x    | Maintenance | v3.x                    | [v1.x][v1.x] | [![Build & Test](https://github.com/thaitype/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/thaitype/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) |
+| v2.x    | Alpha       | v4.x                    | [main][main] | [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Afunc-v4)                                                                                                                                                                                                        |
 
 [v1.x]: https://github.com/thaitype/nammatham/tree/v1.x
 [main]: https://github.com/thaitype/nammatham/tree/main
@@ -23,14 +27,9 @@ Type-safe Serverless Library for Azure Functions and friends
 ## Description
 Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs.
 
-## Talks 
-Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @ Microsoft Thailand, 25 Mar 2023
-[![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=n6B4-5Lt2h0) (Thai speech, subtitle will added later)
-- Slides: https://docs.google.com/presentation/d/1WUIXaUxXaiixZ2bgGCfx-f4Gdrmjl4RfbwKaEfAC6t4/edit?usp=sharing
+## Getting Started for Azure Functions
 
-## Minimal Get Started
-
-For dev server, using express.js
+You can see [examples](examples) or follow the minimal app getting started below:
 
 ```typescript
 import { AzureFunctionsAdapter } from "@nammatham/azure-functions";
@@ -63,33 +62,49 @@ Then edit `package.json` like this;
 {
   "main": "dist/src/main.js",
   "scripts": {
-    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts"
+    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts",
+    "start": "tsc && func start"
   }
 }
 ```
 
-Run 
+Run Dev Server on locally, (For dev server use `tsx watch` for reloading run dev server using `express` )
 
 ```
 npm run dev
 ```
 
-The result commandline will show (Dev Server): 
+Run Azure Functions on locally (Using Official Azure Functions Node.js)
 
 ```
-
-Start Nammatham, Type-safe Serverless Framework
-
-[12:44:14.784] INFO (44575): Using adapter: AzureFunctionsAdapter
-[12:44:14.786] INFO (44575): Function "hello" added
-[12:44:14.786] INFO (44575): Using middleware: expressPlugin
-[12:44:14.793] INFO (44575): All functions registered
-[12:44:14.794] INFO (44575): Dev Server started at http://localhost:3000
-
-Functions:
-
-        hello: [GET] http://localhost:3000/api/hello-world
+npm start
 ```
+
+
+## Nammatham Packages
+
+- [core][@nammatham/core], Nammatham Core package for initializing Nammatham App
+
+### Available Adatpers
+
+- [azure-functions][@nammatham/azure-functions], Azure Functions Adapter for Nammatham
+
+### Available Plugins
+
+- [express][@nammatham/express], Express Plugin for run server. Nammatham itself doesn't contain any server, enabling this plugin to provide better DX than the original server e.g. Azure Functions Runtime
+- [trpc-azure-functions][@nammatham/trpc-azure-functions], provide [tRPC](https://trpc.io/) Plugin for Azure Functions, inclduing [express][@nammatham/express] server for local testing.
+
+[@nammatham/core]: packages/core
+[@nammatham/azure-functions]: packages/azure-functions
+[@nammatham/express]: packages/express
+[@nammatham/trpc-azure-functions]: packages/trpc-azure-functions
+
+
+## Talks 
+Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @ Microsoft Thailand, 25 Mar 2023
+[![](docs/imgs/azure-open-source-day-2023.png)](https://www.youtube.com/watch?v=n6B4-5Lt2h0) (Thai speech, subtitle will added later)
+- Slides: https://docs.google.com/presentation/d/1WUIXaUxXaiixZ2bgGCfx-f4Gdrmjl4RfbwKaEfAC6t4/edit?usp=sharing
+
 
 <!-- ## What's different with Azure Functions v4 (Official Library) -->
 
