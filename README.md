@@ -1,4 +1,3 @@
-
 <p align="center">
   <a href="http://thadaw.com/" target="blank"><img src="https://i.ibb.co/QmTh7x4/Nammatham-Logo-v2.png" width="120" alt="Nammatham Logo" /></a>
 </p>
