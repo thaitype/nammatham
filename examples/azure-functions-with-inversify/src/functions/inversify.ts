@@ -1,6 +1,9 @@
+import 'reflect-metadata';
 import { interfaces, Container } from 'inversify';
 import { DataService } from '../services/data';
 import { Service } from '../services/service';
+import { Tokens, Option } from '../constants';
+import { container } from '../container';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 class InversifyProvider<Items extends Record<string, interfaces.ServiceIdentifier<unknown>> = {}> {
@@ -25,6 +28,7 @@ class Injection<OutputType, Items extends Record<string, interfaces.ServiceIdent
       throw new Error('Only one item can be injected at a time');
     }
     this.provider.items = {
+      ...this.provider.items,
       ...(item as unknown as Items),
     };
     return this.provider as InversifyProvider<
@@ -39,10 +43,10 @@ function inversify<T, TReturn>(container: Container) {
   return new InversifyProvider(container);
 }
 
-const container = new Container();
 const result = inversify(container)
   .inject<DataService>().with({ dataService: DataService })
-  .inject<Service>().with({ service: Service });
+  .inject<Service>().with({ service: Service })
+  .inject<Option>().with({ option: Tokens.Option })
 // .resolve(({ dataService, service }: MockResolveType) => async (request, ctx) => {
 //   return {
 //     body: dataService.getData(),
@@ -51,4 +55,10 @@ const result = inversify(container)
 
 const service = container.get(result.items.service);
 console.log(`service.getData()`, service.getData());
+
+const dataService = container.get(result.items.dataService);
+console.log(`dataService.getData()`, dataService.getData());
+
+const option = container.get(result.items.option);
+console.log(`option`, option);
 
