@@ -1,4 +1,4 @@
-import type { GenericFunctionOptions, HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit } from '@azure/functions';
+import type { GenericFunctionOptions, HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit, Timer, TimerFunctionOptions } from '@azure/functions';
 import { app, HttpMethodFunctionOptions } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
 import { FunctionOption } from './types';
@@ -59,6 +59,19 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       }),
       funcOption => {
         app.http(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+  timer(funcName: string, option: Omit<TimerFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<Timer, void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.timer(funcName, {
           ...option,
           ...funcOption,
         });

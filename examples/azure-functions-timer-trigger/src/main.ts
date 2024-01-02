@@ -1,8 +1,8 @@
 import { expressPlugin } from '@nammatham/express';
-import hello from './functions/hello';
+import simpleTimer from './functions/simple-timer';
 import { app } from './nammatham';
 
-app.addFunctions(hello);
+app.addFunctions(simpleTimer);
 
 app.register(
   expressPlugin({
