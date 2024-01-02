@@ -23,7 +23,9 @@ class InversifyProvider<Items extends Record<string, interfaces.ServiceIdentifie
 class Injection<OutputType, Items extends Record<string, interfaces.ServiceIdentifier<unknown>>> {
   constructor(private readonly provider: InversifyProvider<Items>) {}
 
-  with<NewItem extends Record<string, interfaces.ServiceIdentifier<OutputType>>>(item: NewItem) {
+  with<WithOutputType extends OutputType, NewItem extends Record<string, interfaces.ServiceIdentifier<WithOutputType>>>(
+    item: NewItem
+  ) {
     if (Object.keys(item).length > 1) {
       throw new Error('Only one item can be injected at a time');
     }
@@ -33,7 +35,7 @@ class Injection<OutputType, Items extends Record<string, interfaces.ServiceIdent
     };
     return this.provider as InversifyProvider<
       Items & {
-        [K in keyof NewItem]: interfaces.ServiceIdentifier<OutputType>;
+        [K in keyof NewItem]: interfaces.ServiceIdentifier<WithOutputType>;
       }
     >;
   }
@@ -46,7 +48,7 @@ function inversify(container: Container) {
 const result = inversify(container)
   .inject<DataService>().with({ dataService: DataService })
   .inject<Service>().with({ service: Service })
-  .inject<Option>().with({ option: Tokens.Option })
+  .inject<Option>().with({ option: Tokens.Option });
 
 const service = container.get(result.items.service);
 console.log(`service.getData()`, service.getData());
@@ -56,4 +58,3 @@ console.log(`dataService.getData()`, dataService.getData());
 
 const option = container.get(result.items.option);
 console.log(`option`, option);
-
