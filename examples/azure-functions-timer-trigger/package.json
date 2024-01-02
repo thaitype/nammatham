@@ -1,5 +1,5 @@
 {
-  "name": "@examples/azure-functions-with-trpc",
+  "name": "@examples/azure-functions-timer-trigger",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",
@@ -7,19 +7,15 @@
     "build": "tsc",
     "lint": "tsc --noEmit",
     "start": "tsc && func start",
-    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts",
-    "dev:old": "nodemon --watch src --ext ts --exec 'npm run build'"
+    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.1.0",
-    "@nammatham/azure-functions": "workspace:*",
     "@nammatham/core": "workspace:*",
     "@nammatham/express": "workspace:*",
-    "@nammatham/trpc-azure-functions": "workspace:*",
-    "@trpc/server": "^10.45.0",
-    "trpc-azure-functions-adapter": "0.0.5"
+    "@nammatham/azure-functions": "workspace:*",
+    "@azure/functions": "^4.1.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

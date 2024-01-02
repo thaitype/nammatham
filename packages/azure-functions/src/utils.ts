@@ -1,5 +1,5 @@
 import { blue, green, yellow } from 'colorette';
-import { NammathamApp, trimSlash } from '@nammatham/core';
+import { AfterServerStartedMetadata, NammathamApp, trimSlash } from '@nammatham/core';
 import { AzureFunctionsEndpoint } from './types';
 
 function getMethods(func: AzureFunctionsEndpoint<any, any>): string[] {
@@ -11,23 +11,38 @@ function getMethods(func: AzureFunctionsEndpoint<any, any>): string[] {
 }
 
 function getFullUrl(func: AzureFunctionsEndpoint<any, any>, port?: number): string {
-  if (typeof func.endpointOption?.route !== 'string') return '';
-  return `http://localhost${port ? `:${port}` : ''}/api/${trimSlash(func.endpointOption?.route)}`;
+  const endpoint = func.endpointOption?.route ?? func.name;
+  if(typeof endpoint !== 'string') return '';
+  return `http://localhost${port ? `:${port}` : ''}/api/${trimSlash(endpoint)}`;
 }
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export async function printRegisteredFunctions(app: NammathamApp, port?: number) {
-  const azureFunctions = app.functions.filter(func => func.type === 'azureFunctions') as AzureFunctionsEndpoint<
-    any,
-    any
-  >[];
+export async function printRegisteredFunctions(app: NammathamApp, option: AfterServerStartedMetadata) {
+  const azureFunctions = app.functions
+    .filter(func => func.type === 'azureFunctions')
+    .filter(func => func.endpointOption?.type === 'http') as AzureFunctionsEndpoint<any, any>[];
   if (azureFunctions.length === 0) return;
   await delay(200);
   console.log(`\n${yellow('Functions:')}\n`);
   for (const func of azureFunctions) {
     const methods = `[${getMethods(func).join(',')}]`;
-    console.log(`\t${yellow(func.name)}: ${blue(methods)} ${green(getFullUrl(func, port))}\n`);
+    console.log(`\t${yellow(func.name)}: ${blue(methods)} ${green(getFullUrl(func, option.port))}\n`);
+  }
+  console.log('');
+}
+
+export async function printRegisteredNonHttpFunctions(app: NammathamApp, option: AfterServerStartedMetadata) {
+  const azureFunctions = app.functions.filter(func => func.type === 'azureFunctions').filter(func => func.endpointOption?.type !== 'http') as AzureFunctionsEndpoint<
+    any,
+    any
+  >[];
+  if (azureFunctions.length === 0) return;
+  await delay(200);
+  console.log(`\n${yellow('Debug Functions:')}\n`);
+  for (const func of azureFunctions) {
+    const methods = `[GET]`;
+    console.log(`\t${yellow(func.name)}: ${blue(methods)} ${green(getFullUrl(func, option.port))}\n`);
   }
   console.log('');
 }

@@ -8,6 +8,7 @@ export interface ExpressServerOption {
   port?: number;
   expressApp?: express.Express;
   isDevelopment?: boolean;
+  allowAllFunctionsAccessByHttp?: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
   const expressApp = expressOption?.expressApp ?? express();
   const port = expressOption?.port ?? 3000;
   const prefix = expressOption?.prefix ?? '/api';
+  const allowAllFunctionsAccessByHttp = expressOption?.allowAllFunctionsAccessByHttp ?? false;
 
   // https://stackoverflow.com/questions/18811286/nodejs-express-cache-and-304-status-code
   expressApp.disable('etag');
@@ -44,12 +46,15 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
     createExpressMiddleware({
       app,
       handlerResolver,
+      option: {
+        allowAllFunctionsAccessByHttp,
+      }
       // createContext,
     })
   );
 
   expressApp.listen(port, async () => {
     logger.info(`Dev Server started at http://localhost:${port}`);
-    await handlerResolver.afterServerStarted(app, { port });
+    await handlerResolver.afterServerStarted(app, { port, allowAllFunctionsAccessByHttp });
   });
 }

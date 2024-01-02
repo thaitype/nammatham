@@ -18,7 +18,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.5",
+    "@nammatham/core": "workspace:*",
     "express": "^4.18.2"
   },
   "repository": {

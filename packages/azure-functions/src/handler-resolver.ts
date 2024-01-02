@@ -8,7 +8,7 @@ import type {
 } from 'express';
 import { HttpRequest } from './http/HttpRequest';
 import { v4 as uuidv4 } from 'uuid';
-import { printRegisteredFunctions } from './utils';
+import { printRegisteredFunctions, printRegisteredNonHttpFunctions } from './utils';
 import { yellow } from 'colorette';
 
 function logExecutedFunction(
@@ -121,6 +121,7 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
     try {
       result = await endpoint.invokeHandler(new HttpRequest(req), context);
       logExecutedFunction(startTime, endpoint, context, 'Succeeded');
+      if(result === undefined) return;
       const response = result instanceof HttpResponse ? result : new HttpResponse(result);
       return await convertHttpResponseToExpressResponse(res, response);
     } catch (error) {
@@ -156,7 +157,8 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
   }
 
   override async afterServerStarted(app: NammathamApp, metadata: AfterServerStartedMetadata) {
-    return printRegisteredFunctions(app, metadata.port);
+    await printRegisteredFunctions(app, metadata);
+    await printRegisteredNonHttpFunctions(app, metadata);
   }
 
   protected mockInvocationContext(): InvocationContext {
