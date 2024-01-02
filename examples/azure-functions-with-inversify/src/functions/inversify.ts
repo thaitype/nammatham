@@ -39,7 +39,7 @@ class Injection<OutputType, Items extends Record<string, interfaces.ServiceIdent
   }
 }
 
-function inversify<T, TReturn>(container: Container) {
+function inversify(container: Container) {
   return new InversifyProvider(container);
 }
 
@@ -47,11 +47,6 @@ const result = inversify(container)
   .inject<DataService>().with({ dataService: DataService })
   .inject<Service>().with({ service: Service })
   .inject<Option>().with({ option: Tokens.Option })
-// .resolve(({ dataService, service }: MockResolveType) => async (request, ctx) => {
-//   return {
-//     body: dataService.getData(),
-//   };
-// });
 
 const service = container.get(result.items.service);
 console.log(`service.getData()`, service.getData());
