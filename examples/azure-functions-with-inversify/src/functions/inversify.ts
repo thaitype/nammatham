@@ -1,6 +1,4 @@
 import { interfaces, Container } from 'inversify';
-import { Tokens } from '../constants';
-import { func } from '../nammatham';
 import { DataService } from '../services/data';
 import { Service } from '../services/service';
 
@@ -19,14 +17,21 @@ class InversifyProvider<Items extends Record<string, interfaces.ServiceIdentifie
   }
 }
 
-class Injection<T, Items extends Record<string, interfaces.ServiceIdentifier<unknown>>> {
+class Injection<OutputType, Items extends Record<string, interfaces.ServiceIdentifier<unknown>>> {
   constructor(private readonly provider: InversifyProvider<Items>) {}
 
-  with<NewItem extends Record<string, interfaces.ServiceIdentifier<T>>>(item: NewItem) {
+  with<NewItem extends Record<string, interfaces.ServiceIdentifier<OutputType>>>(item: NewItem) {
+    if (Object.keys(item).length > 1) {
+      throw new Error('Only one item can be injected at a time');
+    }
     this.provider.items = {
       ...(item as unknown as Items),
     };
-    return this.provider as InversifyProvider<Items & NewItem>;
+    return this.provider as InversifyProvider<
+      Items & {
+        [K in keyof NewItem]: interfaces.ServiceIdentifier<OutputType>;
+      }
+    >;
   }
 }
 
@@ -35,14 +40,15 @@ function inversify<T, TReturn>(container: Container) {
 }
 
 const container = new Container();
-const result =inversify(container)
+const result = inversify(container)
   .inject<DataService>().with({ dataService: DataService })
-  .inject<string>().with({ service: Tokens.Service })
-  // .resolve(({ dataService, service }: MockResolveType) => async (request, ctx) => {
-  //   return {
-  //     body: dataService.getData(),
-  //   };
-  // });
+  .inject<Service>().with({ service: Service });
+// .resolve(({ dataService, service }: MockResolveType) => async (request, ctx) => {
+//   return {
+//     body: dataService.getData(),
+//   };
+// });
 
-type A = typeof result.items
-  // ^?
+const service = container.get(result.items.service);
+console.log(`service.getData()`, service.getData());
+
