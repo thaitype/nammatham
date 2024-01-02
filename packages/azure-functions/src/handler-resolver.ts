@@ -121,7 +121,7 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
     try {
       result = await endpoint.invokeHandler(new HttpRequest(req), context);
       logExecutedFunction(startTime, endpoint, context, 'Succeeded');
-      if(result === undefined) return;
+      if (result === undefined) return;
       const response = result instanceof HttpResponse ? result : new HttpResponse(result);
       return await convertHttpResponseToExpressResponse(res, response);
     } catch (error) {
@@ -133,7 +133,7 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
 
   override async resolveRegisterHandler(app: NammathamApp) {
     logger.debug(`Starting using Azure Functions register handler`);
-    const azureFunctions = app.functions.filter(func => func.type === 'azureFunctions') as AzureFunctionsEndpoint<
+    const azureFunctions = app.functions.filter(func => func.type === 'azure-functions') as AzureFunctionsEndpoint<
       any,
       any
     >[];
@@ -142,7 +142,15 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
       logger.warn(`\n\n${yellow('No functions registered, did you forget to add functions?')}\n`);
     }
 
-    if (process.env.NAMMATHAM_ENV === 'development') {
+    console.log(`runtime: ${app.runtime}, isDevelopment: ${app.isDevelopment}`);
+
+    if (app.runtime === 'express' && process.env.NAMMATHAM_ENV !== 'development') {
+      throw new Error(
+        `expressPlugin will not start express server in production mode for Azure Functions Adapter, because Azure Functions will start the server for us.
+        Please make set isDevelopment to be 'false' when use expressPlugin in production mode.`
+      );
+    }
+    if (app.isDevelopment === true) {
       logger.debug(`Skipping Register Azure Function handler in development mode`);
       return;
     }

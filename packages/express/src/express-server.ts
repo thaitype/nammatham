@@ -18,9 +18,11 @@ export function expressPlugin(option?: ExpressServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
     const isDevelopment = option?.isDevelopment ?? process.env.NAMMATHAM_ENV === 'development';
     if (!isDevelopment) {
-      logger.debug('Skipping express server in development mode');
+      logger.debug('Skipping express server');
       return;
     }
+    app.setRuntime('express');
+    app.setDevelopment(isDevelopment);
     logger.info(`Using plugin: expressPlugin`);
     startExpress(
       {

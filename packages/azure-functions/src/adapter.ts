@@ -8,6 +8,9 @@ export class AzureFunctionsAdapter extends BaseRuntimeAdapter<AzureFunctionsTrig
   }
 
   createApp() {
-    return new NammathamApp(new AzureFunctionsHandlerResolver());
+    const app = new NammathamApp(new AzureFunctionsHandlerResolver());
+    app.setRuntime('azure-functions');
+    app.setDevelopment(false);
+    return app;
   }
 }

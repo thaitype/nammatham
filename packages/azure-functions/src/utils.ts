@@ -20,7 +20,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function printRegisteredFunctions(app: NammathamApp, option: AfterServerStartedMetadata) {
   const azureFunctions = app.functions
-    .filter(func => func.type === 'azureFunctions')
+    .filter(func => func.type === 'azure-functions')
     .filter(func => func.endpointOption?.type === 'http') as AzureFunctionsEndpoint<any, any>[];
   if (azureFunctions.length === 0) return;
   await delay(200);
@@ -32,8 +32,11 @@ export async function printRegisteredFunctions(app: NammathamApp, option: AfterS
   console.log('');
 }
 
+/**
+ * FIXME: This functions is duplicated with printRegisteredFunctions, it should be merged later.
+ */
 export async function printRegisteredNonHttpFunctions(app: NammathamApp, option: AfterServerStartedMetadata) {
-  const azureFunctions = app.functions.filter(func => func.type === 'azureFunctions').filter(func => func.endpointOption?.type !== 'http') as AzureFunctionsEndpoint<
+  const azureFunctions = app.functions.filter(func => func.type === 'azure-functions').filter(func => func.endpointOption?.type !== 'http') as AzureFunctionsEndpoint<
     any,
     any
   >[];
