@@ -42,7 +42,8 @@ export async function printRegisteredNonHttpFunctions(app: NammathamApp, option:
   >[];
   if (azureFunctions.length === 0) return;
   await delay(200);
-  console.log(`\n${yellow('Debug Functions:')}\n`);
+  console.log(`\n${yellow(`----------------------------------------------`)}`);
+  console.log(`\n${yellow('Non-HTTP Functions (In Develpment Mode Only):')}\n`);
   for (const func of azureFunctions) {
     const methods = `[GET]`;
     console.log(`\t${yellow(func.name)}: ${blue(methods)} ${green(getFullUrl(func, option.port))}\n`);

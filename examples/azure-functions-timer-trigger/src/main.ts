@@ -6,7 +6,6 @@ app.addFunctions(hello);
 
 app.register(
   expressPlugin({
-    isDevelopment: true,
     allowAllFunctionsAccessByHttp: true,
   })
 );
