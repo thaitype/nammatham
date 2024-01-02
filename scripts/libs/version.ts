@@ -44,3 +44,16 @@ async function modifyDependency(packagePath: string, newVersion: string) {
   }
   await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }
+
+
+export async function readPackageJson(packagePath: string) {
+  const packageJsonPath = path.resolve(packagePath, 'package.json');
+  const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+  if (!('name' in packageJson && 'version' in packageJson)) {
+    throw new Error(`Invalid package.json: ${packageJsonPath}`);
+  }
+  return packageJson as {
+    name: string;
+    version: string;
+  };
+}

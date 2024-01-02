@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { copyReadmeFromRoot, execute, modifyAllDependencies, modifyPackagesVersion, modifyVersion } from './libs';
+import { copyReadmeFromRoot, execute, modifyAllDependencies, modifyPackagesVersion, modifyVersion, readPackageJson } from './libs';
 
 export type ReleaseType = 'major' | 'minor' | 'patch' | 'alpha';
 
@@ -61,18 +61,6 @@ function bumpVersion(version: string, option: { dryRun?: boolean; releaseType: R
     case 'alpha':
       return `${major}.${minor}.${patch}-alpha.${alpha + 1}`;
   }
-}
-
-async function readPackageJson(packagePath: string) {
-  const packageJsonPath = path.resolve(packagePath, 'package.json');
-  const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-  if (!('name' in packageJson && 'version' in packageJson)) {
-    throw new Error(`Invalid package.json: ${packageJsonPath}`);
-  }
-  return packageJson as {
-    name: string;
-    version: string;
-  };
 }
 
 main().catch(error => {
