@@ -20,7 +20,7 @@ export interface FunctionOption {
 }
 
 export interface AzureFunctionsEndpoint<TTriggerType, TReturnType> extends NammamthamEndpoint, FunctionOption {
-  type: 'azureFunctions';
+  type: 'azure-functions';
   invokeHandler: (triggerInput: TTriggerType, context: InvocationContext) => PromiseLike<TReturnType>;
   registerFunc: RegisterFunctionOption;
 }

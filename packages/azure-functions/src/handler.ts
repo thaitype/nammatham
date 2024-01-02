@@ -16,7 +16,7 @@ export class AzureFunctionsHandler<TTriggerType, TReturnType> {
     };
     return {
       ...this.functionOption,
-      type: 'azureFunctions',
+      type: 'azure-functions',
       name: this.funcName,
       invokeHandler,
       registerFunc: this.registerFunc,
