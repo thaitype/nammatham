@@ -45,14 +45,12 @@ export function inversify(container: Container) {
   return new InversifyProvider(container);
 }
 
-const result = inversify(container)
-  .inject('dataService', DataService).to<DataService>()
-  .inject('service', Service).to<Service>()
-  .inject('option', Tokens.Option).to<Option>()
-  // .inject<Service>().with('service', Service)
-  // .inject<Option>().with('option', Tokens.Option)
-  .resolve(({ dataService, service, option }) => {
-    console.log(`service.getData()`, service.getData());
-    console.log(`dataService.getData()`, dataService.getData());
-    console.log(`option`, option);
-  });
+// const result = inversify(container)
+//   .inject('dataService', DataService).to<DataService>()
+//   .inject('service', Service).to<Service>()
+//   .inject('option', Tokens.Option).to<Option>()
+//   .resolve(({ dataService, service, option }) => {
+//     console.log(`service.getData()`, service.getData());
+//     console.log(`dataService.getData()`, dataService.getData());
+//     console.log(`option`, option);
+//   });
