@@ -49,7 +49,21 @@ class Inversify<
 
 const result = new Inversify(container)
   .inject<Option>(Tokens.Option)
-  .inject<DataService>(DataService).inject<Service>(Service);
+  .inject<DataService>(DataService)
+  .inject<Service>(Service);
 
 type Result = typeof result.items;
-    // ^?
+/*
+
+type Result = {
+    '0': interfaces.ServiceIdentifier<Option>;
+} & {
+    '1': interfaces.ServiceIdentifier<DataService>;
+} & {
+    '2': interfaces.ServiceIdentifier<Service>;
+}
+
+*/
+
+// FIXME: Can't get this to work
+
