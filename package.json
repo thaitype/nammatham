@@ -1,6 +1,6 @@
 {
   "name": "@nammatham/monorepo",
-  "version": "2.0.0-alpha.6",
+  "version": "2.0.0-alpha.7",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
