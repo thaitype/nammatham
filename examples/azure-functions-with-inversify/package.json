@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.1.0",
+    "@di-extra/inversify": "^0.1.0",
     "@nammatham/azure-functions": "workspace:*",
     "@nammatham/core": "workspace:*",
     "@nammatham/express": "workspace:*",

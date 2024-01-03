@@ -146,6 +146,9 @@ importers:
       '@azure/functions':
         specifier: ^4.1.0
         version: 4.1.0
+      '@di-extra/inversify':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@nammatham/azure-functions':
         specifier: workspace:*
         version: link:../../packages/azure-functions
@@ -321,6 +324,12 @@ packages:
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
+
+  /@di-extra/inversify@0.1.0:
+    resolution: {integrity: sha512-qzOjEOQ75qdUVqp3eUQmW7FmKIkyto+ZoXZc/GoUDlfYWNcYINC61SvX2MWiQ6aMjVWUjDDUoyBarLG69Ir9PA==}
+    dependencies:
+      inversify: 6.0.2
+    dev: false
 
   /@esbuild/aix-ppc64@0.19.11:
     resolution: {integrity: sha512-FnzU0LyE3ySQk7UntJO4+qIiQgI7KoODnZg5xzXIrFJlKd2P2gwHsHY4927xj9y5PJmJSzULiUCWmv7iWnNa7g==}
