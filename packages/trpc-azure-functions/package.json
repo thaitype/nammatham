@@ -24,7 +24,8 @@
     "@nammatham/express": "2.0.0-alpha.6",
     "@trpc/server": "^10.45.0",
     "express": "^4.18.2",
-    "trpc-azure-functions-adapter": "0.0.5"
+    "trpc-azure-functions-adapter": "0.0.5",
+    "@types/express": "^4.17.21"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21"
   }
 }
