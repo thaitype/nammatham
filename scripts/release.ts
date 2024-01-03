@@ -6,6 +6,7 @@ export type ReleaseType = 'major' | 'minor' | 'patch' | 'alpha';
 
 async function main() {
   const dryRun = process.env.DRY_RUN === 'true';
+  const otp = process.env.NPM_OTP;
   const releaseType: ReleaseType = 'alpha'; // TODO: use @inquirer/prompts to select release type later
   console.log(`Starting release nammatham... ${dryRun ? 'with dry-run' : ''}`);
   const { version } = await readPackageJson(process.cwd());
@@ -22,6 +23,7 @@ async function main() {
     directory: path.resolve('packages'),
     dryRun,
     version: newVersion,
+    otp,
   });
   await execute('git', ['tag', '-a', `v${newVersion}`, '-m', `v${newVersion}`], { dryRun });
   await execute('git', ['push', 'origin', '--all'], { dryRun });
@@ -32,15 +34,17 @@ export interface PublishPackagesOptions {
   version: string;
   directory: string;
   dryRun?: boolean;
+  otp?: string;
 }
 
-async function publishPackages({ directory, dryRun, version }: PublishPackagesOptions) {
+async function publishPackages({ directory, dryRun, version, otp }: PublishPackagesOptions) {
   const packages = await fs.readdir(directory);
   for (const packageName of packages) {
     const packagePath = path.resolve(directory, packageName);
     const { name } = await readPackageJson(packagePath);
     console.log(`Publishing ${name}@${version}`);
-    await execute('npm', ['publish', '--access', 'public'], {
+    const otpOption = otp ? ['--otp', otp] : [];
+    await execute('npm', ['publish', '--access', 'public', ...otpOption], {
       cwd: packagePath,
       dryRun,
     });
