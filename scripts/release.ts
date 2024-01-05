@@ -1,13 +1,15 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { input, select } from '@inquirer/prompts';
 import { copyReadmeFromRoot, execute, modifyAllDependencies, modifyPackagesVersion, modifyVersion, readPackageJson } from './libs';
+import { releaseTypeSelectOption } from './input-option';
 
 export type ReleaseType = 'major' | 'minor' | 'patch' | 'alpha';
 
 async function main() {
   const dryRun = process.env.DRY_RUN === 'true';
-  const otp = process.env.NPM_OTP;
-  const releaseType: ReleaseType = 'alpha'; // TODO: use @inquirer/prompts to select release type later
+  const releaseType = await select(releaseTypeSelectOption) as ReleaseType;
+
   console.log(`Starting release nammatham... ${dryRun ? 'with dry-run' : ''}`);
   const { version } = await readPackageJson(process.cwd());
   console.log(`Current version: ${version}`);
@@ -23,7 +25,6 @@ async function main() {
     directory: path.resolve('packages'),
     dryRun,
     version: newVersion,
-    otp,
   });
   await execute('git', ['tag', '-a', `v${newVersion}`, '-m', `v${newVersion}`], { dryRun });
   await execute('git', ['push', 'origin', '--all'], { dryRun });
@@ -34,10 +35,12 @@ export interface PublishPackagesOptions {
   version: string;
   directory: string;
   dryRun?: boolean;
-  otp?: string;
 }
 
-async function publishPackages({ directory, dryRun, version, otp }: PublishPackagesOptions) {
+async function publishPackages({ directory, dryRun, version }: PublishPackagesOptions) {
+  console.log('Publishing packages...');
+  const otp = await input({ message: 'Enter your OTP' }); // Temp method, use github actions later
+
   const packages = await fs.readdir(directory);
   for (const packageName of packages) {
     const packagePath = path.resolve(directory, packageName);

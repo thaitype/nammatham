@@ -119,8 +119,8 @@ pnpm pre-local && pnpm install
 pnpm dev
 # After dev before submitting PRs (Update workspace to actual dependencies), `pnpm install` for making sure lockfile is correct.
 pnpm post-local && pnpm install
-# Release package with OTP (Temporary Use)
-export NPM_OTP="123456" && pnpm release
+# Release package
+pnpm release
 ```
 
 ## Inspiration 
