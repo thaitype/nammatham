@@ -18,7 +18,7 @@ Type-safe Serverless Library for Azure Functions and friends
 | Version | Status      | Azure Functions Node.js | Branch       | Build Status                                                                                                                                                                                                                                                                                                      |
 | ------- | ----------- | ----------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | v1.x    | Maintenance | v3.x                    | [v1.x][v1.x] | [![Build & Test](https://github.com/thaitype/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/thaitype/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) |
-| v2.x    | Alpha       | v4.x                    | [main][main] | [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Afunc-v4)                                                                                                                                                                                                        |
+| v2.x    | Alpha       | v4.x                    | [main][main] | [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Av2-blocker)                                                                                                                                                                                                        |
 
 [v1.x]: https://github.com/thaitype/nammatham/tree/v1.x
 [main]: https://github.com/thaitype/nammatham/tree/main
@@ -44,10 +44,10 @@ const helloFunction = func
   .httpGet('hello', {
     route: 'hello-world',
   })
-  .handler(async (request, ctx) => {
-    ctx.context.log('HTTP trigger function processed a request.');
-    ctx.context.debug(`Http function processed request for url "${request.url}"`);
-    const name = request.query.get('name') || (await request.text()) || 'world';
+  .handler(async ({trigger, context}) => {
+    context.log('HTTP trigger function processed a request.');
+    context.debug(`Http function processed request for url "${trigger.url}"`);
+    const name = trigger.query.get('name') || (await trigger.text()) || 'world';
     return { body: `Hello, ${name}!` };
   });
 
@@ -107,6 +107,21 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 
 
 <!-- ## What's different with Azure Functions v4 (Official Library) -->
+
+## Local Dev Setup
+
+```bash
+# Install dependencies
+pnpm install
+# Before dev (Update workspace to local dependencies)
+pnpm pre-local && pnpm install
+# While dev
+pnpm dev
+# After dev before submitting PRs (Update workspace to actual dependencies), `pnpm install` for making sure lockfile is correct.
+pnpm post-local && pnpm install
+# Release package
+pnpm release
+```
 
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
