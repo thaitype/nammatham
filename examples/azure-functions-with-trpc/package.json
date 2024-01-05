@@ -7,6 +7,7 @@
     "build": "tsc",
     "lint": "tsc --noEmit",
     "start": "tsc && func start",
+    "start:client": "tsx src/client.ts",
     "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts",
     "dev:old": "nodemon --watch src --ext ts --exec 'npm run build'"
   },
@@ -18,6 +19,7 @@
     "@nammatham/core": "2.0.0-alpha.7",
     "@nammatham/express": "2.0.0-alpha.7",
     "@nammatham/trpc-azure-functions": "2.0.0-alpha.7",
+    "@trpc/client": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "trpc-azure-functions-adapter": "0.0.5"
   },

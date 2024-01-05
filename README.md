@@ -108,6 +108,21 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 
 <!-- ## What's different with Azure Functions v4 (Official Library) -->
 
+## Local Dev Setup
+
+```bash
+# Install dependencies
+pnpm install
+# Before dev (Update workspace to local dependencies)
+pnpm pre-local && pnpm install
+# While dev
+pnpm dev
+# After dev before submitting PRs (Update workspace to actual dependencies), `pnpm install` for making sure lockfile is correct.
+pnpm post-local && pnpm install
+# Release package
+pnpm release
+```
+
 ## Inspiration 
 - [Azure Functions .NET](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process)
 - [inversify-express-utils](https://github.com/inversify/inversify-express-utils) - We use inversify as a Dependency Injection Tool.

@@ -11,8 +11,8 @@ export class AzureFunctionsHandler<TTriggerType, TReturnType> {
 
   handler(func: HandlerFunction<TTriggerType, TReturnType>): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
     const invokeHandler = (triggerInput: TTriggerType, context: InvocationContext) => {
-      const nammathamContext = new NammathamContext(context);
-      return func(triggerInput, nammathamContext);
+      const nammathamContext = new NammathamContext(context, triggerInput);
+      return func(nammathamContext);
     };
     return {
       ...this.functionOption,
