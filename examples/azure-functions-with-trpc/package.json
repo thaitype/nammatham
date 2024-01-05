@@ -15,10 +15,10 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.1.0",
-    "@nammatham/azure-functions": "workspace:*",
-    "@nammatham/core": "workspace:*",
-    "@nammatham/express": "workspace:*",
-    "@nammatham/trpc-azure-functions": "workspace:*",
+    "@nammatham/azure-functions": "2.0.0-alpha.7",
+    "@nammatham/core": "2.0.0-alpha.7",
+    "@nammatham/express": "2.0.0-alpha.7",
+    "@nammatham/trpc-azure-functions": "2.0.0-alpha.7",
     "@trpc/client": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "trpc-azure-functions-adapter": "0.0.5"
