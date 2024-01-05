@@ -63,13 +63,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/express
     devDependencies:
       cross-env:
@@ -91,13 +91,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/express
     devDependencies:
       cross-env:
@@ -119,13 +119,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/express
     devDependencies:
       cross-env:
@@ -147,16 +147,16 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/express
       '@nammatham/trpc-azure-functions':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../../packages/trpc-azure-functions
       '@trpc/client':
         specifier: ^10.45.0
@@ -187,7 +187,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/core':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../core
       colorette:
         specifier: ^2.0.20
@@ -230,7 +230,7 @@ importers:
   packages/express:
     dependencies:
       '@nammatham/core':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../core
       '@types/express':
         specifier: ^4.17.21
@@ -245,13 +245,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../azure-functions
       '@nammatham/core':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../core
       '@nammatham/express':
-        specifier: workspace:*
+        specifier: 2.0.0-alpha.7
         version: link:../express
       '@trpc/server':
         specifier: ^10.45.0

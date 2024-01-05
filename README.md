@@ -113,12 +113,12 @@ Empowering TypeScript on Azure Functions with Nammatham, Azure Open Source Day @
 ```bash
 # Install dependencies
 pnpm install
-# Before dev
-pnpm pre-local
+# Before dev (Update workspace to local dependencies)
+pnpm pre-local && pnpm install
 # While dev
 pnpm dev
-# After dev before submitting PRs
-pnpm post-local
+# After dev before submitting PRs (Update workspace to actual dependencies), `pnpm install` for making sure lockfile is correct.
+pnpm post-local && pnpm install
 # Release package
 pnpm release
 ```
