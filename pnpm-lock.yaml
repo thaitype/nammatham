@@ -63,13 +63,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/express
     devDependencies:
       cross-env:
@@ -91,13 +91,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/express
     devDependencies:
       cross-env:
@@ -119,13 +119,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/express
     devDependencies:
       cross-env:
@@ -147,17 +147,20 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/express
       '@nammatham/trpc-azure-functions':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../../packages/trpc-azure-functions
+      '@trpc/client':
+        specifier: ^10.45.0
+        version: 10.45.0(@trpc/server@10.45.0)
       '@trpc/server':
         specifier: ^10.45.0
         version: 10.45.0
@@ -184,7 +187,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/core':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../core
       colorette:
         specifier: ^2.0.20
@@ -227,7 +230,7 @@ importers:
   packages/express:
     dependencies:
       '@nammatham/core':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../core
       '@types/express':
         specifier: ^4.17.21
@@ -242,13 +245,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.7
+        specifier: workspace:*
         version: link:../express
       '@trpc/server':
         specifier: ^10.45.0
@@ -835,6 +838,14 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@trpc/client@10.45.0(@trpc/server@10.45.0):
+    resolution: {integrity: sha512-m091R1qte9rvkvL8N1e/mzrbb8S4gb+Q4ZNJnEGDgd7kic/6a8DFgSciBTiCoSp0YwOTVhyQzSrrA/sZI6PhBg==}
+    peerDependencies:
+      '@trpc/server': 10.45.0
+    dependencies:
+      '@trpc/server': 10.45.0
+    dev: false
 
   /@trpc/server@10.45.0:
     resolution: {integrity: sha512-2Fwzv6nqpE0Ie/G7PeS0EVR89zLm+c1Mw7T+RAGtU807j4oaUx0zGkBXTu5u9AI+j+BYNN2GZxJcuDTAecbr1A==}
