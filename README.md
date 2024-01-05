@@ -44,10 +44,10 @@ const helloFunction = func
   .httpGet('hello', {
     route: 'hello-world',
   })
-  .handler(async (request, ctx) => {
-    ctx.context.log('HTTP trigger function processed a request.');
-    ctx.context.debug(`Http function processed request for url "${request.url}"`);
-    const name = request.query.get('name') || (await request.text()) || 'world';
+  .handler(async ({trigger, context}) => {
+    context.log('HTTP trigger function processed a request.');
+    context.debug(`Http function processed request for url "${trigger.url}"`);
+    const name = trigger.query.get('name') || (await trigger.text()) || 'world';
     return { body: `Hello, ${name}!` };
   });
 
@@ -119,8 +119,8 @@ pnpm pre-local && pnpm install
 pnpm dev
 # After dev before submitting PRs (Update workspace to actual dependencies), `pnpm install` for making sure lockfile is correct.
 pnpm post-local && pnpm install
-# Release package
-pnpm release
+# Release package with OTP (Temporary Use)
+export NPM_OTP="123456" && pnpm release
 ```
 
 ## Inspiration 
