@@ -4,7 +4,7 @@ export default func
   .timer('watcher', {
     schedule: '*/5 * * * * *',
   })
-  .handler(async (timer, ctx) => {
-    ctx.context.info('Timer triggered!'); 
-    timer.isPastDue ? ctx.context.info('Timer is past due!') : null;
+  .handler(async ({trigger, context}) => {
+    context.info('Timer triggered!'); 
+    trigger.isPastDue ? context.info('Timer is past due!') : null;
   });

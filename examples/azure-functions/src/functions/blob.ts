@@ -17,11 +17,11 @@ export default func
     extraInputs: [blobInput],
     extraOutputs: [blobOutput],
   })
-  .handler((request, ctx) => {
-    ctx.context.log('function processed work item:', request);
-    const blobInputValue = ctx.context.extraInputs.get(blobOutput);
+  .handler(({ trigger, context }) => {
+    context.log('function processed work item:', trigger);
+    const blobInputValue = context.extraInputs.get(blobOutput);
 
-    ctx.context.extraOutputs.set(blobOutput, blobInputValue);
+    context.extraOutputs.set(blobOutput, blobInputValue);
     return {
       body: `Hello ${blobInputValue}`,
     };

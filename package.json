@@ -10,7 +10,7 @@
     "post-local": "tsx ./scripts/post-local.ts",
     "release": "run-s build releaseOnly",
     "releaseOnly": "tsx ./scripts/release.ts",
-    "build": "nx run-many -t build",
+    "build": "nx run-many -t build --parallel=10",
     "azurite": "pnpx azurite --silent --location ./.azurite --debug ./.azurite/debug.log"
   },
   "keywords": [

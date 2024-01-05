@@ -27,9 +27,9 @@ export function tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: Trpc
         route: prefix + '/{x:regex(^[^\\/]+$)}',
         methods: ['GET', 'POST'],
       })
-      .handler(async (request, ctx) => {
+      .handler(async ({ trigger, context }) => {
         const handler = wrapAzureFunctionsRequestHandler(option.trpcOptions);
-        return handler(request, ctx.context);
+        return handler(trigger, context);
       });
     app.addFunction(trpcFunction);
 

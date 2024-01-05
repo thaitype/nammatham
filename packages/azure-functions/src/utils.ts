@@ -23,7 +23,7 @@ export async function printRegisteredFunctions(app: NammathamApp, option: AfterS
     .filter(func => func.type === 'azure-functions')
     .filter(func => func.endpointOption?.type === 'http') as AzureFunctionsEndpoint<any, any>[];
   if (azureFunctions.length === 0) return;
-  await delay(200);
+  await delay(100);
   console.log(`\n${yellow('Functions:')}\n`);
   for (const func of azureFunctions) {
     const methods = `[${getMethods(func).join(',')}]`;
@@ -41,7 +41,7 @@ export async function printRegisteredNonHttpFunctions(app: NammathamApp, option:
     any
   >[];
   if (azureFunctions.length === 0) return;
-  await delay(200);
+  await delay(100);
   console.log(`${yellow(`----------------------------------------------`)}\n`);
   console.log(`\n${yellow('Non-HTTP Functions (In Develpment Mode Only):')}\n`);
   for (const func of azureFunctions) {

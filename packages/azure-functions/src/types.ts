@@ -2,10 +2,7 @@ import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/fu
 import { NammathamContext } from './nammatham-context';
 import type { NammamthamEndpoint, PromiseLike } from '@nammatham/core';
 
-export type HandlerFunction<TTriggerType, TReturnType> = (
-  triggerInput: TTriggerType,
-  context: NammathamContext
-) => PromiseLike<TReturnType>;
+export type HandlerFunction<TTriggerType, TReturnType> = (ctx: NammathamContext<TTriggerType>) => PromiseLike<TReturnType>;
 
 export type AnyHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
 export type RegisterFunctionOption = (option: {
