@@ -2,6 +2,7 @@ import { expect, test } from 'vitest';
 import { AzureFunctionsAdapter } from './adapter';
 import { AzureFunctionsTrigger } from './trigger';
 import { NammathamApp } from '@nammatham/core';
+import { AzureFunctionsHandlerResolver } from './handler-resolver';
 
 test(`${AzureFunctionsAdapter.name} should be created correctly`, async () => {
   // Arrange
@@ -15,4 +16,5 @@ test(`${AzureFunctionsAdapter.name} should be created correctly`, async () => {
   expect(app).toBeInstanceOf(NammathamApp);
   expect(app.runtime === 'azure-functions').toBe(true);
   expect(app.isDevelopment).toBe(false);
+  expect(app.handlerResolver).toBeInstanceOf(AzureFunctionsHandlerResolver);
 });

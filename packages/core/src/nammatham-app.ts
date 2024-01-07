@@ -19,7 +19,7 @@ export class NammathamApp {
    */
   private _isDevelopment: boolean | undefined;
 
-  constructor(protected handlerResolver: BaseHandlerResolver) {}
+  constructor(public readonly handlerResolver: BaseHandlerResolver) {}
 
   /**
    * Start register functions on the runtime e.g. Azure Functions
