@@ -1,11 +1,13 @@
+import { WithEndpointOption } from '@nammatham/core';
 import { NammathamContext } from './nammatham-context';
 import type { InvocationContext } from '@azure/functions';
 import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
 
+
 export class AzureFunctionsHandler<TTriggerType, TReturnType> {
   constructor(
     public funcName: string,
-    public functionOption: FunctionOption,
+    public functionOption: WithEndpointOption & FunctionOption,
     public registerFunc: RegisterFunctionOption
   ) {}
 

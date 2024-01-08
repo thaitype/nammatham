@@ -53,7 +53,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
         ...option,
         endpointOption: {
           type: 'http',
-          route: option?.route,
+          route: option?.route ?? funcName,
           methods: option?.methods,
         },
       }),
@@ -92,6 +92,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       endpointOption: {
         ...opt?.endpointOption,
         route: (opt?.endpointOption as HttpEndpointOption)?.route ?? funcName,
+        type: (opt?.endpointOption as HttpEndpointOption)?.type ?? 'http',
       },
       extraInputs: opt?.extraInputs ?? [],
       extraOutputs: opt?.extraOutputs ?? [],
