@@ -3,11 +3,11 @@ import type * as types from '@azure/functions';
 import type { HttpRequestParams, HttpRequestUser } from '@azure/functions';
 import type { Blob } from 'buffer';
 import type express from 'express';
-import { logger } from '@nammatham/core';
+import type { URLSearchParams } from 'url';
 import type { ReadableStream } from 'stream/web';
 import type { FormData, Headers } from 'undici';
+import { logger } from '@nammatham/core';
 import { Request as uRequest } from 'undici';
-import type { URLSearchParams } from 'url';
 import {
   convertExpressQueryToURLSearchParams,
   convertExpressReqHeaderToHeadersInit,
@@ -25,7 +25,7 @@ export class HttpRequest implements types.HttpRequest {
     const url = getExpressReqFullUrl(req);
     this.#body = req.body;
     this.#uReq = new uRequest(url, {
-      body: this.#body,
+      body: req.method === 'GET' ? undefined : req.body,
       method: req.method,
       headers: convertExpressReqHeaderToHeadersInit(req.headers),
     });
