@@ -1,4 +1,4 @@
-import { BaseHandlerResolver, NammathamApp } from '@nammatham/core';
+import type { BaseHandlerResolver, NammathamApp } from '@nammatham/core';
 
 export interface NammathamHttpHandlerOption {
   handlerResolver: BaseHandlerResolver;

@@ -1,8 +1,9 @@
-import type { GenericFunctionOptions, HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit, Timer, TimerFunctionOptions } from '@azure/functions';
-import { app, HttpMethodFunctionOptions } from '@azure/functions';
+import type { GenericFunctionOptions, HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit, Timer, TimerFunctionOptions , HttpMethodFunctionOptions } from '@azure/functions';
+import { app } from '@azure/functions';
 import { AzureFunctionsHandler } from './handler';
-import { FunctionOption } from './types';
-import { HttpEndpointOption, WithEndpointOption, BaseFunctionTrigger } from '@nammatham/core';
+import type { FunctionOption } from './types';
+import type { HttpEndpointOption, WithEndpointOption} from '@nammatham/core';
+import { BaseFunctionTrigger } from '@nammatham/core';
 
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   generic(funcName: string, option: Omit<GenericFunctionOptions, 'handler'>) {

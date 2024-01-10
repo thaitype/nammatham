@@ -1,7 +1,8 @@
 import express from 'express';
 import { createExpressMiddleware } from './middleware';
-import { BaseHandlerResolver, NammathamApp, logger } from '@nammatham/core';
-import { NammathamHttpHandlerOption } from './types';
+import type { BaseHandlerResolver, NammathamApp} from '@nammatham/core';
+import { logger } from '@nammatham/core';
+import type { NammathamHttpHandlerOption } from './types';
 
 export interface ExpressServerOption {
   prefix?: string;

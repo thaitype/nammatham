@@ -1,6 +1,7 @@
 import { blue, green, yellow } from 'colorette';
-import { AfterServerStartedMetadata, NammathamApp, trimSlash } from '@nammatham/core';
-import { AzureFunctionsEndpoint } from './types';
+import type { AfterServerStartedMetadata, NammathamApp} from '@nammatham/core';
+import { trimSlash } from '@nammatham/core';
+import type { AzureFunctionsEndpoint } from './types';
 
 export function getMethods(func: AzureFunctionsEndpoint<any, any>): string[] {
   if (!Array.isArray(func.endpointOption?.methods)) {

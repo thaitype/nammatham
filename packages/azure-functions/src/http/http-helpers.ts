@@ -1,5 +1,5 @@
-import { IncomingHttpHeaders } from 'node:http';
-import express from 'express';
+import type { IncomingHttpHeaders } from 'node:http';
+import type express from 'express';
 
 export function convertExpressReqHeaderToHeadersInit(_headers: IncomingHttpHeaders): HeadersInit {
   const headers: Record<string, string | ReadonlyArray<string>> = {};

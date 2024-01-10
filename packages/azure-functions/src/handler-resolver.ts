@@ -1,6 +1,8 @@
-import { BaseHandlerResolver, NammathamApp, logger, AfterServerStartedMetadata } from '@nammatham/core';
-import { Cookie, HttpResponse, InvocationContext, LogLevel } from '@azure/functions';
-import { AzureFunctionsEndpoint } from './types';
+import type { NammathamApp, AfterServerStartedMetadata } from '@nammatham/core';
+import { BaseHandlerResolver, logger } from '@nammatham/core';
+import type { Cookie, LogLevel } from '@azure/functions';
+import { HttpResponse, InvocationContext } from '@azure/functions';
+import type { AzureFunctionsEndpoint } from './types';
 import type {
   Request as ExpressRequest,
   Response as ExpressResponse,
@@ -29,7 +31,7 @@ function logExecutedFunction(
  * Map InvocationContext log level to logger
  */
 
-function logHandler(level: LogLevel, ...args: any[]) {
+function logHandler(level: LogLevel, ...args: unknown[]) {
   if (level === 'information') {
     logger.info(...args);
   } else if (level === 'error') {
