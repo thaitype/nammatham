@@ -7,7 +7,7 @@ describe(`Test utils: ${utils.getMethods.name}`, () => {
       endpointOption: {
         type: 'http',
         methods: ['get', 'post', 'put', 'delete'],
-      }
+      },
     } as any;
 
     // Act
@@ -22,7 +22,7 @@ describe(`Test utils: ${utils.getMethods.name}`, () => {
     const func = {
       endpointOption: {
         type: 'http',
-      }
+      },
     } as any;
 
     // Act
@@ -39,7 +39,7 @@ describe(`Test utils: ${utils.getFullUrl.name}`, () => {
     const func = {
       endpointOption: {
         route: 'test',
-      }
+      },
     } as any;
 
     // Act
@@ -54,7 +54,7 @@ describe(`Test utils: ${utils.getFullUrl.name}`, () => {
     const func = {
       endpointOption: {
         route: '/test',
-      }
+      },
     } as any;
 
     // Act
@@ -67,8 +67,7 @@ describe(`Test utils: ${utils.getFullUrl.name}`, () => {
   test(`${utils.getFullUrl.name} should return empty string if route is not defined`, async () => {
     // Arrange
     const func = {
-      endpointOption: {
-      }
+      endpointOption: {},
     } as any;
 
     // Act
@@ -104,7 +103,7 @@ describe(`Test utils: ${utils.printRegisteredFunctions.name}`, () => {
             type: 'http',
             route: 'test',
             methods: ['get', 'post', 'put', 'delete'],
-          }
+          },
         },
         {
           type: 'azure-functions',
@@ -113,7 +112,7 @@ describe(`Test utils: ${utils.printRegisteredFunctions.name}`, () => {
             type: 'timer',
             route: 'test2',
             methods: ['get', 'post', 'put', 'delete'],
-          }
+          },
         },
       ],
     } as any;
@@ -157,7 +156,7 @@ describe(`Test utils: ${utils.printRegisteredNonHttpFunctions.name}`, () => {
             type: 'http',
             route: 'test',
             methods: ['get', 'post', 'put', 'delete'],
-          }
+          },
         },
         {
           type: 'azure-functions',
@@ -166,7 +165,7 @@ describe(`Test utils: ${utils.printRegisteredNonHttpFunctions.name}`, () => {
             type: 'timer',
             route: 'test2',
             methods: ['get', 'post', 'put', 'delete'],
-          }
+          },
         },
       ],
     } as any;

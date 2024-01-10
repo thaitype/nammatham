@@ -5,10 +5,14 @@ import type { Blob } from 'buffer';
 import type express from 'express';
 import { logger } from '@nammatham/core';
 import type { ReadableStream } from 'stream/web';
-import type { FormData, Headers} from 'undici';
+import type { FormData, Headers } from 'undici';
 import { Request as uRequest } from 'undici';
 import type { URLSearchParams } from 'url';
-import { convertExpressQueryToURLSearchParams, convertExpressReqHeaderToHeadersInit, getExpressReqFullUrl } from './http-helpers';
+import {
+  convertExpressQueryToURLSearchParams,
+  convertExpressReqHeaderToHeadersInit,
+  getExpressReqFullUrl,
+} from './http-helpers';
 
 export class HttpRequest implements types.HttpRequest {
   readonly query: URLSearchParams;
@@ -51,7 +55,7 @@ export class HttpRequest implements types.HttpRequest {
     return null;
   }
 
-  get body(): ReadableStream<any> | null {
+  get body(): ReadableStream<unknown> | null {
     return this.#uReq.body;
   }
 

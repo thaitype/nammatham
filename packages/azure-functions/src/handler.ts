@@ -3,7 +3,6 @@ import { NammathamContext } from './nammatham-context';
 import type { InvocationContext } from '@azure/functions';
 import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
 
-
 export class AzureFunctionsHandler<TTriggerType, TReturnType> {
   constructor(
     public funcName: string,

@@ -13,7 +13,7 @@ export class NammathamApp {
   /**
    * Use when run app in development mode or not,
    * Mostly used for plugins, e.g. expressPlugin
-   * 
+   *
    * For example, expressPlugin will not start express server in production mode for Azure Functions Adapter,
    * because Azure Functions will start the server for us.
    */
@@ -69,5 +69,4 @@ export class NammathamApp {
   setDevelopment(isDev: boolean) {
     this._isDevelopment = isDev;
   }
-  
 }

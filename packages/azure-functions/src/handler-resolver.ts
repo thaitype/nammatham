@@ -119,11 +119,12 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
     logger.info(
       `Executing 'Functions.${endpoint.name}' (Reason='This function was programmatically called via the host APIs.', Id=${context.invocationId})`
     );
-    let result: any;
+    let result: HttpResponse | string | undefined | unknown;
     try {
       result = await endpoint.invokeHandler(new HttpRequest(req), context);
       logExecutedFunction(startTime, endpoint, context, 'Succeeded');
-      if (result === undefined) return;
+      if (result === undefined || result === null) return;
+      if (typeof result === 'string') return res.send(result);
       const response = result instanceof HttpResponse ? result : new HttpResponse(result);
       return await convertHttpResponseToExpressResponse(res, response);
     } catch (error) {
@@ -136,8 +137,8 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
   override async resolveRegisterHandler(app: NammathamApp) {
     logger.debug(`Starting using Azure Functions register handler`);
     const azureFunctions = app.functions.filter(func => func.type === 'azure-functions') as AzureFunctionsEndpoint<
-      any,
-      any
+      unknown,
+      unknown
     >[];
 
     if (azureFunctions.length === 0) {

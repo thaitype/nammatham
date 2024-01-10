@@ -4,6 +4,7 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],
     root: true,
+    ignorePatterns: ["**.test.ts"],
     rules: {
         '@typescript-eslint/consistent-type-imports': 'error',
     }

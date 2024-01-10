@@ -67,4 +67,4 @@ class ConsoleLogger extends BaseLogger {
   }
 }
 
-export const logger: BaseLogger = isDevelopment ? new PinoLogger(_logger): new ConsoleLogger();
+export const logger: BaseLogger = isDevelopment ? new PinoLogger(_logger) : new ConsoleLogger();

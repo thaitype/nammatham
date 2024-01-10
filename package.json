@@ -5,12 +5,12 @@
   "scripts": {
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "format": "prettier --write '**/*.ts'",
     "dev": "nx run @nammatham/core:build && nx run-many -t dev --projects=@nammatham/* --parallel=5",
     "pre-local": "tsx ./scripts/pre-local.ts",
     "post-local": "tsx ./scripts/post-local.ts",
     "release": "run-s build releaseOnly",
     "releaseOnly": "tsx ./scripts/release.ts",
+    "format": "nx run-many -t format --projects=@nammatham/* --parallel=5",
     "lint": "nx run-many -t lint --projects=@nammatham/* --parallel=5",
     "lint:fix": "nx run-many -t lint:fix --projects=@nammatham/* --parallel=5",
     "build": "nx run-many -t build --parallel=10",
