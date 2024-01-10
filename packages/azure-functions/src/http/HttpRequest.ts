@@ -3,55 +3,16 @@ import * as types from '@azure/functions';
 import { HttpRequestParams, HttpRequestUser } from '@azure/functions';
 import { Blob } from 'buffer';
 import express from 'express';
-import { IncomingHttpHeaders } from 'node:http';
 import { logger } from '@nammatham/core';
 import { ReadableStream } from 'stream/web';
 import { FormData, Headers, Request as uRequest } from 'undici';
 import { URLSearchParams } from 'url';
-
-function convertExpressReqHeaderToHeadersInit(_headers: IncomingHttpHeaders): HeadersInit {
-  const headers: Record<string, string | ReadonlyArray<string>> = {};
-
-  for (const [key, value] of Object.entries(_headers)) {
-    if (Array.isArray(value)) {
-      headers[key] = value;
-    } else if (value !== undefined) {
-      headers[key] = value;
-    }
-  }
-
-  return headers as HeadersInit;
-}
-
-function convertExpressQueryToURLSearchParams(query: express.Request['query']): URLSearchParams {
-  const params = new URLSearchParams();
-
-  for (const [key, value] of Object.entries(query)) {
-    if (Array.isArray(value)) {
-      for (const v of value) {
-        params.append(key, String(v));
-      }
-    } else if (value !== undefined) {
-      params.append(key, String(value));
-    }
-  }
-
-  return params;
-}
-
-function getExpressReqFullUrl(req: express.Request): string {
-  const protocol = req.protocol;
-  const host = req.get('host');
-  const path = req.originalUrl;
-
-  return `${protocol}://${host}${path}`;
-}
+import { convertExpressQueryToURLSearchParams, convertExpressReqHeaderToHeadersInit, getExpressReqFullUrl } from './http-helpers';
 
 export class HttpRequest implements types.HttpRequest {
   readonly query: URLSearchParams;
   readonly params: HttpRequestParams;
 
-  #cachedUser?: HttpRequestUser | null;
   #uReq: uRequest;
   #body?: Buffer | string;
 
@@ -81,8 +42,8 @@ export class HttpRequest implements types.HttpRequest {
   }
 
   /**
-   * This requres to call `extractHttpUserFromHeaders` in `@azure/functions` internally.
    * In development, we may don't care this.
+   * @deprecated This requres to call `extractHttpUserFromHeaders` in `@azure/functions` internally.
    */
   get user(): HttpRequestUser | null {
     logger.warn(`HttpRequest.user is not supported in development`);
