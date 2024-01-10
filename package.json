@@ -11,6 +11,8 @@
     "post-local": "tsx ./scripts/post-local.ts",
     "release": "run-s build releaseOnly",
     "releaseOnly": "tsx ./scripts/release.ts",
+    "lint": "nx run-many -t lint --projects=@nammatham/* --parallel=5",
+    "lint:fix": "nx run-many -t lint:fix --projects=@nammatham/* --parallel=5",
     "build": "nx run-many -t build --parallel=10",
     "azurite": "pnpx azurite --silent --location ./.azurite --debug ./.azurite/debug.log"
   },

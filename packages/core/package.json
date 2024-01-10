@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build",
     "build": "tsup src/main.ts --dts",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && npx eslint ./src && npx prettier -c src",
+    "lint:fix": "npx eslint --fix ./src && npx prettier -c src",
     "dev": "nodemon --watch src --ext ts --exec 'npm run build'"
   },
   "keywords": [

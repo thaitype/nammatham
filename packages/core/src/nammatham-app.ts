@@ -1,7 +1,7 @@
 import { magenta } from 'colorette';
 import { logger } from './main';
-import { BaseHandlerResolver } from './bases';
-import { NammamthamEndpoint } from './types';
+import type { BaseHandlerResolver } from './bases';
+import type { NammamthamEndpoint } from './types';
 
 export class NammathamApp {
   protected readonly _functions: NammamthamEndpoint[] = [];
