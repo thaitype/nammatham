@@ -1,14 +1,16 @@
+import type { AnyRouter } from '@trpc/server';
 import type { BaseHandlerResolver } from '@nammatham/core';
-import { NammathamApp, logger, trimSlash } from '@nammatham/core';
+import type { ExpressServerOption } from '@nammatham/express';
 import type { HttpRequest as AzureHttpRequest } from '@azure/functions';
 import type { AzureFunctionsOptions } from 'trpc-azure-functions-adapter';
-import { wrapAzureFunctionsRequestHandler } from 'trpc-azure-functions-adapter';
-import type { AnyRouter } from '@trpc/server';
-import { AzureFunctionsTrigger } from '@nammatham/azure-functions';
-import type { ExpressServerOption } from '@nammatham/express';
-import { startExpress } from '@nammatham/express';
+
 import express from 'express';
+import { startExpress } from '@nammatham/express';
 import * as trpcExpress from '@trpc/server/adapters/express';
+import { NammathamApp, logger, trimSlash } from '@nammatham/core';
+import { AzureFunctionsTrigger } from '@nammatham/azure-functions';
+import { wrapAzureFunctionsRequestHandler } from 'trpc-azure-functions-adapter';
+
 import { createContext } from './trpc';
 
 export interface TrpcAzureFunctionsPluginOption<TRouter extends AnyRouter> {

@@ -31,4 +31,3 @@ test('Trigger HTTP', () => {
   const result = trigger.http('test');
   expect(result).toBeInstanceOf(AzureFunctionsHandler);
 });
-

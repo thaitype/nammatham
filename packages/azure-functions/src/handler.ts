@@ -1,7 +1,9 @@
-import type { WithEndpointOption } from '@nammatham/core';
-import { NammathamContext } from './nammatham-context';
 import type { InvocationContext } from '@azure/functions';
+import type { WithEndpointOption } from '@nammatham/core';
+
 import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
+
+import { NammathamContext } from './nammatham-context';
 
 export class AzureFunctionsHandler<TTriggerType, TReturnType> {
   constructor(

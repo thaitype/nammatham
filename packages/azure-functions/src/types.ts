@@ -1,6 +1,7 @@
-import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/functions';
-import type { NammathamContext } from './nammatham-context';
 import type { NammamthamEndpoint, PromiseLike } from '@nammatham/core';
+import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/functions';
+
+import type { NammathamContext } from './nammatham-context';
 
 export type HandlerFunction<TTriggerType, TReturnType> = (
   ctx: NammathamContext<TTriggerType>

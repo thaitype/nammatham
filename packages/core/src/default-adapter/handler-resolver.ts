@@ -1,5 +1,5 @@
-import { BaseHandlerResolver } from '../bases';
 import { logger } from '../main';
+import { BaseHandlerResolver } from '../bases';
 
 export class DefaultHandlerResolver extends BaseHandlerResolver {
   override resolveHandler() {

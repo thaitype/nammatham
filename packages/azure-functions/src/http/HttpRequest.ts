@@ -1,13 +1,15 @@
 // Adapted from https://github.com/Azure/azure-functions-nodejs-library/blob/v4.x/src/http/HttpRequest.ts
-import type * as types from '@azure/functions';
-import type { HttpRequestParams, HttpRequestUser } from '@azure/functions';
 import type { Blob } from 'buffer';
 import type express from 'express';
 import type { URLSearchParams } from 'url';
-import type { ReadableStream } from 'stream/web';
+import type * as types from '@azure/functions';
 import type { FormData, Headers } from 'undici';
+import type { ReadableStream } from 'stream/web';
+import type { HttpRequestParams, HttpRequestUser } from '@azure/functions';
+
 import { logger } from '@nammatham/core';
 import { Request as uRequest } from 'undici';
+
 import {
   convertExpressQueryToURLSearchParams,
   convertExpressReqHeaderToHeadersInit,

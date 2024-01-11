@@ -1,6 +1,8 @@
-import { blue, green, yellow } from 'colorette';
 import type { AfterServerStartedMetadata, NammathamApp } from '@nammatham/core';
+
 import { trimSlash } from '@nammatham/core';
+import { blue, green, yellow } from 'colorette';
+
 import type { AzureFunctionsEndpoint } from './types';
 
 export function getMethods(func: AzureFunctionsEndpoint<unknown, unknown>): string[] {

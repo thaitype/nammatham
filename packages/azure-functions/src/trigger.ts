@@ -1,3 +1,4 @@
+import type { HttpEndpointOption, WithEndpointOption } from '@nammatham/core';
 import type {
   GenericFunctionOptions,
   HttpFunctionOptions,
@@ -8,11 +9,13 @@ import type {
   TimerFunctionOptions,
   HttpMethodFunctionOptions,
 } from '@azure/functions';
+
 import { app } from '@azure/functions';
-import { AzureFunctionsHandler } from './handler';
-import type { FunctionOption } from './types';
-import type { HttpEndpointOption, WithEndpointOption } from '@nammatham/core';
 import { BaseFunctionTrigger } from '@nammatham/core';
+
+import type { FunctionOption } from './types';
+
+import { AzureFunctionsHandler } from './handler';
 
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   generic(funcName: string, option: Omit<GenericFunctionOptions, 'handler'>) {
