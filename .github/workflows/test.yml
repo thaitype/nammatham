@@ -2,15 +2,15 @@ name: "Build & Test"
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ v1.x ]
     paths-ignore:
       - '**/*.md'
-      - '.github'
+      # - '.github'
   pull_request:
-    branches: [ main, dev ]
+    branches: [ v1.x ]
     paths-ignore:
       - '**/*.md'
-      - '.github'
+      # - '.github'
 
 env:
   pnpm_version: 7

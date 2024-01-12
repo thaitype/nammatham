@@ -7,12 +7,12 @@
 Azure Function Lightweight frameworks with DI, providing type safe function triggers and bindings
 </p>
 
-<p align="center"><a href="https://github.com/mildronize/nammatham/actions/workflows/test.yml"><img src="https://github.com/mildronize/nammatham/actions/workflows/test.yml/badge.svg" alt="Build &amp; Test"></a> <a href="https://codecov.io/gh/mildronize/nammatham"><img src="https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN" alt="codecov"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/v/nammatham" alt="npm version"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
+<p align="center"><a href="https://github.com/thaitype/nammatham/actions/workflows/test.yml?branch=v1.x"><img src="https://github.com/thaitype/nammatham/actions/workflows/test.yml/badge.svg" alt="Build &amp; Test"></a> <a href="https://codecov.io/gh/thaitype/nammatham"><img src="https://codecov.io/gh/thaitype/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN" alt="codecov"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/v/nammatham" alt="npm version"></a> <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
 
 | Version | Status      | Azure Functions Node.js | branch |
-|---------|-------------|-------------------------|--------|
+| ------- | ----------- | ----------------------- | ------ |
 | v1.x    | Maintenance | v3.x                    | v1.x   |
-| v2.x    | In Progress | v4.x                    | next   |
+| v2.x    | Alpha       | v4.x                    | main   |
 
 > **Nammatham** v1 is stable now (I've currently used in production), due to Nammatham v1 is based on Azure Functions Node.js v3.5.x. Azure will release Azure Functions Node.js v4 in GA (General availability) soon, [See in Roadmap 2023](https://github.com/Azure/azure-functions-nodejs-library/wiki/Roadmap)
 > 
