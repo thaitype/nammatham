@@ -11,18 +11,18 @@ Type-safe Serverless Library for Azure Functions and friends
 
 > 🚧 Alpha Stage: Internal Use Only 🚧
 > 
-> Please note that Nammatham v2 is currently in its Alpha stage and is intended for internal use only. As we actively develop and refine the platform, be aware that the API may undergo frequent changes.
+> Please note that Nammatham v2 is currently in its Alpha stage and is intended for internal use only. As we actively develop and refine the platform, be aware that the API may undergo frequent changes. [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Av2-blocker)
 > 
 > Note: [Nammatham v1](https://www.npmjs.com/package/nammatham) is currently in maintenance mode. no new features are actively being developed
 
-| Version | Status      | Azure Functions Node.js | Branch       | Build Status                                                                                                                                                                                                                                                                                                      |
-| ------- | ----------- | ----------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| v1.x    | Maintenance | v3.x                    | [v1.x][v1.x] | [![Build & Test](https://github.com/thaitype/nammatham/actions/workflows/test.yml/badge.svg)](https://github.com/thaitype/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/mildronize/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/mildronize/nammatham) |
-| v2.x    | Alpha       | v4.x                    | [main][main] | [Tracking v2 Roadmap](https://github.com/thaitype/nammatham/issues?q=is%3Aissue+is%3Aopen+label%3Av2-blocker)                                                                                                                                                                                                        |
+
+| Version | Status      | Azure Functions <br>Node.js Lib | Branch       | Build Status                                                                                                                                                                                                                                                                                                                |
+| ------- | ----------- | ----------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v1.x    | Maintenance | v3.x                    | [v1.x][v1.x] | [![Build & Test](https://github.com/thaitype/nammatham/actions/workflows/test.yml/badge.svg?branch=v1.x)](https://github.com/thaitype/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/thaitype/nammatham/branch/main/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/thaitype/nammatham) |
+| v2.x    | Alpha       | v4.x                    | [main][main] | [![Build & Test](https://github.com/thaitype/nammatham/actions/workflows/test.yml/badge.svg?branch=main.unittest)](https://github.com/thaitype/nammatham/actions/workflows/test.yml) [![codecov](https://codecov.io/gh/thaitype/nammatham/branch/main.unittest/graph/badge.svg?token=Y7ZMDKFPAN)](https://codecov.io/gh/thaitype/nammatham)                                                                                                                                        |
 
 [v1.x]: https://github.com/thaitype/nammatham/tree/v1.x
 [main]: https://github.com/thaitype/nammatham/tree/main
-
 
 ## Description
 Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **abstract** in Thai) is Azure Function Nodejs.
