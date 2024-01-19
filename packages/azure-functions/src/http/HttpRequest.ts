@@ -1,57 +1,25 @@
 // Adapted from https://github.com/Azure/azure-functions-nodejs-library/blob/v4.x/src/http/HttpRequest.ts
-import * as types from '@azure/functions';
-import { HttpRequestParams, HttpRequestUser } from '@azure/functions';
-import { Blob } from 'buffer';
-import express from 'express';
-import { IncomingHttpHeaders } from 'node:http';
+import type { Blob } from 'buffer';
+import type express from 'express';
+import type { URLSearchParams } from 'url';
+import type * as types from '@azure/functions';
+import type { FormData, Headers } from 'undici';
+import type { ReadableStream } from 'stream/web';
+import type { HttpRequestParams, HttpRequestUser } from '@azure/functions';
+
 import { logger } from '@nammatham/core';
-import { ReadableStream } from 'stream/web';
-import { FormData, Headers, Request as uRequest } from 'undici';
-import { URLSearchParams } from 'url';
+import { Request as uRequest } from 'undici';
 
-function convertExpressReqHeaderToHeadersInit(_headers: IncomingHttpHeaders): HeadersInit {
-  const headers: Record<string, string | ReadonlyArray<string>> = {};
-
-  for (const [key, value] of Object.entries(_headers)) {
-    if (Array.isArray(value)) {
-      headers[key] = value;
-    } else if (value !== undefined) {
-      headers[key] = value;
-    }
-  }
-
-  return headers as HeadersInit;
-}
-
-function convertExpressQueryToURLSearchParams(query: express.Request['query']): URLSearchParams {
-  const params = new URLSearchParams();
-
-  for (const [key, value] of Object.entries(query)) {
-    if (Array.isArray(value)) {
-      for (const v of value) {
-        params.append(key, String(v));
-      }
-    } else if (value !== undefined) {
-      params.append(key, String(value));
-    }
-  }
-
-  return params;
-}
-
-function getExpressReqFullUrl(req: express.Request): string {
-  const protocol = req.protocol;
-  const host = req.get('host');
-  const path = req.originalUrl;
-
-  return `${protocol}://${host}${path}`;
-}
+import {
+  convertExpressQueryToURLSearchParams,
+  convertExpressReqHeaderToHeadersInit,
+  getExpressReqFullUrl,
+} from './http-helpers';
 
 export class HttpRequest implements types.HttpRequest {
   readonly query: URLSearchParams;
   readonly params: HttpRequestParams;
 
-  #cachedUser?: HttpRequestUser | null;
   #uReq: uRequest;
   #body?: Buffer | string;
 
@@ -59,7 +27,7 @@ export class HttpRequest implements types.HttpRequest {
     const url = getExpressReqFullUrl(req);
     this.#body = req.body;
     this.#uReq = new uRequest(url, {
-      body: this.#body,
+      body: req.method === 'GET' ? undefined : req.body,
       method: req.method,
       headers: convertExpressReqHeaderToHeadersInit(req.headers),
     });
@@ -81,15 +49,15 @@ export class HttpRequest implements types.HttpRequest {
   }
 
   /**
-   * This requres to call `extractHttpUserFromHeaders` in `@azure/functions` internally.
    * In development, we may don't care this.
+   * @deprecated This requres to call `extractHttpUserFromHeaders` in `@azure/functions` internally.
    */
   get user(): HttpRequestUser | null {
     logger.warn(`HttpRequest.user is not supported in development`);
     return null;
   }
 
-  get body(): ReadableStream<any> | null {
+  get body(): ReadableStream<unknown> | null {
     return this.#uReq.body;
   }
 

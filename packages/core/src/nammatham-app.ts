@@ -1,7 +1,9 @@
 import { magenta } from 'colorette';
+
+import type { NammamthamEndpoint } from './types';
+import type { BaseHandlerResolver } from './bases';
+
 import { logger } from './main';
-import { BaseHandlerResolver } from './bases';
-import { NammamthamEndpoint } from './types';
 
 export class NammathamApp {
   protected readonly _functions: NammamthamEndpoint[] = [];
@@ -13,13 +15,13 @@ export class NammathamApp {
   /**
    * Use when run app in development mode or not,
    * Mostly used for plugins, e.g. expressPlugin
-   * 
+   *
    * For example, expressPlugin will not start express server in production mode for Azure Functions Adapter,
    * because Azure Functions will start the server for us.
    */
   private _isDevelopment: boolean | undefined;
 
-  constructor(protected handlerResolver: BaseHandlerResolver) {}
+  constructor(public readonly handlerResolver: BaseHandlerResolver) {}
 
   /**
    * Start register functions on the runtime e.g. Azure Functions
@@ -69,5 +71,4 @@ export class NammathamApp {
   setDevelopment(isDev: boolean) {
     this._isDevelopment = isDev;
   }
-  
 }

@@ -1,6 +1,7 @@
-import { AfterServerStartedMetadata, NammamthamEndpoint } from '../types';
 import type { Request, Response } from 'express';
-import { NammathamApp } from '../nammatham-app';
+
+import type { NammathamApp } from '../nammatham-app';
+import type { AfterServerStartedMetadata, NammamthamEndpoint } from '../types';
 
 export abstract class BaseHandlerResolver {
   abstract resolveHandler(endpoint: NammamthamEndpoint, req: Request, res: Response): any;

@@ -1,10 +1,15 @@
-import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/functions';
-import { NammathamContext } from './nammatham-context';
 import type { NammamthamEndpoint, PromiseLike } from '@nammatham/core';
+import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/functions';
 
-export type HandlerFunction<TTriggerType, TReturnType> = (ctx: NammathamContext<TTriggerType>) => PromiseLike<TReturnType>;
+import type { NammathamContext } from './nammatham-context';
 
-export type AnyHandler = (triggerInput: any, context: InvocationContext) => PromiseLike<any>;
+export type HandlerFunction<TTriggerType, TReturnType> = (
+  ctx: NammathamContext<TTriggerType>
+) => PromiseLike<TReturnType>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyHandler = (triggerInput: unknown, context: InvocationContext) => PromiseLike<any>;
+
 export type RegisterFunctionOption = (option: {
   handler: AnyHandler;
   extraInputs: FunctionInput[];

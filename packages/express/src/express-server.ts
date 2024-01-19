@@ -1,7 +1,11 @@
+import type { BaseHandlerResolver, NammathamApp } from '@nammatham/core';
+
 import express from 'express';
+import { logger } from '@nammatham/core';
+
+import type { NammathamHttpHandlerOption } from './types';
+
 import { createExpressMiddleware } from './middleware';
-import { BaseHandlerResolver, NammathamApp, logger } from '@nammatham/core';
-import { NammathamHttpHandlerOption } from './types';
 
 export interface ExpressServerOption {
   prefix?: string;
@@ -34,7 +38,10 @@ export function expressPlugin(option?: ExpressServerOption) {
   };
 }
 
-export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOption, expressOption?: ExpressServerOption) {
+export function startExpress(
+  { app, handlerResolver }: NammathamHttpHandlerOption,
+  expressOption?: ExpressServerOption
+) {
   logger.debug('Starting express server');
   const expressApp = expressOption?.expressApp ?? express();
   const port = expressOption?.port ?? 3000;
@@ -50,7 +57,7 @@ export function startExpress({ app, handlerResolver }: NammathamHttpHandlerOptio
       handlerResolver,
       option: {
         allowAllFunctionsAccessByHttp,
-      }
+      },
       // createContext,
     })
   );

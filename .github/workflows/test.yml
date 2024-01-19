@@ -2,18 +2,18 @@ name: "Build & Test"
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main ]
     paths-ignore:
       - '**/*.md'
       - '.github'
   pull_request:
-    branches: [ main, dev ]
+    branches: [ main ]
     paths-ignore:
       - '**/*.md'
       - '.github'
 
 env:
-  pnpm_version: 7
+  pnpm_version: 8
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [16, 18, 20]
         os: [ubuntu-latest, windows-latest]
 
     steps:
@@ -36,10 +36,8 @@ jobs:
         with:
           version: ${{ env.pnpm_version }}
       - run: pnpm install
-      - run: npx nx run nammatham:build
-      - run: npx nx run nammatham:typecheck
-      - run: npx nx run nammatham:test
-      - run: npx nx run nammatham:test:coverage
+      - run: pnpm build
+      - run: pnpm test:coverage
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:

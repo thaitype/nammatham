@@ -1,8 +1,21 @@
-import type { GenericFunctionOptions, HttpFunctionOptions, HttpRequest, HttpResponse, HttpResponseInit, Timer, TimerFunctionOptions } from '@azure/functions';
-import { app, HttpMethodFunctionOptions } from '@azure/functions';
+import type { HttpEndpointOption, WithEndpointOption } from '@nammatham/core';
+import type {
+  GenericFunctionOptions,
+  HttpFunctionOptions,
+  HttpRequest,
+  HttpResponse,
+  HttpResponseInit,
+  Timer,
+  TimerFunctionOptions,
+  HttpMethodFunctionOptions,
+} from '@azure/functions';
+
+import { app } from '@azure/functions';
+import { BaseFunctionTrigger } from '@nammatham/core';
+
+import type { FunctionOption } from './types';
+
 import { AzureFunctionsHandler } from './handler';
-import { FunctionOption } from './types';
-import { HttpEndpointOption, WithEndpointOption, BaseFunctionTrigger } from '@nammatham/core';
 
 export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   generic(funcName: string, option: Omit<GenericFunctionOptions, 'handler'>) {
@@ -53,7 +66,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
         ...option,
         endpointOption: {
           type: 'http',
-          route: option?.route,
+          route: option?.route ?? funcName,
           methods: option?.methods,
         },
       }),
@@ -67,21 +80,12 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   }
 
   timer(funcName: string, option: Omit<TimerFunctionOptions, 'handler'>) {
-    return new AzureFunctionsHandler<Timer, void>(
-      funcName,
-      this.parseFunctionOption(funcName, option),
-      funcOption => {
-        app.timer(funcName, {
-          ...option,
-          ...funcOption,
-        });
-      }
-    );
-  }
-
-  storageQueue(funcName: string, option: any) {
-    // TODO: Implement later
-    return new AzureFunctionsHandler<unknown, unknown>(funcName, this.parseFunctionOption(funcName, option), option);
+    return new AzureFunctionsHandler<Timer, void>(funcName, this.parseFunctionOption(funcName, option), funcOption => {
+      app.timer(funcName, {
+        ...option,
+        ...funcOption,
+      });
+    });
   }
 
   private parseFunctionOption(
@@ -92,6 +96,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       endpointOption: {
         ...opt?.endpointOption,
         route: (opt?.endpointOption as HttpEndpointOption)?.route ?? funcName,
+        type: (opt?.endpointOption as HttpEndpointOption)?.type ?? 'http',
       },
       extraInputs: opt?.extraInputs ?? [],
       extraOutputs: opt?.extraOutputs ?? [],

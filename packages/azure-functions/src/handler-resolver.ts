@@ -1,15 +1,20 @@
-import { BaseHandlerResolver, NammathamApp, logger, AfterServerStartedMetadata } from '@nammatham/core';
-import { Cookie, HttpResponse, InvocationContext, LogLevel } from '@azure/functions';
-import { AzureFunctionsEndpoint } from './types';
+import type { Cookie, LogLevel } from '@azure/functions';
+import type { NammathamApp, AfterServerStartedMetadata } from '@nammatham/core';
 import type {
   Request as ExpressRequest,
   Response as ExpressResponse,
   CookieOptions as ExpressCookieOptions,
 } from 'express';
-import { HttpRequest } from './http/HttpRequest';
-import { v4 as uuidv4 } from 'uuid';
-import { printRegisteredFunctions, printRegisteredNonHttpFunctions } from './utils';
+
 import { yellow } from 'colorette';
+import { v4 as uuidv4 } from 'uuid';
+import { BaseHandlerResolver, logger } from '@nammatham/core';
+import { HttpResponse, InvocationContext } from '@azure/functions';
+
+import type { AzureFunctionsEndpoint } from './types';
+
+import { HttpRequest } from './http/HttpRequest';
+import { printRegisteredFunctions, printRegisteredNonHttpFunctions } from './utils';
 
 function logExecutedFunction(
   startTime: number,
@@ -29,7 +34,7 @@ function logExecutedFunction(
  * Map InvocationContext log level to logger
  */
 
-function logHandler(level: LogLevel, ...args: any[]) {
+function logHandler(level: LogLevel, ...args: unknown[]) {
   if (level === 'information') {
     logger.info(...args);
   } else if (level === 'error') {
@@ -117,11 +122,12 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
     logger.info(
       `Executing 'Functions.${endpoint.name}' (Reason='This function was programmatically called via the host APIs.', Id=${context.invocationId})`
     );
-    let result: any;
+    let result: HttpResponse | string | undefined | unknown;
     try {
       result = await endpoint.invokeHandler(new HttpRequest(req), context);
       logExecutedFunction(startTime, endpoint, context, 'Succeeded');
-      if (result === undefined) return;
+      if (result === undefined || result === null) return;
+      if (typeof result === 'string') return res.send(result);
       const response = result instanceof HttpResponse ? result : new HttpResponse(result);
       return await convertHttpResponseToExpressResponse(res, response);
     } catch (error) {
@@ -134,8 +140,8 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
   override async resolveRegisterHandler(app: NammathamApp) {
     logger.debug(`Starting using Azure Functions register handler`);
     const azureFunctions = app.functions.filter(func => func.type === 'azure-functions') as AzureFunctionsEndpoint<
-      any,
-      any
+      unknown,
+      unknown
     >[];
 
     if (azureFunctions.length === 0) {

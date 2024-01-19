@@ -22,7 +22,7 @@ export interface GenericEndpointOption extends EndpointOptionBase, Record<string
 
 export type EndpointOption = HttpEndpointOption | GenericEndpointOption;
 
-export type WithEndpointOption = { endpointOption?: Partial<EndpointOption> };
+export type WithEndpointOption = { endpointOption?: EndpointOption };
 
 export interface NammamthamEndpoint {
   type: string;
