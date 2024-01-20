@@ -9,7 +9,14 @@ export class AzureFunctionsAdapter extends BaseRuntimeAdapter<AzureFunctionsTrig
   }
 
   createApp() {
-    const app = new NammathamApp(new AzureFunctionsHandlerResolver());
+    const app = new NammathamApp(
+      new AzureFunctionsHandlerResolver({
+        /**
+         * Azure Functions always start with /api
+         */
+        prefixPath: '/api',
+      })
+    );
     app.setRuntime('azure-functions');
     app.setDevelopment(false);
     return app;
