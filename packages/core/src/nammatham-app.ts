@@ -1,9 +1,13 @@
-import { magenta } from 'colorette';
+import { bgBlue, blue } from 'colorette';
 
 import type { NammamthamEndpoint } from './types';
 import type { BaseHandlerResolver } from './bases';
 
 import { logger } from './main';
+
+export async function logo() {
+  return `${bgBlue(`\n nammatham `)} ${blue('v' + (await import('../package.json')).version)}`;
+}
 
 export class NammathamApp {
   protected readonly _functions: NammamthamEndpoint[] = [];
@@ -20,6 +24,7 @@ export class NammathamApp {
    * because Azure Functions will start the server for us.
    */
   private _isDevelopment: boolean | undefined;
+  public readonly startTime = performance.now();
 
   constructor(public readonly handlerResolver: BaseHandlerResolver) {}
 
@@ -30,8 +35,8 @@ export class NammathamApp {
   async start() {
     logger.debug('Registering functions...');
     await this.handlerResolver.resolveRegisterHandler(this);
-    logger.info('All functions registered');
-    console.log(magenta(`\nStart Nammatham, Type-safe Serverless Library\n`));
+    logger.debug('All functions registered');
+    console.log(`${logo()} \n`);
   }
 
   addFunctions(...functions: NammamthamEndpoint[]) {
@@ -44,7 +49,7 @@ export class NammathamApp {
   addFunction(func: NammamthamEndpoint) {
     logger.debug(`Adding function "${func.name}" on route: ${func.endpointOption?.route}`);
     this._functions.push(func);
-    logger.info(`Function "${func.name}" added`);
+    logger.debug(`Function "${func.name}" added`);
     return this;
   }
 

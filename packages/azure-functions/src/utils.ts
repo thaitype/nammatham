@@ -1,7 +1,7 @@
 import type { AfterServerStartedMetadata, NammathamApp } from '@nammatham/core';
 
+import { gray, yellow } from 'colorette';
 import { trimSlash } from '@nammatham/core';
-import { blue, green, yellow } from 'colorette';
 
 import type { AzureFunctionsEndpoint } from './types';
 
@@ -29,11 +29,10 @@ export async function printRegisteredFunctions(
     .filter(func => func.type === 'azure-functions')
     .filter(func => func.endpointOption?.type === 'http') as AzureFunctionsEndpoint<unknown, unknown>[];
   if (azureFunctions.length === 0) return [];
-  await delay(100);
   console.log(`\n${yellow('Functions:')}\n`);
   for (const func of azureFunctions) {
     const methods = `[${getMethods(func).join(',')}]`;
-    console.log(`\t${yellow(func.name)}: ${blue(methods)} ${green(getFullUrl(func, option.port))}\n`);
+    console.log(` - ${func.name} ${gray(methods)} ${gray(getFullUrl(func, option.port))}`);
   }
   console.log('');
   return azureFunctions;
@@ -50,12 +49,11 @@ export async function printRegisteredNonHttpFunctions(
     .filter(func => func.type === 'azure-functions')
     .filter(func => func.endpointOption?.type !== 'http') as AzureFunctionsEndpoint<unknown, unknown>[];
   if (azureFunctions.length === 0) return [];
-  await delay(100);
   console.log(`${yellow(`----------------------------------------------`)}\n`);
   console.log(`\n${yellow('Non-HTTP Functions (In Develpment Mode Only):')}\n`);
   for (const func of azureFunctions) {
-    const methods = `[GET]`;
-    console.log(`\t${yellow(func.name)}: ${blue(methods)} ${green(getFullUrl(func, option.port))}\n`);
+    const methods = `[${getMethods(func).join(',')}]`;
+    console.log(` - ${func.name} ${gray(methods)} ${gray(getFullUrl(func, option.port))}`);
   }
   console.log('');
   return azureFunctions;
