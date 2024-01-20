@@ -87,7 +87,7 @@ npm start
 
 ### Available Adatpers
 
-- [azure-functions][@nammatham/azure-functions], Azure Functions Adapter for Nammatham
+- [azure-functions][@nammatham/azure-functions], Azure Functions Adapter for Nammatham, internally, Azure Functions in local dev mode is dependend on Express.js.
 
 ### Available Plugins
 

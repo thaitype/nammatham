@@ -19,7 +19,12 @@ export interface TrpcAzureFunctionsPluginOption<TRouter extends AnyRouter> {
   expressPluginOption?: ExpressServerOption;
 }
 
-export function tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: TrpcAzureFunctionsPluginOption<TRouter>) {
+/**
+ * tRPC plugin for AzureFunctions
+ * Unstable, some features are not implemented yet.
+ */
+
+export function unstable__tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: TrpcAzureFunctionsPluginOption<TRouter>) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
     logger.info(`Using plugin: tRPC for AzureFunctions`);
 
