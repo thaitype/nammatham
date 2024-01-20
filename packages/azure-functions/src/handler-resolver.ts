@@ -148,8 +148,8 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
       logger.warn(`\n\n${yellow('No functions registered, did you forget to add functions?')}\n`);
     }
 
-    logger.info(`Running with runtime: ${app.runtime}`);
-    console.log(`runtime: ${app.runtime}, isDevelopment: ${app.isDevelopment}`);
+    logger.debug(`Running with runtime: ${app.runtime}`);
+    logger.debug(`runtime: ${app.runtime}, isDevelopment: ${app.isDevelopment}`);
 
     if (app.runtime === 'express' && process.env.NAMMATHAM_ENV !== 'development') {
       throw new Error(
@@ -158,7 +158,7 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
       );
     }
     if (app.isDevelopment === true) {
-      logger.info(`Running in development mode`);
+      logger.debug(`Running in development mode`);
       logger.debug(`Skipping Register Azure Function handler in development mode`);
       return;
     }
