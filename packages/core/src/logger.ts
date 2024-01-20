@@ -4,10 +4,7 @@ const isDevelopment = process.env.NAMMATHAM_ENV === 'development';
 export const _logger = pino({
   level: process.env.NAMMATHAM_LOG_LEVEL || 'info',
   transport: {
-    target: 'pino-pretty',
-    options: {
-      colorize: true,
-    },
+    target: 'pino-dev',
   },
 });
 

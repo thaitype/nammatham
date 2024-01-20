@@ -24,9 +24,11 @@ export interface TrpcAzureFunctionsPluginOption<TRouter extends AnyRouter> {
  * Unstable, some features are not implemented yet.
  */
 
-export function unstable__tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(option: TrpcAzureFunctionsPluginOption<TRouter>) {
+export function unstable__tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(
+  option: TrpcAzureFunctionsPluginOption<TRouter>
+) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
-    logger.info(`Using plugin: tRPC for AzureFunctions`);
+    logger.debug(`Using plugin: tRPC for AzureFunctions`);
 
     const prefix = trimSlash(option?.prefix ?? '/trpc');
 

@@ -1,7 +1,8 @@
 import type { BaseHandlerResolver, NammathamApp } from '@nammatham/core';
 
 import express from 'express';
-import { logger } from '@nammatham/core';
+import { logger, logo } from '@nammatham/core';
+import { blue, gray, greenBright } from 'colorette';
 
 import type { NammathamHttpHandlerOption } from './types';
 
@@ -27,7 +28,7 @@ export function expressPlugin(option?: ExpressServerOption) {
     }
     app.setRuntime('express');
     app.setDevelopment(isDevelopment);
-    logger.info(`Using plugin: expressPlugin`);
+    logger.debug(`Using plugin: expressPlugin`);
     startExpress(
       {
         handlerResolver,
@@ -63,7 +64,16 @@ export function startExpress(
   );
 
   expressApp.listen(port, async () => {
-    logger.info(`Dev Server started at http://localhost:${port}`);
+    console.clear();
+    const endTime = performance.now();
+    const durationMs = Math.floor(endTime - app.startTime);
+    logger.debug(`Server started at http://localhost:${port}`);
+    console.log(`${await logo()}  ${gray(`ready in ${durationMs}ms`)}\n`);
+    console.log(`\n${blue('Express server started')}\n`);
+    console.log(` ┃ Local  ${greenBright(`http://localhost:${port}`)}`);
+    console.log(` ┃ Host   ${gray('Not Available')} \n`);
+
     await handlerResolver.afterServerStarted(app, { port, allowAllFunctionsAccessByHttp });
+    // console.log(`\nServer Ready \n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
   });
 }
