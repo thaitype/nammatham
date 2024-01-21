@@ -4,10 +4,37 @@
   "description": "Type-safe Serverless Library for Azure Functions and friends",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "default": "./dist/main.js"
+    },
+    "./express": {
+      "types": "./dist/express.d.ts",
+      "import": "./dist/express.mjs",
+      "default": "./dist/express.js"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.mjs",
+      "default": "./dist/core.js"
+    },
+    "./azure-functions": {
+      "types": "./dist/azure-functions.d.ts",
+      "import": "./dist/azure-functions.mjs",
+      "default": "./dist/azure-functions.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build",
-    "build": "tsup src/main.ts --dts",
+    "build:main": "tsup src/main.ts --dts --format esm,cjs",
+    "build:express": "tsup src/express.ts --dts --format esm,cjs",
+    "build:core": "tsup src/core.ts --dts --format esm,cjs",
+    "build:azure-functions": "tsup src/azure-functions.ts --dts --format esm,cjs",
+    "build": "run-p build:*",
     "format": "prettier -w src",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",
     "lint:fix": "eslint --fix ./src && prettier -w src",

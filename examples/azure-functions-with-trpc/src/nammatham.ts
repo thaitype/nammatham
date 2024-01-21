@@ -1,5 +1,4 @@
-import { initNammatham } from '@nammatham/core';
-import { AzureFunctionsAdapter } from '@nammatham/azure-functions';
+import { initNammatham, AzureFunctionsAdapter } from 'nammatham';
 
 const n = initNammatham.create(new AzureFunctionsAdapter());
 
