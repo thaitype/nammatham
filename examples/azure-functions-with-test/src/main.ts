@@ -4,5 +4,6 @@ import { app } from './nammatham';
 
 app.addFunctions(hello);
 
-app.register(expressPlugin());
+const dev = process.env.NODE_ENV === 'development';
+app.register(expressPlugin({ dev }));
 app.start();

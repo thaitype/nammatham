@@ -24,7 +24,7 @@ export class NammathamApp {
    * For example, expressPlugin will not start express server in production mode for Azure Functions Adapter,
    * because Azure Functions will start the server for us.
    */
-  private _isDevelopment: boolean | undefined;
+  private _isDevelopment = false;
   public readonly startTime = performance.now();
 
   constructor(public readonly handlerResolver: BaseHandlerResolver) {}
@@ -37,7 +37,7 @@ export class NammathamApp {
     logger.debug('Registering functions...');
     await this.handlerResolver.resolveRegisterHandler(this);
     logger.debug('All functions registered');
-    console.log(`${logo()} \n`);
+    console.log(`${await logo()} \n`);
   }
 
   addEndpoint(func: NammamthamEndpoint) {

@@ -12,7 +12,7 @@ export interface ExpressServerOption {
   prefix?: string;
   port?: number;
   expressApp?: express.Express;
-  isDevelopment?: boolean;
+  dev?: boolean;
   allowAllFunctionsAccessByHttp?: boolean;
 }
 
@@ -21,13 +21,16 @@ export interface ExpressServerOption {
  */
 export function expressPlugin(option?: ExpressServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
-    const isDevelopment = option?.isDevelopment ?? process.env.NODE_ENV === 'development';
-    if (!isDevelopment) {
-      logger.debug('Skipping express server');
+    const isDevelopment = option?.dev ?? false;
+    app.setDevelopment(isDevelopment);
+    console.log(app.runtime, 'runtime')
+    console.log(isDevelopment, 'isDevelopment')
+    if (isDevelopment === false && app.runtime === 'azure-functions') {
       return;
+    } else {
+      logger.info('Starting express server in development mode');
     }
     app.setRuntime('express');
-    app.setDevelopment(isDevelopment);
     logger.debug(`Using plugin: expressPlugin`);
     startExpress(
       {
