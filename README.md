@@ -6,7 +6,8 @@
 Type-safe Serverless Library for Azure Functions and friends 
 </p>
 
-<p align="center"><a href="https://www.npmjs.com/package/@nammatham/core"><img src="https://img.shields.io/npm/v/@nammatham/core" alt="npm version"></a> <a href="https://www.npmjs.com/package/@nammatham/core"><img src="https://img.shields.io/npm/dt/@nammatham/core" alt="npm download"></a></p>
+<p align="center"><a href="https://www.npmjs.com/package/nammatham"><img alt="NPM Version (with dist tag)" src="https://img.shields.io/npm/v/nammatham/alpha">
+ <a href="https://www.npmjs.com/package/nammatham"><img src="https://img.shields.io/npm/dt/nammatham" alt="npm download"></a></p>
 
 
 > 🚧 Alpha Stage: Internal Use Only 🚧
@@ -29,12 +30,24 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **a
 
 ## Getting Started for Azure Functions
 
+### Install
+
+```bash
+# Including all packages
+npm install nammatham@alpha
+```
+
+You can also install independently
+```bash
+npm install @nammatham/core @nammatham/azure-functions @nammatham/express
+```
+
+### Example
+
 You can see [examples](examples) or follow the minimal app getting started below:
 
 ```typescript
-import { AzureFunctionsAdapter } from "@nammatham/azure-functions";
-import { initNammatham } from "@nammatham/core";
-import { expressPlugin } from "@nammatham/express";
+import { initNammatham, AzureFunctionsAdapter, expressPlugin } from "nammatham";
 
 const n = initNammatham.create(new AzureFunctionsAdapter());
 const func = n.func;
