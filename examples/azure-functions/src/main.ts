@@ -1,4 +1,4 @@
-import { expressPlugin } from '@nammatham/express';
+import { expressPlugin } from 'nammatham';
 import blob from './functions/blob';
 import hello from './functions/hello';
 import { app } from './nammatham';
