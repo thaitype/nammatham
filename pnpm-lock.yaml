@@ -150,6 +150,43 @@ importers:
         specifier: ^5.0.2
         version: 5.3.3
 
+  examples/azure-functions-with-inversify:
+    dependencies:
+      '@azure/functions':
+        specifier: ^4.1.0
+        version: 4.1.0
+      '@di-extra/inversify':
+        specifier: ^0.2.0
+        version: 0.2.0
+      '@nammatham/azure-functions':
+        specifier: 2.0.0-alpha.8
+        version: link:../../packages/azure-functions
+      '@nammatham/core':
+        specifier: 2.0.0-alpha.8
+        version: link:../../packages/core
+      '@nammatham/express':
+        specifier: 2.0.0-alpha.8
+        version: link:../../packages/express
+      inversify:
+        specifier: ^6.0.2
+        version: 6.0.2
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.1
+    devDependencies:
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      tsx:
+        specifier: ^4.7.0
+        version: 4.7.0
+      typescript:
+        specifier: ^5.0.2
+        version: 5.3.3
+
   examples/azure-functions-with-trpc:
     dependencies:
       '@azure/functions':
@@ -338,6 +375,12 @@ packages:
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
+
+  /@di-extra/inversify@0.2.0:
+    resolution: {integrity: sha512-R37Jp6nIgFcAlRyWbsK6oQq7nwujCFxb5QvOE4Q78F9AU22VgPw11VAeouZNyBCR9q+7UM8siYJJ3Yv1ZyOetw==}
+    dependencies:
+      inversify: 6.0.2
+    dev: false
 
   /@esbuild/aix-ppc64@0.19.11:
     resolution: {integrity: sha512-FnzU0LyE3ySQk7UntJO4+qIiQgI7KoODnZg5xzXIrFJlKd2P2gwHsHY4927xj9y5PJmJSzULiUCWmv7iWnNa7g==}
@@ -2890,6 +2933,10 @@ packages:
       side-channel: 1.0.4
     dev: true
 
+  /inversify@6.0.2:
+    resolution: {integrity: sha512-i9m8j/7YIv4mDuYXUAcrpKPSaju/CIly9AHK5jvCBeoiM/2KEsuCQTTP+rzSWWpLYWRukdXFSl6ZTk2/uumbiA==}
+    dev: false
+
   /ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
@@ -4018,6 +4065,10 @@ packages:
   /real-require@0.2.0:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
+    dev: false
+
+  /reflect-metadata@0.2.1:
+    resolution: {integrity: sha512-i5lLI6iw9AU3Uu4szRNPPEkomnkjRTaVt9hy/bn5g/oSzekBSMeLZblcjP74AW0vBabqERLLIrz+gR8QYR54Tw==}
     dev: false
 
   /regexp.prototype.flags@1.5.1:

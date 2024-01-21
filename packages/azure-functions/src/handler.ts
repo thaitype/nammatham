@@ -5,17 +5,21 @@ import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, F
 
 import { NammathamContext } from './nammatham-context';
 
-export class AzureFunctionsHandler<TTriggerType, TReturnType> {
+export class AzureFunctionsHandler<TTriggerType, TReturnType, ExtraContex extends Record<string, unknown> = {}> {
+  context: ExtraContex = {} as ExtraContex;
+
   constructor(
     public funcName: string,
     public functionOption: WithEndpointOption & FunctionOption,
     public registerFunc: RegisterFunctionOption
   ) {}
 
-  handler(func: HandlerFunction<TTriggerType, TReturnType>): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
-    const invokeHandler = (triggerInput: TTriggerType, context: InvocationContext) => {
-      const nammathamContext = new NammathamContext(context, triggerInput);
-      return func(nammathamContext);
+  handler(
+    func: HandlerFunction<TTriggerType, TReturnType, ExtraContex>
+  ): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
+    const invokeHandler = (triggerInput: TTriggerType, innocationContext: InvocationContext) => {
+      const nammathamContext = new NammathamContext(innocationContext, triggerInput);
+      return func({ ...nammathamContext, ...this.context });
     };
     return {
       ...this.functionOption,
@@ -24,5 +28,10 @@ export class AzureFunctionsHandler<TTriggerType, TReturnType> {
       invokeHandler,
       registerFunc: this.registerFunc,
     };
+  }
+
+  setContext<NewItem extends Record<string, unknown>>(context: NewItem) {
+    this.context = { ...this.context, ...context };
+    return this as AzureFunctionsHandler<TTriggerType, TReturnType, ExtraContex & NewItem>;
   }
 }
