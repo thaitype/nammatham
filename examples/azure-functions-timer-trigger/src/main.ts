@@ -1,4 +1,4 @@
-import { expressPlugin } from '@nammatham/express';
+import { expressPlugin } from 'nammatham';
 import simpleTimer from './functions/simple-timer';
 import { app } from './nammatham';
 

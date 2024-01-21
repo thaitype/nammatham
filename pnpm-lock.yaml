@@ -71,15 +71,9 @@ importers:
       '@azure/functions':
         specifier: ^4.1.0
         version: 4.1.0
-      '@nammatham/azure-functions':
+      nammatham:
         specifier: 2.0.0-alpha.8
-        version: link:../../packages/azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/express
+        version: link:../../packages/main
     devDependencies:
       cross-env:
         specifier: ^7.0.3
@@ -99,15 +93,9 @@ importers:
       '@azure/functions':
         specifier: ^4.1.0
         version: 4.1.0
-      '@nammatham/azure-functions':
+      nammatham:
         specifier: 2.0.0-alpha.8
-        version: link:../../packages/azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/express
+        version: link:../../packages/main
     devDependencies:
       cross-env:
         specifier: ^7.0.3
@@ -127,15 +115,9 @@ importers:
       '@azure/functions':
         specifier: ^4.1.0
         version: 4.1.0
-      '@nammatham/azure-functions':
+      nammatham:
         specifier: 2.0.0-alpha.8
-        version: link:../../packages/azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/express
+        version: link:../../packages/main
     devDependencies:
       cross-env:
         specifier: ^7.0.3
@@ -158,18 +140,12 @@ importers:
       '@di-extra/inversify':
         specifier: ^0.2.0
         version: 0.2.0
-      '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/express
       inversify:
         specifier: ^6.0.2
         version: 6.0.2
+      nammatham:
+        specifier: 2.0.0-alpha.8
+        version: link:../../packages/main
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.1
@@ -192,15 +168,9 @@ importers:
       '@azure/functions':
         specifier: ^4.1.0
         version: 4.1.0
-      '@nammatham/azure-functions':
+      nammatham:
         specifier: 2.0.0-alpha.8
-        version: link:../../packages/azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/express
+        version: link:../../packages/main
     devDependencies:
       cross-env:
         specifier: ^7.0.3
@@ -220,15 +190,6 @@ importers:
       '@azure/functions':
         specifier: ^4.1.0
         version: 4.1.0
-      '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.8
-        version: link:../../packages/express
       '@nammatham/trpc-azure-functions':
         specifier: 2.0.0-alpha.8
         version: link:../../packages/trpc-azure-functions
@@ -238,6 +199,9 @@ importers:
       '@trpc/server':
         specifier: ^10.45.0
         version: 10.45.0
+      nammatham:
+        specifier: 2.0.0-alpha.8
+        version: link:../../packages/main
       trpc-azure-functions-adapter:
         specifier: 0.0.5
         version: 0.0.5
@@ -322,6 +286,18 @@ importers:
       express:
         specifier: ^4.18.2
         version: 4.18.2
+
+  packages/main:
+    dependencies:
+      '@nammatham/azure-functions':
+        specifier: 2.0.0-alpha.8
+        version: link:../azure-functions
+      '@nammatham/core':
+        specifier: 2.0.0-alpha.8
+        version: link:../core
+      '@nammatham/express':
+        specifier: 2.0.0-alpha.8
+        version: link:../express
 
   packages/trpc-azure-functions:
     dependencies:

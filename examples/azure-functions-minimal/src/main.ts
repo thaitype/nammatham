@@ -1,6 +1,4 @@
-import { AzureFunctionsAdapter } from "@nammatham/azure-functions";
-import { initNammatham } from "@nammatham/core";
-import { expressPlugin } from "@nammatham/express";
+import { AzureFunctionsAdapter, initNammatham, expressPlugin } from "nammatham";
 
 const n = initNammatham.create(new AzureFunctionsAdapter());
 const func = n.func;

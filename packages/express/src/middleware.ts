@@ -11,7 +11,7 @@ interface NammathamAppRequestOption extends NammathamHttpHandlerOption {
   res: express.Response;
 }
 
-export function trimSlash(str: string) {
+function trimSlash(str: string) {
   return str.replace(/^\/|\/$/g, '');
 }
 

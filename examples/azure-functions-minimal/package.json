@@ -12,9 +12,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.8",
-    "@nammatham/express": "2.0.0-alpha.8",
-    "@nammatham/azure-functions": "2.0.0-alpha.8",
+    "nammatham": "2.0.0-alpha.8",
     "@azure/functions": "^4.1.0"
   },
   "devDependencies": {
