@@ -8,7 +8,7 @@ const services = injector(container)
   .inject('dataService', DataService).to<DataService>()
   .resolve();
 
-export const helloFunc = func
+export default func
   .httpGet('hello', {
     route: 'hello-world',
   })
