@@ -6,6 +6,13 @@ import { releaseTypeSelectOption } from './input-option';
 
 export type ReleaseType = 'major' | 'minor' | 'patch' | 'alpha';
 
+/**
+ * If the package is published with the tag, it will be published with the tag.
+ */
+export const publishTags: Record<string, string> = {
+  nammatham: 'alpha',
+};
+
 async function main() {
   const dryRun = process.env.DRY_RUN === 'true';
   const releaseType = await select(releaseTypeSelectOption) as ReleaseType;
@@ -37,6 +44,10 @@ export interface PublishPackagesOptions {
   dryRun?: boolean;
 }
 
+function publishWithTag(packageName: string) {
+  return publishTags[packageName] ?? 'latest';
+}
+
 async function publishPackages({ directory, dryRun, version }: PublishPackagesOptions) {
   console.log('Publishing packages...');
   const otp = await input({ message: 'Enter your OTP' }); // Temp method, use github actions later
@@ -47,7 +58,8 @@ async function publishPackages({ directory, dryRun, version }: PublishPackagesOp
     const { name } = await readPackageJson(packagePath);
     console.log(`Publishing ${name}@${version}`);
     const otpOption = otp ? ['--otp', otp] : [];
-    await execute('npm', ['publish', '--access', 'public', ...otpOption], {
+    const tagOption = ['--tag', publishWithTag(name)]
+    await execute('npm', ['publish', '--access', 'public', ...otpOption, ...tagOption], {
       cwd: packagePath,
       dryRun,
     });
