@@ -15,9 +15,8 @@ export const publishTags: Record<string, string> = {
 
 async function main() {
   const dryRun = process.env.DRY_RUN === 'true';
-  const releaseType = await select(releaseTypeSelectOption) as ReleaseType;
-
   console.log(`Starting release nammatham... ${dryRun ? 'with dry-run' : ''}`);
+  const releaseType = await select(releaseTypeSelectOption) as ReleaseType;
   const { version } = await readPackageJson(process.cwd());
   console.log(`Current version: ${version}`);
 
