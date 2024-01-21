@@ -8,6 +8,7 @@ export default defineConfig({
       exclude: [
         ...configDefaults.coverage.exclude ?? [],
         'scripts',
+        'examples',
       ]
     },
   },
