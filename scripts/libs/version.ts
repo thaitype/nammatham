@@ -38,7 +38,7 @@ async function modifyDependency(packagePath: string, newVersion: string) {
 
   // Replaces all @nammatham/* dependencies
   for (const [name, version] of Object.entries(dependencies ?? {})) {
-    if (name.startsWith('@nammatham/')) {
+    if (name.startsWith('@nammatham/' || name === 'nammatham')) {
       dependencies[name] = newVersion;
     }
   }
