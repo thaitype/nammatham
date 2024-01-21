@@ -8,7 +8,7 @@
     "lint": "tsc --noEmit",
     "start": "tsc && func start",
     "start:client": "tsx src/client.ts",
-    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts",
+    "dev": "cross-env NODE_ENV=development tsx watch src/main.ts",
     "dev:old": "nodemon --watch src --ext ts --exec 'npm run build'"
   },
   "author": "Thada Wangthammang",

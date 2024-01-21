@@ -21,7 +21,7 @@ export interface ExpressServerOption {
  */
 export function expressPlugin(option?: ExpressServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
-    const isDevelopment = option?.isDevelopment ?? process.env.NAMMATHAM_ENV === 'development';
+    const isDevelopment = option?.isDevelopment ?? process.env.NODE_ENV === 'development';
     if (!isDevelopment) {
       logger.debug('Skipping express server');
       return;

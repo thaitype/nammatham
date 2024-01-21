@@ -45,7 +45,7 @@ export function unstable__tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(
       });
     app.addFunction(trpcFunction);
 
-    const isDevelopment = option?.expressPluginOption?.isDevelopment ?? process.env.NAMMATHAM_ENV === 'development';
+    const isDevelopment = option?.expressPluginOption?.isDevelopment ?? process.env.NODE_ENV === 'development';
     if (!isDevelopment) {
       logger.debug('Skipping express server in development mode (trpc)');
       return;

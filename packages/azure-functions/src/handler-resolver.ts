@@ -149,7 +149,7 @@ export class AzureFunctionsHandlerResolver extends BaseHandlerResolver {
     logger.debug(`Running with runtime: ${app.runtime}`);
     logger.debug(`runtime: ${app.runtime}, isDevelopment: ${app.isDevelopment}`);
 
-    if (app.runtime === 'express' && process.env.NAMMATHAM_ENV !== 'development') {
+    if (app.runtime === 'express' && process.env.NODE_ENV !== 'development') {
       throw new Error(
         `expressPlugin will not start express server in production mode for Azure Functions Adapter, because Azure Functions will start the server for us.
         Please make set isDevelopment to be 'false' when use expressPlugin in production mode.`
