@@ -65,7 +65,7 @@ export function unstable__tRpcAzureFunctionsPlugin<TRouter extends AnyRouter>(
     // TODO: Fix later, this is a workaround to remove trpc function from NammatamApp,
     // Thie will be empty NammatamApp with functions, e.g. only functions will register.
     // However, the `startExpress` only needs `functions` from NammatamApp.
-    const nammathamAppWithoutTrpc = new NammathamApp(handlerResolver).addFunctions(
+    const nammathamAppWithoutTrpc = new NammathamApp(handlerResolver).addEndpoints(
       ...app.functions.filter(func => func.name !== 'trpc')
     );
 

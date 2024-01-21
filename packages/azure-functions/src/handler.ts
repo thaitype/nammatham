@@ -1,25 +1,37 @@
 import type { InvocationContext } from '@azure/functions';
-import type { WithEndpointOption } from '@nammatham/core';
+import { BaseHandler, type WithEndpointOption } from '@nammatham/core';
 
 import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
 
 import { NammathamContext } from './nammatham-context';
 
-export class AzureFunctionsHandler<TTriggerType, TReturnType, ExtraContex extends Record<string, unknown> = {}> {
-  context: ExtraContex = {} as ExtraContex;
+export class AzureFunctionsHandler<
+  TTriggerType,
+  TReturnType,
+  ExtraContext extends Record<string, unknown> = {}
+> extends BaseHandler<HandlerFunction<TTriggerType, TReturnType, ExtraContext>> {
+  context: ExtraContext = {} as ExtraContext;
+  protected funcHandler!: HandlerFunction<TTriggerType, TReturnType, ExtraContext>;
 
   constructor(
     public funcName: string,
     public functionOption: WithEndpointOption & FunctionOption,
     public registerFunc: RegisterFunctionOption
-  ) {}
+  ) {
+    super();
+  }
 
   handler(
-    func: HandlerFunction<TTriggerType, TReturnType, ExtraContex>
-  ): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
+    func: HandlerFunction<TTriggerType, TReturnType, ExtraContext>
+  ){
+    this.funcHandler = func;
+    return this;
+  }
+
+  build(): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
     const invokeHandler = (triggerInput: TTriggerType, innocationContext: InvocationContext) => {
       const nammathamContext = new NammathamContext(innocationContext, triggerInput);
-      return func({ ...nammathamContext, ...this.context });
+      return this.funcHandler({ ...nammathamContext, ...this.context });
     };
     return {
       ...this.functionOption,
@@ -27,11 +39,15 @@ export class AzureFunctionsHandler<TTriggerType, TReturnType, ExtraContex extend
       name: this.funcName,
       invokeHandler,
       registerFunc: this.registerFunc,
-    };
+    }; 
   }
 
   setContext<NewItem extends Record<string, unknown>>(context: NewItem) {
     this.context = { ...this.context, ...context };
-    return this as AzureFunctionsHandler<TTriggerType, TReturnType, ExtraContex & NewItem>;
+    return this as AzureFunctionsHandler<TTriggerType, TReturnType, ExtraContext & NewItem>;
+  }
+
+  getHandler() {
+    return this.funcHandler;
   }
 }

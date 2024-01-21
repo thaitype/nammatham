@@ -1,7 +1,7 @@
 import { bgBlue, blue } from 'colorette';
 
 import type { NammamthamEndpoint } from './types';
-import type { BaseHandlerResolver } from './bases';
+import type { BaseHandler, BaseHandlerResolver } from './bases';
 
 import { logger } from './main';
 
@@ -11,6 +11,7 @@ export async function logo() {
 
 export class NammathamApp {
   protected readonly _functions: NammamthamEndpoint[] = [];
+  
   /**
    * The runtime server e.g. Azure Functions,
    * this is used to determine whether to start the server or not.
@@ -39,17 +40,30 @@ export class NammathamApp {
     console.log(`${logo()} \n`);
   }
 
-  addFunctions(...functions: NammamthamEndpoint[]) {
+  addEndpoint(func: NammamthamEndpoint) {
+    logger.debug(`Adding function "${func.name}" on route: ${func.endpointOption?.route}`);
+    this._functions.push(func);
+    logger.debug(`Function "${func.name}" added`);
+    return this;
+  }
+
+  addEndpoints(...functions: NammamthamEndpoint[]) {
+    for (const func of functions) {
+      this.addEndpoint(func);
+    }
+    return this;
+  }
+
+  addFunctions(...functions: BaseHandler<any>[]) {
     for (const func of functions) {
       this.addFunction(func);
     }
     return this;
   }
 
-  addFunction(func: NammamthamEndpoint) {
-    logger.debug(`Adding function "${func.name}" on route: ${func.endpointOption?.route}`);
-    this._functions.push(func);
-    logger.debug(`Function "${func.name}" added`);
+  addFunction(handler: BaseHandler<any>) {
+    const func = handler.build();
+    this.addEndpoint(func);
     return this;
   }
 
