@@ -1,4 +1,4 @@
-import { NammamthamEndpoint } from '../types';
+import type { NammamthamEndpoint } from '../types';
 
 export abstract class BaseHandler<Handler extends (...args: any[]) => any> {
   abstract build(): NammamthamEndpoint;

@@ -3,6 +3,7 @@ import type { FunctionInput, FunctionOutput, InvocationContext } from '@azure/fu
 
 import type { NammathamContext } from './nammatham-context';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type HandlerFunction<TTriggerType, TReturnType, ExtraContext extends Record<string, unknown> = {}> = (
   ctx: NammathamContext<TTriggerType> & ExtraContext
 ) => PromiseLike<TReturnType>;

@@ -11,7 +11,7 @@ export async function logo() {
 
 export class NammathamApp {
   protected readonly _functions: NammamthamEndpoint[] = [];
-  
+
   /**
    * The runtime server e.g. Azure Functions,
    * this is used to determine whether to start the server or not.

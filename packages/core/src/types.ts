@@ -36,4 +36,4 @@ export interface AfterServerStartedMetadata {
   allowAllFunctionsAccessByHttp?: boolean;
 }
 
-export type InferHandler<T extends { handler: (...args: any) => any }> = Parameters<T['handler']>[0]
+export type InferHandler<T extends { handler: (...args: any) => any }> = Parameters<T['handler']>[0];

@@ -1,4 +1,5 @@
 import type { InvocationContext } from '@azure/functions';
+
 import { BaseHandler, type WithEndpointOption } from '@nammatham/core';
 
 import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, FunctionOption } from './types';
@@ -8,6 +9,7 @@ import { NammathamContext } from './nammatham-context';
 export class AzureFunctionsHandler<
   TTriggerType,
   TReturnType,
+  // eslint-disable-next-line @typescript-eslint/ban-types
   ExtraContext extends Record<string, unknown> = {}
 > extends BaseHandler<HandlerFunction<TTriggerType, TReturnType, ExtraContext>> {
   context: ExtraContext = {} as ExtraContext;
@@ -21,9 +23,7 @@ export class AzureFunctionsHandler<
     super();
   }
 
-  handler(
-    func: HandlerFunction<TTriggerType, TReturnType, ExtraContext>
-  ){
+  handler(func: HandlerFunction<TTriggerType, TReturnType, ExtraContext>) {
     this.funcHandler = func;
     return this;
   }
@@ -39,7 +39,7 @@ export class AzureFunctionsHandler<
       name: this.funcName,
       invokeHandler,
       registerFunc: this.registerFunc,
-    }; 
+    };
   }
 
   setContext<NewItem extends Record<string, unknown>>(context: NewItem) {
