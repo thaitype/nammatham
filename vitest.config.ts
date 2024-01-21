@@ -8,6 +8,11 @@ export default defineConfig({
       exclude: [
         ...configDefaults.coverage.exclude ?? [],
         'scripts',
+        'examples',
+        /**
+         * Ignore tRPC plugins, it's unstable yet.
+         */
+        'packages/trpc-azure-functions',
       ]
     },
   },
