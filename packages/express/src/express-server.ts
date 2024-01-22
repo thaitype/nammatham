@@ -11,6 +11,10 @@ import { createExpressMiddleware } from './middleware';
 export interface ExpressServerOption {
   prefix?: string;
   port?: number;
+  /**
+   * @default localhost
+   */
+  hostname?: string;
   expressApp?: express.Express;
   dev?: boolean;
   allowAllFunctionsAccessByHttp?: boolean;
@@ -23,8 +27,6 @@ export function expressPlugin(option?: ExpressServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
     const isDevelopment = option?.dev ?? false;
     app.setDevelopment(isDevelopment);
-    console.log(app.runtime, 'runtime')
-    console.log(isDevelopment, 'isDevelopment')
     if (isDevelopment === false && app.runtime === 'azure-functions') {
       return;
     } else {
@@ -49,6 +51,7 @@ export function startExpress(
   logger.debug('Starting express server');
   const expressApp = expressOption?.expressApp ?? express();
   const port = expressOption?.port ?? 3000;
+  const hostname = expressOption?.hostname ?? 'localhost';
   const prefix = expressOption?.prefix ?? '/api';
   const allowAllFunctionsAccessByHttp = expressOption?.allowAllFunctionsAccessByHttp ?? false;
 
@@ -66,17 +69,19 @@ export function startExpress(
     })
   );
 
-  expressApp.listen(port, async () => {
+  expressApp.listen(port, hostname, async () => {
     console.clear();
     const endTime = performance.now();
     const durationMs = Math.floor(endTime - app.startTime);
-    logger.debug(`Server started at http://localhost:${port}`);
+    const hostType = hostname === 'localhost' ? 'Local' : 'Host';
+    // const host = hostname === 'localhost' ? gray('Not Available') : greenBright(`http://${hostname}:${port}`);
+    logger.debug(`Server started at http://${hostname}:${port}`);
     console.log(`${await logo()}  ${gray(`ready in ${durationMs} ms`)}\n`);
     console.log(`\n${blue('Express server started')}\n`);
-    console.log(` ┃ Local  ${greenBright(`http://localhost:${port}`)}`);
-    console.log(` ┃ Host   ${gray('Not Available')} \n`);
+    // console.log(` ┃ Local  ${greenBright(`http://localhost:${port}`)}`);
+    console.log(` ┃ ${hostType}   ${greenBright(`http://${hostname}:${port}`)} \n`);
 
-    await handlerResolver.afterServerStarted(app, { port, allowAllFunctionsAccessByHttp });
+    await handlerResolver.afterServerStarted(app, { port, hostname, allowAllFunctionsAccessByHttp });
     console.log('\n');
   });
 }

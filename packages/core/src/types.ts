@@ -20,9 +20,9 @@ export interface GenericEndpointOption extends EndpointOptionBase, Record<string
   type: 'generic';
 }
 
-export type UnknownEndpointOption = EndpointOptionBase & Record<string, unknown>;
+// export type UnknownEndpointOption = EndpointOptionBase & Record<string, unknown>;
 
-export type EndpointOption = HttpEndpointOption | GenericEndpointOption | UnknownEndpointOption;
+export type EndpointOption = HttpEndpointOption | GenericEndpointOption;
 
 export type WithEndpointOption = { endpointOption?: EndpointOption };
 
