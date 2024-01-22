@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.1.0",
-    "nammatham": "2.0.0-alpha.9"
+    "nammatham": "2.0.0-alpha.10"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

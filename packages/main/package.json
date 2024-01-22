@@ -1,6 +1,6 @@
 {
   "name": "nammatham",
-  "version": "2.0.0-alpha.9",
+  "version": "2.0.0-alpha.10",
   "description": "Type-safe Serverless Library for Azure Functions and friends",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -47,9 +47,9 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.9",
-    "@nammatham/azure-functions": "2.0.0-alpha.9",
-    "@nammatham/express": "2.0.0-alpha.9"
+    "@nammatham/core": "2.0.0-alpha.10",
+    "@nammatham/azure-functions": "2.0.0-alpha.10",
+    "@nammatham/express": "2.0.0-alpha.10"
   },
   "repository": {
     "type": "git",
