@@ -36,15 +36,21 @@ async function modifyDependency(packagePath: string, newVersion: string) {
   const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
   const { dependencies } = packageJson;
 
+  const relativePackagePath = path.relative(process.cwd(), packagePath);
+
   // Replaces all @nammatham/* dependencies
   for (const [name, version] of Object.entries(dependencies ?? {})) {
-    if (name.startsWith('@nammatham/' || name === 'nammatham')) {
+    if (name.startsWith('@nammatham/')) {
       dependencies[name] = newVersion;
+      console.log(`Replace ${relativePackagePath}, dependency ${name} to ${newVersion}`);
+    } else if (name === 'nammatham') {
+      // TODO: Hotfix, remove the duplicated code later
+      dependencies[name] = newVersion;
+      console.log(`Replace '${relativePackagePath}', dependency '${name}' to '${newVersion}'`);
     }
   }
   await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }
-
 
 export async function readPackageJson(packagePath: string) {
   const packageJsonPath = path.resolve(packagePath, 'package.json');
