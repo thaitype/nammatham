@@ -24,6 +24,7 @@ async function main() {
   await modifyAllDependencies(newVersion, { directories: ['examples', 'packages'] });
   await modifyVersion(process.cwd(), newVersion);
   await modifyPackagesVersion({ version: newVersion, directories: [path.resolve('packages')] });
+  await execute('pnpm', ['install'], { dryRun });
   await copyReadmeFromRoot({ directories: ['packages'] });
   await execute('git', ['add', '.'], { dryRun });
   await execute('git', ['commit', '-m', `Bump version v${newVersion}`], { dryRun });
