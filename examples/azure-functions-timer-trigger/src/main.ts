@@ -4,8 +4,11 @@ import { app } from './nammatham';
 
 app.addFunctions(simpleTimer);
 
+const dev = process.env.NODE_ENV === 'development';
+
 app.register(
   expressPlugin({
+    dev,
     allowAllFunctionsAccessByHttp: true,
   })
 );

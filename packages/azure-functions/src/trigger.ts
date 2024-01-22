@@ -100,7 +100,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       endpointOption: {
         ...opt?.endpointOption,
         route: (opt?.endpointOption as HttpEndpointOption)?.route ?? funcName,
-        type: (opt?.endpointOption as HttpEndpointOption)?.type ?? 'http',
+        type: opt?.endpointOption?.type ?? 'generic',
       },
       extraInputs: opt?.extraInputs ?? [],
       extraOutputs: opt?.extraOutputs ?? [],

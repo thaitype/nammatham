@@ -43,7 +43,7 @@ describe(`Test utils: ${utils.getFullUrl.name}`, () => {
     } as any;
 
     // Act
-    const result = utils.getFullUrl(func, 3000);
+    const result = utils.getFullUrl(func, 'localhost', 3000);
 
     // Assert
     expect(result).toEqual('http://localhost:3000/api/test');
@@ -58,7 +58,7 @@ describe(`Test utils: ${utils.getFullUrl.name}`, () => {
     } as any;
 
     // Act
-    const result = utils.getFullUrl(func, 3000);
+    const result = utils.getFullUrl(func, 'localhost', 3000);
 
     // Assert
     expect(result).toEqual('http://localhost:3000/api/test');
@@ -71,7 +71,7 @@ describe(`Test utils: ${utils.getFullUrl.name}`, () => {
     } as any;
 
     // Act
-    const result = utils.getFullUrl(func, 3000);
+    const result = utils.getFullUrl(func, '', 3000);
 
     // Assert
     expect(result).toEqual('');

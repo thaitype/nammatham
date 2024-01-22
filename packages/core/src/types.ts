@@ -20,6 +20,8 @@ export interface GenericEndpointOption extends EndpointOptionBase, Record<string
   type: 'generic';
 }
 
+// export type UnknownEndpointOption = EndpointOptionBase & Record<string, unknown>;
+
 export type EndpointOption = HttpEndpointOption | GenericEndpointOption;
 
 export type WithEndpointOption = { endpointOption?: EndpointOption };
@@ -33,6 +35,7 @@ export interface NammamthamEndpoint {
 
 export interface AfterServerStartedMetadata {
   port?: number;
+  hostname: string;
   allowAllFunctionsAccessByHttp?: boolean;
 }
 

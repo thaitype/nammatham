@@ -7,14 +7,14 @@
     "build": "tsc",
     "lint": "tsc --noEmit",
     "start": "tsc && func start",
-    "dev": "cross-env NAMMATHAM_ENV=development tsx watch src/main.ts"
+    "dev": "cross-env NODE_ENV=development tsx watch src/main.ts"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.1.0",
     "@di-extra/inversify": "^0.2.0",
-    "nammatham": "2.0.0-alpha.8",
+    "nammatham": "2.0.0-alpha.9",
     "inversify": "^6.0.2",
     "reflect-metadata": "^0.2.1"
   },

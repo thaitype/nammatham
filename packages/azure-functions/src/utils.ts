@@ -13,10 +13,10 @@ export function getMethods(func: AzureFunctionsEndpoint<unknown, unknown>): stri
   return methods;
 }
 
-export function getFullUrl(func: AzureFunctionsEndpoint<unknown, unknown>, port?: number): string {
+export function getFullUrl(func: AzureFunctionsEndpoint<unknown, unknown>, hostname: string, port?: number): string {
   const endpoint = func.endpointOption?.route ?? func.name;
   if (typeof endpoint !== 'string') return '';
-  return `http://localhost${port ? `:${port}` : ''}/api/${trimSlash(endpoint)}`;
+  return `http://${hostname}${port ? `:${port}` : ''}/api/${trimSlash(endpoint)}`;
 }
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -32,9 +32,8 @@ export async function printRegisteredFunctions(
   console.log(`\n${yellow('Functions:')}\n`);
   for (const func of azureFunctions) {
     const methods = `[${getMethods(func).join(',')}]`;
-    console.log(` - ${func.name} ${gray(methods)} ${gray(getFullUrl(func, option.port))}`);
+    console.log(` - ${func.name} ${gray(methods)} ${gray(getFullUrl(func, option.hostname, option.port))}`);
   }
-  console.log('');
   return azureFunctions;
 }
 
@@ -49,12 +48,10 @@ export async function printRegisteredNonHttpFunctions(
     .filter(func => func.type === 'azure-functions')
     .filter(func => func.endpointOption?.type !== 'http') as AzureFunctionsEndpoint<unknown, unknown>[];
   if (azureFunctions.length === 0) return [];
-  console.log(`${yellow(`----------------------------------------------`)}\n`);
-  console.log(`\n${yellow('Non-HTTP Functions (In Develpment Mode Only):')}\n`);
+  console.log(`\n${yellow('Non-HTTP Functions, accessed by HTTP (dev mode):')}\n`);
   for (const func of azureFunctions) {
-    const methods = `[${getMethods(func).join(',')}]`;
-    console.log(` - ${func.name} ${gray(methods)} ${gray(getFullUrl(func, option.port))}`);
+    // const type = `[${func.endpointOption?.type ?? 'generic'}]`;
+    console.log(` - ${func.name} ${gray(getFullUrl(func, option.hostname, option.port))}`);
   }
-  console.log('');
   return azureFunctions;
 }

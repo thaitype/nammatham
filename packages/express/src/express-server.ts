@@ -11,8 +11,12 @@ import { createExpressMiddleware } from './middleware';
 export interface ExpressServerOption {
   prefix?: string;
   port?: number;
+  /**
+   * @default localhost
+   */
+  hostname?: string;
   expressApp?: express.Express;
-  isDevelopment?: boolean;
+  dev?: boolean;
   allowAllFunctionsAccessByHttp?: boolean;
 }
 
@@ -21,13 +25,14 @@ export interface ExpressServerOption {
  */
 export function expressPlugin(option?: ExpressServerOption) {
   return (app: NammathamApp, handlerResolver: BaseHandlerResolver) => {
-    const isDevelopment = option?.isDevelopment ?? process.env.NAMMATHAM_ENV === 'development';
-    if (!isDevelopment) {
-      logger.debug('Skipping express server');
+    const isDevelopment = option?.dev ?? false;
+    app.setDevelopment(isDevelopment);
+    if (isDevelopment === false && app.runtime === 'azure-functions') {
       return;
+    } else {
+      logger.info('Starting express server in development mode');
     }
     app.setRuntime('express');
-    app.setDevelopment(isDevelopment);
     logger.debug(`Using plugin: expressPlugin`);
     startExpress(
       {
@@ -46,6 +51,7 @@ export function startExpress(
   logger.debug('Starting express server');
   const expressApp = expressOption?.expressApp ?? express();
   const port = expressOption?.port ?? 3000;
+  const hostname = expressOption?.hostname ?? 'localhost';
   const prefix = expressOption?.prefix ?? '/api';
   const allowAllFunctionsAccessByHttp = expressOption?.allowAllFunctionsAccessByHttp ?? false;
 
@@ -63,17 +69,19 @@ export function startExpress(
     })
   );
 
-  expressApp.listen(port, async () => {
+  expressApp.listen(port, hostname, async () => {
     console.clear();
     const endTime = performance.now();
     const durationMs = Math.floor(endTime - app.startTime);
-    logger.debug(`Server started at http://localhost:${port}`);
-    console.log(`${await logo()}  ${gray(`ready in ${durationMs}ms`)}\n`);
+    const hostType = hostname === 'localhost' ? 'Local' : 'Host';
+    // const host = hostname === 'localhost' ? gray('Not Available') : greenBright(`http://${hostname}:${port}`);
+    logger.debug(`Server started at http://${hostname}:${port}`);
+    console.log(`${await logo()}  ${gray(`ready in ${durationMs} ms`)}\n`);
     console.log(`\n${blue('Express server started')}\n`);
-    console.log(` ┃ Local  ${greenBright(`http://localhost:${port}`)}`);
-    console.log(` ┃ Host   ${gray('Not Available')} \n`);
+    // console.log(` ┃ Local  ${greenBright(`http://localhost:${port}`)}`);
+    console.log(` ┃ ${hostType}   ${greenBright(`http://${hostname}:${port}`)} \n`);
 
-    await handlerResolver.afterServerStarted(app, { port, allowAllFunctionsAccessByHttp });
-    // console.log(`\nServer Ready \n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
+    await handlerResolver.afterServerStarted(app, { port, hostname, allowAllFunctionsAccessByHttp });
+    console.log('\n');
   });
 }
