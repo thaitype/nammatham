@@ -71,12 +71,12 @@ export function startExpress(
     const endTime = performance.now();
     const durationMs = Math.floor(endTime - app.startTime);
     logger.debug(`Server started at http://localhost:${port}`);
-    console.log(`${await logo()}  ${gray(`ready in ${durationMs}ms`)}\n`);
+    console.log(`${await logo()}  ${gray(`ready in ${durationMs} ms`)}\n`);
     console.log(`\n${blue('Express server started')}\n`);
     console.log(` ┃ Local  ${greenBright(`http://localhost:${port}`)}`);
     console.log(` ┃ Host   ${gray('Not Available')} \n`);
 
     await handlerResolver.afterServerStarted(app, { port, allowAllFunctionsAccessByHttp });
-    // console.log(`\nServer Ready \n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
+    console.log('\n');
   });
 }

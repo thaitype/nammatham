@@ -1,7 +1,7 @@
 import type { AfterServerStartedMetadata, NammathamApp } from '@nammatham/core';
 
 import { gray, yellow } from 'colorette';
-import { trimSlash } from '@nammatham/core';
+import { logger, trimSlash } from '@nammatham/core';
 
 import type { AzureFunctionsEndpoint } from './types';
 
@@ -34,7 +34,6 @@ export async function printRegisteredFunctions(
     const methods = `[${getMethods(func).join(',')}]`;
     console.log(` - ${func.name} ${gray(methods)} ${gray(getFullUrl(func, option.port))}`);
   }
-  console.log('');
   return azureFunctions;
 }
 
@@ -49,12 +48,10 @@ export async function printRegisteredNonHttpFunctions(
     .filter(func => func.type === 'azure-functions')
     .filter(func => func.endpointOption?.type !== 'http') as AzureFunctionsEndpoint<unknown, unknown>[];
   if (azureFunctions.length === 0) return [];
-  console.log(`${yellow(`----------------------------------------------`)}\n`);
-  console.log(`\n${yellow('Non-HTTP Functions (In Develpment Mode Only):')}\n`);
+  console.log(`\n${yellow('Non-HTTP Functions, accessed by HTTP (dev mode):')}\n`);
   for (const func of azureFunctions) {
-    const methods = `[${getMethods(func).join(',')}]`;
-    console.log(` - ${func.name} ${gray(methods)} ${gray(getFullUrl(func, option.port))}`);
+    const type = `[${func.endpointOption?.type ?? 'generic'}]`;
+    console.log(` - ${func.name} ${gray(type)} ${gray(getFullUrl(func, option.port))}`);
   }
-  console.log('');
   return azureFunctions;
 }

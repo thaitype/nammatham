@@ -82,7 +82,12 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
   timer(funcName: string, option: Omit<TimerFunctionOptions, 'handler'>) {
     return new AzureFunctionsHandler<Timer, unknown | void>(
       funcName,
-      this.parseFunctionOption(funcName, option),
+      this.parseFunctionOption(funcName, {
+        ...option,
+        endpointOption: {
+          type: 'timer',
+        },
+      }),
       funcOption => {
         app.timer(funcName, {
           ...option,
@@ -100,7 +105,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       endpointOption: {
         ...opt?.endpointOption,
         route: (opt?.endpointOption as HttpEndpointOption)?.route ?? funcName,
-        type: (opt?.endpointOption as HttpEndpointOption)?.type ?? 'http',
+        type: opt?.endpointOption?.type ?? 'generic',
       },
       extraInputs: opt?.extraInputs ?? [],
       extraOutputs: opt?.extraOutputs ?? [],
