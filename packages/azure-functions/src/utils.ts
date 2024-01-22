@@ -50,8 +50,8 @@ export async function printRegisteredNonHttpFunctions(
   if (azureFunctions.length === 0) return [];
   console.log(`\n${yellow('Non-HTTP Functions, accessed by HTTP (dev mode):')}\n`);
   for (const func of azureFunctions) {
-    const type = `[${func.endpointOption?.type ?? 'generic'}]`;
-    console.log(` - ${func.name} ${gray(type)} ${gray(getFullUrl(func, option.hostname, option.port))}`);
+    // const type = `[${func.endpointOption?.type ?? 'generic'}]`;
+    console.log(` - ${func.name} ${gray(getFullUrl(func, option.hostname, option.port))}`);
   }
   return azureFunctions;
 }

@@ -35,6 +35,7 @@ export interface NammamthamEndpoint {
 
 export interface AfterServerStartedMetadata {
   port?: number;
+  hostname: string;
   allowAllFunctionsAccessByHttp?: boolean;
 }
 
