@@ -72,7 +72,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       nammatham:
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../../packages/main
     devDependencies:
       cross-env:
@@ -94,7 +94,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       nammatham:
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../../packages/main
     devDependencies:
       cross-env:
@@ -116,7 +116,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       nammatham:
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../../packages/main
     devDependencies:
       cross-env:
@@ -144,7 +144,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       nammatham:
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../../packages/main
       reflect-metadata:
         specifier: ^0.2.1
@@ -169,7 +169,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       nammatham:
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../../packages/main
     devDependencies:
       cross-env:
@@ -191,7 +191,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/trpc-azure-functions':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../../packages/trpc-azure-functions
       '@trpc/client':
         specifier: ^10.45.0
@@ -200,7 +200,7 @@ importers:
         specifier: ^10.45.0
         version: 10.45.0
       nammatham:
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../../packages/main
       trpc-azure-functions-adapter:
         specifier: 0.0.5
@@ -225,7 +225,7 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/core':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../core
       colorette:
         specifier: ^2.0.20
@@ -275,7 +275,7 @@ importers:
   packages/express:
     dependencies:
       '@nammatham/core':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../core
       '@types/express':
         specifier: ^4.17.21
@@ -290,13 +290,13 @@ importers:
   packages/main:
     dependencies:
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../express
 
   packages/trpc-azure-functions:
@@ -305,13 +305,13 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../azure-functions
       '@nammatham/core':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../core
       '@nammatham/express':
-        specifier: 2.0.0-alpha.9
+        specifier: 2.0.0-alpha.11
         version: link:../express
       '@trpc/server':
         specifier: ^10.45.0
