@@ -1,13 +1,7 @@
-import type { Hono } from 'hono';
+import type { Env, Hono, Schema } from 'hono';
 
 import { type BaseHandler } from '@nammatham/core';
 import { AzureFunctionsAdapter } from '@nammatham/azure-functions';
-
-interface NammathamHandleOptions {
-  dev?: boolean;
-  app?: Hono;
-  triggers?: Record<string, BaseHandler<any>>;
-}
 
 const adapter = new AzureFunctionsAdapter();
 
@@ -16,7 +10,12 @@ export const nammatham = {
     return adapter.createTrigger();
   },
 
-  handle(option: NammathamHandleOptions) {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  handle<E extends Env = Env, S extends Schema = {}, BasePath extends string = '/'>(option: {
+    dev?: boolean;
+    app?: Hono<E, S, BasePath>;
+    triggers?: Record<string, BaseHandler<any>>;
+  }) {
     const nammathamApp = adapter.createApp();
     nammathamApp.setDevelopment(option.dev ?? false);
     if (option.triggers) {
@@ -24,6 +23,25 @@ export const nammatham = {
     }
     // TODO: Use Hono as a dev server
     // nammathamApp.register(expressplugin());
+
     nammathamApp.start();
+    if (option.app) return nammatham.handleHono(option.app);
+  },
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  handleHono<E extends Env = Env, S extends Schema = {}, BasePath extends string = '/'>(app: Hono<E, S, BasePath>) {
+    console.log('app', app);
+
+    // From https://github.dev/honojs/hono/src/adapter/aws-lambda/handler.ts
+    // const req = createRequest(event)
+    // const requestContext = getRequestContext(event)
+
+    // const res = await app.fetch(req, {
+    //   event,
+    //   requestContext,
+    //   lambdaContext,
+    // })
+
+    // return createResult(event, res)
   },
 };
