@@ -28,9 +28,11 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.12",
+    "@azure/functions": "^4.1.0",
     "@nammatham/azure-functions": "2.0.0-alpha.12",
-    "@nammatham/express": "2.0.0-alpha.12"
+    "@nammatham/core": "2.0.0-alpha.12",
+    "@nammatham/express": "2.0.0-alpha.12",
+    "hono": "^4.0.4"
   },
   "repository": {
     "type": "git",

@@ -12,8 +12,9 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "nammatham-v3": "2.0.0-alpha.12",
-    "@azure/functions": "^4.1.0"
+    "@azure/functions": "^4.1.0",
+    "hono": "^4.0.4",
+    "nammatham-v3": "2.0.0-alpha.12"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

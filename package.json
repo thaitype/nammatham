@@ -10,9 +10,9 @@
     "post-local": "tsx ./scripts/post-local.ts",
     "release": "run-s build releaseOnly",
     "releaseOnly": "tsx ./scripts/release.ts",
-    "format": "nx run-many -t format --projects=@nammatham/* --parallel=5",
-    "lint": "nx run-many -t lint --projects=@nammatham/* --parallel=5",
-    "lint:fix": "nx run-many -t lint:fix --projects=@nammatham/* --parallel=5",
+    "format": "nx run-many -t format --projects nammatham nammatham-v3 @nammatham/* --parallel=10",
+    "lint": "nx run-many -t lint --projects nammatham nammatham-v3 @nammatham/* --parallel=10",
+    "lint:fix": "nx run-many -t lint:fix --projects nammatham nammatham-v3 @nammatham/* --parallel=10",
     "build": "nx run-many -t build --parallel=10",
     "azurite": "pnpx azurite --silent --location ./.azurite --debug ./.azurite/debug.log"
   },
