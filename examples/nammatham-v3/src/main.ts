@@ -1,10 +1,3 @@
-import { expressPlugin } from 'nammatham';
-import blob from './functions/blob';
-import hello from './functions/hello';
-import { app } from './nammatham';
+import { test } from 'nammatham-v3';
 
-app.addFunctions(blob, hello);
-
-const dev = process.env.NODE_ENV === 'development';
-app.register(expressPlugin({ dev }));
-app.start();
+console.log(test);

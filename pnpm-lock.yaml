@@ -224,9 +224,9 @@ importers:
       '@azure/functions':
         specifier: ^4.1.0
         version: 4.1.0
-      nammatham:
+      nammatham-v3:
         specifier: 2.0.0-alpha.12
-        version: link:../../packages/main
+        version: link:../../packages/v3
     devDependencies:
       cross-env:
         specifier: ^7.0.3
@@ -343,6 +343,18 @@ importers:
       trpc-azure-functions-adapter:
         specifier: 0.0.5
         version: 0.0.5
+
+  packages/v3:
+    dependencies:
+      '@nammatham/azure-functions':
+        specifier: 2.0.0-alpha.12
+        version: link:../azure-functions
+      '@nammatham/core':
+        specifier: 2.0.0-alpha.12
+        version: link:../core
+      '@nammatham/express':
+        specifier: 2.0.0-alpha.12
+        version: link:../express
 
 packages:
 
