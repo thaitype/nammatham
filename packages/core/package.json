@@ -22,7 +22,9 @@
   "dependencies": {
     "@hono/node-server": "^1.8.1",
     "@nammatham/azure-functions": "2.0.0-alpha.12",
+    "@types/bun": "^1.0.6",
     "@types/express": "^4.17.21",
+    "bun": "^1.0.28",
     "colorette": "^2.0.20",
     "hono": "^4.0.4",
     "invariant": "^2.2.4",

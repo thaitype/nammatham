@@ -1,3 +1,4 @@
+import type { Serve} from 'bun';
 import type { Env, Hono, Schema } from 'hono';
 import type { serve } from '@hono/node-server';
 
@@ -112,12 +113,19 @@ export class Nammatham {
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
-  handle<E extends Env = Env, S extends Schema = {}, BasePath extends string = '/'>(app?: Hono<E, S, BasePath>) {
-    if (this.options.dev === true) {
+   handle<E extends Env = Env, S extends Schema = {}, BasePath extends string = '/'>(app?: Hono<E, S, BasePath>) {
+
+    if (this.options.dev === true && this.serveFunction !== undefined) {
       return this.handleDevServer(app);
     }
-    
-    return app;
+    logo().then(console.log);
+    if (app !== undefined) {
+      return {
+        development: this.options.dev,
+        port: this.options.port,
+        fetch: app.fetch,
+      } satisfies Serve;
+    }
   }
   // eslint-disable-next-line @typescript-eslint/ban-types
   private handleDevServer<E extends Env = Env, S extends Schema = {}, BasePath extends string = '/'>(
@@ -127,9 +135,15 @@ export class Nammatham {
     if (app === undefined) {
       throw new Error('app is required');
     }
-    return this.serveFunction({
-      fetch: app.fetch,
-      port: this.options.port,
-    });
+    return this.serveFunction(
+      {
+        fetch: app.fetch,
+        port: this.options.port,
+      },
+      info => {
+        logo().then(console.log);
+        console.log(`Started server http://localhost:${info.port}`); // Listening on http://localhost:3000
+      }
+    );
   }
 }
