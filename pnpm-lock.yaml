@@ -280,12 +280,51 @@ importers:
 
   packages/core:
     dependencies:
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.21
+      colorette:
+        specifier: ^2.0.20
+        version: 2.0.20
+      pino:
+        specifier: ^8.17.1
+        version: 8.17.2
+      pino-dev:
+        specifier: ^4.0.3
+        version: 4.0.3
+      undici:
+        specifier: 5.20.0
+        version: 5.20.0
+
+  packages/express:
+    dependencies:
+      '@nammatham/core':
+        specifier: 2.0.0-alpha.12
+        version: link:../core
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.21
+      colorette:
+        specifier: ^2.0.20
+        version: 2.0.20
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+
+  packages/main:
+    dependencies:
       '@hono/node-server':
         specifier: ^1.8.1
         version: 1.8.1
       '@nammatham/azure-functions':
         specifier: 2.0.0-alpha.12
         version: link:../azure-functions
+      '@nammatham/core':
+        specifier: 2.0.0-alpha.12
+        version: link:../core
+      '@nammatham/express':
+        specifier: 2.0.0-alpha.12
+        version: link:../express
       '@types/bun':
         specifier: ^1.0.6
         version: 1.0.6
@@ -317,33 +356,6 @@ importers:
         specifier: 5.20.0
         version: 5.20.0
 
-  packages/express:
-    dependencies:
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.12
-        version: link:../core
-      '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
-      colorette:
-        specifier: ^2.0.20
-        version: 2.0.20
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-
-  packages/main:
-    dependencies:
-      '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.12
-        version: link:../azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.12
-        version: link:../core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.12
-        version: link:../express
-
   packages/trpc-azure-functions:
     dependencies:
       '@azure/functions':
@@ -370,24 +382,6 @@ importers:
       trpc-azure-functions-adapter:
         specifier: 0.0.5
         version: 0.0.5
-
-  packages/v3:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.12
-        version: link:../azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.12
-        version: link:../core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.12
-        version: link:../express
-      hono:
-        specifier: ^4.0.4
-        version: 4.0.4
 
 packages:
 
