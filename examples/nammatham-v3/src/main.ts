@@ -1,34 +1,29 @@
-// PoC version for combining between v2 and v3 prposal
-import { nammatham } from 'nammatham-v3';
+// PoC version for combining between v2 and v3 proposal
+import { Nammatham } from 'nammatham';
+import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-// import { serve } from '@hono/node-server'
 
-const func = nammatham.create();
-const app = new Hono().basePath("/api")
+const dev = process.env.NODE_ENV === 'development';
+const port = 3000;
+const nammatham = new Nammatham({ dev, port });
+const func = nammatham.createFunction();
+
+const app = new Hono();
 
 app.get('/', c => {
   return c.text('Hello, World!');
 });
 
-const helloFunction = func.timer('myTimer', { schedule: '0 */5 * * * *' }).handler(async c => {
-  if (c.trigger.isPastDue) {
-    console.log('Past due');
-  }
-});
+nammatham.addFunction(
+  func.timer('myTimer', { schedule: '0 */5 * * * *' }).handler(async c => {
+    if (c.trigger.isPastDue) {
+      console.log('Past due');
+    }
+  })
+);
 
-const dev = process.env.NODE_ENV === 'development';
+// parsing serve function for node.js runtime on dev
+nammatham.useNodeServer(serve);
 
-// Bun.js Runtime
-export default nammatham.handle({
-  dev,
-  app,
-  triggers: {
-    helloFunction,
-  },
-});
-
-// Node.js Runtime
-// serve({
-//   fetch: app.fetch,
-//   port: 8787,
-// })
+// For Node.js
+nammatham.handle(app);

@@ -30,11 +30,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build",
-    "build:main": "tsup src/main.ts --dts --format esm,cjs",
-    "build:express": "tsup src/express.ts --dts --format esm,cjs",
-    "build:core": "tsup src/core.ts --dts --format esm,cjs",
-    "build:azure-functions": "tsup src/azure-functions.ts --dts --format esm,cjs",
-    "build": "run-p build:*",
+    "build": "tsup src/main.ts --dts --format esm,cjs",
     "format": "prettier -w src",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",
     "lint:fix": "eslint --fix ./src && prettier -w src",
