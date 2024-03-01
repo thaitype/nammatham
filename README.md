@@ -46,10 +46,12 @@ npm install @nammatham/core @nammatham/azure-functions @nammatham/express
 
 You can see [examples](examples) or follow the minimal app getting started below:
 
-```typescript
-import { initNammatham, AzureFunctionsAdapter, expressPlugin } from "nammatham";
+> `initNammatham.create()` is a factory function for creating Nammatham App, it's a wrapper for Azure Functions App.
 
-const n = initNammatham.create(new AzureFunctionsAdapter());
+```typescript
+import { initNammatham, expressPlugin } from "nammatham";
+
+const n = initNammatham.create();
 const func = n.func;
 const app = n.app;
 
@@ -57,7 +59,7 @@ const helloFunction = func
   .httpGet('hello', {
     route: 'hello-world',
   })
-  .handler(async ({trigger, context}) => {
+  .handler(async ({ trigger, context }) => {
     context.log('HTTP trigger function processed a request.');
     context.debug(`Http function processed request for url "${trigger.url}"`);
     const name = trigger.query.get('name') || (await trigger.text()) || 'world';
