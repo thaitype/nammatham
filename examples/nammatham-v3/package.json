@@ -6,9 +6,9 @@
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit",
-    "start": "tsc && func start",
+    "start": "tsx watch src/main.ts",
     "dev": "cross-env NODE_ENV=development tsx watch src/main.ts",
-    "dev:bun": "bun --watch src/main-bun.ts"
+    "dev:bun": "cross-env NODE_ENV=development bun --watch src/main-bun.ts"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
