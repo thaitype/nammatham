@@ -88,6 +88,28 @@ importers:
         specifier: ^5.0.2
         version: 5.3.3
 
+  examples/azure-functions-class-controller:
+    dependencies:
+      '@azure/functions':
+        specifier: ^4.1.0
+        version: 4.1.0
+      nammatham:
+        specifier: 2.0.0-alpha.12
+        version: link:../../packages/main
+    devDependencies:
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      tsx:
+        specifier: ^4.7.0
+        version: 4.7.0
+      typescript:
+        specifier: ^5.0.2
+        version: 5.3.3
+
   examples/azure-functions-minimal:
     dependencies:
       '@azure/functions':
@@ -1890,7 +1912,7 @@ packages:
     dev: true
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
 
   /content-disposition@0.5.4:
@@ -2737,7 +2759,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.5
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true

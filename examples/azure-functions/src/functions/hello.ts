@@ -18,6 +18,7 @@ export default func
       }
     }
     return {
+      status: 200,
       jsonBody: result,
     }
   });
