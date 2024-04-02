@@ -1,4 +1,3 @@
-import { Headers } from 'undici';
 import * as type from '@azure/functions';
 
 /**
@@ -10,25 +9,31 @@ export type Request = type.HttpRequest;
 /**
  * Http Response Builder wrapping around azure/functions
  */
+export type Header = Record<string, string>;
 export class HttpResponse {
-  protected _headers: Headers;
+  protected _headers: Header;
   protected _cookies: NonNullable<type.HttpResponseInit['cookies']> = [];
   protected _httpResponse: type.HttpResponseInit;
 
-  constructor(responseInit?: type.HttpResponseInit) {
+  constructor(responseInit?: Omit<type.HttpResponseInit, 'headers'> & { headers: Header }) {
     this._httpResponse = {
       ...responseInit,
-      status: 200,
     };
-    this._headers = new Headers(responseInit?.headers);
+    this._headers = responseInit?.headers ?? {};
   }
 
   private build(): type.HttpResponseInit {
-    return {
+    const result = {
       ...this._httpResponse,
-      headers: this._headers,
-      cookies: this._cookies.length === 0 ? undefined : this._cookies,
     };
+    if (Object.values(this._headers).length > 0) {
+      result.headers = this._headers;
+    }
+
+    if (this._cookies.length > 0) {
+      result.cookies = this._cookies;
+    }
+    return result;
   }
 
   public text(body?: string) {
@@ -38,11 +43,11 @@ export class HttpResponse {
     });
   }
 
-  public json<T extends object>(jsonBody: T) {
-    return new type.HttpResponse({
+  public json<T extends object>(jsonBody: T): AzureHttpResponse {
+    return {
       ...this.build(),
       jsonBody,
-    });
+    };
   }
 
   public httpResponse(responseInit?: type.HttpResponseInit) {
@@ -50,13 +55,13 @@ export class HttpResponse {
   }
 
   public header(key: string, value: string) {
-    this._headers.set(key, value);
+    this._headers[key] = value;
     return this;
   }
 
-  public headers(headers: Record<string, string>) {
+  public headers(headers: Header) {
     for (const [key, value] of Object.entries(headers)) {
-      this._headers.set(key, value);
+      this._headers[key] = value;
     }
     return this;
   }
