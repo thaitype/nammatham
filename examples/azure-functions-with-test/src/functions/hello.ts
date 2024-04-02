@@ -4,20 +4,17 @@ export default func
   .httpGet('hello', {
     route: 'hello-world',
   })
-  .handler(async ({ trigger, context }) => {
-    context.log('HTTP trigger function processed a request.');
-    context.debug(`Http function processed request for url "${trigger.url}"`);
-    const name = trigger.query.get('name') || (await trigger.text()) || 'world';
+  .handler(async c => {
+    c.context.log('HTTP trigger function processed a request.');
+    c.context.debug(`Http function processed request for url "${c.trigger.url}"`);
+    const name = c.trigger.query.get('name') || (await c.trigger.text()) || 'world';
     if (name === 'error') {
       throw new Error('this is an error');
     }
-    const result = {
+    return c.json({
       data: {
         name: name,
-        message: `Hello, ${name}!`
-      }
-    }
-    return {
-      jsonBody: result,
-    }
+        message: `Hello, ${name}!`,
+      },
+    });
   });

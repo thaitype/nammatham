@@ -16,6 +16,8 @@ Type-safe Serverless Library for Azure Functions and friends
 > 
 > Note: [Nammatham v1](https://www.npmjs.com/package/nammatham) is currently in maintenance mode. no new features are actively being developed
 
+You're reading v2 docs
+
 
 | Version | Status      | Azure Functions <br>Node.js Lib | Branch       | Build Status                                                                                                                                                                                                                                                                                                                |
 | ------- | ----------- | ----------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,11 +39,6 @@ Nammatham (นามธรรม in Thai, pronounced `/naam ma tham/`, means **a
 npm install nammatham@alpha
 ```
 
-You can also install independently
-```bash
-npm install @nammatham/core @nammatham/azure-functions @nammatham/express
-```
-
 ### Example
 
 You can see [examples](examples) or follow the minimal app getting started below:
@@ -49,7 +46,7 @@ You can see [examples](examples) or follow the minimal app getting started below
 > `initNammatham.create()` is a factory function for creating Nammatham App, it's a wrapper for Azure Functions App.
 
 ```typescript
-import { initNammatham, expressPlugin } from "nammatham";
+import { initNammatham, expressPlugin } from 'nammatham';
 
 const n = initNammatham.create();
 const func = n.func;
@@ -59,11 +56,11 @@ const helloFunction = func
   .httpGet('hello', {
     route: 'hello-world',
   })
-  .handler(async ({ trigger, context }) => {
-    context.log('HTTP trigger function processed a request.');
-    context.debug(`Http function processed request for url "${trigger.url}"`);
-    const name = trigger.query.get('name') || (await trigger.text()) || 'world';
-    return { body: `Hello, ${name}!` };
+  .handler(async c => {
+    c.context.log('HTTP trigger function processed a request.');
+    c.context.debug(`Http function processed request for url "${c.trigger.url}"`);
+    const name = c.trigger.query.get('name') || (await c.trigger.text()) || 'world';
+    return c.text(`Hello, ${name}!`);
   });
 
 app.addFunctions(helloFunction);

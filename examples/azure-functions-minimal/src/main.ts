@@ -9,11 +9,11 @@ app.addFunctions(
     .httpGet('hello', {
       route: 'hello-world',
     })
-    .handler(async ({ trigger, context }) => {
-      context.log('HTTP trigger function processed a request.');
-      context.debug(`Http function processed request for url "${trigger.url}"`);
-      const name = trigger.query.get('name') || (await trigger.text()) || 'world';
-      return { body: `Hello, ${name}!` };
+    .handler(async c => {
+      c.context.log('HTTP trigger function processed a request.');
+      c.context.debug(`Http function processed request for url "${c.trigger.url}"`);
+      const name = c.trigger.query.get('name') || (await c.trigger.text()) || 'world';
+      return c.text(`Hello, ${name}!`);
     })
 );
 

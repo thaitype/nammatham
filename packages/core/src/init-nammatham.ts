@@ -19,9 +19,7 @@ function createRuntime<Adapter extends BaseRuntimeAdapter<unknown>>(adapter?: Ad
   } as unknown as NammathamRuntime<Adapter>;
 }
 
-export const createInitNammatham = <Adapter extends BaseRuntimeAdapter<unknown>>(
-  defaultAdapter: Adapter
-) => ({
+export const createInitNammatham = <Adapter extends BaseRuntimeAdapter<unknown>>(defaultAdapter: Adapter) => ({
   create(adapter?: Adapter): NammathamRuntime<Adapter> {
     logger.debug(`Using adapter: ${yellow(adapter?.constructor.name ?? defaultAdapter?.constructor.name)}`);
     if (adapter === undefined) {
