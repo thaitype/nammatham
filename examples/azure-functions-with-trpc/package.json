@@ -15,8 +15,8 @@
   "license": "MIT",
   "dependencies": {
     "@azure/functions": "^4.1.0",
-    "nammatham": "2.0.0-alpha.12",
-    "@nammatham/trpc-azure-functions": "2.0.0-alpha.12",
+    "nammatham": "2.0.0-alpha.13",
+    "@nammatham/trpc-azure-functions": "2.0.0-alpha.13",
     "@trpc/client": "^10.45.0",
     "@trpc/server": "^10.45.0",
     "trpc-azure-functions-adapter": "0.0.5"
