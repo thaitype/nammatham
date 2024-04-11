@@ -12,7 +12,7 @@ export class AzureFunctionsHandler<
   // eslint-disable-next-line @typescript-eslint/ban-types
   ExtraContext extends Record<string, unknown> = {}
 > extends BaseHandler<HandlerFunction<TTriggerType, TReturnType, ExtraContext>> {
-  context: ExtraContext = {} as ExtraContext;
+  extraContext: ExtraContext = {} as ExtraContext;
   protected funcHandler!: HandlerFunction<TTriggerType, TReturnType, ExtraContext>;
 
   constructor(
@@ -31,7 +31,8 @@ export class AzureFunctionsHandler<
   build(): AzureFunctionsEndpoint<TTriggerType, TReturnType> {
     const invokeHandler = (triggerInput: TTriggerType, innocationContext: InvocationContext) => {
       const nammathamContext = new NammathamContext(innocationContext, triggerInput);
-      return this.funcHandler({ ...nammathamContext, ...this.context });
+      Object.assign(nammathamContext, this.extraContext);
+      return this.funcHandler(nammathamContext as NammathamContext<TTriggerType> & ExtraContext);
     };
     return {
       ...this.functionOption,
@@ -43,7 +44,7 @@ export class AzureFunctionsHandler<
   }
 
   setContext<NewItem extends Record<string, unknown>>(context: NewItem) {
-    this.context = { ...this.context, ...context };
+    this.extraContext = { ...this.extraContext, ...context };
     return this as AzureFunctionsHandler<TTriggerType, TReturnType, ExtraContext & NewItem>;
   }
 

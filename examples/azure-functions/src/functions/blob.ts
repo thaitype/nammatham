@@ -17,12 +17,10 @@ export default func
     extraInputs: [blobInput],
     extraOutputs: [blobOutput],
   })
-  .handler(({ trigger, context }) => {
-    context.log('function processed work item:', trigger);
-    const blobInputValue = context.extraInputs.get(blobOutput);
+  .handler(c => {
+    c.context.log('function processed work item:', c.trigger);
+    const blobInputValue = c.context.extraInputs.get(blobOutput);
 
-    context.extraOutputs.set(blobOutput, blobInputValue);
-    return {
-      body: `Hello ${blobInputValue}`,
-    };
+    c.context.extraOutputs.set(blobOutput, blobInputValue);
+    return c.text(`Hello ${blobInputValue}`);
   });

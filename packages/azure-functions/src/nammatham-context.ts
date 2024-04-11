@@ -1,8 +1,8 @@
-import type { InvocationContext } from '@azure/functions';
+import { type InvocationContext } from '@azure/functions';
 
-import { NammathamContextBase } from '@nammatham/core';
+import { HttpResponse } from './http/HttpResponse';
 
-export class NammathamContext<TTriggerType> extends NammathamContextBase {
+export class NammathamContext<TTriggerType> extends HttpResponse {
   constructor(public readonly context: InvocationContext, public readonly trigger: TTriggerType) {
     super();
   }

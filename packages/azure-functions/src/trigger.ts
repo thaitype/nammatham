@@ -8,6 +8,7 @@ import type {
   Timer,
   TimerFunctionOptions,
   HttpMethodFunctionOptions,
+  StorageQueueFunctionOptions,
 } from '@azure/functions';
 
 import { app } from '@azure/functions';
@@ -85,6 +86,19 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       this.parseFunctionOption(funcName, option),
       funcOption => {
         app.timer(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+  storageQueue(funcName: string, option: Omit<StorageQueueFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.storageQueue(funcName, {
           ...option,
           ...funcOption,
         });

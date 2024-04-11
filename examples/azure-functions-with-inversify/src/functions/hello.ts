@@ -15,12 +15,10 @@ export default func
   .setContext({
     services,
   })
-  .handler(async ({ trigger, context, services }) => {
-    context.log('HTTP trigger function processed a request.');
+  .handler(async c => {
+    c.context.log('HTTP trigger function processed a request.');
 
-    return {
-      jsonBody: {
-        data: 'hello world' + services.dataService.getData(),
-      },
-    };
+    return c.json({
+      data: 'hello world' + services.dataService.getData(),
+    });
   });
