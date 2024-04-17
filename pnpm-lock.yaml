@@ -132,6 +132,37 @@ importers:
         specifier: ^5.0.2
         version: 5.3.3
 
+  examples/azure-functions-with-context:
+    dependencies:
+      '@azure/functions':
+        specifier: ^4.1.0
+        version: 4.1.0
+      '@di-extra/inversify':
+        specifier: ^0.2.0
+        version: 0.2.0
+      inversify:
+        specifier: ^6.0.2
+        version: 6.0.2
+      nammatham:
+        specifier: 2.0.0-alpha.13
+        version: link:../../packages/main
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.1
+    devDependencies:
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      tsx:
+        specifier: ^4.7.0
+        version: 4.7.0
+      typescript:
+        specifier: ^5.0.2
+        version: 5.3.3
+
   examples/azure-functions-with-inversify:
     dependencies:
       '@azure/functions':
