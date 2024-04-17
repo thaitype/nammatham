@@ -1,8 +1,9 @@
+import { inject } from 'inversify';
 import { func } from '../nammatham';
 import { DataService } from '../services/data.service';
 
 export class HomeController {
-  constructor(public dataService: DataService) {}
+  constructor(@inject(DataService) public dataService: DataService) {}
 
   hello = func
     .httpGet('hello', {
