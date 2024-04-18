@@ -1,12 +1,13 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { func } from '../nammatham';
 import { DataService } from '../services/data.service';
 
+@injectable()
 export class HomeController {
   constructor(@inject(DataService) public dataService: DataService) {}
 
   hello = func
-    .httpGet('hello', {
+    .httpGet('myHello', {
       route: 'hello-world',
     })
     .handler(async c => {
@@ -15,5 +16,13 @@ export class HomeController {
       return c.json({
         data: 'hello world' + this.dataService.getData(),
       });
+    });
+
+  timer = func
+    .timer('myTimer', {
+      schedule: '0 */5 * * * *',
+    })
+    .handler(async c => {
+      c.context.log('Timer trigger function processed a request.');
     });
 }
