@@ -20,7 +20,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.1.0",
+    "@azure/functions": "^4.4.0",
     "@nammatham/core": "2.0.0-alpha.13",
     "@nammatham/azure-functions": "2.0.0-alpha.13",
     "@nammatham/express": "2.0.0-alpha.13",
