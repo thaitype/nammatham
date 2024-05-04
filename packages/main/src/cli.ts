@@ -1,8 +1,8 @@
-import type { BuildOptions } from 'esbuild';
+import path from 'node:path';
 
-import fs from 'fs';
-import path from 'path';
-import { build } from 'esbuild';
+import { simpleLoadConfig } from './command';
+import fs from 'node:fs';
+import { BuildOptions, build } from 'esbuild';
 
 export interface NammathamCommandOptions {
   /**
@@ -22,6 +22,11 @@ const config: NammathamCommandOptions = {
   console.log(`Start the command`);
   console.log(`PWD: ${process.cwd()}`);
 
+  // const userConfig = await loadConfigFromFile();
+  // const userConfig = await simpleLoadConfig(path.resolve(process.cwd(), 'nammatham.config.ts'));
+  // console.log('userConfig', userConfig);
+
+
   await fs.promises.mkdir(path.resolve(config.buildPath ?? '') ?? '', { recursive: true });
   const outfile = path.resolve(config.buildPath ?? '', 'nammatham.config.mjs');
 
@@ -40,8 +45,9 @@ const config: NammathamCommandOptions = {
     console.log(option);
   } finally {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    fs.unlink(outfile, () => {}); // ignore the error
+    // fs.unlink(outfile, () => {}); // ignore the error
   }
+
 
   console.log(`End the command`);
 })();
