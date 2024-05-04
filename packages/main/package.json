@@ -2,24 +2,29 @@
   "name": "nammatham",
   "version": "3.0.0-canary.0",
   "description": "Type-safe Serverless Library for Azure Functions and friends",
+  "type": "module",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
+  "bin": {
+    "nammatham": "dist/cli.js"
+  },
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "default": "./dist/main.js"
+      "import": "./dist/main.js",
+      "default": "./dist/main.cjs"
     }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build",
     "build": "tsup src/main.ts --dts --format esm,cjs",
+    "build:cli": "tsup src/cli.ts --dts --format esm,cjs",
     "format": "prettier -w src",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",
     "lint:fix": "eslint --fix ./src && prettier -w src",
-    "dev": "nodemon --watch src --ext ts --exec 'npm run build'"
+    "dev": "nodemon --watch src --ext ts --exec 'run-p build build:cli'"
   },
   "keywords": [
     "azure-functions",
@@ -28,14 +33,15 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.12",
-    "@nammatham/azure-functions": "2.0.0-alpha.12",
-    "@nammatham/express": "2.0.0-alpha.12",
     "@hono/node-server": "^1.8.1",
+    "@nammatham/azure-functions": "2.0.0-alpha.12",
+    "@nammatham/core": "2.0.0-alpha.12",
+    "@nammatham/express": "2.0.0-alpha.12",
     "@types/bun": "^1.0.6",
     "@types/express": "^4.17.21",
     "bun": "^1.0.28",
     "colorette": "^2.0.20",
+    "esbuild": "^0.20.2",
     "hono": "^4.0.4",
     "invariant": "^2.2.4",
     "pino": "^8.17.1",

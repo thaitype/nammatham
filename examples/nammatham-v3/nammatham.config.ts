@@ -1,8 +1,6 @@
-import { defineConfig } from "./src/nammatham-config";
-
+/// <reference types="nammatham" />
+import { defineConfig } from "nammatham";
 
 export default defineConfig({
-  test: {
-    // ... Specify options here.
-  },
+  buildPath: '.newPath'
 })
