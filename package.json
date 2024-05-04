@@ -1,6 +1,7 @@
 {
   "name": "@nammatham/monorepo",
   "version": "3.0.0-canary.0",
+  "type": "module",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
     "test": "vitest",
