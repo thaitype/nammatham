@@ -2,7 +2,6 @@
   "name": "@examples/nammatham-v3",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
@@ -16,7 +15,6 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@azure/functions": "^4.1.0",
     "@hono/node-server": "^1.8.1",
     "hono": "^4.0.4",
     "nammatham": "3.0.0-canary.0"

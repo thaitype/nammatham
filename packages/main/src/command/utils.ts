@@ -40,10 +40,8 @@ export function createDebugger(
 
 export function isFilePathESM(filePath: string): boolean {
   if (/\.m[jt]s$/.test(filePath)) {
-    console.log('isFilePathESM', true);
     return true;
   } else if (/\.c[jt]s$/.test(filePath)) {
-    console.log('isFilePathESM', false);
     return false;
   } else {
     // check package.json for type: "module"
@@ -67,24 +65,3 @@ export function tryStatSync(file: string): fs.Stats | undefined {
     // Ignore errors
   }
 }
-
-// // Supported by Node, Deno, Bun
-// const NODE_BUILTIN_NAMESPACE = 'node:';
-// // Supported by Deno
-// const NPM_BUILTIN_NAMESPACE = 'npm:';
-// // Supported by Bun
-// const BUN_BUILTIN_NAMESPACE = 'bun:';
-// // Some runtimes like Bun injects namespaced modules here, which is not a node builtin
-// const nodeBuiltins = builtinModules.filter(id => !id.includes(':'));
-
-// // TODO: Use `isBuiltin` from `node:module`, but Deno doesn't support it
-// export function isBuiltin(id: string): boolean {
-//   if (process.versions.deno && id.startsWith(NPM_BUILTIN_NAMESPACE)) return true;
-//   if (process.versions.bun && id.startsWith(BUN_BUILTIN_NAMESPACE)) return true;
-//   return isNodeBuiltin(id);
-// }
-
-// export function isNodeBuiltin(id: string): boolean {
-//   if (id.startsWith(NODE_BUILTIN_NAMESPACE)) return true;
-//   return nodeBuiltins.includes(id);
-// }
