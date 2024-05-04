@@ -1,11 +1,11 @@
 {
   "name": "@nammatham/monorepo",
-  "version": "2.0.0-alpha.12",
+  "version": "3.0.0-canary.0",
   "description": "Azure Function Nodejs Lightweight framework with Dependency Injection",
   "scripts": {
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "dev": "nx run @nammatham/core:build && nx run-many -t dev --projects nammatham @nammatham/* --parallel=10",
+    "dev": "nx run nammatham:dev",
     "pre-local": "tsx ./scripts/pre-local.ts",
     "post-local": "tsx ./scripts/post-local.ts",
     "release": "run-s build releaseOnly",

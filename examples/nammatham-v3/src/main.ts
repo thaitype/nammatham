@@ -1,7 +1,7 @@
 // PoC version for combining between v2 and v3 proposal
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { Nammatham, createHttp } from './lib';
+// import { Nammatham, createHttp } from './lib';
 
 const app = new Hono().basePath('/api');
 

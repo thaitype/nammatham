@@ -66,159 +66,6 @@ importers:
         specifier: ^1.1.3
         version: 1.2.1(@types/node@18.19.8)
 
-  examples/azure-functions:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      nammatham:
-        specifier: 2.0.0-alpha.12
-        version: link:../../packages/main
-    devDependencies:
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      tsx:
-        specifier: ^4.7.0
-        version: 4.7.0
-      typescript:
-        specifier: ^5.0.2
-        version: 5.3.3
-
-  examples/azure-functions-minimal:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      nammatham:
-        specifier: 2.0.0-alpha.12
-        version: link:../../packages/main
-    devDependencies:
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      tsx:
-        specifier: ^4.7.0
-        version: 4.7.0
-      typescript:
-        specifier: ^5.0.2
-        version: 5.3.3
-
-  examples/azure-functions-timer-trigger:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      nammatham:
-        specifier: 2.0.0-alpha.12
-        version: link:../../packages/main
-    devDependencies:
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      tsx:
-        specifier: ^4.7.0
-        version: 4.7.0
-      typescript:
-        specifier: ^5.0.2
-        version: 5.3.3
-
-  examples/azure-functions-with-inversify:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      '@di-extra/inversify':
-        specifier: ^0.2.0
-        version: 0.2.0
-      inversify:
-        specifier: ^6.0.2
-        version: 6.0.2
-      nammatham:
-        specifier: 2.0.0-alpha.12
-        version: link:../../packages/main
-      reflect-metadata:
-        specifier: ^0.2.1
-        version: 0.2.1
-    devDependencies:
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      tsx:
-        specifier: ^4.7.0
-        version: 4.7.0
-      typescript:
-        specifier: ^5.0.2
-        version: 5.3.3
-
-  examples/azure-functions-with-test:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      nammatham:
-        specifier: 2.0.0-alpha.12
-        version: link:../../packages/main
-    devDependencies:
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      tsx:
-        specifier: ^4.7.0
-        version: 4.7.0
-      typescript:
-        specifier: ^5.0.2
-        version: 5.3.3
-
-  examples/azure-functions-with-trpc:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      '@nammatham/trpc-azure-functions':
-        specifier: 2.0.0-alpha.12
-        version: link:../../packages/trpc-azure-functions
-      '@trpc/client':
-        specifier: ^10.45.0
-        version: 10.45.0(@trpc/server@10.45.0)
-      '@trpc/server':
-        specifier: ^10.45.0
-        version: 10.45.0
-      nammatham:
-        specifier: 2.0.0-alpha.12
-        version: link:../../packages/main
-      trpc-azure-functions-adapter:
-        specifier: 0.0.5
-        version: 0.0.5
-    devDependencies:
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      tsx:
-        specifier: ^4.7.0
-        version: 4.7.0
-      typescript:
-        specifier: ^5.0.2
-        version: 5.3.3
-
   examples/nammatham-v3:
     dependencies:
       '@azure/functions':
@@ -231,7 +78,7 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       nammatham:
-        specifier: 2.0.0-alpha.12
+        specifier: 3.0.0-canary.0
         version: link:../../packages/main
     devDependencies:
       cross-env:
@@ -247,70 +94,6 @@ importers:
         specifier: ^5.0.2
         version: 5.3.3
 
-  packages/azure-functions:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.12
-        version: link:../core
-      colorette:
-        specifier: ^2.0.20
-        version: 2.0.20
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-      undici:
-        specifier: 5.20.0
-        version: 5.20.0
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
-    devDependencies:
-      '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
-      '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.7
-      node-mocks-http:
-        specifier: ^1.14.1
-        version: 1.14.1
-
-  packages/core:
-    dependencies:
-      '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
-      colorette:
-        specifier: ^2.0.20
-        version: 2.0.20
-      pino:
-        specifier: ^8.17.1
-        version: 8.17.2
-      pino-dev:
-        specifier: ^4.0.3
-        version: 4.0.3
-      undici:
-        specifier: 5.20.0
-        version: 5.20.0
-
-  packages/express:
-    dependencies:
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.12
-        version: link:../core
-      '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
-      colorette:
-        specifier: ^2.0.20
-        version: 2.0.20
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-
   packages/main:
     dependencies:
       '@hono/node-server':
@@ -318,13 +101,13 @@ importers:
         version: 1.8.1
       '@nammatham/azure-functions':
         specifier: 2.0.0-alpha.12
-        version: link:../azure-functions
+        version: 2.0.0-alpha.12
       '@nammatham/core':
         specifier: 2.0.0-alpha.12
-        version: link:../core
+        version: 2.0.0-alpha.12
       '@nammatham/express':
         specifier: 2.0.0-alpha.12
-        version: link:../express
+        version: 2.0.0-alpha.12
       '@types/bun':
         specifier: ^1.0.6
         version: 1.0.6
@@ -355,33 +138,6 @@ importers:
       undici:
         specifier: 5.20.0
         version: 5.20.0
-
-  packages/trpc-azure-functions:
-    dependencies:
-      '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
-      '@nammatham/azure-functions':
-        specifier: 2.0.0-alpha.12
-        version: link:../azure-functions
-      '@nammatham/core':
-        specifier: 2.0.0-alpha.12
-        version: link:../core
-      '@nammatham/express':
-        specifier: 2.0.0-alpha.12
-        version: link:../express
-      '@trpc/server':
-        specifier: ^10.45.0
-        version: 10.45.0
-      '@types/express':
-        specifier: ^4.17.21
-        version: 4.17.21
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-      trpc-azure-functions-adapter:
-        specifier: 0.0.5
-        version: 0.0.5
 
 packages:
 
@@ -436,12 +192,6 @@ packages:
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
-
-  /@di-extra/inversify@0.2.0:
-    resolution: {integrity: sha512-R37Jp6nIgFcAlRyWbsK6oQq7nwujCFxb5QvOE4Q78F9AU22VgPw11VAeouZNyBCR9q+7UM8siYJJ3Yv1ZyOetw==}
-    dependencies:
-      inversify: 6.0.2
-    dev: false
 
   /@esbuild/aix-ppc64@0.19.11:
     resolution: {integrity: sha512-FnzU0LyE3ySQk7UntJO4+qIiQgI7KoODnZg5xzXIrFJlKd2P2gwHsHY4927xj9y5PJmJSzULiUCWmv7iWnNa7g==}
@@ -889,6 +639,42 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
+  /@nammatham/azure-functions@2.0.0-alpha.12:
+    resolution: {integrity: sha512-or/9WNH73KF3KdOAhOnPdtEtcEyTsBxL/UbuuIaS2yJhSU8ncf2e4yk3+p8fGUAODqhPfuAGk9/ZoTcAikIxtw==}
+    dependencies:
+      '@azure/functions': 4.1.0
+      '@nammatham/core': 2.0.0-alpha.12
+      colorette: 2.0.20
+      express: 4.18.2
+      undici: 5.20.0
+      uuid: 9.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@nammatham/core@2.0.0-alpha.12:
+    resolution: {integrity: sha512-oJxLDgJXVTpj3I8ZvySk2ajEDJ5L7N6/lpr3Tb8KR+cVcSRkezVylOO01cqOIcdV9OCN73qZFBCNI65J0SwE1A==}
+    dependencies:
+      '@types/express': 4.17.21
+      colorette: 2.0.20
+      pino: 8.17.2
+      pino-dev: 4.0.3
+      undici: 5.20.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@nammatham/express@2.0.0-alpha.12:
+    resolution: {integrity: sha512-YExp+knAivzS7+KiHzU/lerG1hUPsIQ9Awfpb3u/VuiiPYJZnhzGrqsGHSvi7xt16qXQSYHHK415Bvzep5qqaQ==}
+    dependencies:
+      '@nammatham/core': 2.0.0-alpha.12
+      '@types/express': 4.17.21
+      colorette: 2.0.20
+      express: 4.18.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1184,23 +970,12 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@trpc/client@10.45.0(@trpc/server@10.45.0):
-    resolution: {integrity: sha512-m091R1qte9rvkvL8N1e/mzrbb8S4gb+Q4ZNJnEGDgd7kic/6a8DFgSciBTiCoSp0YwOTVhyQzSrrA/sZI6PhBg==}
-    peerDependencies:
-      '@trpc/server': 10.45.0
-    dependencies:
-      '@trpc/server': 10.45.0
-    dev: false
-
-  /@trpc/server@10.45.0:
-    resolution: {integrity: sha512-2Fwzv6nqpE0Ie/G7PeS0EVR89zLm+c1Mw7T+RAGtU807j4oaUx0zGkBXTu5u9AI+j+BYNN2GZxJcuDTAecbr1A==}
-    dev: false
-
   /@types/body-parser@1.19.5:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
     dependencies:
       '@types/connect': 3.4.38
       '@types/node': 18.19.8
+    dev: false
 
   /@types/bun@1.0.6:
     resolution: {integrity: sha512-RtBfd9vxT4LmgKtENsJeM5j0Kwy+CyIEY8Z99oPdh5SZWjZAIEsNdSCeAO3q3GBiNWXjJ5IIJPjDQdwSeKiRFA==}
@@ -1212,6 +987,7 @@ packages:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
       '@types/node': 18.19.8
+    dev: false
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -1224,6 +1000,7 @@ packages:
       '@types/qs': 6.9.11
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
+    dev: false
 
   /@types/express@4.17.21:
     resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
@@ -1232,6 +1009,7 @@ packages:
       '@types/express-serve-static-core': 4.17.41
       '@types/qs': 6.9.11
       '@types/serve-static': 1.15.5
+    dev: false
 
   /@types/fs-extra@11.0.4:
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
@@ -1242,6 +1020,7 @@ packages:
 
   /@types/http-errors@2.0.4:
     resolution: {integrity: sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==}
+    dev: false
 
   /@types/istanbul-lib-coverage@2.0.6:
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
@@ -1259,9 +1038,11 @@ packages:
 
   /@types/mime@1.3.5:
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
+    dev: false
 
   /@types/mime@3.0.4:
     resolution: {integrity: sha512-iJt33IQnVRkqeqC7PzBHPTC6fDlRNRW8vjrgqtScAhrmMwe8c4Eo7+fUGTa+XdWrpEgpyKWMYmi2dIwMAYRzPw==}
+    dev: false
 
   /@types/mute-stream@0.0.4:
     resolution: {integrity: sha512-CPM9nzrCPPJHQNA9keH9CVkVI+WR5kMa+7XEs5jcGQ0VoAGnLv242w8lIVgwAEfmE4oufJRaTc9PNLQl0ioAow==}
@@ -1281,9 +1062,11 @@ packages:
 
   /@types/qs@6.9.11:
     resolution: {integrity: sha512-oGk0gmhnEJK4Yyk+oI7EfXsLayXatCWPHary1MtcmbAifkobT9cM9yutG/hZKIseOU0MqbIwQ/u2nn/Gb+ltuQ==}
+    dev: false
 
   /@types/range-parser@1.2.7:
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
+    dev: false
 
   /@types/semver@7.5.6:
     resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
@@ -1294,6 +1077,7 @@ packages:
     dependencies:
       '@types/mime': 1.3.5
       '@types/node': 18.19.8
+    dev: false
 
   /@types/serve-static@1.15.5:
     resolution: {integrity: sha512-PDRk21MnK70hja/YF8AHfC7yIsiQHn1rcXx7ijCFBX/k+XQJhQT/gw3xekXKJvx+5SXaMMS8oqQy09Mzvz2TuQ==}
@@ -1301,10 +1085,7 @@ packages:
       '@types/http-errors': 2.0.4
       '@types/mime': 3.0.4
       '@types/node': 18.19.8
-
-  /@types/uuid@9.0.7:
-    resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
-    dev: true
+    dev: false
 
   /@types/wrap-ansi@3.0.0:
     resolution: {integrity: sha512-ltIpx+kM7g/MLRZfkbL7EsCEjfzCcScLpkg37eXEtx5kmrAKBkTJwd1GIAjDSL8wTpM6Hzn5YO4pSb91BEwu1g==}
@@ -1610,6 +1391,7 @@ packages:
     dependencies:
       mime-types: 2.1.35
       negotiator: 0.6.3
+    dev: false
 
   /acorn-jsx@5.3.2(acorn@8.11.3):
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2045,6 +1827,7 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       safe-buffer: 5.2.1
+    dev: false
 
   /content-type@1.0.5:
     resolution: {integrity: sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==}
@@ -2166,11 +1949,6 @@ packages:
   /delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
-    dev: true
-
-  /depd@1.1.2:
-    resolution: {integrity: sha512-7emPTl6Dpo6JRXOXjLRxck+FlLRX5847cLKEn00PLAgc3g2hTZZgr+e4c2v6QpSmLeFP3n5yUo7ft6avBK/5jQ==}
-    engines: {node: '>= 0.6'}
     dev: true
 
   /depd@2.0.0:
@@ -2768,6 +2546,7 @@ packages:
   /fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
+    dev: false
 
   /fs-constants@1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
@@ -3065,10 +2844,6 @@ packages:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
-
-  /inversify@6.0.2:
-    resolution: {integrity: sha512-i9m8j/7YIv4mDuYXUAcrpKPSaju/CIly9AHK5jvCBeoiM/2KEsuCQTTP+rzSWWpLYWRukdXFSl6ZTk2/uumbiA==}
     dev: false
 
   /ipaddr.js@1.9.1:
@@ -3462,6 +3237,7 @@ packages:
   /media-typer@0.3.0:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
+    dev: false
 
   /memorystream@0.3.1:
     resolution: {integrity: sha512-S3UwM3yj5mtUSEfP41UZmt/0SCoVYUcU1rkXv+BQ5Ig8ndL4sPoJNBUJERafdPb5jjHJGuMgytgKvKIf58XNBw==}
@@ -3471,10 +3247,6 @@ packages:
   /merge-descriptors@1.0.1:
     resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
     dev: false
-
-  /merge-descriptors@1.0.3:
-    resolution: {integrity: sha512-gaNvAS7TZ897/rVaZ0nMtAyxNyi/pdbjbAwUpFQpN70GqnVfOiXpeUUMKRBmzXaSQ8DdTX4/0ms62r2K+hE6mQ==}
-    dev: true
 
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -3488,6 +3260,7 @@ packages:
   /methods@1.1.2:
     resolution: {integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==}
     engines: {node: '>= 0.6'}
+    dev: false
 
   /micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
@@ -3511,6 +3284,7 @@ packages:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
 
   /mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
@@ -3604,6 +3378,7 @@ packages:
   /negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
+    dev: false
 
   /nice-try@1.0.5:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
@@ -3616,24 +3391,6 @@ packages:
   /node-gyp-build@4.8.0:
     resolution: {integrity: sha512-u6fs2AEUljNho3EYTJNBfImO5QTo/J/1Etd+NVdCj7qWKUSN/bSLkZwhDv7I+w/MSC6qJ4cknepkAYykDdK8og==}
     hasBin: true
-    dev: true
-
-  /node-mocks-http@1.14.1:
-    resolution: {integrity: sha512-mfXuCGonz0A7uG1FEjnypjm34xegeN5+HI6xeGhYKecfgaZhjsmYoLE9LEFmT+53G1n8IuagPZmVnEL/xNsFaA==}
-    engines: {node: '>=14'}
-    dependencies:
-      '@types/express': 4.17.21
-      '@types/node': 20.11.5
-      accepts: 1.3.8
-      content-disposition: 0.5.4
-      depd: 1.1.2
-      fresh: 0.5.2
-      merge-descriptors: 1.0.3
-      methods: 1.1.2
-      mime: 1.6.0
-      parseurl: 1.3.3
-      range-parser: 1.2.1
-      type-is: 1.6.18
     dev: true
 
   /nodemon@2.0.22:
@@ -3885,6 +3642,7 @@ packages:
   /parseurl@1.3.3:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
+    dev: false
 
   /path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -4129,6 +3887,7 @@ packages:
   /range-parser@1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
+    dev: false
 
   /raw-body@2.5.1:
     resolution: {integrity: sha512-qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig==}
@@ -4194,10 +3953,6 @@ packages:
   /real-require@0.2.0:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
-    dev: false
-
-  /reflect-metadata@0.2.1:
-    resolution: {integrity: sha512-i5lLI6iw9AU3Uu4szRNPPEkomnkjRTaVt9hy/bn5g/oSzekBSMeLZblcjP74AW0vBabqERLLIrz+gR8QYR54Tw==}
     dev: false
 
   /regexp.prototype.flags@1.5.1:
@@ -4778,13 +4533,6 @@ packages:
     hasBin: true
     dev: true
 
-  /trpc-azure-functions-adapter@0.0.5:
-    resolution: {integrity: sha512-/l5ev8RILqT8LG0EK2ACLwPphr3VAILnxSXmDnSVYtSCWKtCbk4KLan9IXRVBKdA/1t0wBIwJw7ZFLxO/H9CNg==}
-    dependencies:
-      '@azure/functions': 4.1.0
-      '@trpc/server': 10.45.0
-    dev: false
-
   /ts-api-utils@1.0.3(typescript@5.3.3):
     resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
     engines: {node: '>=16.13.0'}
@@ -4903,6 +4651,7 @@ packages:
     dependencies:
       media-typer: 0.3.0
       mime-types: 2.1.35
+    dev: false
 
   /typed-array-buffer@1.0.0:
     resolution: {integrity: sha512-Y8KTSIglk9OZEr8zywiIHG/kmQ7KWyjseXs1CbSo8vC42w7hg2HgYTxSWwP0+is7bWDc1H+Fo026CpHFwm8tkw==}

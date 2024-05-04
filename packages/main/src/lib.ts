@@ -1,6 +1,8 @@
-import { Handler, Hono, Input } from 'hono';
+import type { Handler, Input } from 'hono';
+import type { HandlerResponse, MiddlewareHandler } from 'hono/types';
+
+import { Hono } from 'hono';
 import { createFactory } from 'hono/factory';
-import { HandlerResponse, MiddlewareHandler } from 'hono/types';
 
 export class Nammatham {
   protected hono: Hono;

@@ -1,1 +1,1 @@
-export * from './nammatham';
+export * from './lib';
