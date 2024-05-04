@@ -1,45 +1,53 @@
 // PoC version for combining between v2 and v3 proposal
-import { Nammatham } from 'nammatham';
+import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { Context, Hono, HonoRequest } from 'hono';
+import { Nammatham, createHttp } from './lib';
 
-const dev = process.env.NODE_ENV === 'development';
-const port = 3000;
-const nammatham = new Nammatham({ dev, port });
-const func = nammatham.createFunction();
+const app = new Hono().basePath('/api');
 
-const app = new Hono();
+app.get('/SimpleHttpTrigger', c => {
 
-app.get('/', c => {
-  return c.text('Hello, World!');
+  const userAgent = c.req.header('user-agent');
+  console.log(`user agent is: ${userAgent}`);
+
+  const invocationId = c.req.header('x-azure-functions-invocationid');
+  console.log(`invocationid is: ${invocationId}`);
+
+  return c.text('Hello World from go worker');
 });
 
-app.use(async (c, next) => {
-  const start = Date.now()
-  await next()
-  const end = Date.now()
+const port = parseInt(process.env.FUNCTIONS_CUSTOMHANDLER_PORT || '4000');
+console.log(`Start server on on http://localhost:${port}`);
 
-  console.log(`Time: ${end - start}ms`)
-  // c.res.headers.set('X-Response-Time', `${end - start}`)
+serve({
+  fetch: app.fetch,
+  port
 })
 
-nammatham.addFunction(
-  func.timer('myTimer', { schedule: '0 */5 * * * *' }).handler(async c => {
-    if (c.trigger.isPastDue) {
-      console.log('Past due');
-    }
-  })
-);
+// app.get(
+//   "/copy-blob",
+//   ...createHttp({
+//     authLevel: "function",
+//     inputs: {
+//       blobInput: {
+//         type: 'blobStorage',
+//         connection: 'AzureWebJobsStorage',
+//         path: 'demo-input/xxx.txt',
+//       },
+//     },
+//     outputs: {
+//       blobOutput: {
+//         connection: 'AzureWebJobsStorage',
+//         path: 'demo-output/xxx-{rand-guid}.txt',
+//       },
+//     }
+//   }, (c) => {
+//     // Access with ExtraInput
+//     const blob = c.get("inputs").blobInput;
+//     // Access with ExtraOutput
+//     c.get('outputs').blobOutput.set(blob);
+//     return c.text('success');
+//   })
+// );
 
-// parsing serve function for node.js runtime on dev
-nammatham.useNodeServer(serve);
-
-// For Node.js
-nammatham.handle(app);
-
-app.routes.forEach(route => {
-  console.log(`Route: ${route.path}`);
-  route.handler({
-    text: (text: string) => console.log(text),
-  } as any, async () => console.log('done'));
-});
+// export default app;
