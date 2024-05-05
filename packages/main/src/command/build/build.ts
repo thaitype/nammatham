@@ -15,6 +15,21 @@ export interface BundleCodeOptions {
   esbuildOptions?: BuildOptions;
 }
 
+
+/**
+ * When publish into Azure Functions, the package.json will not be included in the final package.
+ * So, it needs to specify the output file manually wheather it is ESM or CommonJS. for example `main.mjs` or `main.cjs`
+ * 
+ * I don't sure which version of node.js installed in Azure Functions, so I will use `es2020` as the target.
+ * Using target `es2021` will use `||=` operator which is not supported in Node.js.
+ * 
+ * Azure Functions node runtime on Custom Handler is using Node.js 16.x 
+ * 
+ * The hono-node-server support the target node.js version 18.x and above
+ * 
+ * 
+ */
+
 export async function bundleCode(options: NammathamConfigs): Promise<string> {
   const workingDir = process.cwd();
   const pkg = findNearestPackageData(workingDir);
@@ -34,9 +49,9 @@ export async function bundleCode(options: NammathamConfigs): Promise<string> {
     bundle: true,
     outfile,
     platform: 'node',
-    target: 'node18',
+    target: 'es2020',
     sourcemap: 'inline',
-    format: isESM ? 'esm' : 'cjs',
+    format: 'cjs',
     ...options.buildOption?.esbuildOptions,
   } as BuildOptions);
   debug?.(`Code bundled completed`);

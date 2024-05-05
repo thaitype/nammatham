@@ -20,6 +20,17 @@ const nammathamConfig = {
       },
       enableForwardingHttpRequest: true,
     },
+    logging: {
+      applicationInsights: {
+        samplingSettings: {
+          isEnabled: true,
+          excludedTypes: 'Request',
+        },
+      },
+      logLevel: {
+        default: 'Trace',
+      },
+    },
   },
 };
 

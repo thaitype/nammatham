@@ -2,11 +2,11 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 // import { Nammatham, createHttp } from './lib';
+// import express from 'express';
 
 const app = new Hono().basePath('/api');
 
 app.get('/SimpleHttpTrigger', c => {
-
   const userAgent = c.req.header('user-agent');
   console.log(`user agent is: ${userAgent}`);
 
@@ -19,6 +19,10 @@ app.get('/SimpleHttpTrigger', c => {
 const port = parseInt(process.env.FUNCTIONS_CUSTOMHANDLER_PORT || '4000');
 console.log(`Start server on on http://localhost:${port}`);
 
+// export default {
+//   port,
+//   fetch: app.fetch,
+// };
 serve({
   fetch: app.fetch,
   port
