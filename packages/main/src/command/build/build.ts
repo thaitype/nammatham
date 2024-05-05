@@ -42,9 +42,9 @@ export interface BuildOptions {
    * - `host`: Build for the host platform.
    * - An object that specifies the target platform, architecture, and runtime.
    *
-   * @default 'host'
+   * @default undefined (build for the host platform)
    */
-  target?: 'host' | TargetOptions;
+  target?: TargetOptions;
   /**
    * esbuild options
    */
@@ -145,6 +145,9 @@ export async function buildExecutable(options: NammathamConfigs, result: BuildNo
     targetOptions = getHostTarget();
   } else {
     targetOptions = target;
+  }
+  if (targetOptions.runtime === 'bun') {
+    throw new Error(`Conflict target build runtime: ${targetOptions.runtime} with ${options.runtime}`);
   }
   const targetString = `${targetOptions.runtime}-${targetOptions.platform}-${targetOptions.arch}`;
   const pkgArgs = [result.filePath, '--target', targetString, '--output', path.join(result.distDirectory, 'main')];
