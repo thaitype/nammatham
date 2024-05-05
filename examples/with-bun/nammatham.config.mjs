@@ -27,9 +27,9 @@ const nammathamConfig = {
           excludedTypes: 'Request',
         },
       },
-      logLevel: {
-        default: 'Trace',
-      },
+      // logLevel: {
+      //   default: 'Trace',
+      // },
     },
   },
 };

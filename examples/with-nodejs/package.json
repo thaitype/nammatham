@@ -1,0 +1,24 @@
+{
+  "name": "@examples/with-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "nammatham dev",
+    "build": "nammatham build",
+    "start": "nammatham start",
+    "lint": "tsc --noEmit"
+  },
+  "author": "Thada Wangthammang",
+  "license": "MIT",
+  "dependencies": {
+    "@hono/node-server": "^1.8.1",
+    "hono": "^4.3.2",
+    "nammatham": "3.0.0-canary.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.9.1",
+    "typescript": "^5.4.5"
+  }
+}
