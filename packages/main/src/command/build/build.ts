@@ -51,7 +51,7 @@ export async function bundleCode(options: NammathamConfigs): Promise<string> {
     platform: 'node',
     target: 'es2020',
     sourcemap: 'inline',
-    format: 'cjs',
+    format: isESM ? 'esm' : 'cjs',
     ...options.buildOption?.esbuildOptions,
   } as BuildOptions);
   debug?.(`Code bundled completed`);
