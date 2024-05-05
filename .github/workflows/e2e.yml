@@ -49,9 +49,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: oven-sh/setup-bun@v1
-        if: matrix.runtime == 'bun'
 
       - name: Use Node.js ${{ matrix.version }}
         if: matrix.runtime == 'node'
@@ -80,16 +78,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS_E2E_TESTS }}
 
-      - name: Azure CLI script
-        uses: azure/cli@v2
+      - name: Deploy to Azure Functions
+        uses: Azure/functions-action@v1
         with:
-          azcliversion: 2.58.0
-          inlineScript: |
-            cd examples/with-${{ matrix.runtime }}/.nmt/dist && \
-            func azure functionapp publish nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}
+          app-name: nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}
+          package: examples/with-${{ matrix.runtime }}/.nmt/dist
 
       - name: Wait for the deployment to finish
-        run: sleep 60
+        run: sleep 15
 
       - name: Run E2E tests
         run: pnpm exec nx run @infra/azure-functions:test
