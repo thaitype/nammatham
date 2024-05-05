@@ -140,7 +140,6 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
     );
   }
 
-
   serviceBusTopic(funcName: string, option: Omit<ServiceBusTopicFunctionOptions, 'handler'>) {
     return new AzureFunctionsHandler<unknown, unknown | void>(
       funcName,
@@ -167,7 +166,6 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
     );
   }
 
-
   eventGrid(funcName: string, option: Omit<EventGridFunctionOptions, 'handler'>) {
     return new AzureFunctionsHandler<unknown, unknown | void>(
       funcName,
@@ -180,7 +178,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       }
     );
   }
-  
+
   cosmosDB(funcName: string, option: Omit<CosmosDBFunctionOptions, 'handler'>) {
     return new AzureFunctionsHandler<unknown, unknown | void>(
       funcName,
@@ -189,7 +187,7 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
         app.cosmosDB(funcName, {
           ...option,
           ...funcOption,
-        } as any);
+        } as unknown as CosmosDBFunctionOptions);
       }
     );
   }
