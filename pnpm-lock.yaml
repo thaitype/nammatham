@@ -132,11 +132,11 @@ importers:
         specifier: ^5.0.2
         version: 5.3.3
 
-  examples/azure-functions-with-inversify:
+  examples/azure-functions-with-context:
     dependencies:
       '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.4.0
+        version: 4.4.0
       '@di-extra/inversify':
         specifier: ^0.2.0
         version: 0.2.0
@@ -163,11 +163,45 @@ importers:
         specifier: ^5.0.2
         version: 5.3.3
 
+  examples/azure-functions-with-inversify:
+    dependencies:
+      '@azure/functions':
+        specifier: ^4.4.0
+        version: 4.4.0
+      '@di-extra/inversify':
+        specifier: ^0.2.0
+        version: 0.2.0
+      '@nammatham/inversify':
+        specifier: 2.0.0-alpha.13
+        version: link:../../packages/inversify
+      inversify:
+        specifier: ^6.0.2
+        version: 6.0.2
+      nammatham:
+        specifier: 2.0.0-alpha.13
+        version: link:../../packages/main
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.1
+    devDependencies:
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      tsx:
+        specifier: ^4.7.0
+        version: 4.7.0
+      typescript:
+        specifier: ^5.0.2
+        version: 5.3.3
+
   examples/azure-functions-with-test:
     dependencies:
       '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.4.0
+        version: 4.4.0
       nammatham:
         specifier: 2.0.0-alpha.13
         version: link:../../packages/main
@@ -188,8 +222,8 @@ importers:
   examples/azure-functions-with-trpc:
     dependencies:
       '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.4.0
+        version: 4.4.0
       '@nammatham/trpc-azure-functions':
         specifier: 2.0.0-alpha.13
         version: link:../../packages/trpc-azure-functions
@@ -222,8 +256,8 @@ importers:
   packages/azure-functions:
     dependencies:
       '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.4.0
+        version: 4.4.0
       '@nammatham/core':
         specifier: 2.0.0-alpha.13
         version: link:../core
@@ -283,6 +317,15 @@ importers:
         specifier: ^4.18.2
         version: 4.18.2
 
+  packages/inversify:
+    dependencies:
+      '@nammatham/core':
+        specifier: 2.0.0-alpha.13
+        version: link:../core
+      inversify:
+        specifier: ^6.0.2
+        version: 6.0.2
+
   packages/main:
     dependencies:
       '@nammatham/azure-functions':
@@ -298,8 +341,8 @@ importers:
   packages/trpc-azure-functions:
     dependencies:
       '@azure/functions':
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.4.0
+        version: 4.4.0
       '@nammatham/azure-functions':
         specifier: 2.0.0-alpha.13
         version: link:../azure-functions
@@ -341,6 +384,15 @@ packages:
     resolution: {integrity: sha512-45WDaJZiTmvaIOPSdWWKL5NgzgUWsNzXDNlF7oCMLS43lE602qG7XE6Hdg9ewPWBj55URHRU7UWTHk4uDVqBGg==}
     engines: {node: '>=18.0'}
     dependencies:
+      long: 4.0.0
+      undici: 5.20.0
+    dev: false
+
+  /@azure/functions@4.4.0:
+    resolution: {integrity: sha512-debidWolFTsfapsK53ftzLtXJc3dbYYPc9UqJoEm1GAj1lS7jFMARQnbfTQPDqBIhuJxLZ9D8WVvhIEV7Hifzw==}
+    engines: {node: '>=18.0'}
+    dependencies:
+      cookie: 0.6.0
       long: 4.0.0
       undici: 5.20.0
     dev: false
@@ -1914,6 +1966,11 @@ packages:
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -4608,7 +4665,7 @@ packages:
   /trpc-azure-functions-adapter@0.0.5:
     resolution: {integrity: sha512-/l5ev8RILqT8LG0EK2ACLwPphr3VAILnxSXmDnSVYtSCWKtCbk4KLan9IXRVBKdA/1t0wBIwJw7ZFLxO/H9CNg==}
     dependencies:
-      '@azure/functions': 4.1.0
+      '@azure/functions': 4.4.0
       '@trpc/server': 10.45.0
     dev: false
 
