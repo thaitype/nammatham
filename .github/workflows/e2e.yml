@@ -74,3 +74,9 @@ jobs:
         run: pnpm exec nx run @examples/with-${{ matrix.runtime }}:build
         env: 
           DEBUG: ${{ env.debug_identifier }}
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_E2E_TESTS }}
+

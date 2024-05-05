@@ -1,5 +1,6 @@
 import type { BuildOptions as EsbuildOptions } from 'esbuild';
 
+import fs from 'node:fs';
 import path from 'node:path';
 import { system } from 'pkg-fetch';
 import { exec as pkgExec } from 'pkg';
@@ -8,6 +9,7 @@ import { build as esbuild } from 'esbuild';
 import type { NammathamConfigs } from '../nammatham-config';
 
 import { createDebugger } from '../utils';
+import { constructHostConfig } from '../config';
 import { findNearestPackageData } from '../packages';
 
 const debug = createDebugger('nammatham:build');
@@ -55,6 +57,34 @@ export async function build(options: NammathamConfigs): Promise<void> {
   if (options.runtime === 'node') {
     const result = await buildNodeJs(options);
     await buildExecutable(options, result);
+    const targetPath = path.resolve(options.buildPath ?? '.nmt', 'dist');
+    await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(options), 'utf-8');
+    // Hard code, fix later
+    const functionPath = path.join(targetPath, 'SimpleHttpTrigger');
+    fs.mkdirSync(functionPath, { recursive: true });
+    await fs.promises.writeFile(
+      path.join(functionPath, 'function.json'),
+      JSON.stringify(
+        {
+          bindings: [
+            {
+              type: 'httpTrigger',
+              direction: 'in',
+              name: 'req',
+              methods: ['get', 'post'],
+            },
+            {
+              type: 'http',
+              direction: 'out',
+              name: 'res',
+            },
+          ],
+        },
+        null,
+        2
+      ),
+      'utf-8'
+    );
   } else {
     throw new Error(`Unsupported runtime: ${options.runtime}`);
   }
