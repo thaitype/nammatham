@@ -9,6 +9,14 @@ import type {
   TimerFunctionOptions,
   HttpMethodFunctionOptions,
   StorageQueueFunctionOptions,
+  StorageBlobFunctionOptions,
+  ServiceBusQueueFunctionOptions,
+  ServiceBusTopicFunctionOptions,
+  EventHubFunctionOptions,
+  EventGridFunctionOptions,
+  CosmosDBFunctionOptions,
+  WarmupFunctionOptions,
+  SqlFunctionOptions,
 } from '@azure/functions';
 
 import { app } from '@azure/functions';
@@ -99,6 +107,112 @@ export class AzureFunctionsTrigger extends BaseFunctionTrigger {
       this.parseFunctionOption(funcName, option),
       funcOption => {
         app.storageQueue(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+  storageBlob(funcName: string, option: Omit<StorageBlobFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.storageBlob(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+  serviceBusQueue(funcName: string, option: Omit<ServiceBusQueueFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.serviceBusQueue(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+
+  serviceBusTopic(funcName: string, option: Omit<ServiceBusTopicFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.serviceBusTopic(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+  eventHub(funcName: string, option: Omit<EventHubFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.eventHub(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+
+  eventGrid(funcName: string, option: Omit<EventGridFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.eventGrid(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+  
+  cosmosDB(funcName: string, option: Omit<CosmosDBFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.cosmosDB(funcName, {
+          ...option,
+          ...funcOption,
+        } as any);
+      }
+    );
+  }
+
+  warmup(funcName: string, option: Omit<WarmupFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.warmup(funcName, {
+          ...option,
+          ...funcOption,
+        });
+      }
+    );
+  }
+
+  sql(funcName: string, option: Omit<SqlFunctionOptions, 'handler'>) {
+    return new AzureFunctionsHandler<unknown, unknown | void>(
+      funcName,
+      this.parseFunctionOption(funcName, option),
+      funcOption => {
+        app.sql(funcName, {
           ...option,
           ...funcOption,
         });
