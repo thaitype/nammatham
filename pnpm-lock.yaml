@@ -82,7 +82,7 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
-  examples/with-nodejs:
+  examples/with-node:
     dependencies:
       '@hono/node-server':
         specifier: ^1.8.1

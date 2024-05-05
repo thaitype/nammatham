@@ -21,6 +21,8 @@ jobs:
       matrix: ${{ steps.deploy-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+
       - name: Use Node.js ${{ env.node_version }}
         uses: actions/setup-node@v4
         with:
@@ -33,13 +35,14 @@ jobs:
       - run: pnpm install
       - name: Export the matrix for testing
         id: deploy-matrix
-        run: nx run @infra/azure-functions:github-actions
+        run: pnpm exec nx run @infra/azure-functions:github-actions
 
   build:
     runs-on: ${{ matrix.os }}
     needs: get-matrix
     strategy:
-      matrix: ${{fromJson(needs.get-matrix.outputs.matrix)}}
+      matrix:
+        include: ${{fromJson(needs.get-matrix.outputs.matrix)}}
 
     steps:
       - uses: actions/checkout@v4
@@ -61,4 +64,4 @@ jobs:
       - run: pnpm build
 
       - name: Build the project
-        run: nx run @examples/with-${{ matrix.runtime }}:build
+        run: pnpm exec nx run @examples/with-${{ matrix.runtime }}:build
