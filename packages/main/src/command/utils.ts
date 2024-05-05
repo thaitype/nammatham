@@ -1,4 +1,7 @@
+import type { Options, ExecaChildProcess } from 'execa';
+
 import debug from 'debug';
+import { execa } from 'execa';
 
 const filter = process.env.DEBUG_FILTER;
 const DEBUG = process.env.DEBUG;
@@ -31,5 +34,32 @@ export function createDebugger(
         log(...args);
       }
     };
+  }
+}
+
+export interface ExecuteOptions {
+  execaOptions?: Options;
+  debug?: debug.Debugger['log'];
+  dryRun?: boolean;
+}
+
+export function execute(
+  file: string,
+  args: readonly string[] = [],
+  options?: ExecuteOptions
+): ExecaChildProcess<string> | undefined {
+  const dryRun = options?.dryRun ?? false;
+  const command = [file, ...args].join(' ');
+  options?.debug?.(`Running command: ${command}`);
+  if (dryRun === false) {
+    const proc = execa(file, args, {
+      /**
+       * Make sure to inherit the stdio so that the output is shown in the console
+       * such as the console colors
+       */
+      stdio: 'inherit',
+      ...options?.execaOptions,
+    });
+    return proc;
   }
 }

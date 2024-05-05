@@ -2,7 +2,8 @@
   "name": "@examples/nammatham-v3",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/src/main.js",
+  "main": "src/main.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit",
