@@ -34,7 +34,10 @@ export interface GithubActionsMatrix {
 export function toGithubActionsMatrix(configs: InfraEnvConfig[]): GithubActionsMatrix[] {
   return configs.map(config => {
     const { platform, runtime } = config;
-    const version = runtime === 'node18' ? '18' : 'latest';
+    /**
+     * Using Node 20 LTS to build but the target runtime is can be different
+     */
+    const version = runtime === 'node18' ? '20' : 'latest';
 
     return {
       os: platform === 'linux' ? 'ubuntu-latest' : platform === 'win' ? 'windows-latest' : 'macos-latest',
