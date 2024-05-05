@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "bun run src/main.ts",
+    "test": "bun test",
     "github-actions": "bun run src/github-actions.ts",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",
     "lint:fix": "eslint --fix ./src && prettier -w src"

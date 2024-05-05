@@ -64,7 +64,7 @@ jobs:
         with:
           version: ${{ env.pnpm_version }}
       - run: pnpm install
-      
+
       - run: pnpm build
 
       - name: pnpm install again for ensure the cli is available
@@ -72,7 +72,7 @@ jobs:
 
       - name: Build the project
         run: pnpm exec nx run @examples/with-${{ matrix.runtime }}:build
-        env: 
+        env:
           DEBUG: ${{ env.debug_identifier }}
 
       - name: Azure Login
@@ -80,3 +80,19 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS_E2E_TESTS }}
 
+      - name: Azure CLI script
+        uses: azure/cli@v2
+        with:
+          azcliversion: 2.58.0
+          inlineScript: |
+            cd examples/with-${{ matrix.runtime }}/.nmt/dist && \
+            func azure functionapp publish nmt-e2e-${{ matrix.target }}-${{ matrix.resource_identifier }}
+
+      - name: Wait for the deployment to finish
+        run: sleep 60
+
+      - name: Run E2E tests
+        run: pnpm exec nx run @infra/azure-functions:test
+        env:
+          AZURE_FUNCTIONS_URL: https://nmt-e2e-${{ matrix.target }}-${{ matrix.resource_identifier }}.azurewebsites.net
+          AZURE_FUNCTIONS_API_KEY: ${{ secrets.AZURE_FUNCTIONS_HOST_KEY }}
