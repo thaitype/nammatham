@@ -5,7 +5,7 @@
   "main": "src/main.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "nammatham build",
     "lint": "tsc --noEmit",
     "tsx": "tsx",
     "start": "tsx watch src/main.ts",

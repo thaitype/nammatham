@@ -5,7 +5,7 @@ import path from 'node:path';
 import { build } from 'esbuild';
 import { pathToFileURL } from 'node:url';
 
-import type { NammathamConfigs } from './nammatham-config';
+import type { NammathamConfigs } from '../nammatham-config';
 
 import { isFilePathESM } from './utils';
 import { createDebugger } from '../utils';

@@ -1,5 +1,5 @@
-import type { LocalSettings } from './types';
-import type { EnvVariablesConfig, HostConfigV2 } from './types';
+import type { BundleCodeOptions } from './build';
+import type { EnvVariablesConfig, HostConfigV2, LocalSettings } from './config-loader';
 
 export interface NammathamConfigs {
   /**
@@ -30,4 +30,9 @@ export interface NammathamConfigs {
    * Environment variables Config, it is to be loaded into the Azure Functions local.settings.json file.
    */
   envVariablesConfig?: EnvVariablesConfig;
+
+  /**
+   * Bundle the code using esbuild
+   */
+  buildOption?: BundleCodeOptions;
 }
