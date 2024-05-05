@@ -20,9 +20,9 @@ export interface GithubActionsMatrix {
    */
   target: string;
   /**
-   * Resource Identifier
+   * Resource Identifier Key for getting value from github actions secrets
    */
-  resource_identifier: string;
+  resource_identifier_key: string;
 }
 
 /**
@@ -51,7 +51,7 @@ export function toGithubActionsMatrix(configs: InfraEnvConfig[]): GithubActionsM
       runtime: runtime === 'bun' ? 'bun' : 'node',
       version,
       target: toTarget(config),
-      resource_identifier: config.resourceIdentifier,
+      resource_identifier_key: `RESOURCE_IDENTIFIER_${toTarget(config).replaceAll('-', '_').toUpperCase()}`,
     } satisfies GithubActionsMatrix;
   });
 }

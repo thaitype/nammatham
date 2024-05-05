@@ -86,7 +86,7 @@ jobs:
           azcliversion: 2.58.0
           inlineScript: |
             cd examples/with-${{ matrix.runtime }}/.nmt/dist && \
-            func azure functionapp publish nmt-e2e-${{ matrix.target }}-${{ matrix.resource_identifier }}
+            func azure functionapp publish nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}
 
       - name: Wait for the deployment to finish
         run: sleep 60
@@ -94,5 +94,5 @@ jobs:
       - name: Run E2E tests
         run: pnpm exec nx run @infra/azure-functions:test
         env:
-          AZURE_FUNCTIONS_URL: https://nmt-e2e-${{ matrix.target }}-${{ matrix.resource_identifier }}.azurewebsites.net
+          AZURE_FUNCTIONS_URL: https://nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}.azurewebsites.net
           AZURE_FUNCTIONS_API_KEY: ${{ secrets.AZURE_FUNCTIONS_HOST_KEY }}
