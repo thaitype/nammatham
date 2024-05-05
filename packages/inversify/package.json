@@ -20,7 +20,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.13",
+    "@nammatham/core": "workspace:*",
     "inversify": "^6.0.2"
   },
   "repository": {

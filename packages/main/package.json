@@ -47,9 +47,9 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "@nammatham/core": "2.0.0-alpha.13",
-    "@nammatham/azure-functions": "2.0.0-alpha.13",
-    "@nammatham/express": "2.0.0-alpha.13"
+    "@nammatham/core": "workspace:*",
+    "@nammatham/azure-functions": "workspace:*",
+    "@nammatham/express": "workspace:*"
   },
   "repository": {
     "type": "git",

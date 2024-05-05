@@ -12,7 +12,7 @@
   "author": "Thada Wangthammang",
   "license": "MIT",
   "dependencies": {
-    "nammatham": "2.0.0-alpha.13",
+    "nammatham": "workspace:*",
     "@azure/functions": "^4.1.0"
   },
   "devDependencies": {
