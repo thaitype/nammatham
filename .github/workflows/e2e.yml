@@ -13,6 +13,9 @@ on:
 env:
   pnpm_version: 8
   node_version: 20
+  debug_identifier: nammatham:*
+
+  RESOURCE_IDENTIFIER_NODE18_LINUX_X64: ${{ secrets.RESOURCE_IDENTIFIER_NODE18_LINUX_X64 }}
 
 jobs:
   get-matrix:
@@ -69,3 +72,5 @@ jobs:
 
       - name: Build the project
         run: pnpm exec nx run @examples/with-${{ matrix.runtime }}:build
+        env: 
+          DEBUG: ${{ env.debug_identifier }}

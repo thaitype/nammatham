@@ -6,7 +6,7 @@ import { fallbackResourceIdentifier, toTarget } from './utils';
 
 export function getResourceName(infraConfig: InfraEnvConfig): { prefix: string; shortPrefix: string } {
   const shortResourceIdentifier =
-    infraConfig.resourceIdentifier?.slice(0, 8) ?? fallbackResourceIdentifier(infraConfig);
+    infraConfig.resourceIdentifier?.slice(0, 14) ?? fallbackResourceIdentifier(infraConfig);
   const resourceNamePrefix = `nmt-e2e-${toTarget(infraConfig)}-${shortResourceIdentifier}`;
   const resourceShortNamePrefix = `nmt${shortResourceIdentifier}`.toLowerCase();
   /**
