@@ -3,7 +3,12 @@
   "module": "src/main.ts",
   "type": "module",
   "scripts": {
-    "start": "bun run src/main.ts"
+    "start": "bun run src/main.ts",
+    "lint": "tsc --noEmit && eslint ./src && prettier -c src",
+    "lint:fix": "eslint --fix ./src && prettier -w src"
+  },
+  "dependencies": {
+    "nammatham": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "latest"

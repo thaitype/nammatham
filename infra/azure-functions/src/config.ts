@@ -1,0 +1,47 @@
+import { createInfraConfig } from './utils';
+
+export const infraConfigs = createInfraConfig(
+  {
+    'node18-linux-x64': process.env.RESOURCE_IDENTIFIER_NODE18_LINUX_X64,
+    'node18-win-x64': process.env.RESOURCE_IDENTIFIER_NODE18_WIN_X64,
+  },
+  [
+    {
+      platform: 'linux',
+      arch: 'x64',
+      runtime: 'node18',
+      isDeployable: true,
+    },
+    // {
+    //   platform: 'win',
+    //   arch: 'x64',
+    //   runtime: 'node18',
+    //   isDeployable: true,
+    // },
+    // {
+    //   platform: 'linux',
+    //   arch: 'x64',
+    //   runtime: 'bun',
+    // },
+    // {
+    //   platform: 'linux',
+    //   arch: 'arm64',
+    //   runtime: 'bun',
+    // },
+    // {
+    //   platform: 'win',
+    //   arch: 'x64',
+    //   runtime: 'bun',
+    // },
+    // {
+    //   platform: 'win',
+    //   arch: 'x64',
+    //   runtime: 'node18',
+    // },
+    // {
+    //   platform: 'macos',
+    //   arch: 'x64',
+    //   runtime: 'bun',
+    // },
+  ]
+);

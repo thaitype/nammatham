@@ -103,6 +103,9 @@ importers:
 
   infra/azure-functions:
     dependencies:
+      nammatham:
+        specifier: workspace:*
+        version: link:../../packages/main
       typescript:
         specifier: ^5.0.0
         version: 5.4.5
