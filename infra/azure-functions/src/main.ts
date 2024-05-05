@@ -1,5 +1,5 @@
 import { infraConfigs } from './config';
-import { createFunctionApp, destroyFunctionApp } from './azure-command';
+import { createFunctionApp } from './azure-command';
 
 console.log('config', infraConfigs);
 
