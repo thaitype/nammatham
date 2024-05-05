@@ -5,16 +5,13 @@ import path from 'node:path';
 import { build } from 'esbuild';
 import { pathToFileURL } from 'node:url';
 
-import type { NammathamCommandOptions } from '../cli';
+import type { NammathamConfigs } from './type';
 
+import { isFilePathESM } from './utils';
+import { createDebugger } from '../utils';
 import { DEFAULT_CONFIG_FILES } from './constants';
-import { createDebugger, isFilePathESM } from './utils';
 
 const debug = createDebugger('nammatham:config');
-
-export interface NammathamConfigs extends NammathamCommandOptions {
-  some?: string;
-}
 
 /**
  * Ref: packages/vite/src/node/config.ts
