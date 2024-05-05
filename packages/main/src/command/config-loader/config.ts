@@ -9,7 +9,7 @@ import type { NammathamConfigs } from './nammatham-config';
 
 import { isFilePathESM } from './utils';
 import { createDebugger } from '../utils';
-import { DEFAULT_CONFIG_FILES } from './constants';
+import { DEFAULT_CONFIG_FILES } from '../constants';
 import { provideDefaultConfig } from './default-config';
 
 const debug = createDebugger('nammatham:config');
