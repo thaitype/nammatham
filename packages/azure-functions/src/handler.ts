@@ -6,6 +6,8 @@ import type { HandlerFunction, RegisterFunctionOption, AzureFunctionsEndpoint, F
 
 import { NammathamContext } from './nammatham-context';
 
+import camelCase from 'lodash.camelcase';
+
 export class AzureFunctionsHandler<
   TTriggerType,
   TReturnType,
@@ -37,7 +39,7 @@ export class AzureFunctionsHandler<
     return {
       ...this.functionOption,
       type: 'azure-functions',
-      name: this.funcName,
+      name: camelCase(this.funcName),
       invokeHandler,
       registerFunc: this.registerFunc,
     };

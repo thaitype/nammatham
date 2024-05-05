@@ -14,7 +14,7 @@
   "dependencies": {
     "@azure/functions": "^4.4.0",
     "@di-extra/inversify": "^0.2.0",
-    "nammatham": "2.0.0-alpha.13",
+    "nammatham": "workspace:*",
     "inversify": "^6.0.2",
     "reflect-metadata": "^0.2.1"
   },

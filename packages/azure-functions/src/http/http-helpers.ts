@@ -1,4 +1,5 @@
 import type express from 'express';
+import type { HeadersInit } from 'undici';
 import type { IncomingHttpHeaders } from 'node:http';
 
 export function convertExpressReqHeaderToHeadersInit(_headers: IncomingHttpHeaders): HeadersInit {
