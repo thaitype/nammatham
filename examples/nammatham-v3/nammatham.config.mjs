@@ -2,8 +2,6 @@
 
 /** @type {import('nammatham').NammathamConfigs} */
 const nammathamConfig = {
-  buildPath: 'build',
-
   hostConfig: {
     version: '2.0',
     extensionBundle: {

@@ -5,7 +5,7 @@ export async function main() {
   console.log(`PWD: ${process.cwd()}`);
 
   const userConfig = await loadConfigFromFile();
-  console.log('userConfig', userConfig);
+  console.log('parse config', userConfig);
 
   console.log(`End the command`);
 }
