@@ -1,4 +1,4 @@
-import type { BundleCodeOptions } from './build';
+import type { BuildOptions } from './build';
 import type { EnvVariablesConfig, HostConfigV2, LocalSettings } from './config-loader';
 
 export interface NammathamConfigs {
@@ -34,5 +34,11 @@ export interface NammathamConfigs {
   /**
    * Bundle the code using esbuild
    */
-  buildOption?: BundleCodeOptions;
+  buildOption?: BuildOptions;
+  /**
+   * The runtime environment for the Azure Functions.
+   *
+   * @default 'bun'
+   */
+  runtime?: 'node' | 'bun';
 }

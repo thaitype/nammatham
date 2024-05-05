@@ -2,6 +2,14 @@
 
 /** @type {import('nammatham').NammathamConfigs} */
 const nammathamConfig = {
+  runtime: 'node',
+  buildOption: {
+    target: {
+      arch: 'x64',
+      platform: 'linux',
+      runtime: 'node18',
+    }
+  },
   hostConfig: {
     version: '2.0',
     extensionBundle: {

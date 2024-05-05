@@ -2,6 +2,7 @@
 
 /** @type {import('nammatham').NammathamConfigs} */
 const nammathamConfig = {
+  runtime: 'bun',
   hostConfig: {
     version: '2.0',
     extensionBundle: {

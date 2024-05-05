@@ -1,4 +1,4 @@
-import { bundleCode } from './build';
+import { build } from './build';
 import { loadConfigFromFile } from './config-loader';
 import { loadEnvVariables, writeConfig } from './config';
 import { startAzureFunctionHost } from './azure-func-host';
@@ -24,7 +24,7 @@ export async function main() {
     await startAzureFunctionHost(config);
   } else if (args[0] === 'build') {
     console.log(`Build the code`);
-    await bundleCode(config);
+    await build(config);
   }
   console.log(`End the command`);
 }
