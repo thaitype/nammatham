@@ -38,7 +38,7 @@ export async function loadConfigFromFile(file?: string, configRoot = process.cwd
 
   if (!resolvedPath) {
     debug?.('Cannot find config file in %s', configRoot);
-    return null;
+    return {};
   }
 
   const isESM = isFilePathESM(resolvedPath);

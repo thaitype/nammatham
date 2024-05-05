@@ -26,9 +26,9 @@ export function loadUserDefinedEnvVariables(): EnvVariables {
   return {};
 }
 
-export function loadEnvVariables(config: EnvVariablesConfig): EnvVariables {
+export function loadEnvVariables(config?: EnvVariablesConfig): EnvVariables {
   const userEnvVariables = loadUserDefinedEnvVariables();
-  if (Object.keys(userEnvVariables).length === 0 && config.enableLoadSystemEnvVariables) {
+  if (Object.keys(userEnvVariables).length === 0 && config?.enableLoadSystemEnvVariables) {
     debug?.('Loading system environment variables');
     return process.env;
   }
