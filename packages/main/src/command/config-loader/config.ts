@@ -12,7 +12,7 @@ import { createDebugger } from '../utils';
 import { DEFAULT_CONFIG_FILES } from '../constants';
 import { provideDefaultConfig } from './default-config';
 
-const debug = createDebugger('nammatham:config');
+const debug = createDebugger('nammatham:config-loader');
 
 /**
  * Ref: packages/vite/src/node/config.ts
