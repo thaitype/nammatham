@@ -61,7 +61,11 @@ jobs:
         with:
           version: ${{ env.pnpm_version }}
       - run: pnpm install
+      
       - run: pnpm build
+
+      - name: pnpm install again for ensure the cli is available
+        run: pnpm install
 
       - name: Build the project
         run: pnpm exec nx run @examples/with-${{ matrix.runtime }}:build

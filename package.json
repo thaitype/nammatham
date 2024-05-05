@@ -15,7 +15,7 @@
     "lint": "nx run-many -t lint --projects nammatham @infra/* --parallel=10",
     "lint:fix": "nx run-many -t lint:fix --projects nammatham @infra/* --parallel=10",
     "lint:fix:watch": "nodemon --watch . --ext ts --exec 'sleep 3 && run-s lint:fix'",
-    "build": "nx run-many -t build --parallel=10",
+    "build": "nx run nammatham:build",
     "azurite": "pnpx azurite --silent --location ./.azurite --debug ./.azurite/debug.log",
     "infra": "nx run @infra/azure-functions:start"
   },
