@@ -6,18 +6,25 @@ export const infraConfigs = createInfraConfig(
     'node18-win-x64': process.env.RESOURCE_IDENTIFIER_NODE18_WIN_X64,
   },
   [
+    // --- Node 18 ---
     {
       platform: 'linux',
       arch: 'x64',
       runtime: 'node18',
       isDeployable: true,
     },
-    // {
-    //   platform: 'win',
-    //   arch: 'x64',
-    //   runtime: 'node18',
-    //   isDeployable: true,
-    // },
+    {
+      platform: 'win',
+      arch: 'x64',
+      runtime: 'node18',
+      // isDeployable: true,
+    },
+    {
+      platform: 'macos',
+      arch: 'arm64',
+      runtime: 'node18',
+    },
+    // --- Bun ---- 
     // {
     //   platform: 'linux',
     //   arch: 'x64',

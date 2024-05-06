@@ -75,19 +75,23 @@ jobs:
 
       - name: Azure Login
         uses: azure/login@v2
+        if: matrix.is_deployable == true
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS_E2E_TESTS }}
 
       - name: Deploy to Azure Functions
         uses: Azure/functions-action@v1
+        if: matrix.is_deployable == true
         with:
           app-name: nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}
           package: examples/with-${{ matrix.runtime }}/.nmt/dist
 
       - name: Wait for the deployment to finish
+        if: matrix.is_deployable == true
         run: sleep 15
 
       - name: Run E2E tests
+        if: matrix.is_deployable == true
         run: pnpm exec nx run @infra/azure-functions:test
         env:
           AZURE_FUNCTIONS_URL: https://nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}.azurewebsites.net

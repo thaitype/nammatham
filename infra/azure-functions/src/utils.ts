@@ -17,13 +17,13 @@ export function createInfraConfig(
   infraConfigs: InfraEnvConfig[]
 ): InfraEnvConfig[] {
   return infraConfigs
-    .filter(config => config.isDeployable)
     .map(infraConfig => {
       const resourceIdentifier: string =
         resourceIdentifiers[toTarget(infraConfig)] ?? fallbackResourceIdentifier(infraConfig);
 
       return {
         ...infraConfig,
+        isDeployable: infraConfig.isDeployable ?? false,
         resourceIdentifier,
       };
     });

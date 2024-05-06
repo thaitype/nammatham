@@ -23,6 +23,10 @@ export interface GithubActionsMatrix {
    * Resource Identifier Key for getting value from github actions secrets
    */
   resource_identifier_key: string;
+  /**
+   * is deployable
+   */
+  is_deployable?: boolean;
 }
 
 /**
@@ -51,6 +55,7 @@ export function toGithubActionsMatrix(configs: InfraEnvConfig[]): GithubActionsM
       runtime: runtime === 'bun' ? 'bun' : 'node',
       version,
       target: toTarget(config),
+      is_deployable: config.isDeployable,
       resource_identifier_key: `RESOURCE_IDENTIFIER_${toTarget(config).replaceAll('-', '_').toUpperCase()}`,
     } satisfies GithubActionsMatrix;
   });
