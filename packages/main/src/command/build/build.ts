@@ -200,19 +200,16 @@ export async function buildExecutable(options: NammathamConfigs, result: BuildNo
   if (options.buildOption?.nodeToolChain?.package !== 'pkg') {
     throw new Error(`Unsupported package tool: ${options.buildOption?.nodeToolChain?.package}`);
   }
-  const target = options.buildOption?.target ?? 'host';
-  let targetOptions: TargetOptions;
-  if (target === 'host') {
-    targetOptions = getHostTarget();
-  } else {
-    targetOptions = target;
+  const target = options.buildOption?.target;
+  if (!target) {
+    throw new Error(`Target should be set at the default configuration when the cli loaded`);
   }
-  debug?.(`Building executable for target: ${targetOptions.runtime}-${targetOptions.platform}-${targetOptions.arch}`);
-  if (targetOptions.runtime === 'bun') {
-    throw new Error(`Conflict target build runtime: ${targetOptions.runtime} with ${options.runtime}`);
+  debug?.(`Building executable for target: ${target.runtime}-${target.platform}-${target.arch}`);
+  if (target.runtime === 'bun') {
+    throw new Error(`Conflict target build runtime: ${target.runtime} with ${options.runtime}`);
   }
-  const targetString = `${targetOptions.runtime}-${targetOptions.platform}-${targetOptions.arch}`;
-  const executablePath = targetOptions.platform === 'win' ? 'main.exe' : 'main';
+  const targetString = `${target.runtime}-${target.platform}-${target.arch}`;
+  const executablePath = target.platform === 'win' ? 'main.exe' : 'main';
   const pkgArgs = [
     result.filePath,
     '--target',

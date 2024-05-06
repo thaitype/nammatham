@@ -1,5 +1,6 @@
-import type { BuildOptions } from './build';
 import type { EnvVariablesConfig, HostConfigV2, LocalSettings } from './config-loader';
+
+import { getHostTarget, type BuildOptions } from './build';
 
 export interface NammathamConfigs {
   /**
@@ -47,6 +48,7 @@ export const defaultNammathamConfigs: NammathamConfigs = {
   buildPath: '.nmt',
   runtime: 'bun',
   buildOption: {
+    target: getHostTarget(),
     nodeToolChain: {
       dev: 'tsx',
       bundle: 'esbuild',
