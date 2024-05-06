@@ -46,5 +46,11 @@ export interface NammathamConfigs {
 export const defaultNammathamConfigs: NammathamConfigs = {
   buildPath: '.nmt',
   runtime: 'bun',
-  buildOption: {},
+  buildOption: {
+    nodeToolChain: {
+      dev: 'tsx',
+      bundle: 'esbuild',
+      package: 'pkg',
+    },
+  },
 };

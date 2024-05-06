@@ -26,6 +26,20 @@ export async function main() {
 
   if (args[0] === 'dev') {
     await writeConfig(config, envVars);
+    /**
+     * setup host.json for dev
+ 
+      "watchDirectories": [
+          "../src", // Watch the source directory
+          "." // watch the function.json
+        ]
+
+      "defaultExecutablePath": "../node_modules/.bin/tsx",
+      "arguments": [
+        "watch",
+        "../src/main.ts"
+      ]
+     */
     await startAzureFunctionHost(config);
   } else if (args[0] === 'build') {
     console.log(`Build the code`);
