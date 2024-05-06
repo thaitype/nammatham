@@ -3,6 +3,7 @@
   "module": "src/main.ts",
   "type": "module",
   "scripts": {
+    "test-os": "tsx src/test-os.ts",
     "apply": "bun run src/main.ts",
     "plan": "PLAN_MODE=true bun run src/main.ts",
     "test": "bun test",

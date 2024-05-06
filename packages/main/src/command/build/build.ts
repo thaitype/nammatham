@@ -211,7 +211,14 @@ export async function buildExecutable(options: NammathamConfigs, result: BuildNo
     throw new Error(`Conflict target build runtime: ${targetOptions.runtime} with ${options.runtime}`);
   }
   const targetString = `${targetOptions.runtime}-${targetOptions.platform}-${targetOptions.arch}`;
-  const pkgArgs = [result.filePath, '--target', targetString, '--output', path.join(result.distDirectory, 'main')];
+  const executablePath = targetOptions.platform === 'win' ? 'main.exe' : 'main';
+  const pkgArgs = [
+    result.filePath,
+    '--target',
+    targetString,
+    '--output',
+    path.join(result.distDirectory, executablePath),
+  ];
   debug?.(`Building executable using pkg with args: ${pkgArgs.join(' ')}`);
   await pkgExec(pkgArgs);
   debug?.(`Executable built completed`);

@@ -17,7 +17,7 @@ export function constructHostConfig(config: NammathamConfigs): string {
     {
       customHandler: {
         description: {
-          defaultExecutablePath: 'main',
+          defaultExecutablePath: config.buildOption?.target?.platform === 'win' ? 'main.exe' : 'main',
         },
         enableForwardingHttpRequest: true,
       },
