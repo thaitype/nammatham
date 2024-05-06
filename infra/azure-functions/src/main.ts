@@ -1,7 +1,25 @@
+import { toTarget } from './utils';
 import { infraConfigs } from './config';
-import { createFunctionApp } from './azure-command';
+import { createFunctionApp, destroyFunctionApp } from './azure-command';
 
-console.log('config', infraConfigs);
+const isPlanMode = process.env.PLAN_MODE === 'true';
 
-await createFunctionApp(infraConfigs[0]);
-// await destroyFunctionApp(infraConfigs[0]);
+console.log(`Running in plan mode: ${isPlanMode}`);
+
+console.table(infraConfigs);
+
+for (const infraConfig of infraConfigs) {
+  if (!infraConfig.mode) {
+    console.log(`Skipping infra config with target ${toTarget(infraConfig)}`);
+    continue;
+  }
+  if (infraConfig.mode === 'create') {
+    await createFunctionApp(infraConfig, { isPlanMode });
+  } else if (infraConfig.mode === 'destroy') {
+    await destroyFunctionApp(infraConfig, { isPlanMode });
+  } else {
+    console.log(
+      `mode=${infraConfig.mode} is not supported yet, Skipping infra config with target ${toTarget(infraConfig)}`
+    );
+  }
+}

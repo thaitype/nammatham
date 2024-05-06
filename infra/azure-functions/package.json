@@ -3,7 +3,8 @@
   "module": "src/main.ts",
   "type": "module",
   "scripts": {
-    "start": "bun run src/main.ts",
+    "apply": "bun run src/main.ts",
+    "plan": "PLAN_MODE=true bun run src/main.ts",
     "test": "bun test",
     "github-actions": "bun run src/github-actions.ts",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",

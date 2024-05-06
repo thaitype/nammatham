@@ -17,14 +17,14 @@ export const infraConfigs = createInfraConfig(
       platform: 'win',
       arch: 'x64',
       runtime: 'node18',
-      // isDeployable: true,
+      isDeployable: true,
     },
     {
       platform: 'macos',
       arch: 'arm64',
       runtime: 'node18',
     },
-    // --- Bun ---- 
+    // --- Bun ----
     // {
     //   platform: 'linux',
     //   arch: 'x64',

@@ -16,15 +16,14 @@ export function createInfraConfig(
   resourceIdentifiers: Record<string, string | undefined>,
   infraConfigs: InfraEnvConfig[]
 ): InfraEnvConfig[] {
-  return infraConfigs
-    .map(infraConfig => {
-      const resourceIdentifier: string =
-        resourceIdentifiers[toTarget(infraConfig)] ?? fallbackResourceIdentifier(infraConfig);
+  return infraConfigs.map(infraConfig => {
+    const resourceIdentifier: string =
+      resourceIdentifiers[toTarget(infraConfig)] ?? fallbackResourceIdentifier(infraConfig);
 
-      return {
-        ...infraConfig,
-        isDeployable: infraConfig.isDeployable ?? false,
-        resourceIdentifier,
-      };
-    });
+    return {
+      ...infraConfig,
+      isDeployable: infraConfig.isDeployable ?? false,
+      resourceIdentifier,
+    };
+  });
 }

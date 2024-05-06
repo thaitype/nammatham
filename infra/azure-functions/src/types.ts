@@ -12,7 +12,15 @@ export interface InfraEnvConfig extends TargetOptions {
   isDeployable?: boolean;
 
   /**
+   * Provide mode for infra config (create, change, destroy)
+   */
+  mode?: 'create' | 'change' | 'destroy';
+  /**
    * Resource identifier
    */
   resourceIdentifier?: string;
+}
+
+export interface InfraOptions {
+  isPlanMode: boolean;
 }
