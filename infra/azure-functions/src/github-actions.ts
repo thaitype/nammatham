@@ -64,3 +64,7 @@ export function toGithubActionsMatrix(configs: InfraEnvConfig[]): GithubActionsM
 const matrix = toGithubActionsMatrix(infraConfigs);
 console.log('Github Actions Matrix', JSON.stringify(matrix, null, 2));
 core.setOutput('matrix', JSON.stringify(matrix));
+
+const deployableMatrix = matrix.filter(config => config.is_deployable);
+console.log('Github Actions Deployable Matrix', JSON.stringify(deployableMatrix, null, 2));
+core.setOutput('deployable_matrix', JSON.stringify(deployableMatrix));
