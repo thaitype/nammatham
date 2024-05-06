@@ -32,7 +32,7 @@ export interface NammathamConfigs {
   envVariablesConfig?: EnvVariablesConfig;
 
   /**
-   * Bundle the code using esbuild
+   * Build options including build, bundle, and package a single executable file.
    */
   buildOption?: BuildOptions;
   /**
@@ -42,3 +42,9 @@ export interface NammathamConfigs {
    */
   runtime?: 'node' | 'bun';
 }
+
+export const defaultNammathamConfigs: NammathamConfigs = {
+  buildPath: '.nmt',
+  runtime: 'bun',
+  buildOption: {},
+};

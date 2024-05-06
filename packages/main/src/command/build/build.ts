@@ -48,9 +48,34 @@ export interface BuildOptions {
    */
   target?: TargetOptions;
   /**
-   * esbuild options
+   * esbuild options, using for build and bundle the code, especially for Node.js runtime.
    */
   esbuildOptions?: EsbuildOptions;
+  /**
+   * Node.js toolchain options, using for build and package the code.
+   *
+   * @default { dev: 'tsx', bundle: 'esbuild', package: 'pkg' }
+   */
+  nodeToolChain?: {
+    /**
+     * The development tool to use for the Node.js runtime.
+     * `tsx` support watch mode for TypeScript.
+     */
+    dev?: 'tsx';
+    /**
+     * The bundler tool to bundle the code, before package the code into a single executable file.
+     */
+    bundle?: 'esbuild';
+    /**
+     * The package tool to package the code into a single executable file.
+     * `pkg` internally used for build the executable file. the `pkg` package is marked as deprecated.
+     *
+     * TODO: Support node.js [Single executable applications](https://nodejs.org/api/single-executable-applications.html) method
+     *
+     * @default 'pkg'
+     */
+    package?: 'pkg';
+  };
 }
 
 export async function build(options: NammathamConfigs): Promise<void> {
@@ -109,6 +134,9 @@ export interface BuildNodeJsResult {
 }
 
 export async function buildNodeJs(options: NammathamConfigs): Promise<BuildNodeJsResult> {
+  if (options.buildOption?.nodeToolChain?.bundle !== 'esbuild') {
+    throw new Error(`Unsupported bundler: ${options.buildOption?.nodeToolChain?.bundle}`);
+  }
   const workingDir = process.cwd();
   const pkg = findNearestPackageData(workingDir);
   const isESM = pkg?.data.type === 'module';
@@ -169,6 +197,9 @@ export function getHostTarget(): TargetOptions {
  * @ref See how to build the with node.js https://dev.to/chad_r_stewart/compile-a-single-executable-from-your-node-app-with-nodejs-20-and-esbuild-210j
  */
 export async function buildExecutable(options: NammathamConfigs, result: BuildNodeJsResult): Promise<void> {
+  if (options.buildOption?.nodeToolChain?.package !== 'pkg') {
+    throw new Error(`Unsupported package tool: ${options.buildOption?.nodeToolChain?.package}`);
+  }
   const target = options.buildOption?.target ?? 'host';
   let targetOptions: TargetOptions;
   if (target === 'host') {

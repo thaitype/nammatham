@@ -1,4 +1,5 @@
 import path from 'node:path';
+import merge from 'lodash.merge';
 
 import { findNearestPackageData } from '../packages';
 
@@ -16,4 +17,8 @@ export function isFilePathESM(filePath: string): boolean {
       return false;
     }
   }
+}
+
+export function setDefaultConfig<T>(userConfig: T, defaultConfig: T): T {
+  return merge(defaultConfig, userConfig);
 }

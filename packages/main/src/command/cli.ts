@@ -1,11 +1,14 @@
 import { build } from './build';
+import { createDebugger } from './utils';
 import { loadConfigFromFile } from './config-loader';
 import { loadEnvVariables, writeConfig } from './config';
 import { startAzureFunctionHost } from './azure-func-host';
 
+const debug = createDebugger('nammatham:cli');
+
 export async function main() {
   console.log(`Start the command`);
-  console.log(`PWD: ${process.cwd()}`);
+  debug?.(`Working Directory: ${process.cwd()}`);
 
   /**
    * Remove the first two arguments which are the node binary and the script file
@@ -17,7 +20,9 @@ export async function main() {
     process.exit(0);
   }
   const config = await loadConfigFromFile();
+  debug?.(`Loaded config: ${JSON.stringify(config)}`);
   const envVars = loadEnvVariables(config?.envVariablesConfig);
+  debug?.(`Loaded env variables: ${JSON.stringify(envVars)}`);
 
   if (args[0] === 'dev') {
     await writeConfig(config, envVars);

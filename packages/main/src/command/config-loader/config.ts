@@ -5,12 +5,10 @@ import path from 'node:path';
 import { build } from 'esbuild';
 import { pathToFileURL } from 'node:url';
 
-import type { NammathamConfigs } from '../nammatham-config';
-
-import { isFilePathESM } from './utils';
 import { createDebugger } from '../utils';
 import { DEFAULT_CONFIG_FILES } from '../constants';
-import { provideDefaultConfig } from './default-config';
+import { isFilePathESM, setDefaultConfig } from './utils';
+import { defaultNammathamConfigs, type NammathamConfigs } from '../nammatham-config';
 
 const debug = createDebugger('nammatham:config-loader');
 
@@ -48,7 +46,7 @@ export async function loadConfigFromFile(file?: string, configRoot = process.cwd
     debug?.(`Running in Module Type: ${isESM ? 'ESM' : 'CommonJS'}`);
     const userConfig = await loadConfigFromBuiltFile(resolvedPath, bundledCode);
     debug?.(`bundled config file loaded in ${getTime()}`);
-    return provideDefaultConfig(userConfig);
+    return setDefaultConfig(userConfig, defaultNammathamConfigs);
   } catch (e) {
     console.error(`Failed to load config file in ${getTime()}`);
     throw e;

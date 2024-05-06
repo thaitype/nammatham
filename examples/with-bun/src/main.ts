@@ -17,5 +17,5 @@ console.log(`Start server on on http://localhost:${port}`);
 
 export default {
   port,
-  fetch: app.fetch,
+  fetch: app.fetch
 };

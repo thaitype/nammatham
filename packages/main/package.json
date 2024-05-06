@@ -41,6 +41,7 @@
     "execa": "^8.0.1",
     "hono": "^4.0.4",
     "invariant": "^2.2.4",
+    "lodash.merge": "^4.6.2",
     "pino": "^8.17.1",
     "pino-dev": "^4.0.3",
     "pkg": "^5.8.1",
@@ -55,6 +56,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.12"
+    "@types/debug": "^4.1.12",
+    "@types/lodash.merge": "^4.6.9"
   }
 }
