@@ -176,7 +176,7 @@ export function getHostTarget(): TargetOptions {
   debug?.(`Host Node.js Version: ${nodeVersion}`);
 
   return {
-    platform: system.hostPlatform as TargetOptions['platform'],
+    platform: process.platform === 'win32' ? 'win' : process.platform === 'darwin' ? 'macos' : 'linux',
     arch: system.hostArch as TargetOptions['arch'],
     /**
      * The pkg version 5.8.1 only support node.js version 18.x and below.
@@ -207,6 +207,7 @@ export async function buildExecutable(options: NammathamConfigs, result: BuildNo
   } else {
     targetOptions = target;
   }
+  debug?.(`Building executable for target: ${targetOptions.runtime}-${targetOptions.platform}-${targetOptions.arch}`);
   if (targetOptions.runtime === 'bun') {
     throw new Error(`Conflict target build runtime: ${targetOptions.runtime} with ${options.runtime}`);
   }
