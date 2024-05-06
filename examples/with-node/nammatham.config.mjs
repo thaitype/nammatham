@@ -3,6 +3,13 @@
 /** @type {import('nammatham').NammathamConfigs} */
 const nammathamConfig = {
   runtime: 'node',
+  buildOption: {
+    target: {
+      arch: 'x64',
+      platform: 'linux',
+      runtime: 'node18',
+    },
+  },
   hostConfig: {
     version: '2.0',
     extensionBundle: {
@@ -28,9 +35,9 @@ const nammathamConfig = {
           excludedTypes: 'Request',
         },
       },
-      // logLevel: {
-      //   default: 'Trace',
-      // },
+      logLevel: {
+        default: 'Trace',
+      },
     },
   },
 };

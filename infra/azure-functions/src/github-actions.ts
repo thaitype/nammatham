@@ -47,9 +47,6 @@ export function toGithubActionsMatrix(configs: InfraEnvConfig[]): GithubActionsM
      */
     const version = runtime === 'node18' ? '20' : 'latest';
 
-    if (!config.resourceIdentifier) {
-      throw new Error('resourceIdentifier is required');
-    }
     return {
       os: platform === 'linux' ? 'ubuntu-latest' : platform === 'win' ? 'windows-latest' : 'macos-latest',
       runtime: runtime === 'bun' ? 'bun' : 'node',

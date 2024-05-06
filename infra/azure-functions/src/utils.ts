@@ -17,8 +17,17 @@ export function createInfraConfig(
   infraConfigs: InfraEnvConfig[]
 ): InfraEnvConfig[] {
   return infraConfigs.map(infraConfig => {
-    const resourceIdentifier: string =
-      resourceIdentifiers[toTarget(infraConfig)] ?? fallbackResourceIdentifier(infraConfig);
+    const resourceIdentifier = resourceIdentifiers[toTarget(infraConfig)];
+
+    if (!resourceIdentifier && infraConfig.isDeployable) {
+      throw new Error(
+        `resourceIdentifier is required for ${toTarget(
+          infraConfig
+        )} due to is cannot be deployed. Please provide RESOURCE_IDENTIFIER_${toTarget(infraConfig)
+          .replaceAll('-', '_')
+          .toUpperCase()} in env.`
+      );
+    }
 
     return {
       ...infraConfig,
