@@ -5,9 +5,10 @@
   "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc --watch",
     "lint": "tsc --noEmit",
-    "start": "tsc && func start",
-    "dev": "cross-env NODE_ENV=development tsx watch src/main.ts"
+    "start": "func start",
+    "dev": "run-p build:watch start"
   },
   "author": "Thada Wangthammang",
   "license": "MIT",
