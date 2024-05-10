@@ -1,17 +1,12 @@
 {
-    "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "tasksRunnerOptions": {
-        "default": {
-          "runner": "nx/tasks-runners/default",
-          "options": {
-            "cacheableOperations": ["build"]
-          }
-        }
-      },
-    "targetDefaults": {
-      "build": {
-        "dependsOn": ["^build"]
-      }
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": true
     }
-  }
-  
+  },
+  "useInferencePlugins": false
+}

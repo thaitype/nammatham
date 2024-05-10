@@ -11,6 +11,13 @@ export interface NammathamConfigs {
    */
   buildPath?: string;
   /**
+   * The route prefix for the HTTP trigger functions.
+   * TODO: the config will read from `Nammatham` class that define in the code first, if not found then it will use this config.
+   *
+   * @default 'api'
+   */
+  routePrefix?: string;
+  /**
    * Azure Functions Host.json Configuration
    *
    * @ref https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json
@@ -35,7 +42,7 @@ export interface NammathamConfigs {
   /**
    * Build options including build, bundle, and package a single executable file.
    */
-  buildOption?: BuildOptions;
+  buildOptions?: BuildOptions;
   /**
    * The runtime environment for the Azure Functions.
    *
@@ -44,15 +51,31 @@ export interface NammathamConfigs {
   runtime?: 'node' | 'bun';
 }
 
+const defaultRoutePrefix = 'api';
 export const defaultNammathamConfigs: NammathamConfigs = {
   buildPath: '.nmt',
   runtime: 'bun',
-  buildOption: {
+  routePrefix: defaultRoutePrefix,
+  hostConfig: {
+    version: '2.0',
+    extensionBundle: {
+      id: 'Microsoft.Azure.Functions.ExtensionBundle',
+      version: '[4.0.0, 5.0.0)',
+    },
+    extensions: {
+      http: {
+        routePrefix: defaultRoutePrefix,
+      },
+    },
+  },
+  buildOptions: {
+    disabled: false,
     target: getHostTarget(),
     nodeToolChain: {
       dev: 'tsx',
       bundle: 'esbuild',
       package: 'pkg',
+      version: 18,
     },
   },
 };

@@ -4,6 +4,8 @@ import path from 'node:path';
 import type { EnvVariables } from './load-env-vars';
 import type { LocalSettings, NammathamConfigs } from '../config-loader';
 
+import { getExecutablePath } from '../build';
+
 export async function writeConfig(config: NammathamConfigs, envVars: EnvVariables, tmpPath = '') {
   const targetPath = path.resolve(config.buildPath ?? './nmt', tmpPath);
   await Promise.all([
@@ -17,7 +19,7 @@ export function constructHostConfig(config: NammathamConfigs): string {
     {
       customHandler: {
         description: {
-          defaultExecutablePath: config.buildOption?.target?.platform === 'win' ? 'main.exe' : 'main',
+          defaultExecutablePath: getExecutablePath(config.buildOptions?.target),
         },
         enableForwardingHttpRequest: true,
       },
@@ -28,14 +30,14 @@ export function constructHostConfig(config: NammathamConfigs): string {
   );
 }
 
-function constructLocalSettings(envVars: EnvVariables): string {
+export function constructLocalSettings(envVars?: EnvVariables): string {
   return JSON.stringify(
     {
       IsEncrypted: false,
       Values: {
         ...envVars,
         FUNCTIONS_WORKER_RUNTIME: 'custom',
-        AzureWebJobsStorage: envVars.AzureWebJobsStorage ?? 'UseDevelopmentStorage=true',
+        AzureWebJobsStorage: envVars?.AzureWebJobsStorage ?? 'UseDevelopmentStorage=true',
       },
     } satisfies LocalSettings,
     null,

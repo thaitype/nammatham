@@ -1,6 +1,6 @@
 import { toTarget } from './utils';
 import { infraConfigs } from './config';
-import { createFunctionApp, destroyFunctionApp } from './azure-command';
+import { assignRoleAssignment, createFunctionApp, destroyFunctionApp } from './azure-command';
 
 const isPlanMode = process.env.PLAN_MODE === 'true';
 
@@ -15,6 +15,7 @@ for (const infraConfig of infraConfigs) {
   }
   if (infraConfig.mode === 'create') {
     await createFunctionApp(infraConfig, { isPlanMode });
+    await assignRoleAssignment(infraConfig, { isPlanMode });
   } else if (infraConfig.mode === 'destroy') {
     await destroyFunctionApp(infraConfig, { isPlanMode });
   } else {

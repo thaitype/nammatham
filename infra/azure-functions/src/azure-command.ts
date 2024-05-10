@@ -50,10 +50,27 @@ export async function createFunctionApp(infraConfig: InfraEnvConfig, options: In
   await $`az functionapp create --name ${resourceName.prefix} --storage-account ${resourceName.shortPrefix} --consumption-plan-location ${location} --resource-group ${resourceGroup} --os-type ${osType} --runtime custom --functions-version ${functionsVersion}`;
 
   console.log(`Set Function Key for ${resourceName.prefix} `);
-  await $`az functionapp keys set --name ${resourceName.prefix} --resource-group ${resourceGroup} --key-name github_actions --key-value ${process.env.AZURE_FUNCTIONS_API_KEY}`;
+  await $`az functionapp keys set --name ${resourceName.prefix} --resource-group ${resourceGroup} --key-name github_actions --key-type functionKeys --key-value ${process.env.AZURE_FUNCTIONS_API_KEY}`;
 
   console.log('Function app created');
   console.log('-'.repeat(80));
+}
+
+export async function assignRoleAssignment(infraConfig: InfraEnvConfig, options: InfraOptions) {
+  const resourceName = getResourceName(infraConfig);
+  console.log('-'.repeat(80));
+
+  if (options.isPlanMode) {
+    console.log('Plan mode enabled, skipping resource creation');
+    return;
+  }
+  console.log('Assigning role assignment');
+
+  const resourceGroup = `rg-nammatham-${resourceName.prefix}`;
+  const role = 'Contributor';
+  const assignee = process.env.AZURE_APPLICATION_ID; 
+  const scope = `/subscriptions/${process.env.AZURE_SUBSCRIPTION_ID}/resourceGroups/${resourceGroup}`;
+  await $`az role assignment create --role ${role} --assignee ${assignee} --scope ${scope}`;
 }
 
 export async function destroyFunctionApp(infraConfig: InfraEnvConfig, options: InfraOptions) {
