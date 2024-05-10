@@ -69,12 +69,19 @@ export async function buildNodeJs(options: NammathamConfigs): Promise<BuildNodeJ
  */
 export async function buildExecutableNodeJs(options: NammathamConfigs, result: BuildNodeJsResult): Promise<void> {
   if (options.buildOptions?.nodeToolChain?.package !== 'pkg') {
-    throw new Error(`Unsupported package tool: ${options.buildOptions?.nodeToolChain?.package}`);
+    throw new Error(`(buildExecutableNodeJs) Unsupported package tool: ${options.buildOptions?.nodeToolChain?.package}`);
   }
   const target = options.buildOptions?.target;
-  const runtime = options.runtime;
+  if(options.runtime !== 'node'){
+    throw new Error(`(buildExecutableNodeJs) Unsupported runtime: ${options.runtime}`);
+  }
+  const nodeVersion = options.buildOptions?.nodeToolChain?.version;
+  if(nodeVersion !== 18){
+    throw new Error(`(buildExecutableNodeJs) Only support node.js version 18 due to minimum version of Nammatham Framework.`);
+  }
+  const runtime = options.runtime + nodeVersion;
   if (!target) {
-    throw new Error(`Target should be set at the default configuration when the cli loaded`);
+    throw new Error(`(buildExecutableNodeJs) Target should be set at the default configuration when the cli loaded`);
   }
   debug?.(`Building executable for target: ${runtime}-${target.platform}-${target.arch}`);
   const targetString = `${runtime}-${target.platform}-${target.arch}`;

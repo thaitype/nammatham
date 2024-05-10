@@ -75,6 +75,7 @@ export const defaultNammathamConfigs: NammathamConfigs = {
       dev: 'tsx',
       bundle: 'esbuild',
       package: 'pkg',
+      version: 18,
     },
   },
 };
