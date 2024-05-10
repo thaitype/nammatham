@@ -7,9 +7,9 @@ import type { TargetBunOptions, TargetOptions } from './types';
 
 import { createDebugger } from '../utils';
 import { buildExecutableBun } from './bun';
-import { constructHostConfig } from '../config';
 import { findNearestPackageData } from '../packages';
 import { buildExecutableNodeJs, buildNodeJs } from './nodejs';
+import { constructHostConfig, constructLocalSettings } from '../config';
 
 export const debug = createDebugger('nammatham:build');
 
@@ -56,12 +56,17 @@ export async function build(config: NammathamConfigs): Promise<void> {
   const targetPath = path.resolve(config.buildPath ?? '.nmt', 'dist');
   fs.mkdirSync(targetPath, { recursive: true });
   await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(config), 'utf-8');
+  await fs.promises.writeFile(path.join(targetPath, 'local.settings.json'), constructLocalSettings(), 'utf-8');
 
   if (config.buildOptions?.disabled) {
     debug?.(`Build process disabled`);
     console.log(`The build process is disabled, you need to manage the build process manually.`);
     console.log(`Please build the code manually and create a single-executable file on the target path: ${targetPath}`);
-    console.log(`The file should be: "${getExecutablePath(getHostTarget())}" (Same value from host.json at customHandler.description.defaultExecutablePath)`)
+    console.log(
+      `The file should be: "${getExecutablePath(
+        getHostTarget()
+      )}" (Same value from host.json at customHandler.description.defaultExecutablePath)`
+    );
     console.log(`The other Azure Functions configurations will be managed by the framework.`);
   } else {
     await buildRuntime(config);
@@ -106,8 +111,10 @@ export function getPackageInfo(config: NammathamConfigs): {
   };
 }
 
-export function getExecutablePath(target: TargetOptions | TargetBunOptions): string {
-  return target.platform === 'win' || target.platform === 'windows' ? 'main.exe' : 'main';
+export function getExecutablePath(
+  target: NonNullable<NammathamConfigs['buildOptions']>['target'] | TargetBunOptions
+): string {
+  return target?.platform === 'win' || target?.platform === 'windows' ? 'main.exe' : 'main';
 }
 
 export function getDistDirectory(options: NammathamConfigs): string {
