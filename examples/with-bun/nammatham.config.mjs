@@ -5,11 +5,6 @@ const nammathamConfig = {
   runtime: 'bun',
   hostConfig: {
     version: '2.0',
-    extensions: {
-      http: {
-        routePrefix: 'api',
-      },
-    },
     logging: {
       applicationInsights: {
         samplingSettings: {
