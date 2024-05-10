@@ -77,3 +77,26 @@ env:
 ```
 
 then use the resource identifier in the github secret `RESOURCE_IDENTIFIER_BUN_LINUX_X64`, from step 2 (`6a2026b8a8736f`).
+
+### 5. Change infra mode config in `src/config.ts`, by remove the `mode: 'create'`
+
+For example:
+
+```ts
+export const infraConfigs = createInfraConfig(
+  {
+    // ....
+    // ^ the above is the existing infra config
+    'bun-linux-x64': process.env.RESOURCE_IDENTIFIER_BUN_LINUX_X64,
+  },
+  [
+    {
+      platform: 'linux',
+      arch: 'x64',
+      runtime: 'bun',
+      // mode: 'create',
+      isDeployable: true,
+    },
+  ]
+);
+```

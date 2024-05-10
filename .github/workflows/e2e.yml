@@ -5,11 +5,10 @@ on:
     branches: [v3.x-bundle]
     paths-ignore:
       - '**/*.md'
-  # pull_request:
-  #   branches: [ main ]
-  #   paths-ignore:
-  #     - '**/*.md'
-
+  pull_request:
+    branches: [v3.x-bundle]
+    paths-ignore:
+      - '**/*.md'
 
 env:
   pnpm_version: 8
@@ -18,7 +17,7 @@ env:
 
   RESOURCE_IDENTIFIER_NODE18_LINUX_X64: ${{ secrets.RESOURCE_IDENTIFIER_NODE18_LINUX_X64 }}
   RESOURCE_IDENTIFIER_NODE18_WIN_X64: ${{ secrets.RESOURCE_IDENTIFIER_NODE18_WIN_X64 }}
-
+  RESOURCE_IDENTIFIER_BUN_LINUX_X64: ${{ secrets.RESOURCE_IDENTIFIER_BUN_LINUX_X64 }}
 
 jobs:
   get-matrix:
