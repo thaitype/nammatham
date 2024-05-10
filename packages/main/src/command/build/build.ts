@@ -78,41 +78,50 @@ export interface BuildOptions {
   };
 }
 
+/**
+ * Hard code the function.json for the SimpleHttpTrigger
+ */
+export function hardCodeFunctionJson() {
+  return {
+    bindings: [
+      {
+        type: 'httpTrigger',
+        direction: 'in',
+        name: 'req',
+        methods: ['get', 'post'],
+      },
+      {
+        type: 'http',
+        direction: 'out',
+        name: 'res',
+      },
+    ],
+  };
+}
+
 export async function build(options: NammathamConfigs): Promise<void> {
+  const targetPath = path.resolve(options.buildPath ?? '.nmt', 'dist');
+  fs.mkdirSync(targetPath, { recursive: true });
+  await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(options), 'utf-8');
   if (options.runtime === 'node') {
+    debug?.(`Building for Node.js runtime`);
     const result = await buildNodeJs(options);
     await buildExecutable(options, result);
-    const targetPath = path.resolve(options.buildPath ?? '.nmt', 'dist');
-    await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(options), 'utf-8');
-    // Hard code, fix later
-    const functionPath = path.join(targetPath, 'SimpleHttpTrigger');
-    fs.mkdirSync(functionPath, { recursive: true });
-    await fs.promises.writeFile(
-      path.join(functionPath, 'function.json'),
-      JSON.stringify(
-        {
-          bindings: [
-            {
-              type: 'httpTrigger',
-              direction: 'in',
-              name: 'req',
-              methods: ['get', 'post'],
-            },
-            {
-              type: 'http',
-              direction: 'out',
-              name: 'res',
-            },
-          ],
-        },
-        null,
-        2
-      ),
-      'utf-8'
-    );
+    debug?.(`Build for Node.js completed`);
+  } else if (options.runtime === 'bun') {
+    debug?.(`Building for Bun runtime`);
+    // Bun.write(path.resolve(targetPath, 'bun.txt'), `Hello Bun with Node.js`);
   } else {
     throw new Error(`Unsupported runtime: ${options.runtime}`);
   }
+  // Hard code, fix later
+  const functionPath = path.join(targetPath, 'SimpleHttpTrigger');
+  fs.mkdirSync(functionPath, { recursive: true });
+  await fs.promises.writeFile(
+    path.join(functionPath, 'function.json'),
+    JSON.stringify(hardCodeFunctionJson(), null, 2),
+    'utf-8'
+  );
 }
 
 /**
