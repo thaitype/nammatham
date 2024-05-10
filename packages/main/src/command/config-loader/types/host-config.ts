@@ -17,7 +17,16 @@ export interface HostConfigV2 {
   /** Contains configurations for various extensions used within the function app. */
   extensions?: Extensions;
   customHandler?: CustomHandler;
-  /** Defines the extension bundle to use with the function app. */
+  /**
+   * Defines the extension bundle to use with the function app.
+   * The default value using [v4.x of the Azure Functions extension bundle](https://github.com/Azure/azure-functions-extension-bundles/blob/v4.x/src/Microsoft.Azure.Functions.ExtensionBundle/extensions.json).
+   *
+   *
+   * @ref https://github.com/Azure/azure-functions-extension-bundles
+   * @ref https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles
+   *
+   * @default { id: 'Microsoft.Azure.Functions.ExtensionBundle', version: '[4.0.0, 5.0.0)'}
+   **/
   extensionBundle?: ExtensionBundle;
   /** A list of functions to load, if not all functions should be loaded. */
   functions?: string[];
@@ -145,8 +154,36 @@ export interface Description {
   workingDirectory?: string;
 }
 
+/**
+ * Extension Bundle
+ * @ref https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles
+ */
 export interface ExtensionBundle {
+  /**
+   * The namespace for Microsoft Azure Functions extension bundles.
+   *
+   * @ref https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles
+   * @default 'Microsoft.Azure.Functions.ExtensionBundle'
+   */
   id?: string;
+  /**
+   * The version range of the bundle to install. The Functions runtime always picks the maximum permissible version defined by the version range or interval.
+   * For example, a version value range of `[4.0.0, 5.0.0)` allows all bundle versions from `4.0.0` up to but not including `5.0.0`. For more information,
+   * see the [interval notation for specifying version ranges](https://learn.microsoft.com/en-us/nuget/reference/package-versioning#version-ranges).
+   * 
+   * The following table lists the currently available version ranges of the default `Microsoft.Azure.Functions.ExtensionBundle` bundles and links to the extensions they include.
+   * 
+   * ```md
+   *  | Bundle version | Version in host.json |
+      |----------------|----------------------|
+      | 1.x            | [1.*, 2.0.0)         |
+      | 2.x            | [2.*, 3.0.0)         |
+      | 3.x            | [3.3.0, 4.0.0)       |
+      | 4.x            | [4.0.0, 5.0.0)       |
+    ```
+   * @ref https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles
+   * @default '[4.0.0, 5.0.0)'
+   */
   version?: string;
 }
 

@@ -1,7 +1,7 @@
-import fs from 'node:fs';
 import path from 'node:path';
+import merge from 'lodash.merge';
 
-import { findNearestPackageData } from './packages';
+import { findNearestPackageData } from '../packages';
 
 export function isFilePathESM(filePath: string): boolean {
   if (/\.m[jt]s$/.test(filePath)) {
@@ -19,14 +19,6 @@ export function isFilePathESM(filePath: string): boolean {
   }
 }
 
-/**
- * From Vite
- */
-export function tryStatSync(file: string): fs.Stats | undefined {
-  try {
-    // The "throwIfNoEntry" is a performance optimization for cases where the file does not exist
-    return fs.statSync(file, { throwIfNoEntry: false });
-  } catch {
-    // Ignore errors
-  }
+export function setDefaultConfig<T>(userConfig: T, defaultConfig: T): T {
+  return merge(defaultConfig, userConfig);
 }

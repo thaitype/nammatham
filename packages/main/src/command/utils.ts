@@ -1,5 +1,6 @@
 import type { Options, ExecaChildProcess } from 'execa';
 
+import fs from 'node:fs';
 import debug from 'debug';
 import { execa } from 'execa';
 
@@ -61,5 +62,17 @@ export function execute(
       ...options?.execaOptions,
     });
     return proc;
+  }
+}
+
+/**
+ * From Vite
+ */
+export function tryStatSync(file: string): fs.Stats | undefined {
+  try {
+    // The "throwIfNoEntry" is a performance optimization for cases where the file does not exist
+    return fs.statSync(file, { throwIfNoEntry: false });
+  } catch {
+    // Ignore errors
   }
 }
