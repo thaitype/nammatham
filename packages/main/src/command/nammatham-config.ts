@@ -47,6 +47,13 @@ export interface NammathamConfigs {
 export const defaultNammathamConfigs: NammathamConfigs = {
   buildPath: '.nmt',
   runtime: 'bun',
+  hostConfig: {
+    version: '2.0',
+    extensionBundle: {
+      id: 'Microsoft.Azure.Functions.ExtensionBundle',
+      version: '[4.0.0, 5.0.0)',
+    },
+  },
   buildOptions: {
     disabled: false,
     target: getHostTarget(),
