@@ -40,6 +40,7 @@ export function hardCodeFunctionJson() {
 export async function buildRuntime(config: NammathamConfigs) {
   if (config.runtime === 'node') {
     debug?.(`Building for Node.js runtime`);
+    debug?.(`Host Node.js Version: ${getHostTarget().version}`);
     const result = await buildNodeJs(config);
     await buildExecutableNodeJs(config, result);
     debug?.(`Build for Node.js completed`);
@@ -56,12 +57,17 @@ export async function build(config: NammathamConfigs): Promise<void> {
   fs.mkdirSync(targetPath, { recursive: true });
   await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(config), 'utf-8');
 
-  if (config.buildOption?.disabled) {
+  if (config.buildOptions?.disabled) {
     debug?.(`Build process disabled`);
+    console.log(`The build process is disabled, you need to manage the build process manually.`);
+    console.log(`Please build the code manually and create a single-executable file on the target path: ${targetPath}`);
+    console.log(`The file should be: "${getExecutablePath(getHostTarget())}" (Same value from host.json at customHandler.description.defaultExecutablePath)`)
+    console.log(`The other Azure Functions configurations will be managed by the framework.`);
   } else {
     await buildRuntime(config);
   }
   // Hard code, fix later
+  // TODO: Please remove all `function.json` files before generating the new one
   const functionPath = path.join(targetPath, 'SimpleHttpTrigger');
   fs.mkdirSync(functionPath, { recursive: true });
   await fs.promises.writeFile(
@@ -77,15 +83,11 @@ export async function build(config: NammathamConfigs): Promise<void> {
 export function getHostTarget(): TargetOptions {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const nodeVersion = process.version.match(/^v(\d+)/)![1];
-  debug?.(`Host Node.js Version: ${nodeVersion}`);
 
   return {
     platform: process.platform === 'win32' ? 'win' : process.platform === 'darwin' ? 'macos' : 'linux',
     arch: system.hostArch as TargetOptions['arch'],
-    // /**
-    //  * The pkg version 5.8.1 only support node.js version 18.x and below.
-    //  */
-    // runtime: 'node18',
+    version: parseInt(nodeVersion),
   };
 }
 
@@ -99,7 +101,7 @@ export function getPackageInfo(config: NammathamConfigs): {
   debug?.(`Running in Module Type: ${isESM ? 'ESM' : 'CommonJS'}`);
 
   return {
-    entryFile: config.buildOption?.entryFile ?? pkg?.data.main ?? 'main.ts',
+    entryFile: config.buildOptions?.entryFile ?? pkg?.data.main ?? 'main.ts',
     isESM,
   };
 }

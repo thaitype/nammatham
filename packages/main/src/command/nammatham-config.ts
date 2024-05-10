@@ -35,7 +35,7 @@ export interface NammathamConfigs {
   /**
    * Build options including build, bundle, and package a single executable file.
    */
-  buildOption?: BuildOptions;
+  buildOptions?: BuildOptions;
   /**
    * The runtime environment for the Azure Functions.
    *
@@ -47,7 +47,7 @@ export interface NammathamConfigs {
 export const defaultNammathamConfigs: NammathamConfigs = {
   buildPath: '.nmt',
   runtime: 'bun',
-  buildOption: {
+  buildOptions: {
     disabled: false,
     target: getHostTarget(),
     nodeToolChain: {

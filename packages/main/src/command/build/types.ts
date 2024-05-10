@@ -5,12 +5,12 @@ export interface TargetBaseOptions {
    * The target architecture for the build.
    */
   arch: 'x64' | 'arm64';
-  // /**
-  //  * The target node.js or bun version.
-  //  *
-  //  * For node.js, only support version 18 due to minimum version of Nammatham Framework.
-  //  */
-  // runtime: 'bun' | 'node18';
+  /**
+   * The target node.js or bun version.
+   *
+   * For node.js, only support version 18 due to minimum version of Nammatham Framework.
+   */
+  version?: number;
 
   /**
    * @see https://bun.sh/docs/bundler/executables
@@ -66,7 +66,7 @@ export interface BuildOptions {
    * - `host`: Build for the host platform.
    * - An object that specifies the target platform, architecture, and runtime.
    */
-  target?: TargetOptions;
+  target?: Omit<TargetOptions, 'version'>;
   /**
    * esbuild options, using for build and bundle the code, especially for Node.js runtime.
    */

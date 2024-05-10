@@ -14,13 +14,13 @@ const nammathamConfig = {
         routePrefix: 'api',
       },
     },
-    customHandler: {
-      description: {
-        defaultExecutablePath: '../node_modules/.bin/tsx',
-        arguments: ['watch', '../src/main.ts'],
-      },
-      enableForwardingHttpRequest: true,
-    },
+    // customHandler: {
+    //   description: {
+    //     defaultExecutablePath: '../node_modules/.bin/tsx',
+    //     arguments: ['watch', '../src/main.ts'],
+    //   },
+    //   enableForwardingHttpRequest: true,
+    // },
     logging: {
       applicationInsights: {
         samplingSettings: {

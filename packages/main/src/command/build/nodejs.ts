@@ -27,8 +27,8 @@ export interface BuildNodeJsResult {
 }
 
 export async function buildNodeJs(options: NammathamConfigs): Promise<BuildNodeJsResult> {
-  if (options.buildOption?.nodeToolChain?.bundle !== 'esbuild') {
-    throw new Error(`Unsupported bundler: ${options.buildOption?.nodeToolChain?.bundle}`);
+  if (options.buildOptions?.nodeToolChain?.bundle !== 'esbuild') {
+    throw new Error(`Unsupported bundler: ${options.buildOptions?.nodeToolChain?.bundle}`);
   }
   const workingDir = process.cwd();
   const { entryFile } = getPackageInfo(options);
@@ -50,7 +50,7 @@ export async function buildNodeJs(options: NammathamConfigs): Promise<BuildNodeJ
      * Due to limitation of `pkg` package, the output file must be CommonJS
      */
     format: 'cjs',
-    ...options.buildOption?.esbuildOptions,
+    ...options.buildOptions?.esbuildOptions,
   } as EsbuildOptions);
   debug?.(`Code bundled completed`);
   return { filePath: outfile, distDirectory };
@@ -68,10 +68,10 @@ export async function buildNodeJs(options: NammathamConfigs): Promise<BuildNodeJ
  * @ref See how to build the with node.js https://dev.to/chad_r_stewart/compile-a-single-executable-from-your-node-app-with-nodejs-20-and-esbuild-210j
  */
 export async function buildExecutableNodeJs(options: NammathamConfigs, result: BuildNodeJsResult): Promise<void> {
-  if (options.buildOption?.nodeToolChain?.package !== 'pkg') {
-    throw new Error(`Unsupported package tool: ${options.buildOption?.nodeToolChain?.package}`);
+  if (options.buildOptions?.nodeToolChain?.package !== 'pkg') {
+    throw new Error(`Unsupported package tool: ${options.buildOptions?.nodeToolChain?.package}`);
   }
-  const target = options.buildOption?.target;
+  const target = options.buildOptions?.target;
   const runtime = options.runtime;
   if (!target) {
     throw new Error(`Target should be set at the default configuration when the cli loaded`);

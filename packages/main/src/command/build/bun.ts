@@ -13,7 +13,7 @@ import { debug, getDistDirectory, getExecutablePath, getPackageInfo } from './bu
 export async function buildExecutableBun(config: NammathamConfigs) {
   debug?.(`Building for Bun runtime`);
 
-  const target = getHostTargetBun(config.buildOption?.target);
+  const target = getHostTargetBun(config.buildOptions?.target);
   const runtime = config.runtime;
 
   debug?.(`Building executable for target: ${runtime}-${target.platform}-${target.arch}`);
