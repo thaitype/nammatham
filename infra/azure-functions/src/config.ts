@@ -10,19 +10,22 @@ export const infraConfigs = createInfraConfig(
     {
       platform: 'linux',
       arch: 'x64',
-      runtime: 'node18',
+      runtime: 'node',
+      version: 18,
       isDeployable: true,
     },
     {
       platform: 'win',
       arch: 'x64',
-      runtime: 'node18',
+      runtime: 'node',
+      version: 18,
       isDeployable: true,
     },
     {
       platform: 'macos',
       arch: 'arm64',
-      runtime: 'node18',
+      runtime: 'node',
+      version: 18,
     },
     // --- Bun ----
     // {
@@ -43,7 +46,8 @@ export const infraConfigs = createInfraConfig(
     // {
     //   platform: 'win',
     //   arch: 'x64',
-    //   runtime: 'node18',
+    // runtime: 'node',
+    // version: 18,
     // },
     // {
     //   platform: 'macos',

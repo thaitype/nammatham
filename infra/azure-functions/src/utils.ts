@@ -1,7 +1,7 @@
 import type { InfraEnvConfig } from './types';
 
 export function toTarget(infraConfig: InfraEnvConfig): string {
-  return `${infraConfig.runtime}-${infraConfig.platform}-${infraConfig.arch}`;
+  return `${infraConfig.runtime}${infraConfig.version}-${infraConfig.platform}-${infraConfig.arch}`;
 }
 
 export function fallbackResourceIdentifier(infraConfig: InfraEnvConfig): string {
