@@ -34,10 +34,10 @@ export function hardCodeFunctionJson() {
   };
 }
 
-export async function build(config: NammathamConfigs): Promise<void> {
-  const targetPath = path.resolve(config.buildPath ?? '.nmt', 'dist');
-  fs.mkdirSync(targetPath, { recursive: true });
-  await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(config), 'utf-8');
+/**
+ * Build the runtime based on the configuration
+ */
+export async function buildRuntime(config: NammathamConfigs) {
   if (config.runtime === 'node') {
     debug?.(`Building for Node.js runtime`);
     const result = await buildNodeJs(config);
@@ -48,6 +48,18 @@ export async function build(config: NammathamConfigs): Promise<void> {
     await buildExecutableBun(config);
   } else {
     throw new Error(`Unsupported runtime: ${config.runtime}`);
+  }
+}
+
+export async function build(config: NammathamConfigs): Promise<void> {
+  const targetPath = path.resolve(config.buildPath ?? '.nmt', 'dist');
+  fs.mkdirSync(targetPath, { recursive: true });
+  await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(config), 'utf-8');
+
+  if (config.buildOption?.disabled) {
+    debug?.(`Build process disabled`);
+  } else {
+    await buildRuntime(config);
   }
   // Hard code, fix later
   const functionPath = path.join(targetPath, 'SimpleHttpTrigger');

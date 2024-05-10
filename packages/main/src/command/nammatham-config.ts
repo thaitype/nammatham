@@ -48,6 +48,7 @@ export const defaultNammathamConfigs: NammathamConfigs = {
   buildPath: '.nmt',
   runtime: 'bun',
   buildOption: {
+    disabled: false,
     target: getHostTarget(),
     nodeToolChain: {
       dev: 'tsx',

@@ -47,6 +47,14 @@ export interface TargetOptions extends TargetBaseOptions {
 
 export interface BuildOptions {
   /**
+   * Disable the build process. This is useful when you want to disable the build process for a specific environment.
+   * You need to manage the build process manually, however, the other Azure Functions configurations will be managed by the framework.
+   * For example, `function.json`, `local.settings.json`, and `host.json` will be managed by the framework.
+   * 
+   * @default false
+   */
+  disabled?: boolean;
+  /**
    * The entry file for the build. If not specified, it will use the main file from the package.json.
    */
   entryFile?: string;
@@ -57,8 +65,6 @@ export interface BuildOptions {
    * Accept the following values:
    * - `host`: Build for the host platform.
    * - An object that specifies the target platform, architecture, and runtime.
-   *
-   * @default undefined (build for the host platform)
    */
   target?: TargetOptions;
   /**
