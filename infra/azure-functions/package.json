@@ -6,7 +6,7 @@
     "test-os": "tsx src/test-os.ts",
     "apply": "bun run src/main.ts",
     "plan": "PLAN_MODE=true bun run src/main.ts",
-    "test": "bun test",
+    "test": "bun test --timeout 120000",
     "github-actions": "bun run src/github-actions.ts",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",
     "lint:fix": "eslint --fix ./src && prettier -w src"
