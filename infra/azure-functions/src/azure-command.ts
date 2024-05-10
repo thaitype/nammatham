@@ -56,6 +56,23 @@ export async function createFunctionApp(infraConfig: InfraEnvConfig, options: In
   console.log('-'.repeat(80));
 }
 
+export async function assignRoleAssignment(infraConfig: InfraEnvConfig, options: InfraOptions) {
+  const resourceName = getResourceName(infraConfig);
+  console.log('-'.repeat(80));
+
+  if (options.isPlanMode) {
+    console.log('Plan mode enabled, skipping resource creation');
+    return;
+  }
+  console.log('Assigning role assignment');
+
+  const resourceGroup = `rg-nammatham-${resourceName.prefix}`;
+  const role = 'Contributor';
+  const assignee = process.env.AZURE_APPLICATION_ID; 
+  const scope = `/subscriptions/${process.env.AZURE_SUBSCRIPTION_ID}/resourceGroups/${resourceGroup}`;
+  await $`az role assignment create --role ${role} --assignee ${assignee} --scope ${scope}`;
+}
+
 export async function destroyFunctionApp(infraConfig: InfraEnvConfig, options: InfraOptions) {
   console.log('-'.repeat(80));
   const resourceName = getResourceName(infraConfig);
