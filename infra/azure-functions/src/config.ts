@@ -5,6 +5,7 @@ export const infraConfigs = createInfraConfig(
     'node18-linux-x64': process.env.RESOURCE_IDENTIFIER_NODE18_LINUX_X64,
     'node18-win-x64': process.env.RESOURCE_IDENTIFIER_NODE18_WIN_X64,
     'bun-linux-x64': process.env.RESOURCE_IDENTIFIER_BUN_LINUX_X64,
+    'bun-win-x64': process.env.RESOURCE_IDENTIFIER_BUN_WIN_X64,
   },
   [
     // --- Node 18 ---
@@ -33,21 +34,19 @@ export const infraConfigs = createInfraConfig(
       platform: 'linux',
       arch: 'x64',
       runtime: 'bun',
-      mode: 'create',
       isDeployable: true,
     },
-    // {
-    //   platform: 'win',
-    //   arch: 'x64',
-    //   runtime: 'bun',
-    //   mode: 'create',
-    //   isDeployable: true,
-    // },
-    // {
-    //   platform: 'macos',
-    //   arch: 'x64',
-    //   runtime: 'bun',
-    //   isDeployable: false,
-    // },
+    {
+      platform: 'win',
+      arch: 'x64',
+      runtime: 'bun',
+      isDeployable: true,
+    },
+    {
+      platform: 'macos',
+      arch: 'x64',
+      runtime: 'bun',
+      isDeployable: false,
+    },
   ]
 );
