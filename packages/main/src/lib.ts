@@ -15,7 +15,7 @@ export class Nammatham {
   }
 }
 
-interface HttpTriggerOptions {
+export interface HttpTriggerOptions {
   authLevel?: 'anonymous' | 'function' | 'admin';
   inputs?: Record<string, unknown>;
   outputs?: Record<string, unknown>;
@@ -25,6 +25,7 @@ type Env<Inputs extends Record<string, unknown> = any, Outputs extends Record<st
   Variables: {
     inputs: Inputs;
     outputs: Outputs;
+    echo: (str: string) => string;
   };
 };
 

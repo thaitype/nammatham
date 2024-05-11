@@ -7,7 +7,9 @@ const debug = createDebugger('nammatham:func-host');
 export async function startAzureFunctionHost(config: NammathamConfigs) {
   debug?.('Starting Azure Function Host');
 
-  await execute('func', ['start'], {
+  const verbose = debug ? ['--verbose'] : [];
+
+  await execute('func', ['start', ...verbose], {
     debug,
     execaOptions: {
       cwd: config.buildPath ?? process.cwd(),
