@@ -6,8 +6,8 @@ import { build as esbuild } from 'esbuild';
 
 import type { NammathamConfigs } from '../nammatham-config';
 
-import { debug, getDistDirectory, getExecutablePath, getPackageInfo } from './build';
-
+import { debug } from './internal';
+import { getDistDirectory, getExecutablePath, getPackageInfo } from './build';
 /**
  * When publish into Azure Functions, the package.json will not be included in the final package.
  * So, it needs to specify the output file manually wheather it is ESM or CommonJS. for example `main.mjs` or `main.cjs`
@@ -69,15 +69,19 @@ export async function buildNodeJs(options: NammathamConfigs): Promise<BuildNodeJ
  */
 export async function buildExecutableNodeJs(options: NammathamConfigs, result: BuildNodeJsResult): Promise<void> {
   if (options.buildOptions?.nodeToolChain?.package !== 'pkg') {
-    throw new Error(`(buildExecutableNodeJs) Unsupported package tool: ${options.buildOptions?.nodeToolChain?.package}`);
+    throw new Error(
+      `(buildExecutableNodeJs) Unsupported package tool: ${options.buildOptions?.nodeToolChain?.package}`
+    );
   }
   const target = options.buildOptions?.target;
-  if(options.runtime !== 'node'){
+  if (options.runtime !== 'node') {
     throw new Error(`(buildExecutableNodeJs) Unsupported runtime: ${options.runtime}`);
   }
   const nodeVersion = options.buildOptions?.nodeToolChain?.version;
-  if(nodeVersion !== 18){
-    throw new Error(`(buildExecutableNodeJs) Only support node.js version 18 due to minimum version of Nammatham Framework.`);
+  if (nodeVersion !== 18) {
+    throw new Error(
+      `(buildExecutableNodeJs) Only support node.js version 18 due to minimum version of Nammatham Framework.`
+    );
   }
   const runtime = options.runtime + nodeVersion;
   if (!target) {
