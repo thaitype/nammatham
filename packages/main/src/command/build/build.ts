@@ -5,14 +5,11 @@ import { system } from 'pkg-fetch';
 import type { NammathamConfigs } from '../nammatham-config';
 import type { TargetBunOptions, TargetOptions } from './types';
 
-import { createDebugger } from '../utils';
+import { debug } from './internal';
 import { buildExecutableBun } from './bun';
 import { findNearestPackageData } from '../packages';
 import { buildExecutableNodeJs, buildNodeJs } from './nodejs';
 import { constructHostConfig, constructLocalSettings } from '../config';
-
-export const debug = createDebugger('nammatham:build');
-
 /**
  * Hard code the function.json for the SimpleHttpTrigger
  */
@@ -55,7 +52,7 @@ export async function buildRuntime(config: NammathamConfigs) {
 export async function build(config: NammathamConfigs): Promise<void> {
   const targetPath = path.resolve(config.buildPath ?? '.nmt', 'dist');
   fs.mkdirSync(targetPath, { recursive: true });
-  await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(config), 'utf-8');
+  await fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(config, 'build'), 'utf-8');
   await fs.promises.writeFile(path.join(targetPath, 'local.settings.json'), constructLocalSettings(), 'utf-8');
 
   if (config.buildOptions?.disabled) {

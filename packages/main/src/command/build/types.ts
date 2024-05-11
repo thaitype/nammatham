@@ -50,7 +50,7 @@ export interface BuildOptions {
    * Disable the build process. This is useful when you want to disable the build process for a specific environment.
    * You need to manage the build process manually, however, the other Azure Functions configurations will be managed by the framework.
    * For example, `function.json`, `local.settings.json`, and `host.json` will be managed by the framework.
-   * 
+   *
    * @default false
    */
   disabled?: boolean;

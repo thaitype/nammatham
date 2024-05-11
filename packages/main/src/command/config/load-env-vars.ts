@@ -11,7 +11,7 @@ import 'dotenv/config';
 
 export type EnvVariables = Record<string, string | undefined>;
 
-const debug = createDebugger('nammatham:config');
+export const debug = createDebugger('nammatham:config');
 
 export function loadUserDefinedEnvVariables(): EnvVariables {
   for (const envFile of DEFAULT_ENV_FILEs) {

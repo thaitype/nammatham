@@ -68,7 +68,7 @@ export async function assignRoleAssignment(infraConfig: InfraEnvConfig, options:
 
   const resourceGroup = `rg-nammatham-${resourceName.prefix}`;
   const role = 'Contributor';
-  const assignee = process.env.AZURE_APPLICATION_ID; 
+  const assignee = process.env.AZURE_APPLICATION_ID;
   const scope = `/subscriptions/${process.env.AZURE_SUBSCRIPTION_ID}/resourceGroups/${resourceGroup}`;
   await $`az role assignment create --role ${role} --assignee ${assignee} --scope ${scope}`;
 }

@@ -4,8 +4,8 @@ import path from 'node:path';
 import type { NammathamConfigs } from '../nammatham-config';
 import type { TargetBunOptions, TargetOptions } from './types';
 
-import { debug, getDistDirectory, getExecutablePath, getPackageInfo } from './build';
-
+import { debug } from './internal';
+import { getDistDirectory, getExecutablePath, getPackageInfo } from './build';
 /**
  * Call bun as a sub-process to build the executable file, for preventing the bundle with tsup
  */
