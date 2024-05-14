@@ -5,9 +5,14 @@ https://github.com/Azure/azure-functions-host/issues/5615
 
 https://github.com/anthonychu/azure-functions-deno-worker/blob/main/mod.ts
 
-# Trace Log from Azure Function hosts
+## Trace Log from Azure Function hosts
+
+this is for `enableForwardingHttpRequest` to be `true`
+
 
 Normal State
+
+ If only one output binding or input binding is used, the path should be with prefix `/api`
 
 ```
  Invocation Request:Method: GET, RequestUri: 'http://127.0.0.1:63950/api/SimpleHttpTrigger', Version: 1.1, Content: <null>, Headers:
@@ -26,6 +31,8 @@ Normal State
 ```
 
 with other bindings
+
+If multiple output bindings are used, the path should be without prefix `/api`
 
 ```
 Invocation Request:Method: POST, RequestUri: 'http: //127.0.0.1:64093/SimpleHttpTrigger', Version: 1.1, Content: System.Net.Http.ObjectContent`1[Microsoft.Azure.WebJobs.Script.Workers.Http.HttpScriptInvocationContext], Headers:
