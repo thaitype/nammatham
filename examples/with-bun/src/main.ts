@@ -8,13 +8,16 @@ app.use(logger())
 
 const func = new HonoFunctionTrigger();
 
+/**
+ * If multiple output bindings are used, the path should be without prefix `/api`
+ */
 app.all('/SimpleHttpTrigger', c => {
   console.log('SimpleHttpTrigger');
-  // const userAgent = c.req.header('user-agent');
-  // console.log(`user agent is: ${userAgent}`);
+  const userAgent = c.req.header('user-agent');
+  console.log(`user agent is: ${userAgent}`);
 
-  // const invocationId = c.req.header('x-azure-functions-invocationid');
-  // console.log(`invocationid is: ${invocationId}`);
+  const invocationId = c.req.header('x-azure-functions-invocationid');
+  console.log(`invocationid is: ${invocationId}`);
 
   // return c.text('Hello World from bun worker');
   // https://github.com/anthonychu/azure-functions-deno-worker/blob/main/mod.ts
@@ -32,16 +35,17 @@ app.all('/SimpleHttpTrigger', c => {
     },
     Logs: ['test log1', 'test log2'],
     // ReturnValue: '{"hello":"world"}', 
-    // returnValue: {
-    //   data: 'Hello, World',
-    // },
     // message: 'Hello, World',
   });
 });
 
+
+/**
+ * If only one output binding or input binding is used, the path should be with prefix `/api`
+ */
 app.all(
   ...func.http({
-    route: '/api/HttpTriggerStringReturnValue',
+    route: '/HttpTriggerStringReturnValue',
   }),
   c => {
     const { func } = c.var;
@@ -57,7 +61,7 @@ app.all(
       outputs: {
         res: {
           statusCode: 201,
-          body: 'my world',
+          body: 'my world +++',
           headers: {
             header1: 'header1Val',
             header2: 'header2Val',

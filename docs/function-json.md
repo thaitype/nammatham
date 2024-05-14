@@ -1,3 +1,5 @@
+# Azure Functions Custom Handler
+
 https://github.com/Azure/azure-functions-host/issues/5615
 [HttpWorker]Add configuration flag in opt-out of http trigger request forward
 
@@ -39,3 +41,10 @@ Invocation Request:Method: POST, RequestUri: 'http: //127.0.0.1:64093/SimpleHttp
 
 Sending invocation for function: 'SimpleHttpTrigger' invocationId: 'fa4fcd1a-a965-431e-8f10-a15c07b4fe2a'
 ```
+
+## Logging
+
+- Cannot specify log level in response return https://github.com/Azure/azure-functions-host/issues/6608
+- Using `enableForwardingHttpRequest` to be `false`, the log will be shown in the app insights.
+- JSON Logging may need more work in KQL to query https://github.com/Azure/azure-functions-host/issues/6608#issuecomment-779621939
+- Logging cannot see the timestamp in the log
