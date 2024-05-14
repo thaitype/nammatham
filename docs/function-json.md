@@ -1,6 +1,8 @@
 https://github.com/Azure/azure-functions-host/issues/5615
 [HttpWorker]Add configuration flag in opt-out of http trigger request forward
 
+https://github.com/anthonychu/azure-functions-deno-worker/blob/main/mod.ts
+
 # Trace Log from Azure Function hosts
 
 Normal State
