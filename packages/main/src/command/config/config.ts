@@ -34,13 +34,13 @@ export function constructHostConfig(config: NammathamConfigs, mode: 'dev' | 'bui
         description,
         /**
          * Enable forwarding HTTP request to the custom handler
-         * 
+         *
          * If this is set to true, the custom handler will receive the HTTP request and response objects
          * However, nammatham will not be not needs to be used in the custom handler
-         * 
+         *
          * Another reason for loggin, disabling this option will log on Azure Application Insights properly
          * @ref https://github.com/Azure/azure-functions-host/issues/6637
-         * 
+         *
          * @ref https://learn.microsoft.com/en-us/azure/azure-functions/functions-custom-handlers#http-only-function
          */
         enableForwardingHttpRequest: false,

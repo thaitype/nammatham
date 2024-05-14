@@ -1,3 +1,5 @@
+import type { HandlerResponse, MiddlewareHandler } from 'hono/types';
+
 import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 
@@ -12,54 +14,52 @@ export class Nammatham {
   }
 }
 
-// export interface HttpTriggerOptions {
-//   authLevel?: 'anonymous' | 'function' | 'admin';
-//   inputs?: Record<string, unknown>;
-//   outputs?: Record<string, unknown>;
-// }
+export interface HttpTriggerOptions<TRoute extends string> {
+  authLevel?: 'anonymous' | 'function' | 'admin';
+  inputs?: Record<string, unknown>;
+  outputs?: Record<string, unknown>;
+  route?: TRoute;
+}
 
-// type Env<Inputs extends Record<string, unknown> = any, Outputs extends Record<string, unknown> = any> = {
-//   Variables: {
-//     inputs: Inputs;
-//     outputs: Outputs;
-//     echo: (str: string) => string;
-//   };
-// };
-
-// export function createHttp(
-//   option: HttpTriggerOptions,
-//   handler: Handler<Env, any, Input, HandlerResponse<any>> | MiddlewareHandler<Env, any, Input>
-// ) {
-//   const factory = createFactory<Env>();
-//   const middleware = factory.createMiddleware(async (c, next) => {
-//     // Do something
-//     await next();
-//   });
-
-//   const httpHandlers = factory.createHandlers(middleware, handler);
-//   return httpHandlers;
-// }
-
-type Env = {
+type HonoEnv = {
   Variables: {
     func: {
       invocationId: string;
       inputs: Record<string, any>;
+      json: (data: any) => HandlerResponse<any>;
+      log: (message: string) => void;
     };
   };
 };
 
-export class HonoFunctionTrigger {
-  http<const TRoute extends string>(options: { route: TRoute }) {
-    const middleware = createMiddleware<Env>(async (c, next) => {
+export class FunctionTrigger {
+  http<const TRoute extends string>(options: HttpTriggerOptions<TRoute>): [TRoute, MiddlewareHandler<HonoEnv>] {
+    const middleware = createMiddleware<HonoEnv>(async (c, next) => {
+      const logMessages: string[] = [];
       c.set('func', {
         invocationId: c.req.header('x-azure-functions-invocationid') || '',
         inputs: {},
+        log: (message: string) => {
+          logMessages.push(message);
+        },
+        json: data => {
+          return c.json({
+            Outputs: {
+              res: {
+                StatusCode: 200,
+                Body: data,
+                headers: {
+                  'content-type': 'application/json',
+                },
+              },
+            },
+            Logs: logMessages,
+            // ReturnValue: '{"hello":"world"}',
+          });
+        },
       });
       await next();
     });
-    return [options.route, middleware] as const;
-    // console.log('options.route', options.route);
-    // return middleware;
+    return [options.route as TRoute, middleware] as const;
   }
 }

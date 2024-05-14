@@ -1,37 +1,27 @@
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
-import { HonoFunctionTrigger } from 'nammatham';
+import { FunctionTrigger } from 'nammatham';
 
 // DO NOT SET `basePath` for Hono App, Azure Functions will handle it
 const app = new Hono();
 app.use(logger());
 
-const func = new HonoFunctionTrigger();
+const trigger = new FunctionTrigger();
 
 app.all(
-  ...func.http({
+  ...trigger.http({
     route: '/SimpleHttpTrigger',
   }),
   c => {
-    console.log('SimpleHttpTrigger');
-    const userAgent = c.req.header('user-agent');
-    console.log(`user agent is: ${userAgent}`);
+    // Getting the function context
+    const context = c.var.func;
 
-    const invocationId = c.req.header('x-azure-functions-invocationid');
-    console.log(`invocationid is: ${invocationId}`);
+    context.log('JavaScript HTTP trigger function processed a request.');
+    context.log(`invocationid is: ${context.invocationId}`);
+    context.log(`The third log message.`);
 
-    return c.json({
-      Outputs: {
-        res: {
-          StatusCode: 200,
-          Body: 'my world',
-          headers: {
-            header1: 'header1Val',
-          },
-        },
-      },
-      Logs: ['test log1', 'test log2'],
-      // ReturnValue: '{"hello":"world"}',
+    return context.json({
+      hello: 'world',
     });
   }
 );
@@ -42,5 +32,5 @@ console.log(`Start server on on http://localhost:${port}`);
 export default {
   port,
   fetch: app.fetch,
-  func,
+  func: trigger,
 };
