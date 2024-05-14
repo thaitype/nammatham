@@ -1,38 +1,46 @@
 import { Hono } from 'hono';
-import { HonoFunctionTrigger } from './libs';
+import { logger } from 'hono/logger';
+import { HonoFunctionTrigger } from 'nammatham';
 
-const app = new Hono().basePath('/api');
+const app = new Hono()
+app.use(logger())
 
 const func = new HonoFunctionTrigger();
 
-app.get('/SimpleHttpTrigger', c => {
-  const userAgent = c.req.header('user-agent');
-  console.log(`user agent is: ${userAgent}`);
+app.all('/SimpleHttpTrigger', c => {
+  console.log('SimpleHttpTrigger');
+  // const userAgent = c.req.header('user-agent');
+  // console.log(`user agent is: ${userAgent}`);
 
-  const invocationId = c.req.header('x-azure-functions-invocationid');
-  console.log(`invocationid is: ${invocationId}`);
+  // const invocationId = c.req.header('x-azure-functions-invocationid');
+  // console.log(`invocationid is: ${invocationId}`);
 
   // return c.text('Hello World from bun worker');
+  // https://github.com/anthonychu/azure-functions-deno-worker/blob/main/mod.ts
   return c.json({
-    outputs: {
+    Outputs: {
       res: {
-        statusCode: 201,
-        body: 'my world',
-        headers: {
-          header1: 'header1Val',
-          header2: 'header2Val',
-        },
+        StatusCode: 200,
+        Body: 'my world',
+        // headers: {
+        //   header1: 'header1Val',
+        //   header2: 'header2Val',
+        // },
       },
+      // message: 'test'
     },
-    logs: ['test log1', 'test log2'],
-    ReturnValue: '{"hello":"world"}',
-    message: 'Hello, World',
+    Logs: ['test log1', 'test log2'],
+    // ReturnValue: '{"hello":"world"}', 
+    // returnValue: {
+    //   data: 'Hello, World',
+    // },
+    // message: 'Hello, World',
   });
 });
 
 app.all(
   ...func.http({
-    route: '/HttpTriggerStringReturnValue',
+    route: '/api/HttpTriggerStringReturnValue',
   }),
   c => {
     const { func } = c.var;
@@ -79,7 +87,7 @@ app.all(
 );
 
 const port = parseInt(process.env.FUNCTIONS_CUSTOMHANDLER_PORT || '4000');
-console.log(`Start server on on http://localhost:${port}`);
+// console.log(`Start server on on http://localhost:${port}`);
 
 export default {
   port,
