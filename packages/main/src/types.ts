@@ -1,6 +1,9 @@
 import type { HandlerResponse } from 'hono/types';
 
-export interface HttpTriggerOptions<TRoute extends string> {
+export type HttpMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+export interface HttpTriggerOptions<TRoute extends string = string> {
+  method: HttpMethods[];
   authLevel?: 'anonymous' | 'function' | 'admin';
   inputs?: Record<string, unknown>;
   outputs?: Record<string, unknown>;
@@ -15,3 +18,7 @@ export interface InvocationContext {
   triggerMetadata?: TriggerMetadata;
 }
 export type TriggerMetadata = Record<string, unknown>;
+
+export interface NammathamTrigger {
+  http(options: HttpTriggerOptions): unknown;
+}

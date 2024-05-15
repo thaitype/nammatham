@@ -1,20 +1,10 @@
 import type { MiddlewareHandler } from 'hono/types';
 
-import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 
 import type { HttpTriggerOptions, InvocationContext } from './types';
 
-export class Nammatham {
-  protected hono: Hono;
-  constructor() {
-    this.hono = new Hono();
-  }
-
-  public getApp() {
-    return this.hono;
-  }
-}
+import { NammathamBase } from './nammatham';
 
 type HonoEnv = {
   Variables: {
@@ -22,8 +12,23 @@ type HonoEnv = {
   };
 };
 
-export class HonoAzureMiddleware {
+export class HonoAzureMiddleware extends NammathamBase {
+  public get<T extends string>(route: T) {
+    return this.http({
+      method: ['GET'],
+      route,
+    });
+  }
+
+  public post<T extends string>(route: T) {
+    return this.http({
+      method: ['POST'],
+      route,
+    });
+  }
+
   http<const TRoute extends string>(options: HttpTriggerOptions<TRoute>): [TRoute, MiddlewareHandler<HonoEnv>] {
+    this.http(options);
     const middleware = createMiddleware<HonoEnv>(async (c, next) => {
       const logMessages: string[] = [];
       c.set('context', {

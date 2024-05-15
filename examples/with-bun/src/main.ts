@@ -8,24 +8,18 @@ app.use(logger());
 
 const func = new HonoAzureMiddleware();
 
-app.all(
-  ...func.http({
-    route: '/SimpleHttpTrigger',
-  }),
-  c => {
-    // Getting the function context
-    const context = c.var.context;
+app.all(...func.get('/SimpleHttpTrigger'), c => {
+  // Getting the function context
+  const context = c.var.context;
 
-    context.log('JavaScript HTTP trigger function processed a request.');
-    context.log(`invocationid is: ${context.invocationId}`);
-    context.log(`The third log message.`);
+  context.log('JavaScript HTTP trigger function processed a request.');
+  context.log(`invocationid is: ${context.invocationId}`);
+  context.log(`The third log message.`);
 
-    return context.json({
-      hello: 'world',
-    });
-  }
-);
-
+  return context.json({
+    hello: 'world',
+  });
+});
 
 export default register({
   fetch: app.fetch,

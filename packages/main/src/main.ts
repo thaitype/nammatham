@@ -1,3 +1,4 @@
 export * from './hono';
 export * from './types';
-export * from './bun';
+export * from './nammatham';
+export * from './register';

@@ -1,12 +1,10 @@
-// import type { Serve } from 'bun';
-
-import type { HonoAzureMiddleware } from './hono';
+import type { NammathamBase } from './nammatham';
 
 export type FetchCallback = (request: Request, env: Record<string, unknown>) => Promise<Response> | Response;
 
 export interface NammathamRegisterOptions {
   fetch: FetchCallback;
-  func: HonoAzureMiddleware;
+  func: NammathamBase;
 }
 
 export function register(option: NammathamRegisterOptions) {
