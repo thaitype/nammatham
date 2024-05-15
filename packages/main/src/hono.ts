@@ -22,11 +22,7 @@ type HonoEnv = {
   };
 };
 
-export function initNammatham(options?: any){
-  return new FunctionTrigger();
-}
-
-export class FunctionTrigger {
+export class HonoAzureMiddleware {
   http<const TRoute extends string>(options: HttpTriggerOptions<TRoute>): [TRoute, MiddlewareHandler<HonoEnv>] {
     const middleware = createMiddleware<HonoEnv>(async (c, next) => {
       const logMessages: string[] = [];

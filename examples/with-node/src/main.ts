@@ -1,13 +1,13 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { initNammatham, register } from 'nammatham';
+import { HonoAzureMiddleware, register } from 'nammatham';
 import { logger } from 'hono/logger';
 
 // DO NOT SET `basePath` for Hono App, Azure Functions will handle it
 const app = new Hono();
 app.use(logger());
 
-const func = initNammatham();
+const func = new HonoAzureMiddleware();
 
 app.all(
   ...func.http({
