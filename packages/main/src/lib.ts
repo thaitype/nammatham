@@ -1,5 +1,6 @@
 import type { HandlerResponse, MiddlewareHandler } from 'hono/types';
 
+import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 
 export interface HttpTriggerOptions<TRoute extends string> {
@@ -23,7 +24,7 @@ type HonoEnv = {
 };
 export type FetchCallback = (request: Request, env: Record<string, unknown>) => Promise<Response> | Response;
 
-export class Nammatham {
+export class FunctionTrigger {
   handle(fetch: FetchCallback): HttpTriggerOptions<string>['handler'] {
     return {} as any;
   }
@@ -57,4 +58,21 @@ export class Nammatham {
     });
     return [options.route as TRoute, middleware] as const;
   }
+}
+
+export class Nammatham {
+  constructor(options?: Record<string, any>) {
+    console.log('Nammatham constructor', options);
+  }
+}
+
+/**
+ * Hono Adapter
+ * import { handle } from "nammatham/hono";
+ */
+export function honoAdapter(app: Nammatham) {
+  console.log(`Converting to Hono`);
+  const honoApp = new Hono();
+  // TODO: Register all routes from Nammatham to Hono
+  return honoApp;
 }
