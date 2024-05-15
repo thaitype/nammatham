@@ -6,10 +6,13 @@ export interface AzureFunctionBindings extends Record<string, unknown> {
   name: string;
 }
 
+export interface AzureFunctionMetadata extends Record<string, unknown> {
+  bindings: AzureFunctionBindings[];
+}
+
 export interface NammathamFunction {
   name: string;
-  metadata?: Record<string, unknown>;
-  bindings: AzureFunctionBindings[];
+  metadata?: AzureFunctionMetadata;
 }
 
 export type HttpMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';

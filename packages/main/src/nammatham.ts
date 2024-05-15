@@ -25,22 +25,24 @@ export class Nammatham implements NammathamTrigger {
     }
     this.functions.push({
       name: camelCase(options.name ?? options.route),
-      bindings: [
-        {
-          type: 'httpTrigger',
-          // TODO: Add Support default value by configuring in options
-          authLevel: options.authLevel ?? 'function',
-          route: options.route,
-          direction: 'in',
-          name: 'req',
-          methods: options.methods ?? ['GET', 'POST', 'PUT', 'DELETE'],
-        },
-        {
-          type: 'http',
-          direction: 'out',
-          name: 'res',
-        },
-      ],
+      metadata: {
+        bindings: [
+          {
+            type: 'httpTrigger',
+            // TODO: Add Support default value by configuring in options
+            authLevel: options.authLevel ?? 'function',
+            route: options.route,
+            direction: 'in',
+            name: 'req',
+            methods: options.methods ?? ['GET', 'POST', 'PUT', 'DELETE'],
+          },
+          {
+            type: 'http',
+            direction: 'out',
+            name: 'res',
+          },
+        ],
+      },
     });
     return this;
   }

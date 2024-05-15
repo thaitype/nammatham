@@ -4,7 +4,7 @@ import { createMiddleware } from 'hono/factory';
 
 import type { HttpTriggerOptions, InvocationContext, NammathamTrigger } from './types';
 
-import { Nammatham } from '../dist/main';
+import { Nammatham } from './main';
 
 type HonoEnv = {
   Variables: {
