@@ -1,23 +1,13 @@
 import type { HandlerResponse, MiddlewareHandler } from 'hono/types';
 
-import { Hono } from 'hono';
 import { createMiddleware } from 'hono/factory';
 
-export class Nammatham {
-  protected hono: Hono;
-  constructor() {
-    this.hono = new Hono();
-  }
-
-  public getApp() {
-    return this.hono;
-  }
-}
-
 export interface HttpTriggerOptions<TRoute extends string> {
+  methods?: string[];
   authLevel?: 'anonymous' | 'function' | 'admin';
   inputs?: Record<string, unknown>;
   outputs?: Record<string, unknown>;
+  handler?: () => void;
   route?: TRoute;
 }
 
@@ -31,8 +21,13 @@ type HonoEnv = {
     };
   };
 };
+export type FetchCallback = (request: Request, env: Record<string, unknown>) => Promise<Response> | Response;
 
-export class FunctionTrigger {
+export class Nammatham {
+  handle(fetch: FetchCallback): HttpTriggerOptions<string>['handler'] {
+    return {} as any;
+  }
+
   http<const TRoute extends string>(options: HttpTriggerOptions<TRoute>): [TRoute, MiddlewareHandler<HonoEnv>] {
     const middleware = createMiddleware<HonoEnv>(async (c, next) => {
       const logMessages: string[] = [];

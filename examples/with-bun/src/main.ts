@@ -1,15 +1,28 @@
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
-import { FunctionTrigger } from 'nammatham';
+import { Nammatham } from 'nammatham';
 
 // DO NOT SET `basePath` for Hono App, Azure Functions will handle it
-const app = new Hono();
-app.use(logger());
+const honoApp = new Hono();
+honoApp.use(logger());
 
-const trigger = new FunctionTrigger();
+const app = new Nammatham();
 
-app.all(
-  ...trigger.http({
+// Inspired by https://hono.dev/getting-started/azure-functions
+app.http({
+  methods: [
+    "GET",
+    "POST",
+    "DELETE",
+    "PUT"
+  ],
+  authLevel: "anonymous",
+  route: "{*proxy}",
+  handler: app.handle(honoApp.fetch)
+});
+
+honoApp.all(
+  ...app.http({
     route: '/SimpleHttpTrigger',
   }),
   c => {
@@ -31,6 +44,6 @@ console.log(`Start server on on http://localhost:${port}`);
 
 export default {
   port,
-  fetch: app.fetch,
-  func: trigger,
+  fetch: honoApp.fetch,
+  func: app,
 };
