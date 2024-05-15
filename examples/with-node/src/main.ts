@@ -1,22 +1,37 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
+import { initNammatham, register } from 'nammatham';
+import { logger } from 'hono/logger';
 
-const app = new Hono().basePath('/api');
+// DO NOT SET `basePath` for Hono App, Azure Functions will handle it
+const app = new Hono();
+app.use(logger());
 
-app.get('/SimpleHttpTrigger', c => {
-  const userAgent = c.req.header('user-agent');
-  console.log(`user agent is: ${userAgent}`);
+const func = initNammatham();
 
-  const invocationId = c.req.header('x-azure-functions-invocationid');
-  console.log(`invocationid is: ${invocationId}`);
+app.all(
+  ...func.http({
+    route: '/SimpleHttpTrigger',
+  }),
+  c => {
+    // Getting the function context
+    const context = c.var.context;
 
-  return c.text('Hello World from node.js worker');
-});
+    context.log('JavaScript HTTP trigger function processed a request.');
+    context.log(`invocationid is: ${context.invocationId}`);
+    context.log(`The third log message.`);
 
-const port = parseInt(process.env.FUNCTIONS_CUSTOMHANDLER_PORT || '4000');
-console.log(`Start server on on http://localhost:${port}`);
+    return context.json({
+      hello: 'world',
+    });
+  }
+);
 
-serve({
-  fetch: app.fetch,
-  port,
-});
+export default serve(
+  register({
+    fetch: app.fetch,
+    func,
+  })
+);
+
+

@@ -100,8 +100,8 @@ importers:
         specifier: ^1.8.1
         version: 1.8.1
       hono:
-        specifier: ^4.3.2
-        version: 4.3.2
+        specifier: ^4.3.6
+        version: 4.3.6
       nammatham:
         specifier: workspace:*
         version: link:../../packages/main
@@ -2926,11 +2926,6 @@ packages:
     resolution: {integrity: sha512-QFLV0taWQOZtvIRIAdBChesmogZrtuXvVWsFHZTk2SU+anspqZ2vMnoLg7IE1+Uk16N19APic1BuF8bC8c2m5g==}
     engines: {node: '>=8'}
     dev: true
-
-  /hono@4.3.2:
-    resolution: {integrity: sha512-wiZcF5N06tc232U11DnqW6hP8DNoypjsrxslKXfvOqOAkTdh7K1HLZJH/92Mf+urxUTGi96f1w4xx/1Qozoqiw==}
-    engines: {node: '>=16.0.0'}
-    dev: false
 
   /hono@4.3.6:
     resolution: {integrity: sha512-2IqXwrxWF4tG2AR7b5tMYn+KEnWK8UvdC/NUSbOKWj/Kj11OJqel58FxyiXLK5CcKLiL8aGtTe4lkBKXyaHMBQ==}
