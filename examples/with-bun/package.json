@@ -17,6 +17,7 @@
     "nammatham": "workspace:*"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.2",
     "tsx": "^4.9.1",
     "typescript": "^5.4.5"
   }
