@@ -1,10 +1,10 @@
-import type { NammathamBase } from './nammatham';
+import type { NammathamTrigger } from './types';
 
 export type FetchCallback = (request: Request, env: Record<string, unknown>) => Promise<Response> | Response;
 
 export interface NammathamRegisterOptions {
   fetch: FetchCallback;
-  func: NammathamBase;
+  func: NammathamTrigger;
 }
 
 export function register(option: NammathamRegisterOptions) {

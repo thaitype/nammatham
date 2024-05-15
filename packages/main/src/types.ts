@@ -1,9 +1,22 @@
 import type { HandlerResponse } from 'hono/types';
 
+export interface AzureFunctionBindings extends Record<string, unknown> {
+  type: string;
+  direction: 'in' | 'out';
+  name: string;
+}
+
+export interface NammathamFunction {
+  name: string;
+  metadata?: Record<string, unknown>;
+  bindings: AzureFunctionBindings[];
+}
+
 export type HttpMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export interface HttpTriggerOptions<TRoute extends string = string> {
-  method: HttpMethods[];
+  name?: string;
+  methods: HttpMethods[];
   authLevel?: 'anonymous' | 'function' | 'admin';
   inputs?: Record<string, unknown>;
   outputs?: Record<string, unknown>;
@@ -20,5 +33,7 @@ export interface InvocationContext {
 export type TriggerMetadata = Record<string, unknown>;
 
 export interface NammathamTrigger {
+  get<T extends string>(route: T): unknown;
+  post<T extends string>(route: T): unknown;
   http(options: HttpTriggerOptions): unknown;
 }

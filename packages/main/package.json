@@ -40,6 +40,7 @@
     "esbuild": "^0.20.2",
     "execa": "^8.0.1",
     "invariant": "^2.2.4",
+    "lodash.camelcase": "^4.3.0",
     "lodash.merge": "^4.6.2",
     "pino": "^8.17.1",
     "pino-dev": "^4.0.3",
@@ -59,7 +60,8 @@
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",
-    "hono": "^4.3.6",
-    "@types/lodash.merge": "^4.6.9"
+    "@types/lodash.camelcase": "^4.3.9",
+    "@types/lodash.merge": "^4.6.9",
+    "hono": "^4.3.6"
   }
 }

@@ -1,30 +1,51 @@
-import type { HttpTriggerOptions } from '../dist/main';
+import camelCase from 'lodash.camelcase';
 
-export class NammathamBase {
-  protected functions: Record<string, any>[] = [];
+import type { NammathamFunction, HttpTriggerOptions, NammathamTrigger } from './types';
 
-  public getFunctions() {
-    return this.functions;
-  }
-}
+export class Nammatham implements NammathamTrigger {
+  protected functions: NammathamFunction[] = [];
 
-export class Nammatham extends NammathamBase {
-  public get<T extends string>(options: HttpTriggerOptions<T>) {
+  public get<T extends string>(route: T) {
     return this.http({
-      ...options,
-      method: ['GET'],
+      route,
+      methods: ['GET'],
     });
   }
 
-  public post<T extends string>(options: HttpTriggerOptions<T>) {
+  public post<T extends string>(route: T) {
     return this.http({
-      ...options,
-      method: ['POST'],
+      route,
+      methods: ['POST'],
     });
   }
 
   public http<T extends string>(options: HttpTriggerOptions<T>) {
-    this.functions.push(options);
+    if (options.route === undefined && options.name === undefined) {
+      throw new Error('Route or Name is required');
+    }
+    this.functions.push({
+      name: camelCase(options.name ?? options.route),
+      bindings: [
+        {
+          type: 'httpTrigger',
+          // TODO: Add Support default value by configuring in options
+          authLevel: options.authLevel ?? 'function',
+          route: options.route,
+          direction: 'in',
+          name: 'req',
+          methods: options.methods ?? ['GET', 'POST', 'PUT', 'DELETE'],
+        },
+        {
+          type: 'http',
+          direction: 'out',
+          name: 'res',
+        },
+      ],
+    });
     return this;
+  }
+
+  public getFunctions() {
+    return this.functions;
   }
 }
