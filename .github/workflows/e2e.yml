@@ -84,6 +84,41 @@ jobs:
           path: examples/with-${{ matrix.runtime }}/.nmt/dist
           retention-days: 1
 
+  e2e-local:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - get-matrix
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        include: ${{fromJson(needs.get-matrix.outputs.matrix)}}
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.resource_identifier_key }}
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Use Node.js ${{ matrix.version }}
+        if: matrix.runtime == 'node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.version }}
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        with:
+          version: ${{ env.pnpm_version }}
+      - run: pnpm install
+
+      - name: Build the project
+        run: pnpm exec nx run @infra/azure-functions:test:e2e-local
+        env:
+          RUNTIME: ${{ matrix.runtime }}
+      
   deploy:
     runs-on: ubuntu-latest
     needs:
@@ -111,7 +146,7 @@ jobs:
           app-name: nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}
           package: .
 
-  e2e:
+  e2e-azure:
     if: always()
     runs-on: ubuntu-latest
     needs:
@@ -140,7 +175,7 @@ jobs:
       - run: pnpm install
 
       - name: Run E2E tests
-        run: pnpm exec nx run @infra/azure-functions:test
+        run: pnpm exec nx run @infra/azure-functions:test:e2e-remote
         env:
           AZURE_FUNCTIONS_URL: https://nmt-e2e-${{ matrix.target }}-${{ secrets[matrix.resource_identifier_key] }}.azurewebsites.net
           AZURE_FUNCTIONS_API_KEY: ${{ secrets.AZURE_FUNCTIONS_HOST_KEY }}
