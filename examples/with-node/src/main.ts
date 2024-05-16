@@ -1,11 +1,9 @@
 import { Hono } from 'hono';
-import { serve } from '@hono/node-server';
 import { HonoAzureMiddleware, register } from 'nammatham';
-import { logger } from 'hono/logger';
+import { serve } from '@hono/node-server';
 
 // DO NOT SET `basePath` for Hono App, Azure Functions will handle it
 const app = new Hono();
-app.use(logger());
 
 const func = new HonoAzureMiddleware();
 
@@ -22,11 +20,10 @@ app.all(...func.get('/SimpleHttpTrigger'), c => {
   });
 });
 
-export default serve(
-  register({
-    fetch: app.fetch,
-    func,
-  })
-);
+const nammathamApp = register({
+  fetch: app.fetch,
+  func,
+});
+export default serve(nammathamApp);
 
 
