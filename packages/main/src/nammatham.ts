@@ -1,6 +1,6 @@
-import camelCase from 'lodash.camelcase';
-
 import type { NammathamFunction, HttpTriggerOptions, NammathamTrigger } from './types';
+
+import { pascalCase } from './utils';
 
 export class Nammatham implements NammathamTrigger {
   protected functions: NammathamFunction[] = [];
@@ -24,7 +24,7 @@ export class Nammatham implements NammathamTrigger {
       throw new Error('Route or Name is required');
     }
     this.functions.push({
-      name: camelCase(options.name ?? options.route),
+      name: pascalCase(options.name ?? options.route),
       metadata: {
         bindings: [
           {
