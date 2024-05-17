@@ -1,0 +1,17 @@
+{
+  "name": "@infra/e2e-local",
+  "module": "src/main.ts",
+  "type": "module",
+  "scripts": {
+    "test": "bun test --timeout 120000"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "bun": "^1.1.0"
+  }
+}

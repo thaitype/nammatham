@@ -115,7 +115,7 @@ jobs:
       - run: pnpm install
 
       - name: Build the project
-        run: pnpm exec nx run @infra/azure-functions:test:e2e-local
+        run: pnpm exec nx run @infra/e2e-local:test
         env:
           RUNTIME: ${{ matrix.runtime }}
       
