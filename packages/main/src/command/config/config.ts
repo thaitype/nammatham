@@ -1,6 +1,7 @@
 import type { EnvVariables } from './load-env-vars';
 import type { HostConfigV2, LocalSettings, NammathamConfigs } from '../config-loader';
 
+import { debug } from './load-env-vars';
 import { getExecutablePath } from '../build';
 
 export function constructHostConfig(config: NammathamConfigs, mode: 'dev' | 'build'): string {
@@ -11,17 +12,38 @@ export function constructHostConfig(config: NammathamConfigs, mode: 'dev' | 'bui
       defaultExecutablePath: getExecutablePath(config.buildOptions?.target),
     };
   } else if (mode === 'dev') {
-    description = {
-      defaultExecutablePath: '../node_modules/.bin/tsx',
-      arguments: ['watch', '../src/main.ts'],
-    };
+    if (config.runtime === 'node') {
+      description = {
+        defaultExecutablePath: '../node_modules/.bin/tsx',
+        arguments: ['watch', '../src/main.ts'],
+      };
+    } else if (config.runtime === 'bun') {
+      description = {
+        defaultExecutablePath: 'bun',
+        arguments: ['run', '--watch', '../src/main.ts'],
+      };
+    } else {
+      throw new Error(`Unsupported runtime when genarate host.json: ${config.runtime}`);
+    }
+    debug?.(`Start server on execution path: ${description.defaultExecutablePath} ${description.arguments?.join(' ')}`);
     watchDirectories = ['../src', '.'];
   }
   return JSON.stringify(
     {
       customHandler: {
         description,
-        enableForwardingHttpRequest: true,
+        /**
+         * Enable forwarding HTTP request to the custom handler
+         *
+         * If this is set to true, the custom handler will receive the HTTP request and response objects
+         * However, nammatham will not be not needs to be used in the custom handler
+         *
+         * Another reason for loggin, disabling this option will log on Azure Application Insights properly
+         * @ref https://github.com/Azure/azure-functions-host/issues/6637
+         *
+         * @ref https://learn.microsoft.com/en-us/azure/azure-functions/functions-custom-handlers#http-only-function
+         */
+        enableForwardingHttpRequest: false,
       },
       watchDirectories,
       ...config.hostConfig,

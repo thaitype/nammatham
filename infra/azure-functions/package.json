@@ -6,13 +6,14 @@
     "test-os": "tsx src/test-os.ts",
     "apply": "bun run src/main.ts",
     "plan": "PLAN_MODE=true bun run src/main.ts",
-    "test": "bun test --timeout 120000",
+    "test:e2e-remote": "bun test --timeout 120000 -t e2e-remote",
     "github-actions": "bun run src/github-actions.ts",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",
     "lint:fix": "eslint --fix ./src && prettier -w src"
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
+    "execa": "^9.1.0",
     "nammatham": "workspace:*"
   },
   "devDependencies": {

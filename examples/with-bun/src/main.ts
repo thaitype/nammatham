@@ -1,21 +1,25 @@
 import { Hono } from 'hono';
+import { HonoAzureMiddleware, register } from 'nammatham';
 
-const app = new Hono().basePath('/api');
+// DO NOT SET `basePath` for Hono App, Azure Functions will handle it
+const app = new Hono();
 
-app.get('/SimpleHttpTrigger', c => {
-  const userAgent = c.req.header('user-agent');
-  console.log(`user agent is: ${userAgent}`);
+const func = new HonoAzureMiddleware();
 
-  const invocationId = c.req.header('x-azure-functions-invocationid');
-  console.log(`invocationid is: ${invocationId}`);
+app.all(...func.get('/SimpleHttpTrigger'), c => {
+  // Getting the function context
+  const context = c.var.context;
 
-  return c.text('Hello World from bun worker');
+  context.log('JavaScript HTTP trigger function processed a request.');
+  context.log(`invocationid is: ${context.invocationId}`);
+  context.log(`The third log message.`);
+
+  return context.json({
+    hello: 'world',
+  });
 });
 
-const port = parseInt(process.env.FUNCTIONS_CUSTOMHANDLER_PORT || '4000');
-console.log(`Start server on on http://localhost:${port}`);
-
-export default {
-  port,
-  fetch: app.fetch
-};
+export default register({
+  fetch: app.fetch,
+  func,
+});

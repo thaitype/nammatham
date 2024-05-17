@@ -17,11 +17,11 @@
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "prepublishOnly": "npm run build",
     "build": "run-s build:*",
-    "build:package": "tsup src/main.ts --dts --format esm",
-    "build:cli": "tsup src/cli.ts --dts --format esm",
+    "build:package": "tsup src/main.ts --dts --format esm --external bun,@types/bun",
+    "build:cli": "tsup src/cli.ts --dts --format esm --external bun,@types/bun",
     "format": "prettier -w src",
     "lint": "tsc --noEmit && eslint ./src && prettier -c src",
     "lint:fix": "eslint --fix ./src && prettier -w src",
@@ -39,7 +39,6 @@
     "dotenv": "^16.4.5",
     "esbuild": "^0.20.2",
     "execa": "^8.0.1",
-    "hono": "^4.0.4",
     "invariant": "^2.2.4",
     "lodash.merge": "^4.6.2",
     "pino": "^8.17.1",
@@ -55,8 +54,12 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "peerDependencies": {
+    "hono": ">=4.0.0"
+  },
   "devDependencies": {
     "@types/debug": "^4.1.12",
-    "@types/lodash.merge": "^4.6.9"
+    "@types/lodash.merge": "^4.6.9",
+    "hono": "^4.3.6"
   }
 }

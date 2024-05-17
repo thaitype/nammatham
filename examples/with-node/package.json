@@ -14,8 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "@hono/node-server": "^1.8.1",
-    "hono": "^4.3.2",
-    "nammatham": "3.0.0-canary.0"
+    "hono": "^4.3.6",
+    "nammatham": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.9.1",

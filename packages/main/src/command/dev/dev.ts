@@ -16,10 +16,9 @@ export async function writeConfig(config: NammathamConfigs, envVars: EnvVariable
     fs.promises.writeFile(path.join(targetPath, 'host.json'), constructHostConfig(config, 'dev'), 'utf-8'),
     fs.promises.writeFile(path.join(targetPath, 'local.settings.json'), constructLocalSettings(envVars), 'utf-8'),
   ]);
-  result.forEach((r) => {
+  result.forEach(r => {
     if (r.status === 'rejected') {
       throw new Error(r.reason);
     }
   });
-
 }
