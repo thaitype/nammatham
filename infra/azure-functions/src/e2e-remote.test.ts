@@ -1,11 +1,11 @@
-import { test, expect, describe, beforeAll } from 'bun:test';
+import { test, expect, describe, beforeEach } from 'bun:test';
 
 describe('e2e-remote', () => {
 
   let url: string | undefined;
   let apiKey: string | undefined;
 
-  beforeAll(() => {
+  beforeEach(() => {
     url = process.env.AZURE_FUNCTIONS_URL;
     apiKey = process.env.AZURE_FUNCTIONS_API_KEY;
     if (!url) throw new Error('AZURE_FUNCTIONS_URL not set');

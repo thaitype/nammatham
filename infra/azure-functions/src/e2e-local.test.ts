@@ -1,53 +1,87 @@
+import type { Subprocess } from 'bun';
 import { test, expect, describe, beforeAll, afterAll } from 'bun:test';
-import { execa, type ResultPromise } from 'execa';
+import path from 'path';
 
-const url = 'http://localhost:7071';
-const healthPath = '/api/SimpleHttpTrigger';
+const TIME_LIMIT = parseInt(process.env.TIME_LIMIT ?? '60000'); // Default 60 seconds
+const DEBUG = (process.env.LOCAL_TEST_DEBUG ?? '').toLowerCase() === 'true';
+const LOCAL_URL = process.env.LOCAL_TEST_URL ?? 'http://127.0.0.1:7071';
+const HEALTH_PATH = process.env.LOCAL_TEST_HEALTH_PATH ?? '/api/SimpleHttpTrigger';
 
 function waitForServer(url: string) {
   return new Promise<void>((resolve, reject) => {
-    const checkServer = async () => {
+    const interval = setInterval(async () => {
       try {
-        const response = await fetch(url);
-        if (response.ok) {
+        const response = await fetch(url, {
+          method: 'GET',
+        });
+        if (response.status === 200) {
+          clearInterval(interval);
           resolve();
-        } else {
-          setTimeout(checkServer, 1000);
         }
       } catch (error) {
-        setTimeout(checkServer, 1000);
+        const message = error instanceof Error ? error.message : error;
+        console.error(`Server not ready: ${url} (Message: ${message})`);
       }
-    };
-    checkServer();
+    }, 1000);
   });
 }
 
+/**
+ * Check every seconds when reach the timeout, call the callback
+ * @param ms
+ */
+function timer(timeout: number, callback?: () => void) {
+  const interval = setInterval(() => {
+    timeout -= 1000;
+    if (timeout <= 0) {
+      clearInterval(interval);
+      if (callback) callback();
+    }
+  }, 1000);
+}
+
 describe('e2e-local', () => {
-  let serverProcess:
-    | ResultPromise<{
-        stdout: 'inherit';
-        killSignal: 'SIGKILL';
-      }>
-    | undefined;
+  let serverProcess: Subprocess | undefined;
   let serverLogs = '';
 
   beforeAll(async () => {
+    const workingDir = path.resolve('../../')
+    console.log(`Starting server process on ${workingDir}`);
     // Place Azure Functions into the current directory
-    serverProcess = execa({ stdout: 'inherit', killSignal: 'SIGKILL' })`func start --verbose`;
+    const command = DEBUG ? ['sleep', '60'] : ['func', 'start', '--verbose'];
+    const serverProcess = Bun.spawn(command, {
+      cwd: workingDir,
+      stdout: 'inherit',
+      onExit(proc, exitCode, signalCode, error) {
+        if (exitCode !== 0) {
+          console.error(`Server process exited with code ${exitCode}`);
+          process.exit(1);
+        }
+        if (error) {
+          console.error(error);
+        }
+      },
+    });
+    timer(TIME_LIMIT, () => {
+      console.log(`Server did not start within ${Math.round(TIME_LIMIT / 1000)} seconds`);
+      if (!serverProcess) console.warn('Server process is not defined');
+      serverProcess?.kill('SIGKILL');
+      process.exit(1);
+    });
     // Wait for the server to be ready
-    await waitForServer(new URL(healthPath, url).toString());
+    await waitForServer(new URL(HEALTH_PATH, LOCAL_URL).toString());
   });
 
   afterAll(async () => {
     if (serverProcess) {
       console.log('Killing server process');
-      serverProcess.kill();
+      serverProcess.kill('SIGKILL');
     }
   });
 
   test('should return 200 OK', async () => {
     try {
-      const response = await fetch(new URL('/api/SimpleHttpTrigger', url).toString());
+      const response = await fetch(new URL('/api/SimpleHttpTrigger', LOCAL_URL).toString());
       expect(response.status).toBe(200);
     } catch (error) {
       console.error(serverLogs); // Print server logs on failure
