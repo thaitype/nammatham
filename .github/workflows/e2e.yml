@@ -90,15 +90,13 @@ jobs:
       - build
       - get-matrix
     timeout-minutes: 10
+    env:
+      artifact_download_path: ./build-functions
     strategy:
       matrix:
         include: ${{fromJson(needs.get-matrix.outputs.matrix)}}
 
     steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.resource_identifier_key }}
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
 
@@ -120,11 +118,20 @@ jobs:
       - name: Azure Functions Version
         run: func --version
 
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.resource_identifier_key }}
+          path: ${{ github.workspace }}/${{ env.artifact_download_path}}
+
+      - name: Display structure of downloaded files
+        run: ls -R ${{ github.workspace }}/${{ env.artifact_download_path}}
+
       - name: Build the project
         run: pnpm exec nx run @infra/e2e-local:test
         env:
-          RUNTIME: ${{ matrix.runtime }}
-      
+          CURRENT_WORKING_DIR: ${{ github.workspace }}/${{ env.artifact_download_path}}
+
   deploy:
     runs-on: ubuntu-latest
     needs:

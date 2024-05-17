@@ -6,6 +6,7 @@ const TIME_LIMIT = parseInt(process.env.TIME_LIMIT ?? '60000'); // Default 60 se
 const DEBUG = (process.env.LOCAL_TEST_DEBUG ?? '').toLowerCase() === 'true';
 const LOCAL_URL = process.env.LOCAL_TEST_URL ?? 'http://127.0.0.1:7071';
 const HEALTH_PATH = process.env.LOCAL_TEST_HEALTH_PATH ?? '/api/SimpleHttpTrigger';
+const CURRENT_WORKING_DIR = process.env.CURRENT_WORKING_DIR ?? path.resolve('../../');
 
 function waitForServer(url: string) {
   return new Promise<void>((resolve, reject) => {
@@ -45,12 +46,11 @@ describe('e2e-local', () => {
   let serverLogs = '';
 
   beforeAll(async () => {
-    const workingDir = path.resolve('../../')
-    console.log(`Starting server process on ${workingDir}`);
+    console.log(`Starting server process on ${CURRENT_WORKING_DIR}`);
     // Place Azure Functions into the current directory
     const command = DEBUG ? ['sleep', '60'] : ['func', 'start', '--verbose'];
     const serverProcess = Bun.spawn(command, {
-      cwd: workingDir,
+      cwd: CURRENT_WORKING_DIR,
       stdout: 'inherit',
       onExit(proc, exitCode, signalCode, error) {
         if (exitCode !== 0) {
