@@ -161,14 +161,26 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - uses: actions/cache@v4
-        name: Setup npm global cache
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-azure-functions-core-tools-v4
+      # - uses: actions/cache@v4
+      #   name: Cache global npm packages
+      #   with:
+      #     # a ternary operator 
+      #     # Ref: https://docs.github.com/en/actions/learn-github-actions/expressions#example
+      #     path: ${{ runner.os == 'Windows' && '~/AppData/Roaming/npm-cache' || '~/.npm' }}
+      #     key: ${{ runner.os }}-node-global-npm
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-global-npm
 
       - name: Install Azure Functions Core Tools
         run: npm i -g azure-functions-core-tools@4 --unsafe-perm true
+
+      # - name: Cache global node_modules
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ${{ runner.os == 'Windows' && '~/AppData/Roaming/npm/node_modules' || '/usr/local/lib/node_modules' }}
+      #     key: ${{ runner.os }}-node-${{ github.sha }}-global-modules
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-global-modules
 
       - name: Azure Functions Version
         run: func --version
