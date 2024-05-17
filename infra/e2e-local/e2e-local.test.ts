@@ -23,7 +23,7 @@ function waitForServer(url: string) {
         const message = error instanceof Error ? error.message : error;
         console.error(`Server not ready: ${url} (Message: ${message})`);
       }
-    }, 1000);
+    }, 5000);
   });
 }
 
@@ -69,7 +69,7 @@ describe('e2e-local', () => {
       process.exit(1);
     });
     // Wait for the server to be ready
-    await waitForServer(new URL(HEALTH_PATH, LOCAL_URL).toString());
+    await waitForServer(LOCAL_URL);
   });
 
   afterAll(async () => {
