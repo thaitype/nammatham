@@ -114,6 +114,12 @@ jobs:
           version: ${{ env.pnpm_version }}
       - run: pnpm install
 
+      - name: Install Azure Functions Core Tools
+        run: npm i -g azure-functions-core-tools@4 --unsafe-perm true
+
+      - name: Azure Functions Version
+        run: func --version
+
       - name: Build the project
         run: pnpm exec nx run @infra/e2e-local:test
         env:
